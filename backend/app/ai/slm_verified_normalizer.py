@@ -288,6 +288,224 @@ def _unused_point_label(text: str, preferred: tuple[str, ...] = ("G", "I", "K", 
     return "P0"
 
 
+# ── /15 composition rules (`VN12`–`VN17`, run `grounded-geometry-language-recovery`) ──────────────────────────────────
+# Each rule rewrites one closed Vietnamese construction into a canonical form the local parser AND the Source Gate already
+# read and verify ("IJ, IK, IL đôi một vuông góc", "SA = 4 và SA vuông góc với đáy", "đường cao SA = 4", "Vẽ hình.", "Cho …
+# có …. Tính …"). Nothing is inferred: a rule leaves the text unchanged when its precondition (one matching solid, equal
+# list lengths, the same segment on both sides, no yes/no question) does not hold, and `_apply_safe_sub` blocks it in a
+# conditional or negated sentence. The Source Gate then verifies the canonical text exactly as it verifies typed input.
+_SEG = r"[A-Z][0-9]*'?[A-Z][0-9]*'?"
+_VAL = r"(?:(?:\d+(?:,\d+)?(?:√\d+)?|√\d+)a?|a)(?![\w'√])"
+_SEG_LIST = rf"{_SEG}(?:\s*,\s*{_SEG})*(?:\s*,?\s*và\s+{_SEG})"
+_VAL_LIST = rf"{_VAL}(?:\s*,\s*{_VAL})*(?:\s*,?\s*và\s+{_VAL})"
+_PERP_PAIRWISE = r"(?:đôi\s+một\s+vuông\s+góc(?:\s+với\s+nhau)?|vuông\s+góc\s+(?:với\s+nhau\s+)?từng\s+đôi(?:\s+một)?)"
+_PERP_TARGET = r"(?:(?:mặt\s+phẳng\s+)?\([A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,3}\)|mặt\s+phẳng\s+đáy|(?:mặt\s+)?đáy)"
+_SOLID_PHRASE = (r"(?:(?:khối|hình)\s+)?(?:tứ\s+diện|chóp|lăng\s+trụ(?:\s+đứng)?)(?:\s+(?:tam\s+giác|tứ\s+giác))?"
+                 r"\s+[A-Z][0-9]*'?(?:\.?[A-Z][0-9]*'?)+")
+_YES_NO_RE = re.compile(r"\bcó\b[^.?!]*\bkhông\s*\??\s*$|\bphải\s+không\b|\bhay\s+không\b", re.IGNORECASE)
+
+
+def _items(s: str, item: str) -> list[str]:
+    return re.findall(item, s)
+
+
+def _tetra_labels(text: str) -> list[str]:
+    return [m.replace(".", "") for m in re.findall(r"(?i:tứ\s+diện)\s+([A-Z]\.?[A-Z]{3})(?![A-Z0-9'])", text)]
+
+
+def _declared_solids(text: str) -> set[str]:
+    return {m.replace(".", "") for m in re.findall(
+        r"(?i:tứ\s+diện|chóp|lăng\s+trụ(?:\s+đứng)?|hình\s+hộp(?:\s+chữ\s+nhật)?|lập\s+phương)\s+"
+        r"([A-Z][0-9]*'?(?:\.?[A-Z][0-9]*'?){3,7})(?![A-Z0-9'])", text)}
+
+
+def _apply_v15_composition(
+    cur: str,
+    *,
+    norm0: str,
+    pos_map: list[int],
+    steps: list[VerifiedNormalizationStep],
+) -> tuple[str, list[int]]:
+    """`VN12`–`VN17`: closed compositional constructions → canonical premises / requests (see block comment above)."""
+    text = cur
+
+    # VN12a "ba cạnh xuất phát từ (đỉnh) P đôi một vuông góc" in the ONE declared tetrahedron that contains P
+    def _repl_edges_from(m: re.Match[str]) -> str:
+        p = m["p"]
+        tets = sorted({t for t in _tetra_labels(text) if p in t})
+        if len(tets) != 1:
+            return m.group(0)
+        others = [x for x in re.findall(r"[A-Z][0-9]*'?", tets[0]) if x != p]
+        return f"{p}{others[0]}, {p}{others[1]}, {p}{others[2]} đôi một vuông góc"
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN12_EDGES_FROM_VERTEX_PAIRWISE_PERP",
+        pattern=re.compile(rf"(?:ba|các)\s+cạnh\s+(?:xuất\s+phát\s+)?từ\s+(?:đỉnh\s+)?(?P<p>[A-Z][0-9]*'?)\s+{_PERP_PAIRWISE}",
+                           re.UNICODE),
+        repl=_repl_edges_from, steps=steps, skip_if_cond_or_neg=True, scope="LOCAL_ENTITY",
+        evidence="three_edges_from_one_vertex_of_the_declared_tetrahedron")
+
+    # VN12b "các góc XPY, YPZ, ZPX (đều) (là góc) vuông" — three angles at P covering the three pairs of {X, Y, Z}
+    def _repl_right_angles(m: re.Match[str]) -> str:
+        angs = re.findall(r"([A-Z])([A-Z])([A-Z])", m["angs"])
+        if len(angs) != 3 or len({a[1] for a in angs}) != 1:
+            return m.group(0)
+        p = angs[0][1]
+        pairs = {frozenset((a[0], a[2])) for a in angs}
+        legs = sorted({x for pr in pairs for x in pr})
+        if len(pairs) != 3 or len(legs) != 3 or p in legs:
+            return m.group(0)
+        return f"{p}{legs[0]}, {p}{legs[1]}, {p}{legs[2]} đôi một vuông góc"
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN12_THREE_RIGHT_ANGLES_AT_VERTEX",
+        pattern=re.compile(r"(?:các|ba)\s+góc\s+(?P<angs>[A-Z]{3}\s*,\s*[A-Z]{3}\s*,?\s*(?:và\s+)?[A-Z]{3})\s+"
+                           r"(?:đều\s+)?(?:là\s+)?(?:(?:các\s+)?góc\s+)?vuông(?![\w])", re.UNICODE),
+        repl=_repl_right_angles, steps=steps, skip_if_cond_or_neg=True, scope="LOCAL_ENTITY",
+        evidence="three_right_angles_at_one_vertex")
+
+    # VN13 one segment, two predicates (length and perpendicularity) — the SAME segment carries both
+    def _len_perp(seg: str, val: str, tgt: str) -> str:
+        return f"{seg} = {val} và {seg} vuông góc với {tgt}"
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN13_SEG_LENGTH_AND_PERP",
+        pattern=re.compile(rf"(?:cạnh\s+(?:bên\s+)?)?(?P<s>{_SEG})\s+(?:dài|có\s+độ\s+dài)\s+(?:bằng\s+|là\s+)?(?P<v>{_VAL})"
+                           rf"\s+và\s+vuông\s+góc\s+với\s+(?P<t>{_PERP_TARGET})", re.UNICODE),
+        repl=lambda m: _len_perp(m["s"], m["v"], m["t"]), steps=steps, skip_if_cond_or_neg=True,
+        scope="LOCAL_ENTITY", evidence="coordinated_predicates_of_one_segment")
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN13_SEG_PERP_AND_LENGTH",
+        pattern=re.compile(rf"(?:cạnh\s+(?:bên\s+)?)?(?P<s>{_SEG})\s+(?:vừa\s+)?vuông\s+góc\s+với\s+(?P<t>{_PERP_TARGET})"
+                           rf"\s*(?:,\s*)?(?:và|vừa|đồng\s+thời)\s+(?:có\s+)?(?:độ\s+dài|dài)\s+(?:bằng\s+|là\s+)?(?P<v>{_VAL})",
+                           re.UNICODE),
+        repl=lambda m: f"{m['s']} vuông góc với {m['t']} và {m['s']} = {m['v']}", steps=steps,
+        skip_if_cond_or_neg=True, scope="LOCAL_ENTITY", evidence="coordinated_predicates_of_one_segment")
+
+    def _repl_same_seg_eq(m: re.Match[str]) -> str:
+        if m["s"] != m["s2"]:
+            return m.group(0)
+        return f"{m['s']} vuông góc với {m['t']} và {m['s']} = {m['v']}"
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN13_SEG_PERP_DONG_THOI_EQ",
+        pattern=re.compile(rf"(?P<s>{_SEG})\s+vuông\s+góc\s+với\s+(?P<t>{_PERP_TARGET})\s*,\s*đồng\s+thời\s+"
+                           rf"(?P<s2>{_SEG})\s*=\s*(?P<v>{_VAL})", re.UNICODE),
+        repl=_repl_same_seg_eq, steps=steps, skip_if_cond_or_neg=True, scope="LOCAL_ENTITY",
+        evidence="coordinated_predicates_of_one_segment")
+
+    def _repl_altitude_named(m: re.Match[str]) -> str:
+        s2 = m.groupdict().get("s2")
+        if s2 is not None and s2 != m["s"]:
+            return m.group(0)
+        return f"đường cao {m['s']} = {m['v']}"
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN13_SEG_IS_ALTITUDE_WITH_LENGTH",
+        pattern=re.compile(rf"(?P<s>{_SEG})\s+là\s+(?:đường\s+cao|chiều\s+cao)\s*(?:(?:,\s*|\s+và\s+)(?P<s2>{_SEG})\s*=\s*"
+                           rf"|\s+(?:dài|có\s+độ\s+dài|bằng)\s+(?:là\s+)?)(?P<v>{_VAL})", re.UNICODE),
+        repl=_repl_altitude_named, steps=steps, skip_if_cond_or_neg=True, scope="LOCAL_ENTITY",
+        evidence="named_altitude_with_its_length")
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN13_ALTITUDE_IS_SEG_WITH_LENGTH",
+        pattern=re.compile(rf"đường\s+cao\s+(?:của\s+(?:hình|khối)\s+chóp\s+)?là\s+(?P<s>{_SEG})\s*(?:,\s*|\s+và\s+)"
+                           rf"(?P<s2>{_SEG})\s*=\s*(?P<v>{_VAL})", re.UNICODE),
+        repl=_repl_altitude_named, steps=steps, skip_if_cond_or_neg=True, scope="LOCAL_ENTITY",
+        evidence="named_altitude_with_its_length")
+
+    # VN13c "chiều cao (hình) chóp bằng V và chân đường cao trùng với (điểm) P" — apex of the ONE declared pyramid with P
+    def _repl_height_foot(m: re.Match[str]) -> str:
+        pyr = [x for x in re.findall(r"chóp\s+([A-Z][0-9]*'?)\.([A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,5})", text)
+               if m["p"] in re.findall(r"[A-Z][0-9]*'?", x[1])]
+        if len(pyr) != 1:
+            return m.group(0)
+        return f"đường cao {pyr[0][0]}{m['p']} = {m['v']}"
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN13_PYRAMID_HEIGHT_WITH_FOOT",
+        pattern=re.compile(rf"chiều\s+cao\s+(?:của\s+)?(?:(?:hình|khối)\s+)?chóp\s+(?:bằng|là)\s+(?P<v>{_VAL})\s+và\s+"
+                           r"chân\s+đường\s+cao\s+trùng\s+với\s+(?:điểm\s+)?(?P<p>[A-Z][0-9]*'?)(?![\w'])", re.UNICODE),
+        repl=_repl_height_foot, steps=steps, skip_if_cond_or_neg=True, scope="LOCAL_ENTITY",
+        evidence="pyramid_altitude_from_its_stated_foot")
+
+    # VN14 values distributed over a list, in order; unequal lengths ⇒ unchanged (never guessed)
+    def _assign(segs: list[str], vals: list[str]) -> str | None:
+        return ", ".join(f"{s} = {v}" for s, v in zip(segs, vals)) if len(segs) == len(vals) >= 2 else None
+
+    def _repl_respective(m: re.Match[str]) -> str:
+        segs, vals = _items(m["segs"], _SEG), _items(m["vals"], _VAL)
+        out = _assign(segs, vals)
+        if out is None:
+            return m.group(0)
+        if m.groupdict().get("legs"):
+            # "hai cạnh góc vuông X, Y" is dropped only when the text states the right angle at their common vertex
+            common = set(segs[0]) & set(segs[1]) if len(segs) == 2 else set()
+            if len(common) != 1 or not re.search(
+                    rf"vuông(?:\s+cân)?\s+(?:tại|ở)\s+{re.escape(next(iter(common)))}(?![\w'])", text):
+                return m.group(0)
+        mid = m.groupdict().get("mid")
+        return f"{m['segs']} đôi một vuông góc, {out}" if mid else out
+
+    resp = r"(?:lần\s+lượt|tương\s+ứng|theo\s+thứ\s+tự)"
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN14_RESPECTIVE_VALUES",
+        pattern=re.compile(
+            rf"(?:(?P<legs>hai\s+cạnh\s+góc\s+vuông)\s+|(?:độ\s+dài|các\s+cạnh|các\s+đoạn(?:\s+thẳng)?|ba\s+cạnh|hai\s+cạnh)\s+)?"
+            rf"(?P<segs>{_SEG_LIST}|{_SEG}(?:\s*,\s*{_SEG})+)"
+            rf"(?:\s+(?P<mid>{_PERP_PAIRWISE}))?\s*(?:,\s*|\s+và\s+)?(?:\s*có\s+)?"
+            rf"(?:\s*(?:độ\s+dài|dài))?\s*(?:{resp}\s+(?:là\s+|bằng\s+)?|(?:là|bằng)\s+{resp}\s+)"
+            rf"(?P<vals>{_VAL_LIST}|{_VAL}(?:\s*,\s*{_VAL})+)", re.UNICODE),
+        repl=_repl_respective, steps=steps, skip_if_cond_or_neg=True, scope="LOCAL_ENTITY_LIST",
+        evidence="ordered_list_value_alignment_with_equal_lengths")
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN14_LIST_LENGTHS_IN_ORDER",
+        pattern=re.compile(
+            rf"(?:(?P<legs>hai\s+cạnh\s+góc\s+vuông)\s+)?(?P<segs>{_SEG}(?:\s*,\s*|\s+và\s+){_SEG})\s+(?:dài|có\s+độ\s+dài)\s+"
+            rf"(?P<vals>{_VAL}(?:\s*,\s*|\s+và\s+){_VAL})(?![\w'])", re.UNICODE),
+        repl=_repl_respective, steps=steps, skip_if_cond_or_neg=True, scope="LOCAL_ENTITY_LIST",
+        evidence="two_segments_two_lengths_in_order")
+
+    # VN15 "chiều cao (của) (hình/khối) lăng trụ (đứng …) bằng/là/= V" → the form the parser reads
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN15_PRISM_HEIGHT_FORM",
+        pattern=re.compile(r"chiều\s+cao\s+(?:của\s+)?(?:(?:hình|khối)\s+)?lăng\s+trụ(?:\s+đứng)?"
+                           r"(?:\s+[A-Z][0-9]*'?(?:\.?[A-Z][0-9]*'?)+)?\s*(?:bằng|là|=)\s*(?=" + _VAL + ")", re.UNICODE),
+        repl="chiều cao của lăng trụ là ", steps=steps, skip_if_cond_or_neg=True, scope="LOCAL_ENTITY",
+        evidence="prism_height_surface_form")
+
+    # VN16 a sentence that is only a bare drawing request, when exactly one solid is declared
+    def _repl_bare_request(m: re.Match[str]) -> str:
+        return f"{m['pre']}Vẽ hình." if len(_declared_solids(text)) == 1 else m.group(0)
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN16_BARE_SIMULATION_REQUEST",
+        pattern=re.compile(r"(?P<pre>(?:^|(?<=[.!?;])\s*))(?:em\s+)?(?:hãy\s+)?(?:mô\s+phỏng|dựng(?:\s+hình)?|vẽ(?:\s+hình)?)"
+                           r"(?:\s+(?:giúp|cho)\s+(?:em|mình|tôi))?(?:\s+theo\s+(?:lời\s+)?đề(?:\s+bài)?)?"
+                           r"(?:\s+(?:nhé|nha|ạ|với))?\s*[.!]?\s*$", re.IGNORECASE | re.UNICODE | re.MULTILINE),
+        repl=_repl_bare_request, steps=steps, skip_if_cond_or_neg=True, scope="REQUEST",
+        evidence="bare_request_bound_to_the_only_declared_solid")
+
+    # VN17 a request whose object is followed by the solid and its premises → "Cho <solid> <lead> P. <request>."
+    def _repl_question_first(m: re.Match[str]) -> str:
+        if _YES_NO_RE.search(m.group(0)) or re.search(r"\bthay\s+đổi\b|\bbất\s+kì\b|\bbất\s+kỳ\b", m.group(0)):
+            return m.group(0)
+        req, obj, prep, solid, lead, prem = m["req"], m["obj"].strip(), m["prep"], m["solid"], m["lead"], m["prem"].strip()
+        asked = f"{obj} {solid}" if not prep else obj
+        req_c = req[0].upper() + req[1:]
+        return f"Cho {solid} {lead} {prem}. {req_c} {asked}."
+
+    cur, pos_map = _apply_safe_sub(
+        cur, norm0=norm0, pos_map=pos_map, rule_id="VN17_QUESTION_FIRST_WITH_PREMISES",
+        pattern=re.compile(
+            rf"(?:^|(?<=[.!?]\s))(?P<req>(?:(?:em\s+)?hãy\s+)?(?:tính|tìm|xác\s+định|cho\s+biết))\s+"
+            rf"(?P<obj>(?:thể\s+tích|diện\s+tích|độ\s+dài|khoảng\s+cách)[^.!?]*?)\s*,?\s*(?:(?P<prep>của|trong)\s+)?"
+            rf"(?P<solid>{_SOLID_PHRASE})\s*,?\s+(?P<lead>có|biết(?:\s+rằng)?|với)\s+(?P<prem>[^.!?]+?)\s*[.!]?\s*$",
+            re.IGNORECASE | re.UNICODE | re.MULTILINE),
+        repl=_repl_question_first, steps=steps, skip_if_cond_or_neg=True, scope="SENTENCE_ORDER",
+        evidence="question_first_sentence_reordered_premises_first")
+    return cur, pos_map
+
+
 def _apply_v3_pre_closure(
     cur: str,
     *,
@@ -296,6 +514,7 @@ def _apply_v3_pre_closure(
     steps: list[VerifiedNormalizationStep],
 ) -> tuple[str, list[int]]:
     """Pre-v2 AXO HYBRID /9 closure rules (`VN06`–`VN11`), strictly non-conditional & non-negated."""
+    cur, pos_map = _apply_v15_composition(cur, norm0=norm0, pos_map=pos_map, steps=steps)
     cur, pos_map = _apply_safe_sub(
         cur, norm0=norm0, pos_map=pos_map,
         rule_id="VN06_STRIP_COURTESY_HEADER_COLON",

@@ -198,3 +198,59 @@ def test_security_10_adversarial_and_failure_categories(monkeypatch):
     assert low_cube is not None and diag_cube["grounding_status"] == "GROUNDED_AND_LOWERED"
 
     assert LOCAL_SLM_EXTRACTOR_V9_VERSION == "local-slm-extractor/6"   # /12 compositional extraction & grounding
+
+
+# /15 composition rules (`VN12`–`VN17`, run `grounded-geometry-language-recovery`): each rewrite lands on a form the parser
+# and the Source Gate already verify; each rule has inputs where it must NOT fire. Labels/values are absent from Holdout-3.
+import pytest  # noqa: E402
+
+V15_REWRITES = [
+    ("VN12_EDGES_FROM_VERTEX_PAIRWISE_PERP", "Tứ diện IJKL có ba cạnh xuất phát từ I đôi một vuông góc, IJ = 2.", "IJ, IK, IL đôi một vuông góc"),
+    ("VN12_THREE_RIGHT_ANGLES_AT_VERTEX", "Vẽ tứ diện IJKL có các góc JIK, KIL, LIJ đều vuông, IJ = 2.", "IJ, IK, IL đôi một vuông góc"),
+    ("VN13_SEG_LENGTH_AND_PERP", "Cho hình chóp U.VWXY có đáy VWXY là hình vuông cạnh 3, cạnh UV dài 2 và vuông góc với đáy.", "UV = 2 và UV vuông góc với"),
+    ("VN13_SEG_PERP_AND_LENGTH", "Cho hình chóp U.VWXY có đáy VWXY là hình vuông cạnh 3, UV vừa vuông góc với đáy vừa có độ dài bằng 2.", "và UV = 2"),
+    ("VN13_SEG_PERP_DONG_THOI_EQ", "Cho hình chóp U.VWXY có đáy VWXY là hình vuông cạnh 3, UV vuông góc với đáy, đồng thời UV = 2.", "và UV = 2"),
+    ("VN13_SEG_IS_ALTITUDE_WITH_LENGTH", "Cho hình chóp U.VWXY có đáy VWXY là hình vuông cạnh 3, UV là đường cao dài 2a.", "đường cao UV = 2a"),
+    ("VN13_PYRAMID_HEIGHT_WITH_FOOT", "Cho hình chóp U.VWXY có đáy VWXY là hình vuông cạnh 3, chiều cao hình chóp bằng 2 và chân đường cao trùng với điểm W.", "đường cao UW = 2"),
+    ("VN14_RESPECTIVE_VALUES", "Cho tứ diện IJKL có IJ, IK, IL đôi một vuông góc, IK, IL, IJ lần lượt bằng 2, 3, 4.", "IK = 2, IL = 3, IJ = 4"),
+    ("VN14_RESPECTIVE_VALUES", "Cho tứ diện IJKL có IJ, IK, IL đôi một vuông góc và có độ dài tương ứng 2, 3 và 4.", "IJ = 2, IK = 3, IL = 4"),
+    ("VN14_LIST_LENGTHS_IN_ORDER", "Vẽ lăng trụ đứng GHI.JKL có đáy GHI vuông tại G, hai cạnh góc vuông GH, GI dài 2 và 5, GJ = 3.", "GH = 2, GI = 5"),
+    ("VN15_PRISM_HEIGHT_FORM", "Vẽ lăng trụ đứng GHI.JKL có đáy GHI vuông tại G, GH = 2, GI = 5, chiều cao lăng trụ bằng 3.", "chiều cao của lăng trụ là 3"),
+    ("VN16_BARE_SIMULATION_REQUEST", "Cho tứ diện IJKL có IJ, IK, IL đôi một vuông góc, IJ = 2, IK = 3, IL = 4. Mô phỏng giúp em.", "IL = 4. Vẽ hình."),
+    ("VN17_QUESTION_FIRST_WITH_PREMISES", "Tính độ dài JK của tứ diện IJKL biết IJ, IK, IL đôi một vuông góc, IJ = 2, IK = 3, IL = 4.", "Cho tứ diện IJKL biết IJ, IK, IL đôi một vuông góc, IJ = 2, IK = 3, IL = 4. Tính độ dài JK."),
+]
+
+
+@pytest.mark.parametrize("rule,src,canonical_part", V15_REWRITES, ids=[f"{r[0]}-{i}" for i, r in enumerate(V15_REWRITES)])
+def test_v15_composition_rule_rewrites_to_a_verified_form(rule, src, canonical_part):
+    out = normalize_for_slm_grounding(src, normalizer_version="v3")
+    applied = [s.rule_id for s in out.steps if s.validation_result == "VALIDATED_MEANING_PRESERVING"]
+    assert rule in applied, (applied, out.canonical_text)
+    assert canonical_part in out.canonical_text, out.canonical_text
+
+
+V15_NO_REWRITE = [
+    # list and values of unequal length are never aligned
+    ("VN14", "Cho tứ diện IJKL có IJ, IK, IL đôi một vuông góc, IJ, IK, IL lần lượt bằng 2 và 3."),
+    ("VN14", "Cho tứ diện IJKL có IJ, IK, IL đôi một vuông góc, độ dài IJ, IK lần lượt là 1, 2, 3."),
+    # the length and the perpendicularity belong to different segments
+    ("VN13", "Cho hình chóp U.VWXY có đáy VWXY là hình vuông cạnh 3, cạnh UV dài 2 và UW vuông góc với đáy."),
+    ("VN13", "Cho hình chóp U.VWXY có đáy VWXY là hình vuông cạnh 3, UV là đường cao và UW = 2."),
+    # two tetrahedra share the vertex; three angles that are not all at one vertex
+    ("VN12", "Cho tứ diện IJKL và tứ diện IMNP, ba cạnh xuất phát từ I đôi một vuông góc, IJ = 2."),
+    ("VN12", "Vẽ tứ diện IJKL có các góc JIK, KIL, JLI đều vuông, IJ = 2."),
+    # conditional or yes/no sentences
+    ("VN14", "Nếu IJ, IK, IL lần lượt bằng 2, 3, 4 thì vẽ tứ diện IJKL có IJ, IK, IL đôi một vuông góc."),
+    ("VN17", "Tính thể tích khối chóp U.VWXY khi UV thay đổi, biết đáy VWXY là hình vuông cạnh 3 và UV vuông góc với đáy."),
+    ("VN17", "Tính thể tích khối chóp U.VWXY có đáy VWXY là hình vuông cạnh 3, UV vuông góc với đáy và UV = 2 có phải không?"),
+    # a bare request with two declared solids, or a negated request
+    ("VN16", "Cho hình chóp U.VWXY và tứ diện IJKL, VW = 3, IJ = 2. Hãy mô phỏng."),
+    ("VN16", "Cho hình chóp U.VWXY có đáy VWXY là hình vuông cạnh 3, UV vuông góc với đáy và UV = 2. Đừng mô phỏng."),
+]
+
+
+@pytest.mark.parametrize("family,src", V15_NO_REWRITE, ids=[f"{r[0]}-{i}" for i, r in enumerate(V15_NO_REWRITE)])
+def test_v15_composition_rule_does_not_fire_without_its_precondition(family, src):
+    out = normalize_for_slm_grounding(src, normalizer_version="v3")
+    applied = [s.rule_id for s in out.steps if s.validation_result == "VALIDATED_MEANING_PRESERVING"]
+    assert not any(r.startswith(family) for r in applied), (applied, out.canonical_text)

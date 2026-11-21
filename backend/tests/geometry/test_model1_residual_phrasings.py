@@ -219,3 +219,72 @@ def test_v14_cache_policy_isolates_cache_153_rows():
 
     assert_cache_policy_at_least(154)
     assert_route_d_row_misses("153:route-d")
+
+
+# /15 (run `grounded-geometry-language-recovery`): families A–G read through the `VN12`–`VN17` normalizer rules; served
+# without the SLM and exact. Opposite cases must stay refused. Labels/values are absent from Holdout-1/2/3.
+CASES_15 = [
+    ("edges_from_vertex", "Tứ diện IJKL có ba cạnh xuất phát từ I đôi một vuông góc, IJ = 2, IK = 3, IL = 4. Tính thể tích khối tứ diện IJKL.", [4.0]),
+    ("three_right_angles", "Vẽ tứ diện IJKL có các góc JIK, KIL, LIJ đều vuông, IJ = 2, IK = 3, IL = 4.", None),
+    ("seg_length_and_perp", "Cho hình chóp U.VWXY có đáy VWXY là hình chữ nhật, VW = 3, VY = 5, cạnh UV dài 2 và vuông góc với đáy. Tính thể tích khối chóp.", [10.0]),
+    ("seg_is_altitude", "Cho hình chóp U.VWXY có đáy VWXY là hình chữ nhật, VW = 3, VY = 5, UV là đường cao và UV = 2. Vẽ hình.", None),
+    ("respective_swapped", "Cho tứ diện IJKL có IJ, IK, IL đôi một vuông góc, IK, IL, IJ lần lượt bằng 2, 3, 4. Tính độ dài JK.", [2 * math.sqrt(5)]),
+    ("legs_in_order", "Vẽ lăng trụ đứng GHI.JKL có đáy GHI vuông tại G, hai cạnh góc vuông GH, GI dài 2 và 5, GJ = 3.", None),
+    ("prism_height_form", "Lăng trụ đứng GHI.JKL có đáy GHI vuông tại G, GH = 2, GI = 5, chiều cao lăng trụ bằng 3. Tính thể tích khối lăng trụ.", [15.0]),
+    ("bare_request", "Cho hình chóp U.VWXY có đáy VWXY là hình chữ nhật, VW = 3, VY = 5, UV vuông góc với đáy và UV = 2. Hãy mô phỏng.", None),
+    ("question_first_locative", "Tính diện tích tam giác IJK trong tứ diện IJKL có IJ, IK, IL đôi một vuông góc, IJ = 2, IK = 3, IL = 4.", [3.0]),
+]
+
+
+@pytest.mark.parametrize("name,text,gold", CASES_15, ids=[c[0] for c in CASES_15])
+def test_v15_family_is_served_exactly(name, text, gold, monkeypatch):
+    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    out = route_text_input_local_slm(text, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3", runtime=None,
+                                     allow_download=False, use_cache=False)
+    rd = out.response["route_d"]
+    assert out.status == "SERVED", (rd.get("refusal"), rd.get("reason_code"))
+    assert rd.get("extraction_mode") in ("LOCAL_DETERMINISTIC_PARSER", "LOCAL_PARSER_AFTER_V3_NORMALIZER")
+    if gold is not None:
+        num = scene_oracle.numeric(rd.get("answers"), rd.get("answer_exact"), gold)
+        assert num["status"] == "CORRECT", num
+    else:
+        assert not rd.get("answers")
+
+
+@pytest.mark.parametrize("text", [
+    "Cho tứ diện IJKL có IJ, IK, IL không đôi một vuông góc, IJ = 2, IK = 3, IL = 4. Vẽ hình.",
+    "Tính thể tích khối tứ diện IJKL có IJ, IK, IL không đôi một vuông góc, IJ = 2, IK = 3, IL = 4.",
+    "Cho tứ diện IJKL có IJ, IK, IL đôi một vuông góc, IJ, IK, IL lần lượt bằng 2 và 3. Vẽ hình.",
+    "Cho hình chóp U.VWXY có đáy VWXY là hình chữ nhật, VW = 3, VY = 5, cạnh UV dài 2 và UW vuông góc với đáy. Vẽ hình.",
+    "Tính diện tích tam giác ABC trong tứ diện IJKL có IJ, IK, IL đôi một vuông góc, IJ = 2, IK = 3, IL = 4.",
+    "Vẽ lăng trụ GHI.JKL có đáy GHI vuông tại G, GH = 2, GI = 5, chiều cao lăng trụ bằng 3.",
+])
+def test_v15_opposite_cases_stay_refused(text, monkeypatch):
+    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    out = route_text_input_local_slm(text, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3", runtime=None,
+                                     allow_download=False, use_cache=False)
+    assert out.status != "SERVED", out.response["route_d"].get("answers")
+
+
+@pytest.mark.parametrize("clause,negated", [
+    ("IJ, IK, IL không đôi một vuông góc", True),
+    ("SA không cùng vuông góc với đáy", True),
+    ("IJ, IK, IL đôi một vuông góc", False),
+    ("Không cần tính toán, IJ, IK, IL đôi một vuông góc", False),
+])
+def test_v15_source_gate_reads_negation_across_an_adverb(clause, negated):
+    """The Source Gate itself (not the parser or the SLM) refuses a negated relation quote — the /14 CACHE 154 product
+    served "IJ, IK, IL không đôi một vuông góc" as three right angles through a grounded AxoV9 lowering."""
+    from app.simulation.geometry_functions import registry
+
+    assert registry._phu_dinh(clause, 0, clause) is negated
+
+
+def test_v15_cache_policy_isolates_cache_154_rows():
+    """CACHE 154 could serve a negated pairwise perpendicularity; its rows are never reused under 155."""
+    from tests.cache_policy import assert_cache_policy_at_least, assert_route_d_row_misses
+
+    assert_cache_policy_at_least(155)
+    assert_route_d_row_misses("154:route-d")

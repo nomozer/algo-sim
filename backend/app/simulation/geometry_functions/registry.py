@@ -1224,7 +1224,11 @@ _MUC_TIEU = ("chứng minh", "cmr", "chứng tỏ", "chỉ ra", "giải thích",
              "kiểm tra", "suy ra", "xác minh", "vì sao", "tại sao", "lập luận")
 #: Không khẳng định (S1, nhóm A): phủ định mạnh, tình thái, phủ định mệnh đề — đọc trong quote và phần trước nó của mệnh đề.
 _KHONG_KHANG_DINH = re.compile(r"(?<!\w)(?:không hề|chẳng|không nhất thiết|không đúng là|có thể(?!\s+tích)"
-                               r"|không bao giờ|không thể|chưa|không còn|đâu có)(?!\w)",
+                               r"|không bao giờ|không thể|chưa|không còn|đâu có)(?!\w)"
+                               # /15: "không" before a relation with an adverb in between ("IJ, IK, IL không đôi một vuông
+                               # góc", "không cùng vuông góc với đáy") negates it exactly like "không vuông góc"
+                               r"|(?<!\w)không\s+(?:(?:đôi\s+một|từng\s+đôi(?:\s+một)?|cùng|hoàn\s+toàn|hẳn)\s+)+"
+                               r"(?:vuông\s+góc|⊥|song\s+song|∥|bằng|cắt|đi\s+qua|qua|nằm|thuộc)(?!\w)",
                                re.IGNORECASE)
 #: Tuyển ("… hoặc …"): một vế của phép tuyển không phải dữ kiện — đọc trong CẢ mệnh đề.
 _TUYEN = re.compile(r"(?<!\w)hoặc(?!\w)", re.IGNORECASE)

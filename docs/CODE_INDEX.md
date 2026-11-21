@@ -1,5 +1,12 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Grounded geometry language recovery (AXO HYBRID /15, 2026-11-21)
+
+| Hạng mục / Vai trò | Đường dẫn |
+|---|---|
+| Luật thành phần `VN12`–`VN17` (`_apply_v15_composition`, gọi đầu `_apply_v3_pre_closure`): viết lại span-audited về dạng parser + Source Gate đã kiểm chứng — `VN12` vuông góc từng đôi từ một đỉnh / ba góc vuông tại một đỉnh, `VN13` một đoạn hai vị ngữ & đường cao có tên & chân đường cao, `VN14` giá trị lần lượt (lệch số lượng ⇒ giữ nguyên), `VN15` chiều cao lăng trụ, `VN16` yêu cầu vẽ trần khi chỉ một khối, `VN17` câu hỏi đứng trước dữ kiện; guard điều kiện / phủ định / câu có-không | `backend/app/ai/slm_verified_normalizer.py` · kiểm: `backend/tests/geometry/test_slm_v9_language_closure_and_security.py`, `backend/tests/geometry/test_model1_residual_phrasings.py` |
+| Source Gate `_KHONG_KHANG_DINH` đọc `không (đôi một / từng đôi / cùng / hoàn toàn / hẳn) <quan hệ>` là phủ định (CACHE 154 từng phục vụ "không đôi một vuông góc" thành ba góc vuông qua bản hạ AxoV9) — `CACHE_VERSION` 154 → 155 | `backend/app/simulation/geometry_functions/registry.py`, `backend/app/main.py` · kiểm: `backend/tests/geometry/test_model1_residual_phrasings.py` |
+
 ## Local Model 1 recovery takeover (AXO HYBRID /14, 2026-11-21)
 
 | Hạng mục / Vai trò | Đường dẫn |
