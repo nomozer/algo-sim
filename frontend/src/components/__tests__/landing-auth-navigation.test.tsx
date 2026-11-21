@@ -12,9 +12,11 @@ import { historyStore } from "../../state/history";
 import { useAppStore } from "../../state/store";
 import { LandingHeader } from "../landing/LandingHeader";
 import {
+  AXO_INTENDED_DESTINATION_KEY,
   applyIntendedDestination,
   clearIntendedDestination,
   enterAxoWorkspace,
+  peekIntendedDestination,
 } from "../landing/landing-geometry-data";
 
 const USERS: Record<"student" | "teacher" | "admin", AuthUser> = {
@@ -73,7 +75,7 @@ function makeMemoryStorage(): Storage {
   };
 }
 
-describe("AXO Landing V1.2.2 — Auth & Navigation Streamlining", () => {
+describe("AXO Landing — Auth & Navigation Streamlining", () => {
   const origWindow = (globalThis as { window?: unknown }).window;
 
   beforeEach(() => {
@@ -99,15 +101,16 @@ describe("AXO Landing V1.2.2 — Auth & Navigation Streamlining", () => {
     syncStoresForSSR();
   });
 
-  it("removes standalone Guest login actions from Header & Drawer source and keeps essential Guest links", () => {
+  it("removes standalone Guest login actions from Header & Drawer and renders 3 post-Hero nav items + primary CTA", () => {
     useAuthStore.setState({ user: null, resolved: true, error: null });
     syncStoresForSSR();
 
     const html = renderToString(<LandingHeader />);
     expect(html).toContain('id="btn-landing-logo"');
-    expect(html).toContain("Giới thiệu");
+    expect(html).toContain("Về Axo");
     expect(html).toContain("Cách hoạt động");
-    expect(html).toContain("Trải nghiệm");
+    expect(html).toContain("Bài mẫu");
+    expect(html).not.toContain("Tổng quan");
     expect(html).toContain('id="btn-landing-header-library"');
     expect(html).toContain("Thư viện");
     expect(html).toContain('id="btn-landing-header-start"');
@@ -134,8 +137,10 @@ describe("AXO Landing V1.2.2 — Auth & Navigation Streamlining", () => {
       syncStoresForSSR();
 
       const html = renderToString(<LandingHeader />);
-      expect(html).toContain('id="header-user-actions"');
-      expect(html).toContain(user.displayName);
+      expect(html).not.toContain('id="header-user-actions"');
+      expect(html).not.toContain(user.displayName);
+      expect(html).toContain('id="btn-landing-header-library"');
+      expect(html).toContain("Thư viện");
       expect(html).toContain("Vào ứng dụng");
 
       enterAxoWorkspace();
@@ -163,7 +168,6 @@ describe("AXO Landing V1.2.2 — Auth & Navigation Streamlining", () => {
     expect(guestLanding).toContain('id="view-landing"');
     expect(guestLanding).toContain("Bắt đầu dựng hình");
 
-    // Cross-tab login updates session cleanly while preserving location key
     vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
       new Response(JSON.stringify({ user: USERS.teacher }), {
         status: 200,
@@ -175,13 +179,32 @@ describe("AXO Landing V1.2.2 — Auth & Navigation Streamlining", () => {
     expect(useAuthStore.getState().user?.email).toBe(USERS.teacher.email);
 
     const authedLanding = renderToString(<App />);
+    const authedHeader = authedLanding.slice(
+      authedLanding.indexOf('<header id="landing-header"'),
+      authedLanding.indexOf("</header>") + "</header>".length,
+    );
     expect(authedLanding).toContain('id="view-landing"');
-    expect(authedLanding).toContain("Vào ứng dụng");
-    expect(authedLanding).toContain(USERS.teacher.displayName);
+    expect(authedHeader).toContain("Vào ứng dụng");
+    expect(authedHeader).not.toContain('id="header-user-actions"');
+    expect(authedHeader).not.toContain(USERS.teacher.displayName);
     expect(AXO_AUTH_SYNC_STORAGE_KEY).toBe("axo_auth_sync_v1");
   });
 
-  it("restores saved draft from historyStore after cold reload across enterAxoWorkspace and applyIntendedDestination", () => {
+  it("rejects tampered or external-URL intendedDestination payloads to prevent open redirects", () => {
+    window.sessionStorage.setItem(
+      AXO_INTENDED_DESTINATION_KEY,
+      JSON.stringify({ kind: "external", sampleId: "https://evil.example/phish", createdAt: Date.now() }),
+    );
+    expect(peekIntendedDestination()).toBeNull();
+
+    window.sessionStorage.setItem(
+      AXO_INTENDED_DESTINATION_KEY,
+      JSON.stringify({ kind: "sample", sampleId: "https://evil.example/x", createdAt: Date.now() }),
+    );
+    expect(peekIntendedDestination()).toBeNull();
+  });
+
+  it("routes unauthenticated Landing entry to /login and restores saved draft from historyStore after auth across applyIntendedDestination and enterAxoWorkspace", () => {
     const draft = "Cho hinh chop S.ABCD day hinh thang";
     historyStore.writeDraftText(draft);
     useAppStore.setState({ problemText: "", view: "landing" });
@@ -196,13 +219,20 @@ describe("AXO Landing V1.2.2 — Auth & Navigation Streamlining", () => {
     });
 
     enterAxoWorkspace();
-    expect(useAppStore.getState().view).toBe("home");
-    expect(useAppStore.getState().problemText).toBe(draft);
+    expect(useAppStore.getState().view).toBe("login");
+    expect(useAppStore.getState().guestEnteredApp).toBe(false);
 
     useAppStore.setState({ problemText: "", view: "login" });
     expect(
       applyIntendedDestination({ kind: "home", createdAt: Date.now() }, USERS.student),
     ).toBe(true);
+    expect(useAppStore.getState().view).toBe("home");
+    expect(useAppStore.getState().guestEnteredApp).toBe(true);
+    expect(useAppStore.getState().problemText).toBe(draft);
+
+    useAuthStore.setState({ user: USERS.student, resolved: true });
+    useAppStore.setState({ problemText: "", view: "landing" });
+    enterAxoWorkspace();
     expect(useAppStore.getState().view).toBe("home");
     expect(useAppStore.getState().problemText).toBe(draft);
 

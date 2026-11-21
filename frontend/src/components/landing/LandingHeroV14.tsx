@@ -30,23 +30,15 @@ export function LandingHeroV14() {
     };
   }, []);
 
-  useEffect(() => {
-    return () => {
-      if (rafRef.current !== null && typeof cancelAnimationFrame === "function") {
-        cancelAnimationFrame(rafRef.current);
-      }
-    };
-  }, []);
-
   const applyParallax = useCallback((nx: number, ny: number) => {
     if (dioramaLayerRef.current) {
-      dioramaLayerRef.current.style.transform = `translate3d(${(nx * 5).toFixed(2)}px, ${(ny * 4).toFixed(2)}px, 0)`;
+      dioramaLayerRef.current.style.transform = `translate3d(${(nx * 3.5).toFixed(2)}px, ${(ny * 2.5).toFixed(2)}px, 0)`;
     }
     if (planeLayerRef.current) {
-      planeLayerRef.current.style.transform = `translate3d(${(nx * 10).toFixed(2)}px, ${(ny * 8).toFixed(2)}px, 0)`;
+      planeLayerRef.current.style.transform = `translate3d(${(nx * 6.5).toFixed(2)}px, ${(ny * 5).toFixed(2)}px, 0)`;
     }
     if (orbitLayerRef.current) {
-      orbitLayerRef.current.style.transform = `translate3d(${(nx * -8).toFixed(2)}px, ${(ny * 6).toFixed(2)}px, 0)`;
+      orbitLayerRef.current.style.transform = `translate3d(${(nx * -5.5).toFixed(2)}px, ${(ny * 4).toFixed(2)}px, 0)`;
     }
   }, []);
 
@@ -67,6 +59,18 @@ export function LandingHeroV14() {
     }
   }, [reducedMotion, resetParallax]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.addEventListener("blur", resetParallax);
+    return () => {
+      window.removeEventListener("blur", resetParallax);
+      if (rafRef.current !== null && typeof cancelAnimationFrame === "function") {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    };
+  }, [resetParallax]);
+
   const handlePointerMove = useCallback(
     (e: ReactPointerEvent<HTMLDivElement>) => {
       if (reducedMotion || e.pointerType === "touch") return;
@@ -77,8 +81,13 @@ export function LandingHeroV14() {
       stage.setAttribute("data-pointer-active", "true");
       const nx = Math.max(-1, Math.min(1, ((e.clientX - rect.left) / rect.width) * 2 - 1));
       const ny = Math.max(-1, Math.min(1, ((e.clientY - rect.top) / rect.height) * 2 - 1));
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() => applyParallax(nx, ny));
+      if (rafRef.current !== null && typeof cancelAnimationFrame === "function") {
+        cancelAnimationFrame(rafRef.current);
+      }
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        applyParallax(nx, ny);
+      });
     },
     [applyParallax, reducedMotion],
   );
@@ -87,9 +96,9 @@ export function LandingHeroV14() {
     resetParallax();
   }, [resetParallax]);
 
-  const handleStoryScroll = useCallback(
+  const handleAboutScroll = useCallback(
     (e: ReactMouseEvent<HTMLAnchorElement>) => {
-      const target = document.getElementById("cach-hoat-dong");
+      const target = document.getElementById("about-axo");
       if (!target) return;
       e.preventDefault();
       const isReduced =
@@ -134,8 +143,8 @@ export function LandingHeroV14() {
 
         <div className="axo-v14-hero-atelier-body">
           <p className="axo-v14-hero-atelier-lead">
-            Nhập đề bài tiếng Việt để quan sát khối đa diện 3D chính xác, mặt
-            phẳng cắt và từng đường giao tuyến ngay trong không gian trực quan.
+            Mô hình hóa bài toán tiếng Việt thành không gian 3D trực quan, giúp
+            bạn dựng hình, xoay góc nhìn và quan sát từng mặt cắt rõ ràng.
           </p>
           <div className="axo-v14-hero-actions axo-v14-hero-atelier-actions">
             <button
@@ -147,12 +156,12 @@ export function LandingHeroV14() {
               {user ? "Vào ứng dụng" : "Bắt đầu dựng hình"}
             </button>
             <a
-              id="btn-landing-hero-story"
-              href="#cach-hoat-dong"
+              id="btn-landing-hero-about"
+              href="#about-axo"
               className="axo-v14-btn axo-v14-btn-secondary"
-              onClick={handleStoryScroll}
+              onClick={handleAboutScroll}
             >
-              Xem cách hoạt động
+              Tìm hiểu về Axo
             </a>
           </div>
         </div>
@@ -164,6 +173,7 @@ export function LandingHeroV14() {
           data-hero-mode="atelier-studio-diorama"
           onPointerMove={handlePointerMove}
           onPointerLeave={handlePointerLeave}
+          onPointerCancel={handlePointerLeave}
         >
           <div
             ref={orbitLayerRef}
@@ -184,12 +194,13 @@ export function LandingHeroV14() {
           <div
             ref={dioramaLayerRef}
             className="axo-v14-hero-atelier-layer axo-v14-hero-atelier-diorama"
+            aria-hidden="true"
           >
             <img
               src="/assets/landing/hero-studio/hero-studio-diorama.png"
               width={963}
               height={824}
-              alt="Tổ hợp mô hình Bàn Dựng Hình Không Gian Axo gồm khối đa diện thạch cao trắng và gỗ sồi bị cắt bởi mặt phẳng xanh lam, kèm thẻ phác thảo, thước ê-ke và com-pa"
+              alt=""
               decoding="async"
               draggable={false}
               className="axo-v14-hero-atelier-img axo-v14-hero-atelier-img-main"
