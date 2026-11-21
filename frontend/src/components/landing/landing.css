@@ -2539,12 +2539,6 @@
   text-anchor: middle;
 }
 
-@media (max-width: 1024px) {
-  .axo-v14-closing-copy {
-    max-width: 100%;
-  }
-}
-
 @media (max-width: 680px) {
   .axo-v14-hero-actions {
     flex-direction: column;
@@ -2574,11 +2568,11 @@
 .axo-v14-story {
   background-color: var(--axo-sp-paper);
   scroll-margin-top: 76px;
-  padding: clamp(48px, 5.2vw, 68px) clamp(20px, 4vw, 48px);
+  padding: clamp(48px, 5.2vw, 68px) var(--axo-v14-gutter, clamp(20px, 4vw, 48px));
 }
 
 .axo-v14-story-shell {
-  max-width: 1240px;
+  max-width: var(--axo-v14-content-max, 1240px);
   margin: 0 auto;
 }
 
@@ -2953,7 +2947,7 @@
 
 @media (max-width: 920px) {
   .axo-v14-story {
-    padding: 26px 20px;
+    padding-block: 26px;
   }
 
   .axo-v14-story-runway {
@@ -3103,6 +3097,9 @@
 
 /* ══ AXO LANDING V1.4 — INTERACTIVE DEMO, CLOSING & FOOTER ═════════════════════════════════════ */
 .axo-v14-root {
+  --axo-v14-content-max: 1240px;
+  --axo-v14-gutter: clamp(20px, 4vw, 48px);
+  --axo-v14-container-max: calc(var(--axo-v14-content-max) + 2 * var(--axo-v14-gutter));
   --axo-sp-closing-panel: var(--axo-sp-accent-tint);
   background-color: var(--axo-sp-bg);
 }
@@ -3114,7 +3111,9 @@
 }
 
 .axo-v14-root .axo-sp-header-inner {
-  max-width: 1240px;
+  box-sizing: border-box;
+  max-width: var(--axo-v14-container-max);
+  padding-inline: var(--axo-v14-gutter);
 }
 
 .axo-v14-root .axo-sp-nav.is-v14 {
@@ -3267,11 +3266,11 @@
 .axo-sp-demo-section.is-v14 {
   background-color: var(--axo-sp-bg);
   scroll-margin-top: 76px;
-  padding: clamp(52px, 6.2vw, 84px) clamp(20px, 4vw, 48px);
+  padding: clamp(52px, 6.2vw, 84px) var(--axo-v14-gutter, clamp(20px, 4vw, 48px));
 }
 
 .axo-sp-demo-section.is-v14 .axo-sp-container {
-  max-width: 1240px;
+  max-width: var(--axo-v14-content-max, 1240px);
   padding-inline: 0;
 }
 
@@ -3547,7 +3546,10 @@
 .axo-v14-closing {
   background-color: var(--axo-sp-paper);
   scroll-margin-top: 72px;
-  padding: clamp(44px, 5.2vw, 68px) clamp(20px, 4vw, 48px) clamp(20px, 2.4vw, 28px);
+  padding:
+    clamp(44px, 5.2vw, 68px)
+    var(--axo-v14-gutter, clamp(20px, 4vw, 48px))
+    clamp(20px, 2.4vw, 28px);
 }
 
 .axo-v14-closing .axo-v14-btn-secondary {
@@ -3563,7 +3565,7 @@
 }
 
 .axo-v14-closing-shell {
-  max-width: 1240px;
+  max-width: var(--axo-v14-content-max, 1240px);
   margin: 0 auto;
   border-radius: 32px;
   background-color: var(--axo-sp-closing-panel);
@@ -3652,11 +3654,11 @@
 
 .axo-v14-footer {
   background-color: var(--axo-sp-paper);
-  padding: 0 clamp(20px, 4vw, 48px) clamp(26px, 3.2vw, 38px);
+  padding: 0 var(--axo-v14-gutter, clamp(20px, 4vw, 48px)) clamp(26px, 3.2vw, 38px);
 }
 
 .axo-v14-footer-shell {
-  max-width: 1240px;
+  max-width: var(--axo-v14-content-max, 1240px);
   margin: 0 auto;
   border-top: 0;
   padding-top: 6px;
@@ -3812,7 +3814,7 @@
 
 @media (max-width: 920px) {
   .axo-sp-demo-section.is-v14 {
-    padding: 44px 20px;
+    padding-block: 44px;
   }
 
   .axo-sp-demo-workbench.is-v14 {
@@ -3836,7 +3838,7 @@
   }
 
   .axo-v14-closing {
-    padding: 36px 20px 20px;
+    padding-block: 36px 20px;
   }
 
   .axo-v14-closing-shell {
@@ -3892,10 +3894,6 @@
     font-size: 0.8125rem;
   }
 
-  .axo-sp-demo-workbench.is-v14 {
-    padding: 0;
-  }
-
   .axo-sp-demo-workbench.is-v14 .axo-sp-demo-canvas-wrap {
     border-radius: 20px;
   }
@@ -3909,16 +3907,15 @@
   }
 
   .axo-v14-closing {
-    padding: 32px 16px 18px;
+    padding-block: 32px 18px;
   }
 
   .axo-v14-closing-shell {
-    border-radius: 24px;
     padding: 24px 18px;
   }
 
   .axo-v14-footer {
-    padding: 0 20px 24px;
+    padding-bottom: 24px;
   }
 
   .axo-v14-footer-shell {
@@ -3996,10 +3993,10 @@
 .axo-v14-hero-atelier-grid {
   box-sizing: border-box;
   width: 100%;
-  max-width: 1336px;
+  max-width: var(--axo-v14-container-max, 1336px);
   min-height: clamp(560px, calc(100svh - 148px), 740px);
   margin: 0 auto;
-  padding-inline: clamp(20px, 4vw, 48px);
+  padding-inline: var(--axo-v14-gutter, clamp(20px, 4vw, 48px));
   display: grid;
   grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr);
   grid-template-rows: 1.04fr auto auto 0.96fr;
