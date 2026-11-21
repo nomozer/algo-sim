@@ -1,3 +1,18 @@
+## WAVE_ID = AXO_HYBRID_SEMANTIC_GROUNDING_SLM_RECOVERY
+
+- `RUN_ID` = semantic-grounding-slm-recovery
+- `REPORT` = docs/evaluation/geometry/runs/semantic-grounding-slm-recovery/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/semantic-grounding-slm-recovery
+- `START_BASE` = c4ae9dd1f
+- `CODE_COMMIT` = 4c1b94b61 (freeze 39c95599e, Full T3 d27b78de5, live Holdout-6/SLM-Ind-3 b28783e31, tree `3152f3829fbe…`, 127 files, CACHE_VERSION=157)
+- `CLASSIFICATION` = SEMANTIC_REWRITE_SAFETY_AUDIT + SLM_ROOT_CAUSE_ABLATION + FULL_T3_PASS + UNEXPOSED_TEXT_ACCEPTANCE + INDEPENDENT_SLM_AUDIT
+- `PRODUCT_CHANGE` = YES (`registry.py` Layer 2 Source Gate `_KHONG_KHANG_DINH` / `_HOI_QUAN_HE` / `_kiem_mat_chung` / `_kiem_vung_tien_de`; `main.py` `CACHE_VERSION 157`; default `HYBRID_ROUTE_MODE = live` preserved)
+- `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) + `llama.cpp b12470` only
+- `CORRECTS` = AXO_HYBRID_GROUNDED_GEOMETRY_LANGUAGE_RECOVERY (VERDICT_RECONCILIATION_V15.json documents /15 report vs run.json summarize_c154.py mismatch without modifying /15 files; /15 REGISTERED_SLM_SCORE_V15 = 5/38 FAIL preserved untouched)
+- `CORRECTED_BY` = NONE
+- `VERIFICATION` = holdout-6/ (`ACCEPTANCE_MANIFEST.json`, `SLM_INDEPENDENT_MANIFEST.json`, `ACCEPTANCE_CRITERIA.json`, `ACCEPTANCE_FREEZE.json`, `CANDIDATE_FREEZE.json`, `build_holdout.py`; 0 overlaps vs 29,423 prior strings); `FULL_T3_RECEIPT.json` (`15162` pytest / `2345` Vitest PASS); `LIVE_TEXT_ACCEPTANCE_RESULTS.json` (`64/72=0.8889`, `23/31=0.7419` fallback, `11/12` targets, `26/26` neg, `10/10` UI); `SLM_CAPABILITY_AUDIT.json` (`21/30=0.7000`, `10/10` neg, `gate_pass=true`); `SEMANTIC_REWRITE_SAFETY_AUDIT.json` (`94` rules); `SLM_ROOT_CAUSE_ABLATION.json` (`RETAIN_AXOV9_NO_FINETUNE_NEEDED`); `LANGUAGE_GAP_RECOVERY.json`; `run.json`
+- `LIMITATIONS` = Holdout-6 synthetic prose (`EXTERNAL_INDEPENDENCE = NOT_MEASURED`); measured on detached HEADs inside reused shared worktree (`AUTHORITATIVE_DETACHED_COMPLIANCE = NOT_VERIFIED`); Candidate 156 Holdout-4/T3 fail & Candidate 157 Holdout-5 generator bugs retired per §17 disclosed with 0 score transfer; OCR/Vision postponed (`LOCAL_VISION_REPLACEMENT_VERIFIED = false`, `FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED = false`, `MAIN_MERGE_READY = false`).
+
 ## WAVE_ID = AXO_HYBRID_GROUNDED_GEOMETRY_LANGUAGE_RECOVERY
 
 - `RUN_ID` = grounded-geometry-language-recovery
@@ -9,7 +24,7 @@
 - `PRODUCT_CHANGE` = YES (`slm_verified_normalizer.py` `VN12`–`VN17`, `registry.py` `_KHONG_KHANG_DINH`, `main.py` `CACHE_VERSION 155`; default `HYBRID_ROUTE_MODE = live` preserved)
 - `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) only
 - `CORRECTS` = AXO_HYBRID_LOCAL_MODEL1_RECOVERY_OFFLINE_VISION (FIRST_FAILING_LAYER_AUDIT.json described its route replay as `runtime=None`, 0 model calls; the process-wide AxoV9 runtime answered parser-incomplete cases. Served cases named deterministic stand.)
-- `CORRECTED_BY` = NONE
+- `CORRECTED_BY` = AXO_HYBRID_SEMANTIC_GROUNDING_SLM_RECOVERY (VERDICT_RECONCILIATION_V15.json)
 - `VERIFICATION` = holdout-3/ (MANIFEST `a8427fcf…`, CRITERIA, ACCEPTANCE_FREEZE, CANDIDATE_FREEZE, ORACLE_REVIEW, PROVENANCE); LANGUAGE_RECOVERY_AUDIT.json; LIVE_TEXT_ACCEPTANCE_RESULTS.json; SLM_CONTRIBUTION_AUDIT.json; MODEL1_TEXT_ROLE_MATRIX.json; FULL_T3_CACHE155_RECEIPT.json (PASS); run.json
 - `LIMITATIONS` = Holdout-3 agent-authored by the agent that fixes the product and aimed at known phrase families (`EXTERNAL_INDEPENDENCE = NOT_MEASURED`); text `58/66 = 0.879`; SLM gate `5/38` FAIL; measured in the shared worktree on a clean tracked tree, not a detached worktree; OCR/Vision postponed; `LOCAL_TEXT_MODEL1_VERIFIED / FULL_GEMINI_ROLE_REPLACEMENT_VERIFIED / MAIN_MERGE_READY = FALSE`.
 

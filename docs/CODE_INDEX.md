@@ -1,5 +1,12 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Semantic grounding integrity & SLM recovery (AXO HYBRID /16, 2026-11-21)
+
+- **Layer 2 Source Gate & rewrite safety hardening:** `backend/app/simulation/geometry_functions/registry.py` (`_KHONG_KHANG_DINH` removes `|đừng|chớ`, `_HOI_QUAN_HE` `?`-scopes `liệu`, `_kiem_mat_chung` emits `AMBIGUOUS_REFERENCE` for `ambiguous_base` before `SOURCE_OBJECT_MISMATCH`, `_kiem_vung_tien_de` owns `"trong không gian,"` lead strip) — audited in `docs/evaluation/geometry/runs/semantic-grounding-slm-recovery/SEMANTIC_REWRITE_SAFETY_AUDIT.json` (`94` rules: `5 SAFE_EQUIVALENT`, `89 GUARDED_EQUIVALENT`; `0` `app.ai` imports in `engine.py`/`registry.py`).
+- **Candidate 157 cache isolation & identity lock:** `backend/app/main.py` (`CACHE_VERSION = "157"`), `backend/cache_identity.lock.json`, `backend/tests/geometry/test_model1_residual_phrasings.py` (`test_cache_157_policy_isolates_cache_156_rows`), `docs/evaluation/geometry/runs/semantic-grounding-slm-recovery/refreeze-157/pending_template_refresh.json`.
+- **Text acceptance & independent SLM evaluation harnesses:** `backend/scripts/evaluate_live_text_acceptance.py` (separates `END_TO_END_SYSTEM_SCORE`, `CANDIDATE_FALLBACK_SCORE`, `INDEPENDENT_SLM_SCORE`, `LEGACY_BASELINE_STRATUM_SCORE`), `backend/scripts/evaluate_slm_independent_capability.py` (isolated AxoV9 audit with `allow_parser_reconcile=false`), and `docs/evaluation/geometry/runs/semantic-grounding-slm-recovery/holdout-6/build_holdout.py` (`_cross_check_prose()` generator witness checks + zero-overlap dedup vs `29,423` prior strings).
+- **Campaign /16 deliverables & disclosed receipts:** `docs/evaluation/geometry/runs/semantic-grounding-slm-recovery/` (`FINAL_MASTER_REPORT.md`, `run.json`, `VERDICT_RECONCILIATION_V15.json`, `SLM_ROOT_CAUSE_ABLATION.json`, `LANGUAGE_GAP_RECOVERY.json`, `FULL_T3_RECEIPT.json`, `LIVE_TEXT_ACCEPTANCE_RESULTS.json`, `SLM_CAPABILITY_AUDIT.json`, `ACCEPTANCE_FREEZE.json`, `holdout-4/`, `holdout-5/`, `holdout-6/`).
+
 ## Grounded geometry language recovery (AXO HYBRID /15, 2026-11-21)
 
 | Hạng mục / Vai trò | Đường dẫn |
