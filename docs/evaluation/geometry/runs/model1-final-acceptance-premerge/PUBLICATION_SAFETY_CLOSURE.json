@@ -1,0 +1,69 @@
+{
+  "schema": "axo-publication-safety-closure/1",
+  "run_id": "model1-final-acceptance-premerge",
+  "date": "2026-11-21",
+  "detector": "backend/scripts/check_publication_safety.py (unchanged; rules PY_TRACEBACK, GOOGLE_API_KEY, OPENAI_KEY, ANTHROPIC_KEY, GITHUB_TOKEN, AWS_ACCESS_KEY, SLACK_TOKEN, PRIVATE_KEY, BEARER_TOKEN, HARDCODED_PASSWORD, SECRET_ASSIGNMENT)",
+  "register": "docs/evaluation/geometry/runs/publication-safety-remediation/publication_exceptions.json (30 entries: 27 PENDING_OWNER_DECISION, 3 APPROVED_BY_USER; not modified by this run)",
+  "scans": {
+    "main_head_bc6ff5e33": "scanned 31,197 · violations 96 · all covered by PENDING entries · BLOCKED",
+    "branch_head": "scanned 33,834 · violations 103 = the same 96 pending + 7 without an entry · BLOCKED",
+    "range_bc6ff5e33..HEAD": "scanned 4,419 new blobs + 401 commit messages · violations 12, 0 entries · BLOCKED · commit messages: 0 findings"
+  },
+  "MAIN_BASELINE_PUBLICATION_ISSUES": {
+    "count_hits": 96,
+    "count_path_blob_pairs": 17,
+    "by_rule": {"PY_TRACEBACK": 16, "BEARER_TOKEN": 1},
+    "classification": "16 HISTORICAL_ARTIFACT (raw Python tracebacks in pytest/gate logs of old runs, e.g. w20-cleanup-premerge, regular-square-pyramid-w01/w03); 1 SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER (docker-backend-dev-auto-refresh/SECRET_SCAN.json, already categorised in the register)",
+    "status": "PENDING_OWNER_DECISION — proposal HISTORICAL_TRACEBACK_EXCEPTION_PROPOSAL.md (run publication-safety-remediation)",
+    "introduced_by_this_branch": false
+  },
+  "BRANCH_INTRODUCED_PUBLICATION_ISSUES": {
+    "count_hits": 12,
+    "count_path_blob_pairs": 11,
+    "rule": "HARDCODED_PASSWORD",
+    "at_tip": 6,
+    "history_only": 5,
+    "files": [
+      "runs/axo-hybrid-local-only-3d-simulation-live-acceptance-cutover/tools/{live_browser_acceptance.mjs, ui_runtime_scenarios.mjs} (/10, tip)",
+      "runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/{live_browser_acceptance.mjs, ui_runtime_scenarios.mjs, v11_ui_scenarios.mjs, v17_pointer_probe.mjs} (/11, tip; v11_ui_scenarios.mjs also 2 older blobs)",
+      "runs/axo-hybrid-compositional-geometry-language-grounded-simulation/tools/{live_browser_acceptance_v12.mjs, v12_ui_scenarios.mjs} (/12, history only)",
+      "runs/semantic-to-scene3d-verified-simulation/tools/browser_simulation_e2e.mjs (history only)"
+    ],
+    "classification": "SYNTHETIC_TEST_PASSWORD in FROZEN historical run tools",
+    "proof_of_synthetic": {
+      "distinct_values": 3,
+      "values_shown": "never — only sha256 prefixes 05b82ef740cd7906, 1d6e65610b8cb77b, d045bf80d2679548 (lengths 18–19)",
+      "every_hit_is_the_password_field_of_a_POST /api/auth/register body": true,
+      "target": "the measured app on loopback (http://127.0.0.1:4173 preview / 127.0.0.1:8000), throwaway SQLite of the run",
+      "account_emails": "generated per run: …@example.com, …@algosim.test, …@example.invalid (reserved / non-routable domains)",
+      "compared_with_real_env_files": "NOT_CHECKED — reading backend/.env (real secrets) was refused by the session's permission policy; the owner can confirm the three values are not used for any real account"
+    },
+    "impact": "no credential to any real system is exposed; the gate still blocks because frozen evidence cannot be edited and only the owner can approve exceptions",
+    "proposal": "PUBLICATION_EXCEPTION_PROPOSAL.json — 11 entries keyed by (path, blob, sha256, rules), owner_decision PENDING_OWNER_DECISION",
+    "alternatives": [
+      "approve the 11 entries (minimal, exact; any byte change re-blocks)",
+      "squash-merge: the 5 history-only blobs never reach main; the 6 tip entries still need approval; squash loses commit identities cited by EVIDENCE_INDEX (needs archive refs, precedent refs/archive/evidence-index)",
+      "relocate/redact the tip tools — edits frozen evidence (forbidden for agents; owner decision) and does not remove the history-only blobs without history rewrite (forbidden)"
+    ]
+  },
+  "TRUE_SECRET_EXPOSURES": {
+    "found": 0,
+    "scope_of_claim": "the detector's regex set over every tracked blob at HEAD and every new blob + commit message in bc6ff5e33..HEAD; regex is a lower bound, not proof of absence"
+  },
+  "OWNER_EXCEPTION_PENDING": {
+    "main_baseline": "27 register entries already PENDING (covering the 96 main hits)",
+    "branch_introduced": "11 proposed entries (PUBLICATION_EXCEPTION_PROPOSAL.json)",
+    "owner_command_if_approved": [
+      "# PowerShell 7, run by the Owner after reading the proposal. Approves only entries whose blob bytes still hash to the recorded sha256.",
+      "$wt  = 'D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-intent-slm-recovery'",
+      "$prop = Get-Content \"$wt\\docs\\evaluation\\geometry\\runs\\model1-final-acceptance-premerge\\PUBLICATION_EXCEPTION_PROPOSAL.json\" -Raw | ConvertFrom-Json",
+      "$regP = \"$wt\\docs\\evaluation\\geometry\\runs\\publication-safety-remediation\\publication_exceptions.json\"",
+      "$reg  = Get-Content $regP -Raw | ConvertFrom-Json",
+      "foreach ($e in $prop.entries) { $t = New-TemporaryFile; cmd /c \"git -C `\"$wt`\" cat-file blob $($e.blob) > `\"$t`\"\"; $h = (Get-FileHash $t -Algorithm SHA256).Hash.ToLower(); Remove-Item $t; if ($h -ne $e.sha256) { Write-Warning \"skip $($e.path): sha256 differs\"; continue }; $n = $e | Select-Object path,blob,sha256,bytes,rules,category,scope,first_commit,first_commit_date,already_public_on_origin_main; $n | Add-Member owner_decision ('APPROVED' + '_BY_USER'); $reg.entries += $n }",
+      "$reg | ConvertTo-Json -Depth 8 | Set-Content $regP -Encoding utf8NoBOM",
+      "cd \"$wt\\backend\"; ..\\..\\..\\..\\backend\\.venv\\Scripts\\python.exe scripts\\check_publication_safety.py --range bc6ff5e33..HEAD"
+    ]
+  },
+  "PUBLICATION_SAFETY_GATE_PASS": "BLOCKED_OWNER_DECISION",
+  "gate_pass_condition": "range scan bc6ff5e33..<merge commit> exits 0 (after the owner approves the 11 entries or chooses another remedy) AND the owner decides the 96 main-baseline traceback entries before any push; the gate is never disabled"
+}

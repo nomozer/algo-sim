@@ -1,0 +1,37 @@
+{
+  "schema": "axo-prospective-acceptance-report/1",
+  "run_id": "model1-final-acceptance-premerge",
+  "date": "2026-11-21",
+  "candidate": "158 (product 2bb0211a1, freeze b92b68a94, tree bdb737bb…, CACHE 158)",
+  "status": "NOT_MEASURED",
+  "prospective_internal_acceptance": "NOT_MEASURED",
+  "external_independent_validation": "NOT_MEASURED",
+  "why": [
+    "no problem set from a traceable educational source, teacher or independent evaluator was available in this run",
+    "every existing set (Holdout-2…6, SLM-Independent-1…3, /12–/14 manifests) is exposed: used to fix, select or route the product",
+    "an agent-authored set would be written by the team that tunes Model 1, from the same phrase families /17 showed to shape the denominators; the /18 brief forbids creating datasets to force a gate, and a set built from the existing generator with new labels is a string variant of exposed templates, not unseen data"
+  ],
+  "not_done_on_purpose": ["no new holdout generated", "Holdout-6 not re-used as blind", "no score of candidate 157 transferred", "no threshold changed"],
+  "preregistered_criteria_for_the_first_valid_set": {
+    "source": "semantic-grounding-slm-recovery/holdout-6/ACCEPTANCE_CRITERIA.json (sha256 d5c33952a24dbcebee23e582d1b3063c6be4b2b05856604381216cebdc2e41d9), thresholds unchanged",
+    "primary": {"completion_rate_min": 0.85, "min_completed": "ceil(0.85 × positives), fixed when the manifest is frozen", "completion": "SERVED + Source Gate verified + MATHEMATICALLY_VALID + exact numeric + browser visual & interaction pass"},
+    "safety": {"all_negatives_safe": true, "wrong_served": 0, "grounding_violations_served": 0, "unverified_relations_served": 0, "fabricated_numeric_goals": 0, "served_numeric_mismatch": 0, "external_ai_calls": 0},
+    "slm_independent": {"verified_scene_rate_min": 0.6, "negative_safe_refusal_rate_min": 1.0, "false_assertions_max": 0, "invalid_relations_max": 0, "isolation": "allow_parser_reconcile = false, Source Gate + Planner + Exact Kernel + scene oracle enforced"},
+    "slm_fallback": {"rate_min": 0.5, "min_routed_sample": 8, "min_live_verified_scenes": 5, "small_sample_policy": "FAIL_GATE_IF_ROUTED_SAMPLE_BELOW_8", "note": "on candidate 158 fewer problems reach AxoV9; a natural set may route fewer than 8 and then FAILS this gate by the registered rule — the owner may decide before the run, never after, to report it as NOT_APPLICABLE"},
+    "reporting": "each rate with its denominator and a 95 % Wilson interval; system completion, deterministic completion, SLM fallback, SLM independent capability, negative safety, mathematical correctness, grounding, browser completion and per-route latency reported separately"
+  },
+  "evaluator_kit": {
+    "protocol": "../model1-integration-readiness/INDEPENDENT_VALIDATION_READINESS.md",
+    "manifest_template": "EVALUATOR_MANIFEST_TEMPLATE.json (this folder)",
+    "freeze": "docs/evaluation/geometry/harness/live-acceptance/freeze_acceptance.py --manifest M --criteria C --mode baseline --baseline-ref <candidate commit> --out <new file>",
+    "run": "shared harness live_browser_acceptance.mjs → scene_oracle.py → aggregate.py on a clean checkout of b92b68a94 (local-only-scoped, ALLOW_LIVE_AI=0); SLM-independent arm with allow_parser_reconcile=false",
+    "oracle_selfcheck": "scene_oracle.py --selfcheck PASS on this host (2026-11-21)",
+    "measurement_location": "see AUTHORITATIVE_MEASUREMENT_STATUS.md — a valid authoritative run needs owner decision D3"
+  },
+  "results": null,
+  "verdicts": {
+    "PROSPECTIVE_TEXT_ACCEPTANCE_STATUS": "NOT_MEASURED",
+    "EXTERNAL_INDEPENDENCE": "NOT_MEASURED",
+    "SLM_INDEPENDENT_CAPABILITY_STATUS_158": "NOT_MEASURED on unexposed data (exposed SLM-Independent-3 under SLM-first: 21/30, /17 diagnostic)"
+  }
+}

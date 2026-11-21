@@ -1,3 +1,18 @@
+## WAVE_ID = AXO_HYBRID_MODEL1_FINAL_ACCEPTANCE_PREMERGE
+
+- `RUN_ID` = model1-final-acceptance-premerge
+- `REPORT` = docs/evaluation/geometry/runs/model1-final-acceptance-premerge/FINAL_MASTER_REPORT.md
+- `ARTIFACT_DIRECTORY` = docs/evaluation/geometry/runs/model1-final-acceptance-premerge
+- `START_BASE` = 6789da55a
+- `CODE_COMMIT` = NONE (audited candidate 158: product 2bb0211a1, freeze b92b68a94, tree `bdb737bba9ab…`, CACHE_VERSION=158)
+- `CLASSIFICATION` = IDENTITY_AUDIT + PUBLICATION_SAFETY_CLASSIFICATION + PREMERGE_AUDIT + ROLLBACK_PLAN + POST_MERGE_PLAN; prospective acceptance NOT_MEASURED
+- `PRODUCT_CHANGE` = NO
+- `MODEL_REQUEST_COUNT` = 0
+- `CORRECTS` = AXO_HYBRID_MODEL1_INTEGRATION_READINESS (MODEL1_INTEGRATION_PLAN.md §6 described Git rollback as a plain `git revert` of the merged range; corrected in PREMERGE_INTEGRATION_AUDIT.md §6)
+- `CORRECTED_BY` = NONE
+- `VERIFICATION` = CANDIDATE158_FINAL_IDENTITY_AUDIT.json; PUBLICATION_SAFETY_CLOSURE.json + PUBLICATION_EXCEPTION_PROPOSAL.json; tools/diff_audit_result.json
+- `LIMITATIONS` = no unexposed or independent data; shared worktree (`AUTHORITATIVE_DETACHED_COMPLIANCE = NOT_VERIFIED`); backend/.env not compared (permission policy)
+
 ## WAVE_ID = AXO_HYBRID_MODEL1_INTEGRATION_READINESS
 
 - `RUN_ID` = model1-integration-readiness
@@ -9,7 +24,7 @@
 - `PRODUCT_CHANGE` = YES (`local_geometry_parser.py`: length assignment is a premise, pairwise-perpendicular synonym; `main.py` `CACHE_VERSION 158`; default `HYBRID_ROUTE_MODE = live` preserved)
 - `MODEL_REQUEST_COUNT` = 0 cloud; local `Qwen3-0.6B-AxoV9-Q4_K_M` (`73f1484b…`) + `llama.cpp b12470` only
 - `CORRECTS` = AXO_HYBRID_SEMANTIC_GROUNDING_SLM_RECOVERY (run.json / FINAL_MASTER_REPORT §3.1 digest of SEMANTIC_REWRITE_SAFETY_AUDIT.json has 63 hex characters, correct `be8d2b97…df747ace2b4`; LIVE_TEXT_ACCEPTANCE_RESULTS performance.concurrency were cache hits, not SLM concurrency — see CANDIDATE157_INTEGRITY_AUDIT.json, RUNTIME_CAPACITY_REPORT.json)
-- `CORRECTED_BY` = NONE
+- `CORRECTED_BY` = AXO_HYBRID_MODEL1_FINAL_ACCEPTANCE_PREMERGE (rollback plan §6)
 - `VERIFICATION` = CANDIDATE157_INTEGRITY_AUDIT.json; PARSER_SLM_ROUTING_AUDIT.json + results/arms/; RESIDUAL_FAILURE_TRIAGE.json; RUNTIME_CAPACITY_REPORT.json + results/load/; FULL_T3_RECEIPT.json
 - `LIMITATIONS` = every evaluation set is exposed (no prospective acceptance of candidate 158); `EXTERNAL_INDEPENDENCE = NOT_MEASURED`; performance on the Windows dev host only; shared worktree (`AUTHORITATIVE_DETACHED_COMPLIANCE = NOT_VERIFIED`)
 

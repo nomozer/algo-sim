@@ -1,0 +1,39 @@
+{
+  "schema": "axo-candidate-integrity-audit/1",
+  "run_id": "model1-final-acceptance-premerge",
+  "date": "2026-11-21",
+  "branch": "feat/model1-final-acceptance-premerge (from /17 HEAD 6789da55a, shared worktree)",
+  "candidate": {
+    "id": 158,
+    "product_commit": "2bb0211a1057c5d2a503f8a1f19e96cf84decff5",
+    "evaluation_candidate_commit_field": "35a17644acb11ea8a0853afb5b7cdc1814f37df8",
+    "freeze_commit": "b92b68a94b67d24dc016ddc358506adad5c7f1e3",
+    "full_t3_commit": "b92b68a94b67d24dc016ddc358506adad5c7f1e3",
+    "docs_only_commits_after_t3": ["6789da55a (/17 report)", "this run's documentation commit(s)"],
+    "product_paths_changed_since_product_commit": 0,
+    "paths_changed_since_t3_commit": "docs/AI_CONTEXT_BUNDLE.md, docs/CODE_INDEX.md, docs/CURRENT_STATE.md, docs/EVIDENCE_INDEX.md, docs/OPEN_ISSUES.md, 39 files under docs/evaluation/geometry/runs/model1-integration-readiness/ (plus this run's folder and the same canonical docs)",
+    "working_tree_clean_at_audit": true
+  },
+  "checks": [
+    {"item": "freeze_evaluation_candidate.py --verify", "result": "PASS", "observed": "127 files, bdb737bba9ab94d0…", "expected": "bdb737bba9ab94d0274b57e25089c01d4cb47935d5989658e7c13aad1e79b132"},
+    {"item": "EVALUATION_CANDIDATE.json", "result": "PASS", "observed": "product_commit_sha 2bb0211a1, cache_version 158, cay_lam_viec_sach true, tree bdb737bb…"},
+    {"item": "lock_cache_identity.py --verify", "result": "PASS", "observed": "CACHE_VERSION 158 · environment f9df4bf0c8bd458a…"},
+    {"item": "CACHE_VERSION / ROUTE_D_CACHE_POLICY", "result": "PASS", "observed": "\"158\" / \"158:route-d\""},
+    {"item": "GGUF sha256", "result": "PASS", "observed": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35"},
+    {"item": "llama.cpp", "result": "PASS", "observed": "build 12470, commit dde9de82c; archive sha256 fc83371644b5… = pin"},
+    {"item": "regression suites: docs IA, shared harness, cache & identity, holdout immutability, 6 Source Gate suites, parser routing integrity, Construction /2 freeze (2), local-only product & network isolation", "result": "PASS", "observed": "579 passed, 0 failed (82.3 s)"},
+    {"item": "harness + backend/experimental/construction_planner/** vs c4ae9dd1f", "result": "PASS", "observed": "0 files changed"},
+    {"item": "frontend code-index-sync after docs changes", "result": "PASS", "observed": "3/3"},
+    {"item": "shared scene_oracle.py --selfcheck", "result": "PASS"}
+  ],
+  "semantic_environment_integrity": {
+    "fingerprint_contents": "prompts, grammar card, schema, capability table, TypedFactNext surface, Hybrid route surface (which carries version LABELS incl. local_parser_version = local-geometry-parser/3), not parser/normalizer/extractor source",
+    "route_d_cache_key": "adaptive_input_router.build_local_first_cache_identity: router/parser/registry/planner/engine version labels + response contract + adapter/envelope versions; _cache_lookup also requires row.policy_version == ROUTE_D_CACHE_POLICY",
+    "candidate_158_protected": true,
+    "why": "CACHE_VERSION was bumped to 158 with the parser change, so every 157:route-d row misses (test_parser_routing_integrity.py::test_cache_158_policy_isolates_cache_157_rows, PASS)",
+    "structural_gap": "the labels (local-geometry-parser/3, geometry-functions/33, geometry-fact-planner/26, geometry-function-engine/24) have not moved across /5–/17 although the code changed; a future local-route change without a manual CACHE bump would replay envelopes produced by the old code — including a served scene that a safety fix now refuses",
+    "action_in_this_run": "none (changing the fingerprint changes the candidate identity and needs its own acceptance design); recorded as ISSUE-ARCH-PARSER-NOT-IN-SEMANTIC-FINGERPRINT and assigned to post-merge Session B",
+    "merge_blocker": false
+  },
+  "verdict": {"CANDIDATE158_IDENTITY_VERIFIED": true}
+}

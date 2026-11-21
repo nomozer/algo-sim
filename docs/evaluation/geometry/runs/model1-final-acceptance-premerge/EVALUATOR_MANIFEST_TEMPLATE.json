@@ -1,0 +1,48 @@
+{
+  "schema": "axo-acceptance-manifest/template-1",
+  "how_to_use": "Copy, fill one object per problem, delete the two examples, then freeze with docs/evaluation/geometry/harness/live-acceptance/freeze_acceptance.py before anyone runs the candidate. The case fields are exactly the ones of semantic-grounding-slm-recovery/holdout-6/ACCEPTANCE_MANIFEST.json, which the shared harness reads. Relations use the scene_oracle vocabulary: perp_lp [line, plane given by 3 labels], perp_ll [line, line], par_ll [line, line], len2 [segment, squared length]. Labels are whatever the problem uses.",
+  "dataset_provenance": {
+    "source": "<publisher / exam code / teacher, year, page — or 'teacher-written'>",
+    "selected_by": "<evaluator name or role, not on the Model 1 team>",
+    "sampling_rule": "<the written rule, fixed before selection>",
+    "oracle_written_by": "<name/role>",
+    "oracle_checked_by": "<second person>"
+  },
+  "valid_cases": [
+    {
+      "case_id": "E001",
+      "phrase_family": "<stratum: textbook_canonical | exam_wording | teacher_wording | learner_colloquial>",
+      "input_type": "text",
+      "original_input": "<problem text exactly as in the source>",
+      "simulation_intent": "QUERY_WITH_SCENE",
+      "geometric_family": "pyramid_quad",
+      "gold_entities": {"solid_vertices": ["<labels of the solid>"], "auxiliary_points": []},
+      "gold_relations": [["perp_lp", "<line>", "<plane>"], ["len2", "<segment>", 0]],
+      "metric_oracle": [0.0],
+      "preregistered_slm_target": false,
+      "expected_counts": {"vertices": 5, "faces": 5},
+      "expected_behavior": "SERVE",
+      "geometry_determinacy": "UNIQUE_GEOMETRY",
+      "validation_method": "EXACT_SCENE_ORACLE+BROWSER"
+    }
+  ],
+  "negative_cases": [
+    {
+      "case_id": "NEG01",
+      "phrase_family": "<missing_data | contradiction | conditional | negated | other_subject>",
+      "input_type": "text",
+      "original_input": "<problem that must be refused>",
+      "simulation_intent": "NEGATIVE",
+      "geometric_family": "negative_control",
+      "gold_entities": {"solid_vertices": [], "auxiliary_points": []},
+      "gold_relations": [],
+      "metric_oracle": null,
+      "preregistered_slm_target": false,
+      "expected_counts": {},
+      "expected_behavior": "SAFE_REFUSE",
+      "geometry_determinacy": "<MISSING_DATA | CONTRADICTION | CONDITIONAL_PREMISE | NEGATED_PREMISE | OUT_OF_DOMAIN>",
+      "validation_method": "REFUSAL+BROWSER"
+    }
+  ],
+  "source_refs": {"E001": "<origin of E001>", "NEG01": "<origin of NEG01>"}
+}

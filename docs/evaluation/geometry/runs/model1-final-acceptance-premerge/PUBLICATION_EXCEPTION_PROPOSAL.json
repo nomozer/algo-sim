@@ -1,0 +1,283 @@
+{
+ "schema": "publication-exception-proposal/1",
+ "target_register": "docs/evaluation/geometry/runs/publication-safety-remediation/publication_exceptions.json",
+ "note": "Proposal only. Agents never write APPROVED_BY_USER; the register is not modified by this run.",
+ "entries": [
+  {
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-compositional-geometry-language-grounded-simulation/tools/live_browser_acceptance_v12.mjs",
+   "blob": "96a3c8df4664cdb0b7204ac7b2ff2a7a612dd1a0",
+   "sha256": "e4e1c4cf4c21a3647adc1e077ae01e063c74323344154921c4138843b81fae4f",
+   "bytes": 20247,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "lines": [
+    127
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "HISTORY_ONLY",
+   "first_commit": "4f4162d87f8f77388d21c8065f4b0bfd67cb648c",
+   "first_commit_date": "2026-11-20T14:00:15+07:00",
+   "already_public_on_origin_main": false,
+   "evidence": {
+    "value_sha256_prefixes": [
+     "1d6e65610b8cb77b"
+    ],
+    "register_call_on_loopback_test_server": true,
+    "frozen_run_tool": true
+   },
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-compositional-geometry-language-grounded-simulation/tools/v12_ui_scenarios.mjs",
+   "blob": "ddaf213df8575a7a60528667f8113998e0a9ac22",
+   "sha256": "445e1a2297b0158b8718d272069805c708344f1a852d5c910f5760b47e497ba2",
+   "bytes": 19458,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "lines": [
+    103
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "HISTORY_ONLY",
+   "first_commit": "4f4162d87f8f77388d21c8065f4b0bfd67cb648c",
+   "first_commit_date": "2026-11-20T14:00:15+07:00",
+   "already_public_on_origin_main": false,
+   "evidence": {
+    "value_sha256_prefixes": [
+     "1d6e65610b8cb77b"
+    ],
+    "register_call_on_loopback_test_server": true,
+    "frozen_run_tool": true
+   },
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-local-only-3d-simulation-live-acceptance-cutover/tools/live_browser_acceptance.mjs",
+   "blob": "f2202864bf03abb56b5dc5823c4eb74b1bb9757a",
+   "sha256": "1161be4a8979b77ed5a08c6c7338c7c5f5c4d6962cd38936fb096b87b0e2337a",
+   "bytes": 14010,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "lines": [
+    85
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "HISTORY_AND_TIP",
+   "first_commit": "451a590406180dfdee7647c16fcbde7581d2a78d",
+   "first_commit_date": "2026-11-19T21:05:41+07:00",
+   "already_public_on_origin_main": false,
+   "evidence": {
+    "value_sha256_prefixes": [
+     "05b82ef740cd7906"
+    ],
+    "register_call_on_loopback_test_server": true,
+    "frozen_run_tool": true
+   },
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-local-only-3d-simulation-live-acceptance-cutover/tools/ui_runtime_scenarios.mjs",
+   "blob": "da99da429278812cfec0f2201d484cab9eda5f3c",
+   "sha256": "66d759a81e51f2fa163d4f353528dc45ce68cb67581bcb6ca1bc07f1d29383a5",
+   "bytes": 15740,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "lines": [
+    43
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "HISTORY_AND_TIP",
+   "first_commit": "28badc70bd8f7934732bf543896ee59098e315ee",
+   "first_commit_date": "2026-11-19T22:53:55+07:00",
+   "already_public_on_origin_main": false,
+   "evidence": {
+    "value_sha256_prefixes": [
+     "05b82ef740cd7906"
+    ],
+    "register_call_on_loopback_test_server": true,
+    "frozen_run_tool": true
+   },
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/live_browser_acceptance.mjs",
+   "blob": "f2202864bf03abb56b5dc5823c4eb74b1bb9757a",
+   "sha256": "1161be4a8979b77ed5a08c6c7338c7c5f5c4d6962cd38936fb096b87b0e2337a",
+   "bytes": 14010,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "lines": [
+    85
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "HISTORY_AND_TIP",
+   "first_commit": "5d0e86dad52ed65de3ed55ef635943c796e4f425",
+   "first_commit_date": "2026-11-19T23:38:02+07:00",
+   "already_public_on_origin_main": false,
+   "evidence": {
+    "value_sha256_prefixes": [
+     "05b82ef740cd7906"
+    ],
+    "register_call_on_loopback_test_server": true,
+    "frozen_run_tool": true
+   },
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/ui_runtime_scenarios.mjs",
+   "blob": "da99da429278812cfec0f2201d484cab9eda5f3c",
+   "sha256": "66d759a81e51f2fa163d4f353528dc45ce68cb67581bcb6ca1bc07f1d29383a5",
+   "bytes": 15740,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "lines": [
+    43
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "HISTORY_AND_TIP",
+   "first_commit": "31c209a8e02c7f92e1c9b8a6e0322015a3546497",
+   "first_commit_date": "2026-11-20T09:55:46+07:00",
+   "already_public_on_origin_main": false,
+   "evidence": {
+    "value_sha256_prefixes": [
+     "05b82ef740cd7906"
+    ],
+    "register_call_on_loopback_test_server": true,
+    "frozen_run_tool": true
+   },
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/v11_ui_scenarios.mjs",
+   "blob": "0af29711bc85e2795ae3454ae8a38dfaf322b127",
+   "sha256": "ab492653a1117bd1115a25ca91ad3b4204e42b8664ff92a255f24fc7725120fb",
+   "bytes": 16032,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "lines": [
+    54
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "HISTORY_AND_TIP",
+   "first_commit": "547423291538e4c839b2743dd4b1c4216d67d594",
+   "first_commit_date": "2026-11-20T10:32:47+07:00",
+   "already_public_on_origin_main": false,
+   "evidence": {
+    "value_sha256_prefixes": [
+     "05b82ef740cd7906"
+    ],
+    "register_call_on_loopback_test_server": true,
+    "frozen_run_tool": true
+   },
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/v11_ui_scenarios.mjs",
+   "blob": "4edcd6e823e04613932fb6788c1cd91461349f73",
+   "sha256": "6d3b71d0c7ee7018b86195cb0c7d35684b6e00d96cd5f67f279c30f43afc9f15",
+   "bytes": 15618,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "lines": [
+    51
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "HISTORY_ONLY",
+   "first_commit": "31e6b47c90087229346be010111d790fa9a5e4cb",
+   "first_commit_date": "2026-11-20T10:20:41+07:00",
+   "already_public_on_origin_main": false,
+   "evidence": {
+    "value_sha256_prefixes": [
+     "05b82ef740cd7906"
+    ],
+    "register_call_on_loopback_test_server": true,
+    "frozen_run_tool": true
+   },
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/v11_ui_scenarios.mjs",
+   "blob": "5f478beb28b1070cbd0d2269b4476101521e15e3",
+   "sha256": "966255f457d6c8d4c70df934da0c15d82ee260f8d079c7819a789d9c8c97e65f",
+   "bytes": 15206,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "lines": [
+    51
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "HISTORY_ONLY",
+   "first_commit": "2f48fe43e85643f47b50519cca876255993df6b8",
+   "first_commit_date": "2026-11-20T10:09:00+07:00",
+   "already_public_on_origin_main": false,
+   "evidence": {
+    "value_sha256_prefixes": [
+     "05b82ef740cd7906"
+    ],
+    "register_call_on_loopback_test_server": true,
+    "frozen_run_tool": true
+   },
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/axo-hybrid-simulation-intent-generalization-grounded-slm-recovery/tools/v17_pointer_probe.mjs",
+   "blob": "8bee72ff728052bce223e30c39682696e1cb035e",
+   "sha256": "30aae5bf81d8c0b503369a969acf987459f9b49a12e0dd41dbb340ccd550cff5",
+   "bytes": 7015,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "lines": [
+    41,
+    75
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "HISTORY_AND_TIP",
+   "first_commit": "b15fd9e92ff037d51d63c93241ed3f2a24acd3b0",
+   "first_commit_date": "2026-11-20T09:40:44+07:00",
+   "already_public_on_origin_main": false,
+   "evidence": {
+    "value_sha256_prefixes": [
+     "05b82ef740cd7906"
+    ],
+    "register_call_on_loopback_test_server": true,
+    "frozen_run_tool": true
+   },
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/semantic-to-scene3d-verified-simulation/tools/browser_simulation_e2e.mjs",
+   "blob": "2bfce9c8e306ca707141c41806e1fac31623c2e9",
+   "sha256": "75a685edde68459fa308794bb6e5d7d6abc543fef61874669e0277dc0acab6c0",
+   "bytes": 14640,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "lines": [
+    178
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "HISTORY_ONLY",
+   "first_commit": "fe835d424672203fc72fedeb786e9ad22457704b",
+   "first_commit_date": "2026-11-13T13:31:23+07:00",
+   "already_public_on_origin_main": false,
+   "evidence": {
+    "value_sha256_prefixes": [
+     "d045bf80d2679548"
+    ],
+    "register_call_on_loopback_test_server": true,
+    "frozen_run_tool": true
+   },
+   "owner_decision": "PENDING_OWNER_DECISION"
+  }
+ ]
+}
