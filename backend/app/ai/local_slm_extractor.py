@@ -3881,6 +3881,7 @@ def run_local_slm_extraction(
     grammar_mode: str | None = None,
     use_cache: bool = True,
     cache_prompt: bool = True,
+    capture_debug_raw: bool = False,
 ) -> LocalSlmExtractionResult:
     """Run local SLM semantic extraction + deterministic source grounding."""
     norm_raw = normalize_problem_text(problem_text or "")
@@ -4070,7 +4071,7 @@ def run_local_slm_extraction(
             reason_code=cached_res.reason_code,
             reason_detail=cached_res.reason_detail,
             failure_taxonomy=cached_res.failure_taxonomy,
-            grounding_envelope={**cached_res.grounding_envelope, "cache_hit": True},
+            grounding_envelope={**{k: v for k, v in cached_res.grounding_envelope.items() if k != "debug_raw_output"}, "cache_hit": True},
             inference=cached_res.inference,
             stage_timings_ms={
                 "cache_lookup_ms": lookup_ms,
@@ -4313,6 +4314,28 @@ def run_local_slm_extraction(
                 "tokens_per_sec": inf_res.tokens_per_sec,
             }
             norm_prov = norm_res.to_provenance_dict() if norm_res is not None else None
+            sys_prompt_sha = hashlib.sha256(messages[0]["content"].encode("utf-8")).hexdigest() if messages else ""
+            usr_prompt_sha = hashlib.sha256(messages[-1]["content"].encode("utf-8")).hexdigest() if messages else ""
+            grammar_sha = hashlib.sha256(dyn_grammar.encode("utf-8")).hexdigest()
+            sim_only_flag = bool(is_simulation_only_source(ctx))
+            gbnf_root_mode = (
+                "sim_only_zero_goal"
+                if sim_only_flag and not any(_GOAL_VERB_RE.search(cl.text) for cl in ctx.clauses)
+                else ("standard_goal" if any(_GOAL_VERB_RE.search(cl.text) or _GOAL_MARKERS_RE.search(cl.text) for cl in ctx.clauses) else "fallback_clause_goal")
+            )
+            unresolved_codes = [
+                str(item.get("k") or "ambig")
+                for item in (raw_merged or {}).get("u") or ()
+                if isinstance(item, dict)
+            ] if isinstance(raw_merged, dict) else []
+            decoding_cfg = {
+                "temperature": 0.0,
+                "top_k": 1,
+                "seed": 42,
+                "max_tokens": eff_max_tok,
+                "ctx_size": DEFAULT_COMPACT_SLM_CTX_SIZE,
+                "grammar_mode": eff_grammar_mode,
+            }
             envelope = {
                 "envelope_version": eff_env_ver,
                 "validator_version": eff_val_ver,
@@ -4334,6 +4357,14 @@ def run_local_slm_extraction(
                 "rejected_ops": val_diag.get("rejected_ops", []),
                 "failure_taxonomy": val_diag.get("failure_taxonomy", "NONE"),
                 "normalization_provenance": norm_prov,
+                "prompt_sha256": usr_prompt_sha,
+                "system_prompt_sha256": sys_prompt_sha,
+                "grammar_sha256": grammar_sha,
+                "clause_count": len(ctx.clauses),
+                "sim_only_mode": sim_only_flag,
+                "unresolved_codes": unresolved_codes,
+                "gbnf_root_mode": gbnf_root_mode,
+                "decoding_config": decoding_cfg,
                 "stage_timings_ms": stage_timings,
                 "server_load_time_ms": inf_res.server_load_time_ms,
                 "inference_time_ms": inf_res.inference_time_ms,
@@ -4379,6 +4410,25 @@ def run_local_slm_extraction(
                 )
             if cache_allowed:
                 get_shared_local_slm_extraction_cache().put(cache_key, res_out)
+            if capture_debug_raw:
+                return LocalSlmExtractionResult(
+                    ok=res_out.ok,
+                    strategy=res_out.strategy,
+                    model_key=res_out.model_key,
+                    model_sha256=res_out.model_sha256,
+                    norm_text=res_out.norm_text,
+                    wire_payload=res_out.wire_payload,
+                    canonical_payload=res_out.canonical_payload,
+                    reason_code=res_out.reason_code,
+                    reason_detail=res_out.reason_detail,
+                    failure_taxonomy=res_out.failure_taxonomy,
+                    grounding_envelope={**envelope, "debug_raw_output": raw_merged},
+                    inference=res_out.inference,
+                    stage_timings_ms=res_out.stage_timings_ms,
+                    normalization_provenance=res_out.normalization_provenance,
+                    cache_hit=res_out.cache_hit,
+                    cache_key=res_out.cache_key,
+                )
             return res_out
     finally:
         if inflight_owner and inflight_evt is not None:

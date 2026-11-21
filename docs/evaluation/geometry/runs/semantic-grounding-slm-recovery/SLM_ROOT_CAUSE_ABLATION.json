@@ -1,0 +1,1006 @@
+{
+  "schema": "axo-slm-root-cause-ablation/1",
+  "run_id": "semantic-grounding-slm-recovery",
+  "model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+  "model_sha256": "73f1484b08b97ed2a1f44e32bcf6610210c7fda51567c4cd0a03d98dffc6cc35",
+  "system_prompt_preserved_byte_for_byte": true,
+  "decision": "RETAIN_AXOV9_NO_FINETUNE_NEEDED",
+  "note": "E_combined runs with pre-Phase-5 Source Gate so E02/G08/M06 still report SOURCE_GATE_MISMATCH even after AxoV9 extracts them cleanly, confirming owning-layer separation.",
+  "arms": {
+    "A_baseline": [
+      {
+        "case_id": "A01",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "64a6e4b593c1de43"
+      },
+      {
+        "case_id": "A02",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 1,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "179d27174c8c065a"
+      },
+      {
+        "case_id": "A03",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "a5d56b7aee88a0b4"
+      },
+      {
+        "case_id": "A05",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "29cf21f80a353a28"
+      },
+      {
+        "case_id": "E02",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 3,
+        "slm_r_count": 4,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_OBJECT_MISMATCH",
+        "failure_stage": "SOURCE_GATE_MISMATCH",
+        "prompt_sha256": "3cc62ef3028f357f"
+      },
+      {
+        "case_id": "G08",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "contra"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "INCONSISTENT_FACTS",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "19cd50d1864a437f"
+      },
+      {
+        "case_id": "M05",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "cf6a76283cf9d35d"
+      },
+      {
+        "case_id": "M06",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "3ef8a8baa30945bc"
+      },
+      {
+        "case_id": "N01",
+        "kind": "negative",
+        "sim_only": true,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "unsup"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "OUT_OF_SCOPE",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "774fc94120fad467"
+      },
+      {
+        "case_id": "N02",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 3,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 1,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "3211d95d135f0166"
+      },
+      {
+        "case_id": "N03",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 3,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 1,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "b9c7afc66b49a4b7"
+      },
+      {
+        "case_id": "N10",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 3,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "MISSING_DIMENSION",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "5932fdcb9cc03e5b"
+      }
+    ],
+    "B_clause_split": [
+      {
+        "case_id": "A01",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 5,
+        "slm_r_count": 3,
+        "slm_g_count": 0,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_PREMISE_UNREAD",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "865a0e2f6267c82a"
+      },
+      {
+        "case_id": "A02",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 4,
+        "slm_r_count": 3,
+        "slm_g_count": 0,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_PREMISE_UNREAD",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "67f5c7e9e880f25e"
+      },
+      {
+        "case_id": "A03",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 5,
+        "slm_r_count": 5,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_PREMISE_UNREAD",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "65615ab41d3e7a23"
+      },
+      {
+        "case_id": "A05",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 4,
+        "slm_r_count": 6,
+        "slm_g_count": 0,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "SERVED",
+        "hybrid_code": null,
+        "failure_stage": "NONE_SERVED",
+        "prompt_sha256": "ba8bd1338cb329f7"
+      },
+      {
+        "case_id": "E02",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 5,
+        "slm_r_count": 4,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_OBJECT_MISMATCH",
+        "failure_stage": "SOURCE_GATE_MISMATCH",
+        "prompt_sha256": "cdf6c7885caa8e97"
+      },
+      {
+        "case_id": "G08",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 3,
+        "slm_r_count": 3,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "NOT_ASKED_IN_SOURCE",
+        "failure_stage": "SOURCE_GATE_MISMATCH",
+        "prompt_sha256": "05ff780bd5ce3fc7"
+      },
+      {
+        "case_id": "M05",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 5,
+        "slm_r_count": 6,
+        "slm_g_count": 0,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_PREMISE_UNREAD",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "b3bf398cd4de296a"
+      },
+      {
+        "case_id": "M06",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 5,
+        "slm_r_count": 5,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "REJECTED_NO_GROUNDED_GOAL",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "LOWERING_OR_GRAMMAR",
+        "prompt_sha256": "d75754569de22852"
+      },
+      {
+        "case_id": "N01",
+        "kind": "negative",
+        "sim_only": true,
+        "clause_count": 5,
+        "slm_r_count": 3,
+        "slm_g_count": 0,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "NEGATED_CLAUSE",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "a06edf6f3a8ecea1"
+      },
+      {
+        "case_id": "N02",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 4,
+        "slm_r_count": 4,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "REJECTED_UNGROUNDED_TOKEN",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "UNGROUNDED_VALUE",
+        "failure_stage": "LOWERING_OR_GRAMMAR",
+        "prompt_sha256": "f3df6a6b2753c770"
+      },
+      {
+        "case_id": "N03",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 4,
+        "slm_r_count": 4,
+        "slm_g_count": 2,
+        "slm_u": [],
+        "lowering_status": "REJECTED_UNGROUNDED_TOKEN",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "UNGROUNDED_VALUE",
+        "failure_stage": "LOWERING_OR_GRAMMAR",
+        "prompt_sha256": "41214932c9810bf1"
+      },
+      {
+        "case_id": "N10",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 4,
+        "slm_r_count": 3,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "MISSING_DIMENSION",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "4f284ed808c3a24a"
+      }
+    ],
+    "C_sim_goal_carrier": [
+      {
+        "case_id": "A01",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "9128179e32ab3ffd"
+      },
+      {
+        "case_id": "A02",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 1,
+        "slm_r_count": 6,
+        "slm_g_count": 0,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "SERVED",
+        "hybrid_code": null,
+        "failure_stage": "NONE_SERVED",
+        "prompt_sha256": "7c3a022d9a92e5be"
+      },
+      {
+        "case_id": "A03",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "a5d56b7aee88a0b4"
+      },
+      {
+        "case_id": "A05",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "accb068f3d4f1dc1"
+      },
+      {
+        "case_id": "E02",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 3,
+        "slm_r_count": 4,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_OBJECT_MISMATCH",
+        "failure_stage": "SOURCE_GATE_MISMATCH",
+        "prompt_sha256": "3cc62ef3028f357f"
+      },
+      {
+        "case_id": "G08",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "contra"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "INCONSISTENT_FACTS",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "19cd50d1864a437f"
+      },
+      {
+        "case_id": "M05",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "6848f85e2cfe5d6b"
+      },
+      {
+        "case_id": "M06",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "3ef8a8baa30945bc"
+      },
+      {
+        "case_id": "N01",
+        "kind": "negative",
+        "sim_only": true,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "contra"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "INCONSISTENT_FACTS",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "813a55bc94996db8"
+      },
+      {
+        "case_id": "N02",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 3,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 1,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "3211d95d135f0166"
+      },
+      {
+        "case_id": "N03",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 3,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 1,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "b9c7afc66b49a4b7"
+      },
+      {
+        "case_id": "N10",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 3,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "MISSING_DIMENSION",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "5932fdcb9cc03e5b"
+      }
+    ],
+    "D_prompt_synonym": [
+      {
+        "case_id": "A01",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "9cc01cd72ead07d1"
+      },
+      {
+        "case_id": "A02",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 1,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "179d27174c8c065a"
+      },
+      {
+        "case_id": "A03",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "4e0762e70980ce55"
+      },
+      {
+        "case_id": "A05",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "c09c064b9acb5084"
+      },
+      {
+        "case_id": "E02",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 3,
+        "slm_r_count": 4,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_OBJECT_MISMATCH",
+        "failure_stage": "SOURCE_GATE_MISMATCH",
+        "prompt_sha256": "3cc62ef3028f357f"
+      },
+      {
+        "case_id": "G08",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 3,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "missing"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "37be84c779fb9355"
+      },
+      {
+        "case_id": "M05",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "ae9c0f79bab181aa"
+      },
+      {
+        "case_id": "M06",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "199ab204779435b2"
+      },
+      {
+        "case_id": "N01",
+        "kind": "negative",
+        "sim_only": true,
+        "clause_count": 2,
+        "slm_r_count": 0,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 0,
+            "k": "unsup"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "OUT_OF_SCOPE",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "774fc94120fad467"
+      },
+      {
+        "case_id": "N02",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 3,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 1,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "3211d95d135f0166"
+      },
+      {
+        "case_id": "N03",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 3,
+        "slm_g_count": 0,
+        "slm_u": [
+          {
+            "c": 1,
+            "k": "ambig"
+          }
+        ],
+        "lowering_status": "SLM_REPORTED_UNRESOLVED",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "SLM_UNRESOLVED_REFUSAL",
+        "prompt_sha256": "b9c7afc66b49a4b7"
+      },
+      {
+        "case_id": "N10",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 2,
+        "slm_r_count": 3,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "MISSING_DIMENSION",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "5932fdcb9cc03e5b"
+      }
+    ],
+    "E_combined": [
+      {
+        "case_id": "A01",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 5,
+        "slm_r_count": 6,
+        "slm_g_count": 0,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_PREMISE_UNREAD",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "7ed6284fd0ba5d02"
+      },
+      {
+        "case_id": "A02",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 4,
+        "slm_r_count": 6,
+        "slm_g_count": 0,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_PREMISE_UNREAD",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "0026591ebcce8e22"
+      },
+      {
+        "case_id": "A03",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 5,
+        "slm_r_count": 5,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_PREMISE_UNREAD",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "9bea7fc83f9d0d6a"
+      },
+      {
+        "case_id": "A05",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 4,
+        "slm_r_count": 6,
+        "slm_g_count": 0,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "SERVED",
+        "hybrid_code": null,
+        "failure_stage": "NONE_SERVED",
+        "prompt_sha256": "6492e4bb0a0d1270"
+      },
+      {
+        "case_id": "E02",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 5,
+        "slm_r_count": 4,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_OBJECT_MISMATCH",
+        "failure_stage": "SOURCE_GATE_MISMATCH",
+        "prompt_sha256": "cdf6c7885caa8e97"
+      },
+      {
+        "case_id": "G08",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 3,
+        "slm_r_count": 3,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "NOT_ASKED_IN_SOURCE",
+        "failure_stage": "SOURCE_GATE_MISMATCH",
+        "prompt_sha256": "736b1a777fe13ef7"
+      },
+      {
+        "case_id": "M05",
+        "kind": "positive",
+        "sim_only": true,
+        "clause_count": 5,
+        "slm_r_count": 6,
+        "slm_g_count": 0,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "SOURCE_PREMISE_UNREAD",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "e6cc1516fc450c35"
+      },
+      {
+        "case_id": "M06",
+        "kind": "positive",
+        "sim_only": false,
+        "clause_count": 5,
+        "slm_r_count": 5,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "REJECTED_NO_GROUNDED_GOAL",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "AMBIGUOUS_FACT",
+        "failure_stage": "LOWERING_OR_GRAMMAR",
+        "prompt_sha256": "445768a6f52c1383"
+      },
+      {
+        "case_id": "N01",
+        "kind": "negative",
+        "sim_only": true,
+        "clause_count": 5,
+        "slm_r_count": 7,
+        "slm_g_count": 0,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "NEGATED_CLAUSE",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "e8dec2c38962365e"
+      },
+      {
+        "case_id": "N02",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 4,
+        "slm_r_count": 4,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "REJECTED_UNGROUNDED_TOKEN",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "UNGROUNDED_VALUE",
+        "failure_stage": "LOWERING_OR_GRAMMAR",
+        "prompt_sha256": "f3df6a6b2753c770"
+      },
+      {
+        "case_id": "N03",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 4,
+        "slm_r_count": 4,
+        "slm_g_count": 2,
+        "slm_u": [],
+        "lowering_status": "REJECTED_UNGROUNDED_TOKEN",
+        "hybrid_status": "GROUNDING_FAILED",
+        "hybrid_code": "UNGROUNDED_VALUE",
+        "failure_stage": "LOWERING_OR_GRAMMAR",
+        "prompt_sha256": "41214932c9810bf1"
+      },
+      {
+        "case_id": "N10",
+        "kind": "negative",
+        "sim_only": false,
+        "clause_count": 4,
+        "slm_r_count": 3,
+        "slm_g_count": 1,
+        "slm_u": [],
+        "lowering_status": "GROUNDED_AND_LOWERED",
+        "hybrid_status": "REFUSED",
+        "hybrid_code": "MISSING_DIMENSION",
+        "failure_stage": "ENGINE_OR_PLANNER",
+        "prompt_sha256": "4f284ed808c3a24a"
+      }
+    ]
+  }
+}
