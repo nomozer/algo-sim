@@ -35,3 +35,19 @@ def test_diacritic_free_out_of_domain_and_bare_word_decoys_remain_tin_hoc():
     ]
     for txt in out_of_domain_decoys:
         assert detect_domain(txt) == DOMAIN_NGOAI_PHAM_VI, f"False positive on decoy: {txt}"
+
+
+def test_abbreviated_pyramid_still_requires_geometry_notation_and_respects_decoys():
+    for statement in [
+        "Mô hình 3D: chóp K.DEFG, đáy DEFG vuông cạnh 4a, KD = 2a.",
+        "Em cần hình 3D của chóp K.DEFG: KD vuông góc với đáy, KD = 2.",
+        "Ve chop K.DEFG biet day DEFG la hinh vuong canh a.",
+    ]:
+        assert detect_domain(statement) == DOMAIN_HINH_HOC
+
+    for statement in [
+        "Tạo mô hình 3D của chóp núi Everest để học địa lý.",
+        "Viết chương trình Python vẽ chóp K.DEFG bằng thư viện đồ họa.",
+        "Ve chop K.DEFG trong ung dung JavaScript.",
+    ]:
+        assert detect_domain(statement) == DOMAIN_NGOAI_PHAM_VI

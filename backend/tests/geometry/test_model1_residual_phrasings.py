@@ -101,3 +101,62 @@ def test_invalid_rhombus_side_diagonal_angle_is_refused(text, monkeypatch):
                                      allow_download=False, use_cache=False)
     assert out.status == "REFUSED"
     assert (out.response["route_d"].get("refusal") or {}).get("code") == "INCONSISTENT_FACTS"
+
+
+@pytest.mark.parametrize("text", [
+    "Dựng hình chóp K.DEFG với đáy hình chữ nhật DEFG, DE = 4, DG = 5, KD vuông góc với đáy, KD = 6, sau đó tính thể tích khối chóp K.DEFG.",
+    "Cho hình chóp K.DEFG có đáy hình chữ nhật DEFG, DE = 4, DG = 5, KD vuông góc với đáy và KD = 6. Tính thể tích khối chóp K.DEFG.",
+])
+def test_nominal_rectangle_base_has_grounded_rectangle_and_exact_volume(text):
+    lp = parse_geometry_problem_locally(text, use_cache=False)
+    assert lp.status == LOCAL_PARSE_COMPLETE
+    assert any(p["kind"] == "rectangle" for p in lp.payload["premises"])
+    out = route_text_input_local_slm(text, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3",
+                                     allow_download=False, use_cache=False)
+    assert out.status == "SERVED", out.response["route_d"].get("refusal")
+    assert out.response["route_d"]["answers"]["q1"] == "40"
+
+
+def test_negated_rectangle_base_does_not_supply_shape():
+    text = "Vẽ hình chóp K.DEFG có đáy không phải hình chữ nhật DEFG, DE = 4, DG = 5, KD vuông góc với đáy, KD = 6."
+    lp = parse_geometry_problem_locally(text, use_cache=False)
+    assert not lp.payload or not any(p["kind"] == "rectangle" for p in lp.payload["premises"])
+
+
+def test_named_symbolic_pyramid_after_3d_display_prefix_has_no_numeric_goal():
+    text = "Mô hình 3D: chóp K.DEFG, đáy DEFG là hình vuông có cạnh 4a, KD ⊥ (DEFG), KD = 2a."
+    lp = parse_geometry_problem_locally(text, use_cache=False)
+    assert lp.status == LOCAL_PARSE_COMPLETE
+    out = route_text_input_local_slm(text, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3",
+                                     allow_download=False, use_cache=False)
+    assert out.status == "SERVED", out.response["route_d"].get("refusal")
+    assert not out.response["route_d"].get("answers")
+
+
+def test_extra_display_request_retains_source_grounded_center():
+    text = "Vẽ hình chóp K.DEFG có đáy là hình vuông DEFG cạnh 4, KD vuông góc với đáy, KD = 3; O là giao điểm của DF và EG. Hiển thị cả điểm O nhé."
+    lp = parse_geometry_problem_locally(text, use_cache=False)
+    assert lp.status == LOCAL_PARSE_COMPLETE, lp.reason_code
+    out = route_text_input_local_slm(text, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3",
+                                     allow_download=False, use_cache=False)
+    assert out.status == "SERVED", out.response["route_d"].get("refusal")
+    assert any(o["id"] == "O" and o["origin"] != "free"
+               for o in out.response["envelope"]["scene3d"]["objects"])
+
+
+def test_extra_display_request_cannot_create_a_point():
+    text = "Vẽ hình chóp K.DEFG có đáy là hình vuông DEFG cạnh 4, KD vuông góc với đáy, KD = 3. Hiển thị cả điểm O nhé."
+    lp = parse_geometry_problem_locally(text, use_cache=False)
+    assert lp.status != LOCAL_PARSE_COMPLETE
+
+
+@pytest.mark.parametrize("tail", ["Chỉ vẽ, không tính.", "Em chỉ cần hình vẽ thôi."])
+def test_display_only_tail_never_adds_a_math_goal(tail):
+    text = "Cho hình chóp K.DEFG, đáy DEFG là hình chữ nhật, DE = 5, DG = 6, KD vuông góc với đáy và KD = 4. " + tail
+    lp = parse_geometry_problem_locally(text, use_cache=False)
+    assert lp.status == LOCAL_PARSE_COMPLETE, lp.reason_code
+    assert not lp.payload["math_goals"]
+    out = route_text_input_local_slm(text, closure_mode=V9_CLOSURE_MODE, normalizer_version="v3",
+                                     allow_download=False, use_cache=False)
+    assert out.status == "SERVED"
+    assert not out.response["route_d"].get("answers")

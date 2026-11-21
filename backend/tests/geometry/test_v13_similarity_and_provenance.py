@@ -372,3 +372,18 @@ def test_underdetermined_slm_grounded_and_rejected_paths_surface_clarification(m
     clar_r = out_rej.response["route_d"].get("clarification")
     assert clar_r and clar_r["schema_version"] == "route-d-clarification/1"
     assert "chưa hỗ trợ" not in clar_r["question"].lower()
+
+
+@pytest.mark.parametrize("text", [
+    "Mô phỏng hình hộp chữ nhật EFGH.E'F'G'H' có EF = 6.",
+    "Dựng lăng trụ đứng MNP.M'N'P' có đáy là tam giác vuông tại M và MN = 6.",
+])
+def test_missing_base_size_and_prism_height_surface_clarification(text):
+    out = route_text_input(text, allow_live_ai=False)
+    assert out.status == "REFUSED"
+    assert out.response["envelope"]["failure_category"] == "insufficient_specification"
+    assert out.response["envelope"]["refusal_cause"] == "SOURCE"
+    rd = out.response["route_d"]
+    assert rd["determinacy_audit"]["status"] == "PROVED_UNDERDETERMINED"
+    assert rd["clarification"]["nlu_class"] == "MISSING_DATA"
+    assert rd["clarification"]["question"]

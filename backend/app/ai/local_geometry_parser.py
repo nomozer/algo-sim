@@ -1066,6 +1066,7 @@ def _unread_values(builder: "_AstBuilder", a: int, b: int, pre4: tuple[int, int,
             spans.append((p, p + len(qt)))
             p = raw.find(qt, p + 1, b + len(qt))
     figs = [(m.start(), m.end()) for m in _FIG_REF_ANY_RE.finditer(raw, a, b)]
+    figs.extend((m.start(), m.end()) for m in _FIG_3D_RE.finditer(raw, a, b))
     return [m.start() for m in _PREMISE_VALUE_RE.finditer(raw, start, stop)
             if not any(s <= m.start() < e for s, e in spans) and not any(s <= m.start() < e for s, e in figs)]
 
@@ -1151,6 +1152,7 @@ _EXAM_HEADER_PREFIX_RE = re.compile(
     r"^(?:\s*(?:(?:Câu|Bài(?:\s+tập)?|Ví\s+dụ)\s*(?:\d+|[a-d])\s*[:.)]?|(?:\d+|[a-d])\s*\)|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*)+",
     re.IGNORECASE | re.UNICODE,
 )
+_FIG_3D_RE = re.compile(r"\bhình\s+3D\b", re.IGNORECASE)
 _FIG_REF_ANY_RE = re.compile(
     r"\(\s*(?:(?:hình\s+)?minh\s+h[ọo]a(?:\s+như)?|tham\s+khảo|như|xem)\s+hình(?:\s+vẽ)?(?:\s+bên(?:\s+dưới|\s+trên)?)?\s*\)",
     re.IGNORECASE | re.UNICODE,
@@ -1545,10 +1547,10 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             )
         mapped_fact = True
 
-    # 1c. Standard pyramid: "(Cho|Vẽ|Mô phỏng|Cho mình xem) (hình|khối) chóp S.ABCD"
+    # 1c. A named pyramid with optional "hình" or "khối".
     if not m_reg_pyr and not m_two_pyr:
         m_pyr = re.search(
-            rf"(?P<lead>{_SOLID_LEAD}\s+)?(?P<core>(?:hình|khối)\s+ch[oó]p\s+(?P<not>{_PT}\.{_PTS3_6}))",
+            rf"(?P<lead>{_SOLID_LEAD}\s+)?(?P<core>(?<![\w'])(?:(?:hình|khối)\s+)?ch[oó]p\s+(?P<not>{_PT}\.{_PTS3_6}))(?![\w'.])",
             ctext_norm,
             re.IGNORECASE | re.UNICODE,
         )
@@ -2095,7 +2097,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     # 2b. Rectangle base: "đáy (ABCD )?là hình chữ nhật( ABCD)?( tâm O)?" — or the named base "biết / có / với ABCD là hình chữ nhật" (/13)
     for m_rect in re.finditer(
-        rf"(?P<full>(?:đáy(?:\s+(?P<verts>{_PTS4}))?|{_BASE_NAMED_LEAD}(?P<verts0>{_PTS4}))\s+là\s+(?:một\s+)?hình\s+chữ\s+nhật(?:\s+(?P<verts2>{_PTS4})(?![\w']))?(?:\s*(?:,\s*)?(?:có\s+)?tâm(?:\s+đối\s+xứng)?(?:\s+là)?\s+(?P<ctr>{_PT})(?![\w']))?)",
+        rf"(?P<full>(?:đáy(?:\s+(?P<verts>{_PTS4}))?\s+(?:là\s+(?:một\s+)?)?|{_BASE_NAMED_LEAD}(?P<verts0>{_PTS4})\s+là\s+(?:một\s+)?)hình\s+chữ\s+nhật(?!\w)(?:\s+(?P<verts2>{_PTS4})(?![\w']))?(?:\s*(?:,\s*)?(?:có\s+)?tâm(?:\s+đối\s+xứng)?(?:\s+là)?\s+(?P<ctr>{_PT})(?![\w']))?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):

@@ -64,7 +64,10 @@ _TRAILING_GOAL_SPLIT_RE = re.compile(
 
 # Meta "no calculation needed" phrases (must NOT be turned into contra / missing goal or negated command)
 META_NO_CALC_RE = re.compile(
-    r"^\s*(?:chỉ\s+cần\s+vẽ\s+hình\s*,?\s*)?(?:và\s+)?(?:không|chưa)\s+cần\s+(?:tính(?:\s+toán|\s+gì(?:\s+thêm)?)?|làm\s+gì\s+thêm)\s*[:,.;!]*\s*$",
+    r"^\s*(?:(?:chỉ\s+cần\s+vẽ\s+hình\s*,?\s*)?(?:và\s+)?(?:không|chưa)\s+cần\s+"
+    r"(?:tính(?:\s+toán|\s+gì(?:\s+thêm)?)?|làm\s+gì\s+thêm)"
+    r"|chỉ\s+(?:vẽ|dựng)(?:\s+hình)?\s*,\s*không\s+tính(?:\s+toán)?"
+    r"|(?:(?:em|mình|tôi)\s+)?chỉ\s+cần\s+hình\s+vẽ\s+thôi)\s*[:,.;!]*\s*$",
     re.IGNORECASE | re.UNICODE,
 )
 INLINE_LEADING_META_RE = re.compile(

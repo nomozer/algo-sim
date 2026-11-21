@@ -260,6 +260,16 @@ def _build_trial_specs(
             trials.append(("shape0=1,shape1=6/5", None, None, ((s0, Fraction(1)), (s1, Fraction(6, 5))), None))
             trials.append(("shape0=1,shape1=10/13", None, None, ((s0, Fraction(1)), (s1, Fraction(10, 13))), None))
 
+    if not scale_free_premises and open_reps and terminal_code == "MISSING_DIMENSION":
+        # A partly determined base can coexist with an unspecified height.
+        # Keep the sampled base fixed while testing whether height changes the target.
+        for i, edge in enumerate(open_reps[:2]):
+            shape = ((edge, Fraction(1)),)
+            trials.extend((
+                (f"shape{i}=1,h2=1", None, Fraction(1), shape, None),
+                (f"shape{i}=1,h2=4", None, Fraction(4), shape, None),
+            ))
+
     return trials[:MAX_COUNTEREXAMPLE_TRIALS]
 
 

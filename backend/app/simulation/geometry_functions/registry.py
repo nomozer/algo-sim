@@ -1768,9 +1768,10 @@ _HINH = (
 _DONG_TU_MO_PHONG = (r"(?:(?:(?:em|bạn|mình|tớ)\s+)?(?:(?:muốn|cần)\s+xem|(?:hãy\s+)?(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng|minh\s+ho[ạa]|biểu\s+diễn|hiển\s+thị"
                      r"|cho\s+(?:mình|em|tôi|tớ)\s+xem))(?:\s+giúp(?:\s+(?:mình|em|tôi|tớ))?|\s+lại)?)(?!\w)")
 _CUM_KHONG_CAN_TINH = re.compile(
-    r"(?:(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng)\s+(?:hình|khối)(?:\s+3D)?(?:\s*,\s*(?:và\s+)?)?)?"
-    # /13: "không tính toán gì" / "không cần tính" — "cần" optional; still a whole meta phrase closed by punctuation
-    r"(?:không|chưa)\s+(?:cần\s+)?tính(?:\s+toán)?(?:\s+gì(?:\s+thêm)?)?(?=\s*(?:[,;:.()!\-–]|$))",
+    r"(?:(?:(?:chỉ\s+cần\s+)?(?:vẽ|dựng|mô\s+phỏng)\s+(?:hình|khối)(?:\s+3D)?(?:\s*,\s*(?:và\s+)?)?)?"
+    r"(?:không|chưa)\s+(?:cần\s+)?tính(?:\s+toán)?(?:\s+gì(?:\s+thêm)?)?"
+    r"|chỉ\s+(?:vẽ|dựng)(?:\s+hình)?\s*,\s*không\s+tính(?:\s+toán)?"
+    r"|(?:(?:em|mình|tôi)\s+)?chỉ\s+cần\s+hình\s+vẽ\s+thôi)(?=\s*(?:[,;:.()!\-–]|$))",
     re.IGNORECASE,
 )
 _C_KHOI = re.compile(rf"(?:(?:cho|xét|{_DONG_TU_MO_PHONG})\s+)?(?:một\s+)?(?:(?:hình|khối)\s+)?(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
@@ -1962,7 +1963,8 @@ _C_MPDN = re.compile(rf"(?:mặt\s+phẳng\s+|mp\s*)?\((?:[A-Z][0-9']?|[α-ωΑ-
                      rf"(?=\s*(?:[,;.!?]|và\s|$))", re.IGNORECASE)
 #: /13: a sentence may open with the number-free meta request "Chỉ cần vẽ hình, không cần tính toán:" before its premises
 #: (only when closed by ":" / "-": the premises follow it; a trailing request is `_C_HOI`'s job).
-_C_DAU = re.compile(rf"\s*(?:{_CUM_KHONG_CAN_TINH.pattern}\s*[:\-–]\s*)?(?:trong\s+không\s+gian\s*,\s*)?(?:(?:biết(?:\s+rằng)?|th[ỏo]a\s+mãn)\s+)?",
+_TIEU_DE_MO_HINH = rf"(?:mô\s+)?hình\s+3D\s*:\s*(?=(?:(?:hình|khối)\s+)?chóp\s+{_L1}\.{_NHAN}(?![\w']))"
+_C_DAU = re.compile(rf"\s*(?:(?:{_CUM_KHONG_CAN_TINH.pattern}\s*[:\-–]\s*)|{_TIEU_DE_MO_HINH})?(?:trong\s+không\s+gian\s*,\s*)?(?:(?:biết(?:\s+rằng)?|th[ỏo]a\s+mãn)\s+)?",
                     re.IGNORECASE)
 #: /13: a number-free purpose tail closing a sentence ("…; gọi I là trung điểm của LL' để hiển thị thêm điểm I.") — it asks
 #: to show what the sentence built; it states no premise.
@@ -2030,13 +2032,13 @@ _VAT_MO_PHONG = re.compile(rf"(?:(?:(?:hình\s+3D|mô\s+hình\s+3D)\s+(?:của\s
                            rf"(?:\s+(?P<k>{_NHAN}(?:\.{_NHAN})?))?(?![\w'])(?P<km2>(?:\s+(?:đứng|đều|xiên))*)"
                            rf"|(?P<hinh>hình(?:\s+(?:vẽ|3D|không\s+gian|ba\s+chiều))?(?:\s+theo\s+giả\s+thiết(?:\s+(?:trên|đã\s+cho))?)?)"
                            rf"|(?P<vseg>đường\s+cao|chiều\s+cao|cạnh\s+bên|cạnh\s+đáy)\s+(?P<seg>{_L1}{_L1})"
-                           rf"|(?:các\s+)?(?P<vai>điểm|đỉnh)\s+(?P<d>{_L1}(?:\s*,\s*{_L1})*))"
+                           rf"|(?:cả\s+)?(?:các\s+)?(?P<vai>điểm|đỉnh)\s+(?P<d>{_L1}(?:\s*,\s*{_L1})*))"
                            rf"(?:\s+(?:này|đó|đã\s+cho|trên))?(?![\w'])", re.IGNORECASE)
 _NOI_VAT_MO_PHONG = re.compile(r"\s*,\s*(?:và\s+)?|\s+và\s+|\s+cùng\s+(?:với\s+)?", re.IGNORECASE)
 _MO_YEU_CAU_MO_PHONG = re.compile(rf"\s*(?:(?:không|chưa|chỉ)\s+cần\s+)?{_DONG_TU_MO_PHONG}\s+", re.IGNORECASE)
 #: /11: content-free tail of a request ("…, không cần tính toán", "… giúp em"): it asks nothing and states no fact.
 _DUOI_MO_PHONG = re.compile(r"(?:\s*[,.;]?\s*(?:và\s+)?(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?"
-                            r"|\s+giúp(?:\s+(?:mình|em|tôi|tớ))?)", re.IGNORECASE)
+                            r"|\s+giúp(?:\s+(?:mình|em|tôi|tớ))?|\s+nhé)", re.IGNORECASE)
 
 
 def _ky_hieu_khoi(k: LoiGoi) -> str:
@@ -4658,10 +4660,10 @@ _GIAN_DAN = re.compile(
 _MAO_TU_KHOI = re.compile(r"\s*một\s+(?=(?:hình|khối|hộp|lăng\s+trụ|chóp|tứ\s+diện)(?!\w))", re.IGNORECASE)
 #: Sentence-initial simulation verb directly before a solid noun (SL-1): a lead-in like "Cho", never premise content.
 _MO_PHONG_MO_KHOI = re.compile(
-    rf"\s*(?:{_DONG_TU_MO_PHONG}(?:\s+(?:hình|mô\s+hình)\s+3D\s+của)?"
+    rf"\s*(?:{_TIEU_DE_MO_HINH}|{_DONG_TU_MO_PHONG}(?:\s+(?:hình|mô\s+hình)\s+3D\s+của)?"
     rf"(?:\s*,?\s*(?:và\s+)?(?:không|chưa)\s+cần\s+tính(?:\s+toán|\s+gì(?:\s+thêm)?)?\s*[:,-])?"
     rf"|{_CUM_KHONG_CAN_TINH.pattern}\s*[:,-](?:\s*cho)?)"
-    r"\s+(?=(?:một\s+)?(?:(?:hình|khối)\s+)?(?:chóp|lăng\s+trụ|hộp|lập\s+phương|tứ\s+diện)(?!\w))",
+    r"\s*(?=(?:một\s+)?(?:(?:hình|khối)\s+)?(?:chóp|lăng\s+trụ|hộp|lập\s+phương|tứ\s+diện)(?!\w))",
     re.IGNORECASE,
 )
 #: Nouns that only NAME an object next to its label; ROLE nouns also state a role and are accepted only when that role

@@ -287,6 +287,12 @@ _MANH_DANH_TU_KHOI = (
     "khối cầu", "khối nón", "khối trụ",
 )
 
+# A bare mathematical solid noun requires its full apex/base notation.
+_NAMED_PYRAMID = re.compile(
+    r"(?<![\w'])(?i:ch[oó]p)\s+[A-Z]\d*'?\.(?:[A-Z]\d*'?){3,6}(?![\w'.])"
+)
+
+
 #: Giữ tên cũ: nhiều test và bảng đồng bộ đọc nó như "toàn bộ cụm mạnh".
 _DAU_HIEU_MANH = _MANH_QUAN_HE + _MANH_DANH_TU_KHOI
 _DAU_HIEU_YEU = (
@@ -655,7 +661,7 @@ def detect_domain(text: str) -> str:
         return DOMAIN_HINH_HOC
     if any(d in t for d in _DAU_HIEU_NGOAI_PHAM_VI):
         return DOMAIN_NGOAI_PHAM_VI
-    if any(d in t for d in _MANH_DANH_TU_KHOI):
+    if _NAMED_PYRAMID.search(text) or any(d in t for d in _MANH_DANH_TU_KHOI):
         return DOMAIN_HINH_HOC
     if sum(1 for d in _DAU_HIEU_YEU if d in t) >= 3:
         return DOMAIN_HINH_HOC
@@ -690,6 +696,8 @@ def _detect_diacritic_free(t: str, raw_text: str) -> str:
         _co_cum_tu(t, _khong_dau(d)) for d in _DAU_HIEU_NGOAI_PHAM_VI
     ):
         return DOMAIN_NGOAI_PHAM_VI
+    if _NAMED_PYRAMID.search(raw_text):
+        return DOMAIN_HINH_HOC
     has_notation = bool(_ASCII_GEOM_NOTATION_RE.search(raw_text))
     weak_stripped = tuple(
         _khong_dau(d) for d in _DAU_HIEU_YEU if d != "đáy"
