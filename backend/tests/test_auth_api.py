@@ -478,13 +478,13 @@ class TestAdminUsernameEmailVaBaoMat:
         env_base.pop("ADMIN_EMAIL", None)
         chk0 = subprocess.run(
             [sys.executable, "-X", "utf8", str(script), "--database-url", empty_url, "--check", "--json"],
-            stdin=subprocess.DEVNULL, capture_output=True, text=True, env=env_base, check=False,
+            stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env_base, check=False,
         )
         assert chk0.returncode == 0, chk0.stderr
         assert _json.loads(chk0.stdout)["adminCount"] == 0
         fail_no_create = subprocess.run(
             [sys.executable, "-X", "utf8", str(script), "--database-url", empty_url, "--apply", "--json"],
-            stdin=subprocess.DEVNULL, capture_output=True, text=True, env=env_base, check=False,
+            stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env_base, check=False,
         )
         assert fail_no_create.returncode != 0
         assert (NEW_TEST_PASSWORD + "-init") not in (fail_no_create.stdout + fail_no_create.stderr)
@@ -494,7 +494,7 @@ class TestAdminUsernameEmailVaBaoMat:
         env_nopw.pop("ADMIN_PASSWORD", None)
         fail_nopw = subprocess.run(
             [sys.executable, "-X", "utf8", str(script), "--database-url", empty_url, "--apply", "--create-if-missing"],
-            stdin=subprocess.DEVNULL, capture_output=True, text=True, env=env_nopw, check=False,
+            stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env_nopw, check=False,
         )
         assert fail_nopw.returncode == 2
 
@@ -502,7 +502,7 @@ class TestAdminUsernameEmailVaBaoMat:
         env_weak = {**env_base, "ADMIN_PASSWORD": "123"}
         fail_weak = subprocess.run(
             [sys.executable, "-X", "utf8", str(script), "--database-url", empty_url, "--apply", "--create-if-missing"],
-            stdin=subprocess.DEVNULL, capture_output=True, text=True, env=env_weak, check=False,
+            stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env_weak, check=False,
         )
         assert fail_weak.returncode != 0
 
@@ -537,7 +537,7 @@ class TestAdminUsernameEmailVaBaoMat:
 
         res1 = subprocess.run(
             [sys.executable, "-X", "utf8", str(script), "--database-url", db_url, "--apply", "--json"],
-            stdin=subprocess.DEVNULL, capture_output=True, text=True, env=env, check=False,
+            stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env, check=False,
         )
         assert res1.returncode == 0, res1.stderr
         assert rotated_pw not in (res1.stdout + res1.stderr)
@@ -551,7 +551,7 @@ class TestAdminUsernameEmailVaBaoMat:
         # Chạy --apply lần 2 (idempotent, không tạo bản ghi thứ hai)
         res2 = subprocess.run(
             [sys.executable, "-X", "utf8", str(script), "--database-url", db_url, "--apply", "--json"],
-            stdin=subprocess.DEVNULL, capture_output=True, text=True, env=env, check=False,
+            stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env, check=False,
         )
         assert res2.returncode == 0, res2.stderr
         out2 = _json.loads(res2.stdout)
@@ -577,7 +577,7 @@ class TestAdminUsernameEmailVaBaoMat:
 
         chk_multi = subprocess.run(
             [sys.executable, "-X", "utf8", str(script), "--database-url", db_url, "--check", "--json"],
-            stdin=subprocess.DEVNULL, capture_output=True, text=True, env=env, check=False,
+            stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env, check=False,
         )
         assert chk_multi.returncode == 0
         multi_state = _json.loads(chk_multi.stdout)
@@ -587,7 +587,7 @@ class TestAdminUsernameEmailVaBaoMat:
 
         fail_ambig = subprocess.run(
             [sys.executable, "-X", "utf8", str(script), "--database-url", db_url, "--apply", "--create-if-missing", "--json"],
-            stdin=subprocess.DEVNULL, capture_output=True, text=True, env=env, check=False,
+            stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env, check=False,
         )
         assert fail_ambig.returncode != 0
         assert rotated_pw not in (fail_ambig.stdout + fail_ambig.stderr)
@@ -595,7 +595,7 @@ class TestAdminUsernameEmailVaBaoMat:
         # Chỉ định rõ --email gỡ nhập nhằng -> cập nhật ĐÚNG tài khoản đích, không tạo Admin thứ 3
         ok_targeted = subprocess.run(
             [sys.executable, "-X", "utf8", str(script), "--database-url", db_url, "--apply", "--email", "second.admin@axo.edu.vn", "--json"],
-            stdin=subprocess.DEVNULL, capture_output=True, text=True, env=env, check=False,
+            stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env, check=False,
         )
         assert ok_targeted.returncode == 0, ok_targeted.stderr
         assert _json.loads(ok_targeted.stdout)["adminId"] == second_admin_id
@@ -619,7 +619,7 @@ class TestAdminUsernameEmailVaBaoMat:
                 "--database-url", clash_url, "--apply", "--create-if-missing",
                 "--email", "student.only@axo.edu.vn",
             ],
-            stdin=subprocess.DEVNULL, capture_output=True, text=True, env=env, check=False,
+            stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env, check=False,
         )
         assert fail_clash.returncode != 0
         with ClashSession() as db:
