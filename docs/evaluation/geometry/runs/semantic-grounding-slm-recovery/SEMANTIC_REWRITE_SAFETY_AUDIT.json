@@ -2,6 +2,7 @@
   "schema": "axo-semantic-rewrite-safety-audit/1",
   "run_id": "semantic-grounding-slm-recovery",
   "normalizer_version": "slm-verified-normalizer/3",
+  "SEMANTIC_REWRITE_SAFETY_VERIFIED": true,
   "total_rules_audited": 94,
   "summary_counts": {
     "SAFE_EQUIVALENT": 5,
@@ -23,10 +24,10 @@
     "layer2_source_gate": {
       "module": "backend/app/simulation/geometry_functions/registry.py",
       "hardened_checks": [
-        "_KHONG_KHANG_DINH: không đúng (là|rằng)?, không phải (cả|mọi|tất cả), sai khi nói/cho rằng, đừng, chớ",
+        "_KHONG_KHANG_DINH: không đúng (là|rằng)?, không phải (cả|mọi|tất cả), sai khi nói/cho rằng (request-exclusion verbs đừng/chớ stay governed by _LOAI_TRU_YEU_CAU -> NEGATED_CLAUSE)",
         "_PHU_DINH_MENH_DE in _phu_dinh: matrix negation across commas on de[ca:vt]",
-        "_HOI_QUAN_HE and _CO_KHONG: liệu yes/no interrogative marker",
-        "_kiem_mat_chung: reject distinct multi-solid declarations when len(khoi_calls) < 2 (SOURCE_OBJECT_MISMATCH)"
+        "_HOI_QUAN_HE (liệu(?![^,;:?]*\\?)) and _CO_KHONG (liệu): declarative liệu clauses marked QUESTION without shadowing endswith('?') mutant kill",
+        "_kiem_mat_chung: preserve AMBIGUOUS_REFERENCE via doc_khang_dinh_loai_hinh before rejecting distinct multi-solid declarations when len(khoi_calls) < 2 (SOURCE_OBJECT_MISMATCH)"
       ]
     },
     "original_source_cross_check": {

@@ -410,8 +410,16 @@ def test_slm_extractor_dense_split_prompt_canon_and_reconcile_isolation():
 
 
 def test_cache_156_policy_isolates_cache_155_rows():
-    """CACHE 155 could not solve/route semantic-grounding-slm-recovery cases cleanly and its rows never replay under 156."""
+    """CACHE 155 could not solve/route semantic-grounding-slm-recovery cases cleanly and its rows never replay under >=156."""
     from tests.cache_policy import assert_cache_policy_at_least, assert_route_d_row_misses
 
     assert_cache_policy_at_least(156)
     assert_route_d_row_misses("155:route-d")
+
+
+def test_cache_157_policy_isolates_cache_156_rows():
+    """Candidate 157 restores 4 Source Gate invariants (T3 alignment) and isolates 156:route-d rows."""
+    from tests.cache_policy import assert_cache_policy_at_least, assert_route_d_row_misses
+
+    assert_cache_policy_at_least(157)
+    assert_route_d_row_misses("156:route-d")

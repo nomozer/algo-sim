@@ -1225,7 +1225,7 @@ _MUC_TIEU = ("chứng minh", "cmr", "chứng tỏ", "chỉ ra", "giải thích",
 #: Không khẳng định (S1, nhóm A): phủ định mạnh, tình thái, phủ định mệnh đề — đọc trong quote và phần trước nó của mệnh đề.
 _KHONG_KHANG_DINH = re.compile(r"(?<!\w)(?:không hề|chẳng|không nhất thiết|không đúng(?:\s+(?:là|rằng))?"
                                r"|không phải(?:\s+(?:là|rằng))?(?:\s+(?:cả|mọi|tất cả))?"
-                               r"|sai khi (?:nói|cho) rằng|đừng|chớ|có thể(?!\s+tích)"
+                               r"|sai khi (?:nói|cho) rằng|có thể(?!\s+tích)"
                                r"|không bao giờ|không thể|chưa|không còn|đâu có)(?!\w)"
                                # /15: "không" before a relation with an adverb in between ("IJ, IK, IL không đôi một vuông
                                # góc", "không cùng vuông góc với đáy") negates it exactly like "không vuông góc"
@@ -3564,7 +3564,7 @@ _DIEU_KIEN = re.compile(r"(?<!\w)(?:nếu|giả sử|giả thiết rằng|trong 
                         r"|giả định|coi như|cho là|theo bạn)(?!\w)", re.IGNORECASE)
 _THI = re.compile(r"(?<!\w)thì(?!\w)", re.IGNORECASE)
 #: Mệnh đề HỎI một quan hệ có/không — không bao giờ là dữ kiện.
-_HOI_QUAN_HE = re.compile(r"(?<!\w)(?:phải chăng|có phải|liệu|kiểm tra xem|hay không|hay chưa)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)"
+_HOI_QUAN_HE = re.compile(r"(?<!\w)(?:phải chăng|có phải|liệu(?![^,;:?]*\?)|kiểm tra xem|hay không|hay chưa)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)"
                           r"|(?<!\w)không\s*\?", re.IGNORECASE)
 #: Động từ hỏi đứng TRƯỚC đối tượng trong cùng mệnh đề …
 _DONG_TU_HOI = re.compile(
@@ -3840,6 +3840,11 @@ def _kiem_mat_chung(de: str, calls: tuple[LoiGoi, ...]) -> None:
                 raise TuChoi("INCONSISTENT_FACTS", "mặt chung không thuộc bảng mặt của cả hai khối", (c.id,))
     khoi_calls = [c for c in calls if c.fn in ("pyramid", "regular_pyramid", "prism")]
     if len(khoi_calls) < 2:
+        if any(ob.kind == "ambiguous_base" for ob in doc_khang_dinh_loai_hinh(de, calls)):
+            raise TuChoi(
+                "AMBIGUOUS_REFERENCE",
+                "khẳng định loại hình mơ hồ khi có nhiều khối có đáy khác nhau trong bài",
+            )
         for pat in (
             rf"(?<!\w)(?:hai|2)\s+(?:hình\s+|khối\s+)?(?:tứ\s+diện(?:\s+đều)?|chóp|lăng\s+trụ(?:\s+đứng|\s+đều)?)\s+(?P<s1>{_NHAN}(?:\.{_NHAN})?)\s+và\s+(?:(?:hình\s+|khối\s+)?(?:tứ\s+diện(?:\s+đều)?|chóp|lăng\s+trụ(?:\s+đứng|\s+đều)?)\s+)?(?P<s2>{_NHAN}(?:\.{_NHAN})?)",
             rf"(?<!\w)(?:hình\s+|khối\s+)?(?:tứ\s+diện(?:\s+đều)?|chóp|lăng\s+trụ(?:\s+đứng|\s+đều)?)\s+(?P<s1>{_NHAN}(?:\.{_NHAN})?)\s+và\s+(?:hình\s+|khối\s+)?(?:tứ\s+diện(?:\s+đều)?|chóp|lăng\s+trụ(?:\s+đứng|\s+đều)?)\s+(?P<s2>{_NHAN}(?:\.{_NHAN})?)",
@@ -4709,7 +4714,6 @@ _GIAN_DAN = re.compile(
     rf"\s*(?:(?:(?:bài\s+tập|bài|câu|ví\s+dụ)\s*(?:\d+|[a-d])(?:\s*\(\s*(?:\d+(?:[.,]\d+)?\s*điểm|VD|VDC|TH|NB)\s*\))?\s*[.:)]?"
     rf"|(?:đề\s+bài|bài\s+toán)\s*:"
     rf"|(?:yêu\s+cầu(?:\s+bài\s+toán)?|nhiệm\s+vụ)\s*:(?=\s*(?:{_DONG_TU_MO_PHONG}|{_DONG_TU_HOI}))"
-    rf"|trong\s+không\s+gian(?!\s+(?:tọa\s+độ|Oxyz))\s*,"
     rf"|(?:\d+|[a-d])\s*\)"
     rf"|(?:\d{{1,3}}|[a-d])\s*[.:]\s+(?={_MO_DAU_MUC_DE})"
     rf"|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\)\s*[.:]?)\s*)+",
@@ -4910,6 +4914,8 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             continue
         gd = _GIAN_DAN.match(de, a, b)
         a0 = gd.end() if gd else a
+        if (m_tkg := re.match(r"\s*trong\s+không\s+gian(?!\s+(?:tọa\s+độ|Oxyz))\s*,\s*", de[a0:b], re.IGNORECASE)) and a0 + m_tkg.end() < b:
+            a0 += m_tkg.end()
         # /13: a sentence opening with the number-free meta "Không cần tính toán, hãy vẽ hình." — the meta phrase reads
         # nothing; what follows it is checked as usual (a request to show built objects, or premises)
         if (mk := re.compile(rf"\s*{_CUM_KHONG_CAN_TINH.pattern}\s*[,;:\-–]?\s*", re.IGNORECASE).match(de, a0, b)) and mk.end() < b:

@@ -997,7 +997,12 @@ MISSING_KEY_MSG = (
 #       prism height + 3-vertex unnamed right prism base (E02), polite `"Hãy cho biết …"` questions (G08), exam header
 #       prefixes (`"Đề bài: / Yêu cầu:"`), and `local-slm-extractor/6` dense clause splitting / carrier grammar / 3-pair
 #       closure ⇒ MISS (`tests/geometry/test_model1_residual_phrasings.py::test_cache_156_policy_isolates_cache_155_rows`).
-CACHE_VERSION = "156"
+# 157 — 2026-11-21 (semantic-grounding-slm-recovery, T3 alignment): restore 4 Source Gate (`registry.py`) invariants:
+#       remove imperative `đừng/chớ` from `_KHONG_KHANG_DINH` so `_LOAI_TRU_YEU_CAU` returns `NEGATED_CLAUSE`; scope
+#       `liệu` in `_HOI_QUAN_HE` with `(?![^,;:?]*\?)` so endswith(`?`) remains load-bearing; check `ambiguous_base`
+#       before `SOURCE_OBJECT_MISMATCH` in `_kiem_mat_chung`; move `"trong không gian,"` lead strip from `_GIAN_DAN`
+#       into `_kiem_vung_tien_de` ⇒ MISS (`tests/geometry/test_model1_residual_phrasings.py::test_cache_157_policy_isolates_cache_156_rows`).
+CACHE_VERSION = "157"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.
