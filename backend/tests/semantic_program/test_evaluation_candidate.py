@@ -667,3 +667,136 @@ class TestHistoricalFreezeVerificationAndNegativeGuards:
                 ["git", "-C", str(root), "worktree", "remove", "--force", str(nested_wt)],
                 check=False, capture_output=True,
             )
+
+
+class TestIntegratedCandidateLineageAndIsolation:
+    """Phase 12 — Kiểm chứng bảo toàn lịch sử 4978ac01f, danh tính integrated candidate mới,
+    cách ly approval/template PENDING, chống fallback ngầm và từ chối giả mạo."""
+
+    PRIOR_ARCHIVE = (
+        ROOT
+        / "docs"
+        / "evaluation"
+        / "geometry"
+        / "runs"
+        / "integrated-security-release"
+        / "prior-EVALUATION_CANDIDATE-4978ac01f.json"
+    )
+    RUN_LOGS = (
+        ROOT
+        / "docs"
+        / "evaluation"
+        / "geometry"
+        / "runs"
+        / "integrated-security-release"
+        / "logs"
+    )
+
+    def test_preserved_historical_4978ac01f_archive_is_byte_identical_and_verifies(self, tmp_path):
+        fz = _freeze_module()
+        expected_bytes = subprocess.check_output(
+            ["git", "-C", str(ROOT), "show", "f2cc62b1e:docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"]
+        )
+        assert self.PRIOR_ARCHIVE.is_file()
+        assert self.PRIOR_ARCHIVE.read_bytes().replace(b"\r\n", b"\n") == expected_bytes
+
+        res = fz.verify_historical_candidate(self.PRIOR_ARCHIVE, check_git_provenance=True)
+        assert res["verdict"] == "PASS", res
+        assert res["recorded_commit"] == "4978ac01f3240d08ae259d532edcc83c2c5af5e4"
+        assert res["actual_historical_tree_hash"] == "7bd85b6e2c8719e4fb6192e362ce17505588081623c90514dda0a83e88b4dd04"
+        assert res["actual_historical_so_file"] == 127
+        assert res["provenance_matches_head"] is True
+
+        # Bản lưu lịch sử bị chỉnh sửa dù chỉ 1 trường phải FAIL
+        orig = json.loads(self.PRIOR_ARCHIVE.read_text(encoding="utf-8"))
+        tampered = tmp_path / "tampered-4978.json"
+        tampered.write_text(
+            json.dumps({**orig, "measured_system": {**orig["measured_system"], "tree_hash": "0" * 64}}),
+            encoding="utf-8",
+        )
+        bad_res = fz.verify_historical_candidate(tampered, check_git_provenance=False)
+        assert bad_res["verdict"] == "FAIL"
+        assert "measured_system.tree_hash" in bad_res["mismatches"]
+
+    def test_integrated_candidate_has_distinct_identity_clean_tree_and_core_unchanged(self, manifest):
+        fz = _freeze_module()
+        prior = json.loads(self.PRIOR_ARCHIVE.read_text(encoding="utf-8"))
+        assert manifest["commit"] != prior["commit"]
+        assert manifest["measured_system"]["tree_hash"] != prior["measured_system"]["tree_hash"]
+        assert manifest["cay_lam_viec_sach"] is True
+        assert manifest["cache_version"] == CACHE_VERSION == "158"
+
+        diff = fz.diff_measured_system_vs_commit(prior["commit"])
+        assert diff["core_evaluation_changed"] == []
+
+        res = fz.verify_historical_candidate(CANDIDATE, check_git_provenance=True)
+        assert res["verdict"] == "PASS", res
+        assert res["provenance_matches_head"] is True
+
+    def test_historical_approval_and_pending_or_forged_templates_refused_on_integrated_runtime(self, monkeypatch):
+        from scripts import run_s2_student_language_pilot as R
+
+        specs = R.default_c21_pilot_specs()
+        k1_corpus = Path(specs["K-1"]["corpus_path"]).read_bytes().replace(b"\r\n", b"\n")
+        k1_template_path = Path(specs["K-1"]["template_path"])
+
+        # 1. Approval mang measured_system lịch sử 4978ac01f phải bị từ chối trên integrated runtime
+        prior_k1 = json.loads((self.RUN_LOGS / "prior-k1-owner-approval.template.json").read_text(encoding="utf-8"))
+        assert prior_k1["measured_system"] == "7bd85b6e2c8719e4fb6192e362ce17505588081623c90514dda0a83e88b4dd04"
+        forged_hist_approved = {k: v for k, v in prior_k1.items() if k != "owner_decision"} | {
+            "owner_decision": "APPROVED_BY_USER",
+            "paid_project_confirmed": True,
+        }
+        with pytest.raises(R.LiveRefused, match="measured_system"):
+            R.check_approval_terms(k1_corpus, forged_hist_approved)
+
+        # 2. Bản template PENDING hiện hành không bao giờ chạy được live ngay cả khi có ALLOW_LIVE_AI=1
+        monkeypatch.setenv("ALLOW_LIVE_AI", "1")
+        monkeypatch.setenv("GEMINI_API_KEY", "test-offline-guard-placeholder-not-a-key")
+        with pytest.raises(R.LiveRefused, match="neither APPROVED_BY_USER"):
+            R.authorize_live(Path(specs["K-1"]["corpus_path"]), k1_template_path)
+
+        cur_k1 = json.loads(k1_template_path.read_text(encoding="utf-8"))
+        assert cur_k1["owner_decision"] == "PENDING_OWNER_DECISION" and cur_k1["paid_project_confirmed"] is False
+        with pytest.raises(R.LiveRefused, match="paid project"):
+            R.check_approval_terms(k1_corpus, cur_k1)
+
+        # 3. Các dạng giả mạo model / budget / corpus bị từ chối rõ ràng
+        valid_shape = {k: v for k, v in cur_k1.items() if k != "owner_decision"} | {"paid_project_confirmed": True}
+        for bad_patch, err_match in (
+            ({"model": "gemini-9.9-fake"}, "model"),
+            ({"max_requests": 999}, "max_requests"),
+            ({"max_usd": -1.0}, "max_usd"),
+            ({"max_usd": 0.001}, "exceeds max_usd"),
+            ({"corpus_sha256": "0" * 64}, "corpus hash"),
+        ):
+            with pytest.raises(R.LiveRefused, match=err_match):
+                R.check_approval_terms(k1_corpus, {**valid_shape, **bad_patch})
+
+    def test_cache_identity_lock_detects_tampered_hash_in_isolation(self, tmp_path):
+        import importlib.util
+
+        lock_script = ROOT / "backend" / "scripts" / "lock_cache_identity.py"
+        spec = importlib.util.spec_from_file_location("lock_cache_identity", lock_script)
+        lock_mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(lock_mod)
+
+        real_lock = json.loads(lock_mod.KHOA.read_text(encoding="utf-8"))
+        assert real_lock["cache_version"] == CACHE_VERSION == "158"
+        tampered = tmp_path / "tampered.lock.json"
+        tampered.write_text(
+            json.dumps({**real_lock, "semantic_environment_hash": "f" * 64}),
+            encoding="utf-8",
+        )
+        old_lock_file = lock_mod.KHOA
+        lock_mod.KHOA = tampered
+        try:
+            old_argv = list(sys.argv)
+            sys.argv = ["lock_cache_identity.py", "--verify"]
+            try:
+                assert lock_mod.main() == 1
+            finally:
+                sys.argv = old_argv
+        finally:
+            lock_mod.KHOA = old_lock_file
+
