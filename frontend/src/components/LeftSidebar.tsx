@@ -5,7 +5,7 @@ import {
   resolveGeometrySolidFamily,
   type GeometrySolidFamily,
 } from "./family-icons";
-import { IconAxoLogo, IconSidebarPanel } from "./icons";
+import { IconSidebarPanel } from "./icons";
 import { clearSavedDraftAttachments } from "./ProblemInput";
 import { stepCountOfEnvelope } from "./SessionCard";
 import { useAuthStore } from "../state/auth";
@@ -1194,9 +1194,6 @@ export function LeftSidebar() {
             title="Axo — Về màn hình nhập đề toán"
             aria-label="Axo — Về màn hình nhập đề toán"
           >
-            <span className="sb-brand-logo" aria-hidden="true">
-              <IconAxoLogo size={22} />
-            </span>
             <span className="sb-brand-name">Axo</span>
           </button>
 

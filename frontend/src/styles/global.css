@@ -19905,7 +19905,7 @@ html::-webkit-scrollbar {
   }
 }
 
-/* 1. Top row: Brand + Collapse (Phase 2: Logo Axo 17px, 650) */
+/* 1. Top row: Brand Wordmark + Actions (Inter 600, 24px, -0.04em) */
 .sb-top {
   height: 48px;
   min-height: 48px;
@@ -19920,8 +19920,8 @@ html::-webkit-scrollbar {
 .sb-brand {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 5px 8px 5px 10px;
+  gap: 0;
+  padding: 4px 8px 4px 12px;
   border-radius: 7px;
   border: none;
   background: transparent;
@@ -19940,26 +19940,11 @@ html::-webkit-scrollbar {
   outline-offset: 1px;
 }
 
-.sb-brand-logo {
-  width: var(--axo-icon-brand-sb);
-  height: var(--axo-icon-brand-sb);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.sb-brand-logo svg {
-  width: var(--axo-icon-brand-sb);
-  height: var(--axo-icon-brand-sb);
-  display: block;
-}
-
 .sb-brand-name {
-  font-size: 17px;
-  font-weight: 650;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
   color: var(--ink);
   white-space: nowrap;
 }

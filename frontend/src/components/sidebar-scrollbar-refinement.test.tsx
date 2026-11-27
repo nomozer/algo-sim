@@ -205,7 +205,8 @@ describe("Sidebar Scrollbar Refinement — scoped sleek CSS & LeftSidebar intera
     expect(html).toContain('id="sb-footer"');
     expect(html).toContain('id="sb-guest-account-btn"');
     expect(html).toContain("Đăng nhập");
-    expect(html).toContain("axo-logo-svg");
+    expect(html).toContain('id="sb-brand-home"');
+    expect(html).toContain('<span class="sb-brand-name">Axo</span>');
   });
 
   it(

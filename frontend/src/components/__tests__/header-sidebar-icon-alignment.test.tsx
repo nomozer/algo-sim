@@ -85,9 +85,10 @@ describe("AXO V9.4.11 — Icon System Consistency & Optical Alignment", () => {
     expect(panelHtml).toContain('viewBox="0 0 20 20"');
     expect(panelHtml).toContain('stroke-width="1.75"');
 
-    const brandChunk = extractElementChunk(appHtml, "sb-brand-home", 1600);
-    expect(brandChunk).toContain('width="22"');
-    expect(brandChunk).toContain('height="22"');
+    const brandChunk = extractElementChunk(appHtml, "sb-brand-home", 400);
+    expect(brandChunk).toContain("sb-brand-name");
+    expect(brandChunk).toContain(">Axo<");
+    expect(brandChunk).not.toContain("<svg");
 
     for (const id of [
       "btn-sidebar-search",
