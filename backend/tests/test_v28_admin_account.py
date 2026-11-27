@@ -14,20 +14,28 @@ from tests.conftest_classroom import TEST_PASSWORD, api, login, new_client, regi
 @pytest.fixture(autouse=True)
 def _reset_v28_in_memory_state():
     """Đảm bảo trạng thái bộ nhớ của router sạch giữa các bài kiểm thử."""
+    from app.accounts import mailer
+
     orig_settings = dict(accounts_router._SYSTEM_SETTINGS)
     accounts_router._ADMIN_AUDIT_LOGS.clear()
     accounts_router._USER_EXTRA_META.clear()
-    if hasattr(accounts_router, "_PASSWORD_RESET_TOKENS"):
-        accounts_router._PASSWORD_RESET_TOKENS.clear()
-    if hasattr(accounts_router, "set_password_reset_mail_sender"):
-        accounts_router.set_password_reset_mail_sender(None)
+    mailer.set_email_transport(None)
     yield
     accounts_router._SYSTEM_SETTINGS.clear()
     accounts_router._SYSTEM_SETTINGS.update(orig_settings)
-    if hasattr(accounts_router, "_PASSWORD_RESET_TOKENS"):
-        accounts_router._PASSWORD_RESET_TOKENS.clear()
-    if hasattr(accounts_router, "set_password_reset_mail_sender"):
-        accounts_router.set_password_reset_mail_sender(None)
+    mailer.set_email_transport(None)
+
+
+def _link_param(msg, name: str) -> str:
+    """Lấy tham số `name` từ liên kết trong phần văn bản của thư (kênh gửi giả)."""
+    import re
+    from urllib.parse import parse_qs, urlsplit
+
+    for url in re.findall(r"https?://\S+", msg.text):
+        values = parse_qs(urlsplit(url).query).get(name)
+        if values:
+            return values[0]
+    raise AssertionError(f"không thấy tham số {name} trong thư")
 
 
 def _register_admin(api_root) -> object:
@@ -99,10 +107,25 @@ class TestQuenMatKhauAnToanV28:
         assert login(c_check, email="hocsinh@truong.edu.vn", password=TEST_PASSWORD).status_code == 200
 
     def test_token_bam_sha256_dung_mot_lan_het_han_va_thu_hoi_phien_cu(self, api):
-        delivered: list[dict[str, str]] = []
-        accounts_router.set_password_reset_mail_sender(
-            lambda email, token: delivered.append({"email": email, "token": token})
+        from sqlalchemy import select, update
+
+        from app.accounts import mailer, tokens
+        from app.persistence.classroom_models import AuthToken
+
+        delivered: list = []
+        mailer.set_email_transport(
+            lambda msg: delivered.append(msg) or mailer.SendResult("accepted", provider_id="test")
         )
+
+        def resets() -> list:
+            return [m for m in delivered if m.category == "password_reset"]
+
+        def age_tokens() -> None:
+            # Bỏ qua khoảng chờ 60 giây giữa hai thư cùng mục đích (lưu trong CSDL).
+            with accounts_router.SessionLocal() as db:
+                for row in db.execute(select(AuthToken)).scalars():
+                    row.created_at = row.created_at - timedelta(minutes=5)
+                db.commit()
 
         c_user = new_client(api)
         register(c_user, email="lan@truong.edu.vn", name="Lan")
@@ -116,18 +139,21 @@ class TestQuenMatKhauAnToanV28:
         r_unknown = c_anon.post("/api/auth/forgot-password", json={"email": "nobody@truong.edu.vn"})
         assert r_unknown.status_code == 200
         assert r_unknown.json()["smtpConfigured"] is True
-        assert r_unknown.json()["deliveryStatus"] == "SENT"
-        assert len(delivered) == 0
+        assert r_unknown.json()["deliveryStatus"] == "REQUEST_ACCEPTED"
+        assert resets() == []
 
-        # Email tồn tại: sinh token ngẫu nhiên, chỉ lưu hash SHA-256 trong bộ nhớ
+        # Email tồn tại: sinh token ngẫu nhiên, CSDL chỉ giữ SHA-256 của token
         r_known = c_anon.post("/api/auth/forgot-password", json={"email": "lan@truong.edu.vn"})
         assert r_known.status_code == 200
-        assert r_known.json()["deliveryStatus"] == "SENT"
+        assert r_known.json() == r_unknown.json()
         assert "token" not in r_known.json()
-        assert len(delivered) == 1
-        raw_token = delivered[0]["token"]
+        assert len(resets()) == 1
+        raw_token = _link_param(resets()[0], "reset_token")
         assert len(raw_token) >= 24
-        assert raw_token not in str(accounts_router._PASSWORD_RESET_TOKENS)
+        with accounts_router.SessionLocal() as db:
+            stored = db.execute(select(AuthToken.token_hash)).scalars().all()
+        assert raw_token not in stored
+        assert tokens.digest(raw_token) in stored
 
         # Đặt lại mật khẩu thành công bằng token
         new_pw = "mat-khau-moi-hop-le-2026"
@@ -137,6 +163,7 @@ class TestQuenMatKhauAnToanV28:
         )
         assert r_reset.status_code == 200
         assert r_reset.json()["updated"] is True
+        assert [m.category for m in delivered][-1] == "password_changed"
 
         # Phiên đăng nhập cũ của Lan bị thu hồi ngay lập tức
         assert c_user.get("/api/auth/me").json()["user"] is None
@@ -153,10 +180,17 @@ class TestQuenMatKhauAnToanV28:
         assert login(c_fresh, email="lan@truong.edu.vn", password=new_pw).status_code == 200
 
         # Kiểm tra token hết hạn bị từ chối
+        age_tokens()
         c_anon.post("/api/auth/forgot-password", json={"email": "lan@truong.edu.vn"})
-        expired_raw = delivered[-1]["token"]
-        for rec in accounts_router._PASSWORD_RESET_TOKENS.values():
-            rec["expires_at"] = datetime.now(timezone.utc) - timedelta(seconds=5)
+        assert len(resets()) == 2
+        expired_raw = _link_param(resets()[-1], "reset_token")
+        with accounts_router.SessionLocal() as db:
+            db.execute(
+                update(AuthToken)
+                .where(AuthToken.token_hash == tokens.digest(expired_raw))
+                .values(expires_at=tokens.utcnow() - timedelta(seconds=5))
+            )
+            db.commit()
         r_expired = c_anon.post(
             "/api/auth/reset-password",
             json={"token": expired_raw, "newPassword": "mat-khau-het-han-1234"},

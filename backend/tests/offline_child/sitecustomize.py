@@ -9,6 +9,8 @@
 import os
 
 os.environ.setdefault("GEMINI_API_KEY", "")
+# Same reason for the transactional-email key: a child must never pick up a real Resend key from `backend/.env`.
+os.environ.setdefault("RESEND_API_KEY", "")
 
 from offline_socket_guard import BLOCK_MESSAGE, install  # noqa: E402
 

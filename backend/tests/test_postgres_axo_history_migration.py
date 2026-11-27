@@ -19,7 +19,7 @@ from sqlalchemy.orm import sessionmaker
 from tests.test_postgres_integration import _alembic, pg_container  # noqa: F401 — shared throw-away container
 
 pytestmark = pytest.mark.postgres
-MAIN_HEAD, AXO_HEAD = "a1c7e4b90d52", "f8a2c41d9e05"
+MAIN_HEAD, AXO_HEAD = "a1c7e4b90d52", "b6d2f0a8c4e1"
 AXO_TABLES = {"learning_history_entries", "user_account_meta", "admin_system_settings", "admin_audit_logs",
               "admin_analysis_telemetry", "analysis_usage_ledger",
               "step_edit_sessions", "step_edit_revisions", "step_edit_feedback"}

@@ -92,8 +92,11 @@ def _assert_scene_identity_invariants(scene: dict, *, forbidden_id_in_objs: str 
 
 
 def test_p0_schema_contract_15_vs_20_tables_valid_states(tmp_path: Path):
-    """Prove both 20-table (migrated/fresh alembic) and 15-table (core ORM / prior-f8) states are valid at f8a2c41d9e05."""
-    # 1. Fresh empty DB via alembic upgrade head -> 20 tables (14 core + 5 retained Classroom + alembic_version)
+    """Prove both 22-table (migrated/fresh alembic) and 17-table (core ORM, no legacy) states are valid at head.
+
+    Counts grew by 2 at `b6d2f0a8c4e1` (auth_tokens, email_verifications — run authentication-account-recovery).
+    """
+    # 1. Fresh empty DB via alembic upgrade head -> 22 tables (16 core + 5 retained Classroom + alembic_version)
     fresh_url = f"sqlite:///{(tmp_path / 'fresh20.db').as_posix()}"
     work_f, ini_f, env_f = _stage_alembic_workspace(tmp_path, fresh_url, "fresh20_w")
     assert _run_alembic(work_f, ini_f, env_f, "upgrade", "head").returncode == 0
@@ -101,11 +104,11 @@ def test_p0_schema_contract_15_vs_20_tables_valid_states(tmp_path: Path):
     assert _run_alembic(work_f, ini_f, env_f, "check").returncode == 0
     eng_f = create_engine(fresh_url)
     fresh_tables = {t for t in inspect(eng_f).get_table_names() if t != "sqlite_sequence"}
-    assert len(fresh_tables) == 20
+    assert len(fresh_tables) == 22
     assert fresh_tables - set(LEGACY_TABLES) - {"alembic_version"} == set(Base.metadata.tables.keys())
     eng_f.dispose()
 
-    # 2. Legacy DB upgraded e437149641fa -> head -> identical 20 tables
+    # 2. Legacy DB upgraded e437149641fa -> head -> identical 22 tables
     leg_url = f"sqlite:///{(tmp_path / 'leg20.db').as_posix()}"
     work_l, ini_l, env_l = _stage_alembic_workspace(tmp_path, leg_url, "leg20_w")
     assert _run_alembic(work_l, ini_l, env_l, "upgrade", "e437149641fa").returncode == 0
@@ -117,7 +120,7 @@ def test_p0_schema_contract_15_vs_20_tables_valid_states(tmp_path: Path):
     assert leg_tables == fresh_tables
     eng_l.dispose()
 
-    # 3. Core-only 15-table DB at f8a2c41d9e05 (0 legacy tables) is also contract-valid
+    # 3. Core-only 17-table DB at head (0 legacy tables) is also contract-valid
     core_url = f"sqlite:///{(tmp_path / 'core15.db').as_posix()}"
     work_c, ini_c, env_c = _stage_alembic_workspace(tmp_path, core_url, "core15_w")
     assert _run_alembic(work_c, ini_c, env_c, "upgrade", "head").returncode == 0
@@ -126,7 +129,7 @@ def test_p0_schema_contract_15_vs_20_tables_valid_states(tmp_path: Path):
         for lt in LEGACY_TABLES:
             conn.execute(text(f'DROP TABLE "{lt}"'))
     core_tables = {t for t in inspect(eng_c).get_table_names() if t != "sqlite_sequence"}
-    assert len(core_tables) == 15
+    assert len(core_tables) == 17
     assert _run_preflight(work_c, ini_c, env_c, "--startup", "--json").returncode == 0
     assert _run_alembic(work_c, ini_c, env_c, "check").returncode == 0
     eng_c.dispose()

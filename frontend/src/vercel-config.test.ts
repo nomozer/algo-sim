@@ -101,6 +101,7 @@ describe("Vercel production deployment configuration & SPA routing contract", ()
       "/forgot",
       "/forgot-password",
       "/reset",
+      "/verify-email",
       "/app",
       "/library",
       "/history",

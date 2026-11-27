@@ -652,7 +652,7 @@ def test_ic4_alembic_handoff_migration_upgrade_downgrade_zero_drift(tmp_path):
     assert {"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} <= table_names
     assert {"classrooms", "assignments", "classroom_sessions", "practice_sessions", "class_memberships"} <= table_names
     with mig_engine.connect() as conn:
-        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "f8a2c41d9e05"
+        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "b6d2f0a8c4e1"
         assert conn.execute(text("SELECT COUNT(*) FROM users WHERE email = 'seed-step@algosim.edu.vn'")).scalar_one() == 1
         for tbl in ("classrooms", "class_memberships", "assignments", "practice_sessions", "classroom_sessions"):
             assert conn.execute(text(f"SELECT COUNT(*) FROM {tbl}")).scalar_one() == 1, f"{tbl} lost rows"
@@ -728,7 +728,7 @@ def test_step_edit_postgres_migration_handoff_live_container(pg_container):
     eng = create_engine(pg_url, future=True)
     with eng.connect() as conn:
         assert "PostgreSQL 16" in conn.execute(text("SELECT version()")).scalar_one()
-        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "f8a2c41d9e05"
+        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "b6d2f0a8c4e1"
     assert {"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} <= set(inspect(eng).get_table_names())
 
     PgSess = sessionmaker(bind=eng, autoflush=False, autocommit=False)

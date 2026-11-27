@@ -282,7 +282,7 @@ def test_gate_a2_isolated_copy_of_46_user_66_classroom_sqlite_db_safe_upgrade(tm
     assert _run_alembic(work, ini, env, "check").returncode == 0
 
     with eng.connect() as conn:
-        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "f8a2c41d9e05"
+        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "b6d2f0a8c4e1"
         for tbl, exp in baseline.items():
             assert _table_digest(conn, tbl) == exp, f"{tbl} changed after upgrade!"
         assert {"step_edit_sessions", "step_edit_revisions", "step_edit_feedback"} <= set(inspect(eng).get_table_names())

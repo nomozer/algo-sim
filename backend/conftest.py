@@ -97,7 +97,10 @@ if sys.platform == "win32":
     def _windows_fixed_socketpair(family=socket.AF_INET, type=socket.SOCK_STREAM, proto=0):
         for port in range(30000, 48000):
             lsock = socket.socket(family, type, proto)
-            lsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            # EXCLUSIVE, không phải SO_REUSEADDR: trên Windows SO_REUSEADDR cho phép bind chồng lên cổng mà tiến
+            # trình KHÁC đang lắng nghe, rồi `connect` nối nhầm sang tiến trình đó ⇒ self-pipe của event loop không
+            # bao giờ được đánh thức và TestClient treo ở `__enter__` (đo 2026-11-28, run authentication-account-recovery).
+            lsock.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
             try:
                 lsock.bind(("127.0.0.1", port))
                 lsock.listen(1)
@@ -178,6 +181,35 @@ def block_real_network(monkeypatch):
 
     monkeypatch.setattr(httpx.AsyncHTTPTransport, "handle_async_request", blocked_async)
     monkeypatch.setattr(httpx.HTTPTransport, "handle_request", blocked_sync)
+
+
+# ── THƯ GIAO DỊCH (run `authentication-account-recovery`) ────────────────────
+#
+# `backend/.env` của Owner có thể chứa `RESEND_API_KEY` thật và `EMAIL_ENABLED=true`; `db.py` nạp nó lúc import.
+# Mọi test bắt đầu với kênh thư TẮT và không có khoá; test cần gửi thư gắn kênh giả qua `mailer.set_email_transport`
+# (không bao giờ gọi Resend thật). Bộ đếm khối lượng thư được đặt lại để test không ảnh hưởng nhau.
+_EMAIL_ENV_KEYS = (
+    "RESEND_API_KEY", "EMAIL_PROVIDER", "EMAIL_FROM", "EMAIL_MAX_PER_RECIPIENT_PER_HOUR", "EMAIL_MAX_PER_HOUR",
+    "ALGOSIM_SMTP_HOST", "ALGOSIM_SMTP_PORT", "ALGOSIM_SMTP_USER", "ALGOSIM_SMTP_PASSWORD", "ALGOSIM_SMTP_FROM",
+    "ALGOSIM_SMTP_STARTTLS", "ALGOSIM_PUBLIC_APP_URL", "EMAIL_VERIFICATION_TOKEN_TTL_MINUTES",
+    "PASSWORD_RESET_TOKEN_TTL_MINUTES",
+)
+
+
+@pytest.fixture(autouse=True)
+def isolate_transactional_email(monkeypatch):
+    import app.persistence.db  # noqa: F401 — nạp `.env` xong rồi mới gỡ (xem `block_real_network`)
+    from app.accounts import mailer
+
+    for name in _EMAIL_ENV_KEYS:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("EMAIL_ENABLED", "false")
+    mailer.set_email_transport(None)
+    mailer.reset_volume_limits()
+    yield
+    mailer.set_email_transport(None)
+    mailer.reset_volume_limits()
+
 
 # ── W8 §17/§18 — CHI PHÍ KDF TRONG TEST ─────────────────────────────────────
 #

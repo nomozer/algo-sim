@@ -296,13 +296,13 @@ def test_b4_8_unapproved_destructive_migrations_and_downgrades_blocked(tmp_path:
     work, ini, env = _stage_alembic_workspace(tmp_path, db_url, "destr_w")
     assert _run_alembic(work, ini, env, "upgrade", "head").returncode == 0
 
-    # Inject a future destructive revision on top of f8a2c41d9e05 inside isolated tmp workdir
+    # Inject a future destructive revision on top of the current head inside isolated tmp workdir
     bad_rev = work / "alembic" / "versions" / "deadbeef0001_bad_drop.py"
     bad_rev.write_text(
         '''"""bad drop"""
 from alembic import op
 revision = "deadbeef0001"
-down_revision = "f8a2c41d9e05"
+down_revision = "b6d2f0a8c4e1"
 branch_labels = None
 depends_on = None
 def upgrade():
@@ -346,7 +346,7 @@ def downgrade():
     with eng.connect() as conn:
         assert "auth_sessions" in set(inspect(eng).get_table_names())
         assert conn.execute(text("SELECT COUNT(*) FROM users WHERE email = 'keep@algosim.edu.vn'")).scalar_one() == 1
-        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "f8a2c41d9e05"
+        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "b6d2f0a8c4e1"
     eng.dispose()
 
 
@@ -477,7 +477,7 @@ def test_b4_postgres16_full_matrix_and_mid_migration_atomic_rollback(pg_containe
     assert _run_alembic(work, ini, env, "upgrade", "head").returncode == 0
     assert _run_alembic(work, ini, env, "check").returncode == 0
     with eng.connect() as conn:
-        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "f8a2c41d9e05"
+        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "b6d2f0a8c4e1"
         for t, exp in pg_digests.items():
             assert _table_digest(conn, t) == exp, f"PG {t} mutated on upgrade head!"
 
@@ -488,7 +488,7 @@ def test_b4_postgres16_full_matrix_and_mid_migration_atomic_rollback(pg_containe
 from alembic import op
 import sqlalchemy as sa
 revision = "cafe0002"
-down_revision = "f8a2c41d9e05"
+down_revision = "b6d2f0a8c4e1"
 branch_labels = None
 depends_on = None
 def upgrade():
@@ -504,12 +504,12 @@ def downgrade():
     assert crash_res.returncode != 0
     assert "INJECTED_MID_MIGRATION_CRASH" in (crash_res.stdout + crash_res.stderr)
 
-    # Verify atomic PG DDL rollback: version still f8a2c41d9e05, no partial table/column left, 100% rows preserved
+    # Verify atomic PG DDL rollback: version still at head, no partial table/column left, 100% rows preserved
     insp = inspect(eng)
     assert "mid_crash_tmp" not in set(insp.get_table_names())
     assert "mid_crash_col" not in {c["name"] for c in insp.get_columns("step_edit_sessions")}
     with eng.connect() as conn:
-        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "f8a2c41d9e05"
+        assert conn.execute(text("SELECT version_num FROM alembic_version")).scalar_one() == "b6d2f0a8c4e1"
         for t, exp in pg_digests.items():
             assert _table_digest(conn, t) == exp
 
@@ -523,7 +523,7 @@ def downgrade():
         '''"""bad drop"""
 from alembic import op
 revision = "badpg0003"
-down_revision = "f8a2c41d9e05"
+down_revision = "b6d2f0a8c4e1"
 branch_labels = None
 depends_on = None
 def upgrade():

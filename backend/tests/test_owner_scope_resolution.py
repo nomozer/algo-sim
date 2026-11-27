@@ -453,7 +453,7 @@ def test_option_b_postgres16_20_table_legacy_retention_and_step_edit_isolation(p
     assert _run_alembic(work, ini, env, "check").returncode == 0
 
     tables = set(inspect(eng).get_table_names())
-    assert len(tables) == 20, f"Expected 20 tables (15 active + 5 legacy), got {len(tables)}: {sorted(tables)}"
+    assert len(tables) == 22, f"Expected 22 tables (17 active + 5 legacy), got {len(tables)}: {sorted(tables)}"
     for tbl in LEGACY_TABLES:
         assert tbl in tables
 
