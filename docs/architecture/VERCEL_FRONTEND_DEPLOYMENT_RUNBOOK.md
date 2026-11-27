@@ -44,13 +44,14 @@ Cấu hình nằm tại [`frontend/vercel.json`](../../frontend/vercel.json) the
    - **Loại trừ rõ ràng** `/api`, `/api/*`, `/assets`, `/assets/*` và mọi đường dẫn có đuôi file (`.js`, `.mjs`, `.css`, `.png`, `.svg`, `.json`, ...). Request tới API hoặc asset không tồn tại **không bao giờ** bị rewrite nhầm thành `index.html` (`200 text/html`).
 2. **Chính sách Cache:**
    - `/index.html`: `public, max-age=0, must-revalidate` để ngay sau redeploy, trình duyệt luôn lấy manifest chunk mới nhất, không giữ tham chiếu tới hash chunk đã bị xóa.
-   - `/assets/([^/]+-[A-Za-z0-9_-]{8}\\.(js|mjs|css))`: `public, max-age=31536000, immutable` áp dụng chặt riêng cho các bundle JS/MJS/CSS có content hash 8 ký tự do Vite/Rollup sinh ra ở gốc `/assets/` (`index-*.js`, `vendor-three-*.js`, `geometry-samples-*.js`, `pdf-*.js`, `pdf.worker.min-*.mjs`, `index-*.css`). File không có hash 8 ký tự (như `/assets/foo-bar.js`) hoặc ảnh tĩnh dưới `/assets/landing/*` **không** bị gắn `immutable`.
+   - `/assets/([^/]+-[A-Za-z0-9_-]{8}\\.(?:js|mjs|css))`: `public, max-age=31536000, immutable` áp dụng chặt riêng cho các bundle JS/MJS/CSS có content hash 8 ký tự do Vite/Rollup sinh ra ở gốc `/assets/` (`index-*.js`, `vendor-three-*.js`, `geometry-samples-*.js`, `pdf-*.js`, `pdf.worker.min-*.mjs`, `index-*.css`). Dùng nhóm không bắt giữ `(?:js|mjs|css)` vì `@vercel/routing-utils` từ chối capturing group lồng nhau `(...)`. File không có hash 8 ký tự (như `/assets/foo-bar.js`) hoặc ảnh tĩnh dưới `/assets/landing/*` **không** bị gắn `immutable`.
    - Lưu ý xác minh: thông số Root Directory = `frontend` và Output Directory = `dist` trên `https://hoclieu.tech` hiện được **suy luận gián tiếp** từ phản hồi HTTP thực tế (`GET /` trả `dist/index.html`); xác minh trực tiếp trong Vercel Dashboard vẫn ở trạng thái `PENDING_EXTERNAL_CONFIGURATION`.
 3. **Security Headers:**
    - `X-Content-Type-Options: nosniff`
+   - `X-Frame-Options: DENY`
    - `Referrer-Policy: strict-origin-when-cross-origin`
    - `Permissions-Policy: camera=(self), geolocation=(), microphone=(), payment=(), usb=()` — giữ quyền `camera=(self)` vì luồng chụp đề bài Camera-First cần truy cập camera cùng origin.
-   - Không đặt `COOP`/`COEP` hay `CSP` cứng nhắc khi chưa đánh giá đủ tác động tới Three.js WebGL, worker `pdfjs-dist` và Google Fonts (`Inter`).
+   - Chưa đặt `COOP`/`COEP` hay `CSP` cứng vì UI dùng Google Fonts (`fonts.googleapis.com` / `fonts.gstatic.com`), inline React styles, `pdf.worker.min.mjs`, `blob:`/`data:` preview URL cho camera/PDF và Three.js WebGL; nếu bật CSP về sau cần cho phép đầy đủ các nguồn đó (`style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`, `font-src 'self' https://fonts.gstatic.com`, `img-src 'self' blob: data:`, `worker-src 'self' blob:`, `connect-src 'self'`, `frame-ancestors 'none'`).
 
 ---
 
@@ -59,8 +60,9 @@ Cấu hình nằm tại [`frontend/vercel.json`](../../frontend/vercel.json) the
 ### Hiện trạng kiến trúc frontend
 - Mọi lời gọi backend trong `frontend/src/` (`App.tsx`, `state/auth.ts`, `llm/client.ts`, `state/history.ts`, `state/construction-step-edits.ts`, `components/AuthGate.tsx`) sử dụng đường dẫn **relative `/api/...`** kèm `credentials: "include"`.
 - Cục bộ ở development, [`frontend/vite.config.ts`](../../frontend/vite.config.ts) proxy `/api` tới `http://localhost:8000`. Proxy này **không** tự động tồn tại trên Vercel production.
-- Backend FastAPI đặt cookie phiên `HttpOnly` với `SameSite=Lax` (`backend/app/accounts/router.py`). Do đó, khi có backend production host riêng (HTTPS):
-  - **Phương án khuyến nghị khi gắn backend production:** thêm một rule rewrite có thứ tự **trước** catch-all SPA trong `frontend/vercel.json` để proxy cùng-origin `/api/:path*` → `https://<VERCEL_HOSTED_BACKEND_ORIGIN>/api/:path*` (giữ nguyên method, path, query, body và cookie `SameSite=Lax`), **hoặc** cấu hình `CORS` tường minh với origin `https://hoclieu.tech` + `allow_credentials=True` nếu chuyển sang URL tuyệt đối.
+- Backend FastAPI đặt cookie phiên `HttpOnly` (hỗ trợ `COOKIE_SECURE=1` / `ALGOSIM_PUBLIC_APP_URL=https://...`) với `SameSite=Lax` (`backend/app/accounts/router.py`). Do đó, khi có backend production host riêng (HTTPS):
+  - **Phương án 1 (same-origin rewrite `/api/:path*` → backend HTTPS):** thêm rule rewrite **trước** catch-all SPA trong `frontend/vercel.json` để proxy cùng origin `/api/:path*` → `https://<BACKEND_ORIGIN>/api/:path*`. Giữ được cookie `SameSite=Lax`, **nhưng lưu ý giới hạn nền tảng chính thức của Vercel**: timeout proxy external rewrite là **120 giây** và giới hạn body HTTP của Vercel Edge/proxy là **4.5 MB** (trong khi backend cho phép ảnh 10 MB / đa tệp 25 MB). Phù hợp khi tệp tải lên được nén < 4 MB và route `live` hoàn thành dưới 120 s.
+  - **Phương án 2 (subdomain API riêng `https://api.hoclieu.tech` — đề xuất chính thức khi Owner triển khai VPS, chưa tự giả định đã tồn tại):** `hoclieu.tech` và `api.hoclieu.tech` là **cross-origin nhưng same-site** (cùng eTLD+1 `hoclieu.tech` và cùng `https://`), nên cookie phiên `HttpOnly; Secure; SameSite=Lax` vẫn được trình duyệt gửi qua `credentials: "include"` khi backend đặt `CORS_ALLOW_ORIGINS=https://hoclieu.tech,https://www.hoclieu.tech` (`allow_credentials=True`). Không cần mở wildcard `*` hay chuyển token sang `localStorage`. Xem hướng dẫn triển khai VPS và PostgreSQL đầy đủ tại [`../OPERATIONS.md`](../OPERATIONS.md).
   - **Trạng thái hiện tại (`BACKEND_DEPLOYMENT_PENDING`):** chưa có origin backend production được cung cấp/triển khai, nên `frontend/vercel.json` **không** chứa URL backend giả định hay `localhost`. Request `/api/*` trên production trả HTTP `404` chuẩn (không bị biến thành HTML).
 
 ### Biến môi trường cần phân biệt

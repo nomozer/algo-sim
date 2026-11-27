@@ -74,6 +74,13 @@ services:
       # gửi lại vẫn trả envelope cũ mà không gọi LLM. Xem `scripts/cache_clear.py`.
       #   DEV_RELOAD=1 docker compose up -d backend
       DEV_RELOAD: ${DEV_RELOAD:-0}
+      # Bảo mật & triển khai production (mặc định an toàn cho local HTTP):
+      CORS_ALLOW_ORIGINS: ${CORS_ALLOW_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000,http://localhost:4173,http://127.0.0.1:4173,https://hoclieu.tech,https://www.hoclieu.tech}
+      COOKIE_SECURE: ${COOKIE_SECURE:-0}
+      COOKIE_SAMESITE: ${COOKIE_SAMESITE:-lax}
+      TRUST_PROXY_HEADERS: ${TRUST_PROXY_HEADERS:-0}
+      UVICORN_FORWARDED_ALLOW_IPS: ${UVICORN_FORWARDED_ALLOW_IPS:-127.0.0.1}
+      ALGOSIM_PUBLIC_APP_URL: ${ALGOSIM_PUBLIC_APP_URL:-http://localhost:3000}
     volumes:
       - ./backend/app:/app/app
       # CHỈ ĐỌC, và chỉ để chạy công cụ vận hành BÊN TRONG mạng compose —

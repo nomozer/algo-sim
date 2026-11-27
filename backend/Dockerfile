@@ -31,23 +31,17 @@ LABEL org.algosim.backend.git-sha=$GIT_SHA       org.algosim.backend.build-time=
 
 EXPOSE 8000
 
-# NẠP LẠI KHI SỬA MÃ — chỉ khi được BẬT TƯỜNG MINH (`DEV_RELOAD=1`).
-#
-# VÌ SAO CẦN: `docker-compose.yml` mount `./backend/app:/app/app`, nên file trên
-# đĩa luôn mới. Nhưng uvicorn đã **import** module lúc khởi động và giữ chúng
-# trong bộ nhớ, nên sửa `backend/app/**` KHÔNG CÓ TÁC DỤNG GÌ cho tới khi
-# restart. Triệu chứng đúng như người dùng mô tả: *"sửa rồi mà nó vẫn nhận bản
-# cũ"* — và nó im lặng, không lỗi, không cảnh báo.
-#
-# `WATCHFILES_FORCE_POLLING` là BẮT BUỘC cho bind mount từ host Windows:
-# inotify không lan qua ranh giới ấy, nên không có nó thì `--reload` bật mà
-# không bao giờ nạp lại — tức đổi một lỗi im lặng lấy một lỗi im lặng khác.
-#
-# MẶC ĐỊNH TẮT: `--reload` sinh tiến trình con nên uvicorn thôi là PID 1 và mất
-# đường nhận SIGTERM sạch; đó là hành vi cho máy lập trình, không cho lượt đo
-# hay bản chạy thật.
+RUN addgroup --system app && adduser --system --ingroup app app && chown -R app:app /app
+
+ENV HOME=/tmp
 ENV DEV_RELOAD=0
 ENV ALGOSIM_STARTUP_MODE=1
+ENV UVICORN_FORWARDED_ALLOW_IPS=127.0.0.1
+
+USER app
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+  CMD ["python", "-c", "import sys, urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=4).status == 200 else 1)"]
 
 # Kiểm tra cổng an toàn trước khi tiến hoá schema (chặn migration phá hủy / DB lạ lúc boot).
 CMD python alembic/migration_preflight.py --startup && alembic upgrade head &&     if [ "$DEV_RELOAD" = "1" ]; then       WATCHFILES_FORCE_POLLING=1 exec uvicorn app.main:app --host 0.0.0.0         --port 8000 --reload --reload-dir /app/app;     else       exec uvicorn app.main:app --host 0.0.0.0 --port 8000;     fi
