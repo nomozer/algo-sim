@@ -1,5 +1,15 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Frontend Performance Optimization, Route Lazy Loading & Bundle Isolation (2026-11-27)
+
+| Hạng mục / Vai trò | Đường dẫn |
+|---|---|
+| Tách siêu dữ liệu thuần (hằng/toán tử Q³, ngữ cảnh bài toán, chuẩn hóa tiêu đề, đồng bộ `scene3d-semantic-policy.ts`) khỏi `three` để shell & catalog không kéo WebGL vào bundle khởi đầu | `frontend/src/simulations/domains/geometry/scene3d-metadata.ts` |
+| Siêu dữ liệu nhẹ cho 22 bài mẫu (slug, phân loại, đề bài, step count, cache runtime, khôi phục cache) & nạp bất đồng bộ theo nhu cầu từng nhóm JSON (`advanced-geometry-samples.json` / `geometry-samples.json`) kèm prefetch có điều kiện (`saveData`/`2g`) | `frontend/src/data/sample-catalog-meta.ts`, `frontend/src/data/sample-loader.ts` |
+| Dựng thumbnail SVG 2D tĩnh cho card Thư viện từ cache không kéo `THREE` hay payload đầy đủ | `frontend/src/components/geometry2d/catalog-preview.ts`, `frontend/src/components/CatalogSamplePreview.tsx` |
+| Tách các thành phần xác thực, tài khoản và trang quản trị nặng khỏi shell để nạp lazy theo route | `frontend/src/components/auth-shared.tsx`, `frontend/src/components/AuthGateModal.tsx`, `frontend/src/components/AuthPageView.tsx`, `frontend/src/components/AccountSettingsModal.tsx`, `frontend/src/components/AdminWorkspaceView.tsx` |
+| Tiện ích `lazyWithRetry` (thử lại 1 lần + `.preload()` + `shouldPrefetchOnIntent`), CSS tối thiểu shell/Landing (`shell-base.css`) và loader CSS ứng dụng lazy (`load-app-styles.ts`) cho route-level splitting trong `App.tsx` | `frontend/src/utils/lazy-with-retry.ts`, `frontend/src/styles/shell-base.css`, `frontend/src/styles/load-app-styles.ts` · kiểm: `frontend/src/components/__tests__/route-lazy-loading.test.tsx`, `frontend/src/components/__tests__/bundle-isolation.test.ts` |
+
 ## Vercel Deployment Hardening & Hero/Footer Redesign (2026-11-27)
 
 | Hạng mục / Vai trò | Đường dẫn |

@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { describe, expect, it, vi, afterEach } from "vitest";
 import { renderToString } from "react-dom/server";
+import { renderReadyHtml } from "../../../test-source";
 import * as THREE from "three";
 import {
   classifySceneEntityProvenance,
@@ -1472,18 +1473,19 @@ describe("AXO Mathematical & Pedagogical Reliability Gate", () => {
       25_000,
     );
 
-    it("handles deep-links to valid & non-existing routes, renders minimalist 404 without auto-reload, and transitions cleanly across routes", () => {
+    it("handles deep-links to valid & non-existing routes, renders minimalist 404 without auto-reload, and transitions cleanly across routes", async () => {
       try {
         useAppStore.getState().syncLocationRoute("/khong-ton-tai-xyz", "", "");
         syncStoreForSSR();
-        const notFoundHtml = renderToString(<App />);
+        const notFoundHtml = await renderReadyHtml(<App />);
         expect(notFoundHtml).toContain('data-error-kind="not_found"');
         expect(notFoundHtml).not.toMatch(/meta[^>]*http-equiv="refresh"/iu);
 
         // Navigate to valid simulation deep-link /simulation/cau-cat-mat-phang
         useAppStore.getState().syncLocationRoute("/simulation/cau-cat-mat-phang", "", "");
+        await useAppStore.getState().waitForPendingSampleLoad();
         syncStoreForSSR();
-        const validDeepLinkHtml = renderToString(<App />);
+        const validDeepLinkHtml = await renderReadyHtml(<App />);
         expect(validDeepLinkHtml).not.toContain('data-error-kind="not_found"');
         expect(validDeepLinkHtml).toContain('id="ws-dock"');
         expect(validDeepLinkHtml).not.toContain('id="dock-math-results"');
@@ -1494,7 +1496,7 @@ describe("AXO Mathematical & Pedagogical Reliability Gate", () => {
         // Navigate to /library (e.g. Browser Back/Forward target)
         useAppStore.getState().syncLocationRoute("/library", "", "");
         syncStoreForSSR();
-        const libHtml = renderToString(<App />);
+        const libHtml = await renderReadyHtml(<App />);
         expect(libHtml).not.toContain('data-error-kind="not_found"');
       } finally {
         useAppStore.getState().reset();

@@ -4,6 +4,7 @@ import esbuild from "esbuild";
 import { chromium } from "playwright";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
+import { renderReadyHtml } from "../../test-source";
 import App from "../../App";
 import { publicCatalog } from "../../data/offline-catalog";
 import {
@@ -75,8 +76,8 @@ describe("AXO V9.4.11 — Icon System Consistency & Optical Alignment", () => {
     );
   });
 
-  it("unifies header control icons (viewBox 0 0 20 20, stroke-width 1.75) and balances sidebar brand mark at 22px", () => {
-    const appHtml = renderToString(<App />);
+  it("unifies header control icons (viewBox 0 0 20 20, stroke-width 1.75) and balances sidebar brand mark at 22px", async () => {
+    const appHtml = await renderReadyHtml(<App />);
     const panelHtml = renderToString(<IconSidebarPanel />);
     const logoHtml = renderToString(<IconAxoLogo />);
 
@@ -223,9 +224,10 @@ describe("AXO V9.4.11 — Icon System Consistency & Optical Alignment", () => {
         bundle: true,
         write: false,
         jsx: "automatic",
-        format: "iife",
+        format: "esm",
         platform: "browser",
         target: "es2022",
+        loader: { ".json": "json", ".css": "empty", ".svg": "dataurl", ".png": "dataurl" },
         define: {
           "process.env.NODE_ENV": '"development"',
           "import.meta.hot": "undefined",
@@ -237,7 +239,7 @@ describe("AXO V9.4.11 — Icon System Consistency & Optical Alignment", () => {
         args: ["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
       });
       const bundleJs = bundled.outputFiles[0]!.text;
-      const htmlDoc = `<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8" /><style>${tokensCss}\n${globalCss}\nhtml, body { margin: 0; }</style></head><body><div id="root"></div><script src="/bundle.js"></script></body></html>`;
+      const htmlDoc = `<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8" /><style>${tokensCss}\n${globalCss}\nhtml, body { margin: 0; }</style></head><body><div id="root"></div><script type="module" src="/bundle.js"></script></body></html>`;
       try {
         const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
         const pageErrors: string[] = [];

@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
+import { renderReadyHtml } from "../../test-source";
 import App from "../../App";
 import { LeftSidebar } from "../LeftSidebar";
 import { useAuthStore, type AuthUser } from "../../state/auth";
@@ -149,13 +150,13 @@ describe("AXO V9.2 — LeftSidebar Guest Account Footer Recovery & Cross-Role Au
     expect(expiredHtml).not.toContain('id="sb-user-account-btn"');
   });
 
-  it("Phase 2 & Phase 7: Sidebar filter labels and App header guest actions stay consistent", () => {
+  it("Phase 2 & Phase 7: Sidebar filter labels and App header guest actions stay consistent", async () => {
     syncAuthForSSR(null, true);
     useAppStore.getState().goHome();
     useAppStore.getState().setGuestEnteredApp(true);
     syncAppForSSR();
 
-    const appHtml = renderToString(<App />);
+    const appHtml = await renderReadyHtml(<App />);
     expect(appHtml).toContain('id="btn-sidebar-problem-filter"');
     expect(appHtml).toContain('id="sb-problem-filter-label">Tất cả<');
     expect(appHtml).toContain('id="btn-header-guest-account"');
@@ -171,7 +172,7 @@ describe("AXO V9.2 — LeftSidebar Guest Account Footer Recovery & Cross-Role Au
     expect(leftSidebarSrc).toContain('in_progress: "Đang tiến hành"');
   });
 
-  it("V9.3 Phase 2.2: Removed classroom routes (/classes, /assignments, /monitor, /observe) safely fall back to 404 not_found experience", () => {
+  it("V9.3 Phase 2.2: Removed classroom routes (/classes, /assignments, /monitor, /observe) safely fall back to 404 not_found experience", async () => {
     for (const removedPath of ["/classes", "/assignments", "/monitor", "/observe"]) {
       useAppStore.getState().reset();
       useAppStore.getState().syncLocationRoute(removedPath, "", "");
@@ -183,7 +184,7 @@ describe("AXO V9.2 — LeftSidebar Guest Account Footer Recovery & Cross-Role Au
         requestedPath: removedPath,
       });
 
-      const html = renderToString(<App />);
+      const html = await renderReadyHtml(<App />);
       expect(html).toContain('data-error-kind="not_found"');
       expect(html).toContain("404");
     }

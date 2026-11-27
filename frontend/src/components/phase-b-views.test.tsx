@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { beforeEach, describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
+import { renderReadyHtml } from "../test-source";
 import App from "../App";
 import { offlineCatalog, publicCatalog } from "../data/offline-catalog";
 import { registerAllSimulations } from "../simulations";
@@ -74,8 +75,8 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     syncStoreForSSR();
   });
 
-  it("P3 & Phase C.1 P1: Logo Axo (#btn-brand-home) có đúng SVG 26x26 trên Header chính, chữ Axo, padding 0 và không đổi nền/scale khi hover hoặc active", () => {
-    const html = renderToString(<App />);
+  it("P3 & Phase C.1 P1: Logo Axo (#btn-brand-home) có đúng SVG 26x26 trên Header chính, chữ Axo, padding 0 và không đổi nền/scale khi hover hoặc active", async () => {
+    const html = await renderReadyHtml(<App />);
     expect(html).toContain('id="btn-brand-home"');
     expect(html).toContain('class="axo-logo-svg" width="26" height="26"');
     expect(html).toContain('<span class="nav-wordmark-text">Axo</span>');
@@ -122,7 +123,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     }
   });
 
-  it("P4.3: Trang chủ tối giản chỉ hiển thị tiêu đề 'Em muốn dựng hình nào?' + Composer; Left Sidebar chuẩn Notion (3 trạng thái, không có mục Trang chủ, hiển thị trung thực Đang học & Gần đây)", () => {
+  it("P4.3: Trang chủ tối giản chỉ hiển thị tiêu đề 'Em muốn dựng hình nào?' + Composer; Left Sidebar chuẩn Notion (3 trạng thái, không có mục Trang chủ, hiển thị trung thực Đang học & Gần đây)", async () => {
     const emptyHomeHtml = renderToString(<HomeView />);
     expect(emptyHomeHtml).toContain("Em muốn dựng hình nào?");
     expect(emptyHomeHtml).not.toContain('id="home-starter-grid"');
@@ -133,7 +134,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     useAppStore.getState().setGuestEnteredApp(true);
     useAuthStore.setState({ user: null, resolved: true });
     syncStoreForSSR();
-    const emptyAppHtml = renderToString(<App />);
+    const emptyAppHtml = await renderReadyHtml(<App />);
     expect(emptyAppHtml).toContain('id="left-sidebar"');
     expect(emptyAppHtml).toContain('data-sidebar-state="expanded"');
     expect(emptyAppHtml).not.toContain('id="nav-item-home"');
@@ -147,7 +148,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     // Trạng thái 2: Ẩn hoàn toàn (Collapsed)
     useAppStore.getState().setLeftRailCollapsed(true);
     syncStoreForSSR();
-    const collapsedAppHtml = renderToString(<App />);
+    const collapsedAppHtml = await renderReadyHtml(<App />);
     expect(collapsedAppHtml).toContain('data-sidebar-state="collapsed"');
     expect(collapsedAppHtml).toContain('id="btn-sidebar-open-trigger"');
     expect(collapsedAppHtml).toContain("sb-collapsed-trigger-zone is-visible");
@@ -155,7 +156,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     // Trạng thái 3: Xem tạm khi di chuột (Hover Preview)
     useAppStore.getState().setLeftRailHoverPreview(true);
     syncStoreForSSR();
-    const previewAppHtml = renderToString(<App />);
+    const previewAppHtml = await renderReadyHtml(<App />);
     expect(previewAppHtml).toContain('data-sidebar-state="hover-preview"');
     expect(previewAppHtml).toContain("axo-left-sidebar is-collapsed is-hover-preview");
 
@@ -169,7 +170,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     useAppStore.setState({ history: historyStore.list() });
     syncStoreForSSR();
 
-    const populatedAppHtml = renderToString(<App />);
+    const populatedAppHtml = await renderReadyHtml(<App />);
     expect(populatedAppHtml).toContain('id="sidebar-group-problems"');
     expect(populatedAppHtml).toContain(sample.title);
     expect(populatedAppHtml).toContain('data-processing-status="ready"');
@@ -405,8 +406,8 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(selectedHtml).toContain('class="playback-pa-capsule is-expanded mode-expanded"');
   });
 
-  it("Phase C.3 · P5: Homepage giữ #btn-brand-home (Logo + chữ Axo); Workspace dùng thanh tab compact kiểu Ramp [‹] [›] | [icon + Tên bài toán ×] [+] hỗ trợ đầy đủ 10 kịch bản đa tab, đóng tab và điều hướng", () => {
-    const homeHtml = renderToString(<App />);
+  it("Phase C.3 · P5: Homepage giữ #btn-brand-home (Logo + chữ Axo); Workspace dùng thanh tab compact kiểu Ramp [‹] [›] | [icon + Tên bài toán ×] [+] hỗ trợ đầy đủ 10 kịch bản đa tab, đóng tab và điều hướng", async () => {
+    const homeHtml = await renderReadyHtml(<App />);
     // Trên Homepage: #btn-brand-home bọc cả SVG logo mark 22x22 và chữ Axo theo chuẩn HTML V2.7
     expect(homeHtml).toMatch(
       /<button[^>]*id="btn-brand-home"[^>]*>\s*<svg[^>]*class="axo-logo-svg"[^>]*>.*?<\/svg>\s*<span class="nav-wordmark-text">Axo<\/span>\s*<\/button>/s,
@@ -959,12 +960,12 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(homeCleared).not.toContain('id="home-composer-refusal"');
   });
 
-  it("Trang giới thiệu sản phẩm Axo (LandingView) tách biệt với Màn hình nhập đề toán (HomeView) và liên kết đầy đủ luồng điều hướng", () => {
+  it("Trang giới thiệu sản phẩm Axo (LandingView) tách biệt với Màn hình nhập đề toán (HomeView) và liên kết đầy đủ luồng điều hướng", async () => {
     useAppStore.getState().openLanding();
     syncStoreForSSR();
     expect(useAppStore.getState().view).toBe("landing");
 
-    const landingHtml = renderToString(<App />);
+    const landingHtml = await renderReadyHtml(<App />);
     const landingPlainText = landingHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
     expect(landingHtml).toContain('id="view-landing"');
     expect(landingHtml).toContain('id="landing-header"');
@@ -992,18 +993,18 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     useAppStore.getState().goHome();
     syncStoreForSSR();
     expect(useAppStore.getState().view).toBe("home");
-    const homeHtml = renderToString(<App />);
+    const homeHtml = await renderReadyHtml(<App />);
     expect(homeHtml).toContain('id="left-sidebar"');
     expect(homeHtml).toContain('id="composer-main-row"');
     expect(homeHtml).not.toContain('id="btn-home-to-landing"');
   });
 
-  it("UI Refinement V3: Cấu trúc Sidebar mới, Thu gọn độc lập ĐANG HỌC/GẦN ĐÂY, Account Footer & Auth-Aware Routing", () => {
+  it("UI Refinement V3: Cấu trúc Sidebar mới, Thu gọn độc lập ĐANG HỌC/GẦN ĐÂY, Account Footer & Auth-Aware Routing", async () => {
     // 1. Khi Guest đã xác thực trạng thái (resolved: true, user: null) truy cập / -> vào thẳng LandingView công khai, không có LeftSidebar
     useAuthStore.setState({ user: null, resolved: true });
     useAppStore.getState().syncLocationRoute("/");
     syncStoreForSSR();
-    const guestRootHtml = renderToString(<App />);
+    const guestRootHtml = await renderReadyHtml(<App />);
     expect(guestRootHtml).toContain('id="view-landing"');
     expect(guestRootHtml).not.toContain('id="left-sidebar"');
 
@@ -1020,7 +1021,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     });
     useAppStore.getState().syncLocationRoute("/");
     syncStoreForSSR();
-    const studentHomeHtml = renderToString(<App />);
+    const studentHomeHtml = await renderReadyHtml(<App />);
     expect(studentHomeHtml).toContain('id="left-sidebar"');
     expect(studentHomeHtml).toContain('id="composer-main-row"');
     expect(studentHomeHtml).toContain('id="sb-user-account-btn"');
@@ -1058,7 +1059,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     syncStoreForSSR();
     expect(useAppStore.getState().leftRailProblemGroupCollapsed).toBe(true);
     expect(useAppStore.getState().workspaceTabs).toHaveLength(2);
-    const collapsedHtml = renderToString(<App />);
+    const collapsedHtml = await renderReadyHtml(<App />);
     expect(collapsedHtml).toContain('id="sidebar-group-problems" data-group-collapsed="true"');
 
     useAppStore.getState().toggleLeftRailProblemGroup();
@@ -1067,7 +1068,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(useAppStore.getState().workspaceTabs).toHaveLength(2);
   });
 
-  it("UI Refinement V4 & V5: Composer 660px, Search icon trên Header Sidebar, Tìm kiếm tiếng Việt có dấu/không dấu và Scrollbar ẩn/hiện khi hover .sb-scroll-region", () => {
+  it("UI Refinement V4 & V5: Composer 660px, Search icon trên Header Sidebar, Tìm kiếm tiếng Việt có dấu/không dấu và Scrollbar ẩn/hiện khi hover .sb-scroll-region", async () => {
     const globalCss = readFileSync(
       new URL("../styles/global.css", import.meta.url),
       "utf-8",
@@ -1098,7 +1099,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     });
     useAppStore.getState().syncLocationRoute("/");
     syncStoreForSSR();
-    const html = renderToString(<App />);
+    const html = await renderReadyHtml(<App />);
     expect(html).toContain('id="btn-sidebar-search"');
     expect(html).toContain('id="btn-sidebar-collapse"');
     expect(html).toContain('class="sb-top-actions"');
@@ -1272,7 +1273,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(publicCatalog()).toHaveLength(pubCountBefore);
   });
 
-  it("UI Refinement V6: Phân loại đúng 4 trạng thái xử lý (Tất cả / Sẵn sàng / Cần chú ý / Đang tiến hành), danh sách 1 dòng gọn gàng và icon square-pen + sidebar toggle Option A", () => {
+  it("UI Refinement V6: Phân loại đúng 4 trạng thái xử lý (Tất cả / Sẵn sàng / Cần chú ý / Đang tiến hành), danh sách 1 dòng gọn gàng và icon square-pen + sidebar toggle Option A", async () => {
     useAppStore.getState().reset();
     historyStore.clear();
     useAuthStore.setState({
@@ -1410,7 +1411,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
 
     // 7. Kiểm tra DOM render của LeftSidebar: danh sách bài toán chỉ 1 dòng (không có .sb-item-sub), có icon square-pen và icon đóng/mở Option A
     syncStoreForSSR();
-    const appHtml = renderToString(<App />);
+    const appHtml = await renderReadyHtml(<App />);
     expect(appHtml).not.toContain('class="sb-item-sub"');
     expect(appHtml).toContain('class="sb-nav-icon is-new-problem-icon"');
     expect(appHtml).toContain('class="sb-toggle-layout-icon"');
@@ -1418,7 +1419,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(appHtml).toContain('title="Hiện thanh bên"');
   });
 
-  it("UI Refinement V7: Phân loại 7 họ khối hình học (pyramid/cube/prism/sphere/cylinder/cone/neutral), đồng bộ Sidebar + Workspace Tabs + Search Popup, phân biệt 2 icon Header, Composer 1 dòng/đa dòng/mở rộng, nền Gemini Light Mode và khôi phục trạng thái sau khi tải lại trang", () => {
+  it("UI Refinement V7: Phân loại 7 họ khối hình học (pyramid/cube/prism/sphere/cylinder/cone/neutral), đồng bộ Sidebar + Workspace Tabs + Search Popup, phân biệt 2 icon Header, Composer 1 dòng/đa dòng/mở rộng, nền Gemini Light Mode và khôi phục trạng thái sau khi tải lại trang", async () => {
     useAppStore.getState().reset();
     historyStore.clear();
     historyStore.clearProcessingRecords();
@@ -1556,7 +1557,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(resolveWorkspaceTabGeometryFamily(wsTabs[1])).toBe("pyramid");
     expect(resolveWorkspaceTabGeometryFamily(wsTabs[2])).toBe("sphere");
 
-    const wsAndSidebarHtml = renderToString(<App />);
+    const wsAndSidebarHtml = await renderReadyHtml(<App />);
     // Trong Sidebar: có đủ data-geometry-family="cube", "pyramid", "sphere"
     expect(wsAndSidebarHtml).toContain('data-geometry-family="cube"');
     expect(wsAndSidebarHtml).toContain('data-geometry-family="pyramid"');
@@ -1848,7 +1849,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(historyStore.readDraftText()).toBe(errorStatement);
   });
 
-  it("UI Refinement V9: Nền trắng trung tính pre-V7, Menu + Light Mode 2 hành động (Tải tệp + Chụp ảnh), loại bỏ mục Lịch sử riêng & hợp nhất vào BÀI TOÁN, khử trùng lặp nút mở/đóng Sidebar và đồng bộ UI 4 vai trò (Guest/Student/Teacher/Admin)", () => {
+  it("UI Refinement V9: Nền trắng trung tính pre-V7, Menu + Light Mode 2 hành động (Tải tệp + Chụp ảnh), loại bỏ mục Lịch sử riêng & hợp nhất vào BÀI TOÁN, khử trùng lặp nút mở/đóng Sidebar và đồng bộ UI 4 vai trò (Guest/Student/Teacher/Admin)", async () => {
     useAppStore.getState().reset();
     historyStore.clear();
     historyStore.clearProcessingRecords();
@@ -1958,7 +1959,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     useAppStore.getState().setLeftRailCollapsed(false);
     useAppStore.getState().setLeftRailHoverPreview(false);
     syncStoreForSSR();
-    const expandedHtml = renderToString(<App />);
+    const expandedHtml = await renderReadyHtml(<App />);
     expect(expandedHtml).toContain('data-sidebar-state="expanded"');
     expect(expandedHtml).toContain('id="btn-sidebar-collapse"');
     expect(expandedHtml).toContain('title="Ẩn thanh bên"');
@@ -1969,7 +1970,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     useAppStore.getState().setLeftRailCollapsed(true);
     useAppStore.getState().setLeftRailHoverPreview(false);
     syncStoreForSSR();
-    const collapsedHtml = renderToString(<App />);
+    const collapsedHtml = await renderReadyHtml(<App />);
     expect(collapsedHtml).toContain('data-sidebar-state="collapsed"');
     expect(collapsedHtml).toMatch(
       /<button[^>]*id="btn-sidebar-open-trigger"[^>]*tabindex="0"/,
@@ -1980,7 +1981,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
 
     useAppStore.getState().setLeftRailHoverPreview(true);
     syncStoreForSSR();
-    const hoverPreviewHtml = renderToString(<App />);
+    const hoverPreviewHtml = await renderReadyHtml(<App />);
     expect(hoverPreviewHtml).toContain('data-sidebar-state="hover-preview"');
     expect(hoverPreviewHtml).toContain('title="Ghim mở thanh bên"');
     expect(hoverPreviewHtml).toContain("sb-collapsed-trigger-zone is-visible is-preview-open");
@@ -1996,7 +1997,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     useAppStore.getState().setLeftRailHoverPreview(false);
     useAppStore.getState().setLeftRailMobileOpen(true);
     syncStoreForSSR();
-    const mobileDrawerOpenHtml = renderToString(<App />);
+    const mobileDrawerOpenHtml = await renderReadyHtml(<App />);
     expect(mobileDrawerOpenHtml).toContain("is-mobile-sidebar-open");
     expect(mobileDrawerOpenHtml).toMatch(
       /<button[^>]*id="btn-mobile-open-sidebar"[^>]*class="[^"]*is-hidden-when-drawer-open[^"]*"[^>]*aria-hidden="true"/,
@@ -2006,7 +2007,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
 
     // 5. Phase 5 & Phase 6 (cập nhật V9.2): Kiểm tra UI tài khoản 4 vai trò (Guest / Student / Teacher / Admin)
     // 5a. Guest: nút icon hình người #btn-header-guest-account + #header-guest-popover ở Header và nút đơn #sb-guest-account-btn ("Đăng nhập") ở Sidebar Footer
-    const guestAppHtml = renderToString(<App />);
+    const guestAppHtml = await renderReadyHtml(<App />);
     expect(guestAppHtml).toContain('id="header-guest-actions"');
     expect(guestAppHtml).toContain('id="btn-header-guest-account"');
     expect(guestAppHtml).toContain('id="header-guest-popover"');
@@ -2034,7 +2035,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
       resolved: true,
     });
     syncStoreForSSR();
-    const studentV9Html = renderToString(<App />);
+    const studentV9Html = await renderReadyHtml(<App />);
     expect(studentV9Html).toContain('id="sb-user-account-btn"');
     expect(studentV9Html).toContain("Lê Minh Khoa");
     expect(studentV9Html).toContain("Học sinh");
@@ -2053,7 +2054,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
       resolved: true,
     });
     syncStoreForSSR();
-    const teacherV9Html = renderToString(<App />);
+    const teacherV9Html = await renderReadyHtml(<App />);
     expect(teacherV9Html).toContain("Thầy Trần Quốc Tuấn");
     expect(teacherV9Html).toContain("Giáo viên");
     expect(teacherV9Html).toContain('id="nav-item-new-problem"');
@@ -2076,7 +2077,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
       resolved: true,
     });
     syncStoreForSSR();
-    const adminHomeV9Html = renderToString(<App />);
+    const adminHomeV9Html = await renderReadyHtml(<App />);
     expect(adminHomeV9Html).toContain("Quản Trị Hệ Thống");
     expect(adminHomeV9Html).toContain("Quản trị viên");
     expect(adminHomeV9Html).toContain('id="nav-item-admin"');

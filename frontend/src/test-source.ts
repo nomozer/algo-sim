@@ -20,6 +20,36 @@
  * đúng, và đó là một quyết định khác, không phải một cách dùng khác.
  */
 import { readFileSync } from "node:fs";
+import type { ReactElement } from "react";
+import { PassThrough } from "node:stream";
+import { renderToPipeableStream } from "react-dom/server";
+
+/**
+ * Render React element (kể cả `React.lazy` + `<Suspense>`) tới khi mọi ranh giới
+ * Suspense sẵn sàng hoàn toàn bằng `renderToPipeableStream` + `onAllReady`.
+ */
+export function renderReadyHtml(element: ReactElement): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    const stream = new PassThrough();
+    stream.on("data", (chunk: Buffer | string) => {
+      chunks.push(typeof chunk === "string" ? Buffer.from(chunk, "utf8") : chunk);
+    });
+    stream.on("end", () => {
+      resolve(Buffer.concat(chunks).toString("utf8"));
+    });
+    stream.on("error", reject);
+
+    const { pipe } = renderToPipeableStream(element, {
+      onAllReady() {
+        pipe(stream);
+      },
+      onError(err) {
+        reject(err instanceof Error ? err : new Error(String(err)));
+      },
+    });
+  });
+}
 
 /**
  * Nội dung file, đã bóc chú thích khối và chú thích dòng.

@@ -3,6 +3,7 @@ import { createRequire } from "node:module";
 import { join } from "node:path";
 import { chromium } from "playwright";
 import { renderToString } from "react-dom/server";
+import { renderReadyHtml } from "../test-source";
 import * as THREE from "three";
 import * as ts from "typescript";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -464,7 +465,7 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
     expect(media480Blocks.some((b) => /\.toolbar-3d-floating\s*\{\s*bottom:\s*8px;/.test(b))).toBe(false);
   });
 
-  it("4. Category D & Math Contradiction Isolation: suppresses stage overlays & 2D footer while keeping #ws-dock, #dock-prob-statement, #dock-steps-ul & '—' badge intact across inner-malformed, outer-malformed, and contradictory Scene3D", () => {
+  it("4. Category D & Math Contradiction Isolation: suppresses stage overlays & 2D footer while keeping #ws-dock, #dock-prob-statement, #dock-steps-ul & '—' badge intact across inner-malformed, outer-malformed, and contradictory Scene3D", async () => {
     const sample = publicCatalog()[0]!;
     const malformedInnerScene = {
       free_objects: ["A"],
@@ -530,7 +531,7 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
     expect(outerWsHtml).not.toContain('id="playback-pa-box"');
     expect(outerWsHtml).not.toContain('id="floating-toolbar-3d"');
 
-    const fullAppHtml = renderToString(<App />);
+    const fullAppHtml = await renderReadyHtml(<App />);
     expect(fullAppHtml).toContain('id="ws-scene3d-unavailable-card"');
     expect(fullAppHtml).not.toContain('class="panel-controls"');
 
@@ -563,7 +564,7 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
     expect(contradictionHtml).not.toContain('id="floating-toolbar-3d"');
   });
 
-  it("5. Condition-Based ErrorBoundary Pure State Machine (resetKey, HMR / Code Update Signal & Bounded Cap): recovers on verified code/route signal without infinite retry loops, including AppRoot", () => {
+  it("5. Condition-Based ErrorBoundary Pure State Machine (resetKey, HMR / Code Update Signal & Bounded Cap): recovers on verified code/route signal without infinite retry loops, including AppRoot", async () => {
     expect(ErrorBoundary.getDerivedStateFromError()).toEqual({ hong: true });
 
     // `getDerivedStateFromProps` resets `hong`, `soLanThuLai`, and `hmrEpoch` when `resetKey` changes
@@ -637,7 +638,7 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
     expect(autoRecoveries).toBeGreaterThanOrEqual(1);
     expect(autoRecoveries).toBeLessThanOrEqual(2);
 
-    const rootHtml = renderToString(<AppRoot />);
+    const rootHtml = await renderReadyHtml(<AppRoot />);
     expect(rootHtml).not.toContain("Ứng dụng gặp lỗi hiển thị. Hãy tải lại trang.");
   });
 

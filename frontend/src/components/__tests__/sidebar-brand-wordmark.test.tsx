@@ -37,18 +37,19 @@ describe("AXO Sidebar Brand Wordmark Refinement", () => {
     expect(globalCss).not.toContain(".sb-brand-logo");
   });
 
-  it("preserves IconAxoLogo / IconAxoSidebarLogo in Landing Header, Footer, TopNav, AuthGate, and icons.tsx", () => {
+  it("preserves IconAxoLogo / IconAxoSidebarLogo in Landing Header, Footer, TopNav, Auth, Admin, and icons.tsx", () => {
     for (const rel of [
       "../landing/LandingHeader.tsx",
       "../landing/LandingFooter.tsx",
       "../TopNav.tsx",
-      "../AuthGate.tsx",
+      "../AuthPageView.tsx",
+      "../AdminWorkspaceView.tsx",
     ]) {
       const src = readFileSync(resolve(__dirname, rel), "utf8");
       expect(src, `${rel} must keep IconAxoLogo`).toContain("IconAxoLogo");
     }
-    const authSrc = readFileSync(resolve(__dirname, "../AuthGate.tsx"), "utf8");
-    expect(authSrc).toContain("IconAxoSidebarLogo");
+    const adminSrc = readFileSync(resolve(__dirname, "../AdminWorkspaceView.tsx"), "utf8");
+    expect(adminSrc).toContain("IconAxoSidebarLogo");
     const iconsSrc = readFileSync(resolve(__dirname, "../icons.tsx"), "utf8");
     expect(iconsSrc).toContain("export const IconAxoLogo");
     expect(iconsSrc).toContain("export const IconAxoSidebarLogo");

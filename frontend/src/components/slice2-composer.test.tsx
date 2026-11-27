@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
+import { renderReadyHtml } from "../test-source";
 import App from "../App";
 import { HomeView } from "./HomeView";
 import { ProblemInput, computePlusPopoverPosition } from "./ProblemInput";
@@ -359,7 +360,7 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     expect(appHtml).toContain("Có lỗi xảy ra. Vui lòng thử lại.");
   });
 
-  it("18. Bấm thẻ Gợi ý khám phá mở mô hình thật trong Workspace Scene3D không cần gọi AI", () => {
+  it("18. Bấm thẻ Gợi ý khám phá mở mô hình thật trong Workspace Scene3D không cần gọi AI", async () => {
     const starters = starterEntries();
     expect(starters.length).toBeGreaterThan(0);
 
@@ -371,7 +372,7 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     expect(state.activeSampleId).toBe(first.id);
 
     useAppStore.getState().reset();
-    const homeHtml = renderToString(<App />);
+    const homeHtml = await renderReadyHtml(<App />);
     expect(homeHtml).toContain("Em muốn dựng hình nào?");
     expect(homeHtml).toContain('id="left-sidebar"');
     expect(homeHtml).toContain("Thư viện mô phỏng");

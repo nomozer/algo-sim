@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { renderToString } from "react-dom/server";
+import { renderReadyHtml } from "../test-source";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import App from "../App";
 import { publicCatalog } from "../data/offline-catalog";
@@ -29,7 +30,7 @@ describe("AXO Error Experience & Unbreakable Escape Navigation (§7–§8)", () 
     syncStoreForSSR();
   });
 
-  it("1. Route Not Found (404): phân loại đúng URL không tồn tại và render minh họa 3D wireframe 404 riêng trong nền sáng Axo", () => {
+  it("1. Route Not Found (404): phân loại đúng URL không tồn tại và render minh họa 3D wireframe 404 riêng trong nền sáng Axo", async () => {
     expect(resolveLocationRoute("/", "", "").kind).toBe("view");
     expect(resolveLocationRoute("/library", "", "")).toEqual({
       kind: "view",
@@ -62,7 +63,7 @@ describe("AXO Error Experience & Unbreakable Escape Navigation (§7–§8)", () 
     expect(useAppStore.getState().view).toBe("not_found");
     syncStoreForSSR();
 
-    const html = renderToString(<App />);
+    const html = await renderReadyHtml(<App />);
     expect(html).toContain('data-error-kind="not_found"');
     expect(html).toContain('data-illustration="axo-404-polyhedron"');
     expect(html).toContain("404");
@@ -131,7 +132,7 @@ describe("AXO Error Experience & Unbreakable Escape Navigation (§7–§8)", () 
     spy.mockRestore();
   });
 
-  it("3. Invalid / Unsupported Simulation: hợp đồng scene3d hỏng, mâu thuẫn toán học và phản hồi unsupported từ Backend phân loại vào Category C (không giả làm 404, không làm sập App)", () => {
+  it("3. Invalid / Unsupported Simulation: hợp đồng scene3d hỏng, mâu thuẫn toán học và phản hồi unsupported từ Backend phân loại vào Category C (không giả làm 404, không làm sập App)", async () => {
     const sample = publicCatalog()[0]!;
     // Hợp đồng scene3d bị hỏng trong bản ghi hình học đang mở
     useAppStore.setState({
@@ -150,7 +151,7 @@ describe("AXO Error Experience & Unbreakable Escape Navigation (§7–§8)", () 
       },
     });
     syncStoreForSSR();
-    const appBrokenSceneHtml = renderToString(<App />);
+    const appBrokenSceneHtml = await renderReadyHtml(<App />);
     expect(appBrokenSceneHtml).toContain('data-error-kind="unsupported_simulation"');
     expect(appBrokenSceneHtml).toContain('data-illustration="axo-constraint-unclosed"');
     expect(appBrokenSceneHtml).not.toContain('data-error-kind="not_found"');
@@ -206,7 +207,7 @@ describe("AXO Error Experience & Unbreakable Escape Navigation (§7–§8)", () 
     expect(refusalHtml).not.toContain('class="axo-error-actions"');
   });
 
-  it("4. Network / Data Loading Failure: phân loại từ hợp đồng lỗi có kiểu (AxoClientError), tuyệt đối không đoán từ chuỗi message", () => {
+  it("4. Network / Data Loading Failure: phân loại từ hợp đồng lỗi có kiểu (AxoClientError), tuyệt đối không đoán từ chuỗi message", async () => {
     const opaqueNetErr = new AxoClientError({
       kind: "network",
       code: "NETWORK_UNREACHABLE",
@@ -232,7 +233,7 @@ describe("AXO Error Experience & Unbreakable Escape Navigation (§7–§8)", () 
 
     useAppStore.getState().reportNetworkFailure(opaqueNetErr);
     syncStoreForSSR();
-    const netHtml = renderToString(<App />);
+    const netHtml = await renderReadyHtml(<App />);
     expect(netHtml).toContain('data-error-kind="network_failure"');
     expect(netHtml).toContain('data-illustration="axo-network-link"');
     expect(netHtml).not.toContain('data-error-kind="not_found"');
@@ -278,7 +279,7 @@ describe("AXO Error Experience & Unbreakable Escape Navigation (§7–§8)", () 
     expect(css).toMatch(/@media\s*\(\s*prefers-reduced-motion:\s*reduce\s*\)[\s\S]*?\.axo-error-svg-float/);
   });
 
-  it("7. Khóa hồi quy điều hướng nâng cao: App hiển thị được variant=refusal trên /workspace, ErrorBoundary gọi thuLai() ở mọi nút thoát, NOT_FOUND/HTTP_ERROR có mô tả kiểu hóa, và SessionCard chịu được bản ghi 3D hỏng", () => {
+  it("7. Khóa hồi quy điều hướng nâng cao: App hiển thị được variant=refusal trên /workspace, ErrorBoundary gọi thuLai() ở mọi nút thoát, NOT_FOUND/HTTP_ERROR có mô tả kiểu hóa, và SessionCard chịu được bản ghi 3D hỏng", async () => {
     // 7A: App.tsx gọi thuLai() trên cả onBack, onGoHome và onOpenLibrary để không kẹt khi resetKey giữ nguyên
     const appSrc = readFileSync(new URL("../App.tsx", import.meta.url), "utf8");
     expect(appSrc).toMatch(/onBack=\{\(\)\s*=>\s*\{[\s\S]*?escapeFromError\(\);[\s\S]*?thuLai\(\);/);
@@ -295,7 +296,7 @@ describe("AXO Error Experience & Unbreakable Escape Navigation (§7–§8)", () 
     useAppStore.getState().syncLocationRoute("/workspace", "", "");
     syncStoreForSSR();
     expect(useAppStore.getState().view).toBe("workspace");
-    const appRefusalHtml = renderToString(<App />);
+    const appRefusalHtml = await renderReadyHtml(<App />);
     expect(appRefusalHtml).toContain('data-error-kind="unsupported_simulation"');
     expect(appRefusalHtml).toContain("is-refusal");
 

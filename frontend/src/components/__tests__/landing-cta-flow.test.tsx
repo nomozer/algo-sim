@@ -119,7 +119,7 @@ describe("AXO Landing — Canonical CTAs, Copy Accuracy & Intended Destination F
     expect(html).not.toContain("Bắt đầu dựng hình");
   });
 
-  it("routes unauthenticated Landing CTAs to /login with saved intended destination, restores Workspace once after login, and avoids redirect loops", () => {
+  it("routes unauthenticated Landing CTAs to /login with saved intended destination, restores Workspace once after login, and avoids redirect loops", async () => {
     useAuthStore.setState({
       user: null,
       resolved: true,
@@ -141,6 +141,7 @@ describe("AXO Landing — Canonical CTAs, Copy Accuracy & Intended Destination F
 
     const applied = applyIntendedDestination(pendingSample!, SAMPLE_STUDENT);
     expect(applied).toBe(true);
+    await useAppStore.getState().waitForPendingSampleLoad();
     expect(useAppStore.getState().view).toBe("workspace");
     expect(useAppStore.getState().guestEnteredApp).toBe(true);
     expect(useAppStore.getState().activeSampleId).toBe("chop-thiet-dien-ba-diem");
@@ -153,7 +154,7 @@ describe("AXO Landing — Canonical CTAs, Copy Accuracy & Intended Destination F
     expect(peekIntendedDestination()?.sampleId).toBe("chop-thiet-dien-ba-diem");
   });
 
-  it("allows Guests to view public Library and open verified Sample models without forcing login", () => {
+  it("allows Guests to view public Library and open verified Sample models without forcing login", async () => {
     useAuthStore.setState({ user: null, resolved: true });
     useAppStore.getState().setView("landing");
 
@@ -161,6 +162,7 @@ describe("AXO Landing — Canonical CTAs, Copy Accuracy & Intended Destination F
     expect(useAppStore.getState().view).toBe("library");
 
     openSampleInWorkspace("lap-phuong-thiet-dien-bat-ky");
+    await useAppStore.getState().waitForPendingSampleLoad();
     expect(useAppStore.getState().view).toBe("workspace");
     expect(useAppStore.getState().activeSampleId).toBe("lap-phuong-thiet-dien-bat-ky");
   });

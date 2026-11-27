@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ReactNode } from "react";
 import { renderToString } from "react-dom/server";
+import { renderReadyHtml } from "../test-source";
 import App, { reconcileCrashedResetKey } from "../App";
 import { publicCatalog } from "../data/offline-catalog";
 import { AxoErrorExperience } from "./AxoErrorExperience";
@@ -183,7 +184,7 @@ describe("AXO Master §9: Error State Design Quality, Strict Classification & 10
     expect(useAppStore.getState().escapeFromError()).toBe("library");
   });
 
-  it("6. URL navigation to a corrupted history item (`scene3d` invalid) surfaces `unsupported_simulation` (never 404, never silent Home drop) and escapes cleanly", () => {
+  it("6. URL navigation to a corrupted history item (`scene3d` invalid) surfaces `unsupported_simulation` (never 404, never silent Home drop) and escapes cleanly", async () => {
     const validBaseEnv = {
       status: "ok" as const,
       simulation_id: "generic.semantic_program",
@@ -215,14 +216,14 @@ describe("AXO Master §9: Error State Design Quality, Strict Classification & 10
     expect(useAppStore.getState().routeFailure?.kind).toBe("unsupported_simulation");
 
     Object.assign(useAppStore.getInitialState(), useAppStore.getState());
-    const html = renderToString(<App />);
+    const html = await renderReadyHtml(<App />);
     expect(html).toContain('data-error-kind="unsupported_simulation"');
     expect(html).not.toContain('data-error-kind="not_found"');
     expect(useAppStore.getState().escapeFromError()).toBe("home");
     historyStore.clear();
   });
 
-  it("7. Adversarial Review [M-01] & [m-01]: escaping ErrorBoundary via TopNav clears `crashedResetKey` (preserving `canvasFirst` on return), and escaping Home `network_failure` stays on Home with `problemText` preserved", () => {
+  it("7. Adversarial Review [M-01] & [m-01]: escaping ErrorBoundary via TopNav clears `crashedResetKey` (preserving `canvasFirst` on return), and escaping Home `network_failure` stays on Home with `problemText` preserved", async () => {
     // [m-01] Visit Library -> back to Home -> type problemText -> encounter network_failure -> escapeFromError stays on Home!
     useAppStore.getState().openLibrary();
     useAppStore.getState().goHome();
@@ -247,7 +248,7 @@ describe("AXO Master §9: Error State Design Quality, Strict Classification & 10
 
     useAppStore.getState().loadEnvelope(sample.envelope, sample.id);
     Object.assign(useAppStore.getInitialState(), useAppStore.getState());
-    const cleanWorkspaceHtml = renderToString(<App />);
+    const cleanWorkspaceHtml = await renderReadyHtml(<App />);
     expect(cleanWorkspaceHtml).toContain("la-canh-3d");
     expect(cleanWorkspaceHtml).not.toContain('class="nav-bar"');
   });

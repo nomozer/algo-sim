@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { renderToString } from "react-dom/server";
 import App from "../App";
+import { renderReadyHtml } from "../test-source";
 import { registerAllSimulations } from "../simulations";
 import type { SimulationEnvelope } from "../simulations/types";
 import { useAppStore } from "./store";
@@ -121,8 +121,8 @@ describe("(9) MỞ LẠI TỪ LỊCH SỬ — zero-AI, khôi phục tiến độ
    hữu duy nhất của thao tác học sinh. */
 
 describe("App SSR — Home sạch (không giả inspector/timeline rỗng)", () => {
-  it("(1)-(5) trạng thái đầu: hero + composer là hành động chính; không player-controls, không panel Quan sát", () => {
-    const html = renderToString(<App />);
+  it("(1)-(5) trạng thái đầu: hero + composer là hành động chính; không player-controls, không panel Quan sát", async () => {
+    const html = await renderReadyHtml(<App />);
     expect(html).toContain("Em muốn dựng hình nào?");
     expect(html).toContain("Phân tích");
     expect(html).toContain('id="left-sidebar"');

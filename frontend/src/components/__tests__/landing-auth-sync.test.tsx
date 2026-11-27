@@ -1,5 +1,5 @@
-import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { renderReadyHtml } from "../../test-source";
 import App, {
   AXO_AUTH_SYNC_STORAGE_KEY,
   reconcileAuthSession,
@@ -96,13 +96,13 @@ describe("AXO Landing Page V1.2.1 — Auth & Navigation Sync", () => {
     syncStoresForSSR();
   });
 
-  it("synchronizes authenticated Student/Teacher/Admin state between Landing Header and Workspace LeftSidebar", () => {
+  it("synchronizes authenticated Student/Teacher/Admin state between Landing Header and Workspace LeftSidebar", async () => {
     for (const user of USERS_BY_ROLE) {
       useAuthStore.setState({ user, resolved: true, error: null });
       useAppStore.getState().setView("landing");
       syncStoresForSSR();
 
-      const landingHtml = renderToString(<App />);
+      const landingHtml = await renderReadyHtml(<App />);
       const headerHtml = landingHtml.slice(
         landingHtml.indexOf('<header id="landing-header"'),
         landingHtml.indexOf("</header>") + "</header>".length,
@@ -120,7 +120,7 @@ describe("AXO Landing Page V1.2.1 — Auth & Navigation Sync", () => {
       expect(useAppStore.getState().view).toBe(expectedView);
       expect(useAppStore.getState().guestEnteredApp).toBe(true);
 
-      const workspaceHtml = renderToString(<App />);
+      const workspaceHtml = await renderReadyHtml(<App />);
       if (user.role !== "admin") {
         expect(workspaceHtml).toContain('id="left-sidebar"');
         expect(workspaceHtml).toContain('id="sb-user-account-btn"');
@@ -195,13 +195,13 @@ describe("AXO Landing Page V1.2.1 — Auth & Navigation Sync", () => {
     expect(AXO_AUTH_SYNC_STORAGE_KEY).toBe("axo_auth_sync_v1");
   });
 
-  it("prevents initial LeftSidebar/TopNav flash on cold load to /gioi-thieu before useEffect runs", () => {
+  it("prevents initial LeftSidebar/TopNav flash on cold load to /gioi-thieu before useEffect runs", async () => {
     useAuthStore.setState({ user: USERS_BY_ROLE[0], resolved: true, error: null });
     useAppStore.getState().reset();
     syncStoresForSSR();
 
     (window as unknown as { location: { pathname: string } }).location.pathname = "/gioi-thieu";
-    const html = renderToString(<App />);
+    const html = await renderReadyHtml(<App />);
     expect(html).toContain('id="view-landing"');
     expect(html).not.toContain('id="left-sidebar"');
     expect(html).not.toContain('class="nav-bar"');

@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderToString } from "react-dom/server";
+import { renderReadyHtml } from "../test-source";
 import App from "../App";
 import { itemsForRole } from "./TopNav";
 import { discoverableCatalog, offlineCatalog, publicCatalog } from "../data/offline-catalog";
@@ -41,8 +42,8 @@ describe("luật icon — không ký tự Unicode/emoji trên UI", () => {
     useAppStore.getState().reset();
   });
 
-  it("Trang chủ không chứa ký tự icon nào (đã thay bằng SVG)", () => {
-    const html = renderToString(<App />);
+  it("Trang chủ không chứa ký tự icon nào (đã thay bằng SVG)", async () => {
+    const html = await renderReadyHtml(<App />);
     for (const ch of FORBIDDEN_ICON_CHARS) {
       expect(html, `ký tự icon "${ch}" vẫn còn trên UI — phải dùng icons.tsx`).not.toContain(ch);
     }
@@ -64,8 +65,8 @@ describe("Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => {
     useAppStore.getState().reset();
   });
 
-  it("không còn nút bung cả danh mục tại chỗ (đã dời sang Thư viện)", () => {
-    const html = renderToString(<App />);
+  it("không còn nút bung cả danh mục tại chỗ (đã dời sang Thư viện)", async () => {
+    const html = await renderReadyHtml(<App />);
     expect(html).not.toContain("Xem tất cả mô phỏng mẫu");
     expect(html).toContain("Thư viện mô phỏng");
     expect((html.match(/class="starter-card"/g) ?? []).length).toBe(0);
@@ -93,7 +94,7 @@ describe("Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => {
     expect(store.useAppStore.getState().history).toHaveLength(muc.length);
 
     const FreshApp = (await import("../App")).default;
-    const html = renderToString(<FreshApp />);
+    const html = await renderReadyHtml(<FreshApp />);
 
     expect(html).toContain('id="left-sidebar"');
     expect(html).toContain('id="sidebar-group-problems"');
@@ -101,8 +102,8 @@ describe("Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => {
     expect((html.match(/class="starter-card"/g) ?? []).length).toBe(0);
   });
 
-  it("hàng chip đề mẫu AI đã gỡ — Trang chủ có ĐÚNG MỘT đường dùng AI (gõ đề)", () => {
-    const html = renderToString(<App />);
+  it("hàng chip đề mẫu AI đã gỡ — Trang chủ có ĐÚNG MỘT đường dùng AI (gõ đề)", async () => {
+    const html = await renderReadyHtml(<App />);
     expect(html).not.toContain("prompt-chip");
     expect(html).not.toContain("Chưa biết bắt đầu từ đâu");
     // đường dùng AI duy nhất: nút gửi của composer
@@ -162,8 +163,8 @@ describe("Panel Giải thích không còn control AI nào", () => {
     expect(html).toContain("Chưa có mô phỏng nào đang chạy.");
   });
 
-  it("Trang chủ VẪN giữ đường phân tích đề bằng AI", () => {
-    const html = renderToString(<App />);
+  it("Trang chủ VẪN giữ đường phân tích đề bằng AI", async () => {
+    const html = await renderReadyHtml(<App />);
     expect(html).toContain("Phân tích đề bằng AI");
   });
 });
@@ -194,11 +195,11 @@ describe("AI thôi ngang hàng với mô phỏng (R0 phản chiếu lên UI)", (
     expect(useAppStore.getState().rightOpen).toBe(false);
   });
 
-  it("CHƯA đăng nhập: header chuẩn Axo với capsule (Trang chủ, Thư viện) và nút Đăng nhập / Đăng ký", () => {
+  it("CHƯA đăng nhập: header chuẩn Axo với capsule (Trang chủ, Thư viện) và nút Đăng nhập / Đăng ký", async () => {
     useAppStore.getState().reset();
     useAppStore.getState().setGuestEnteredApp(true);
     Object.assign(useAppStore.getInitialState(), useAppStore.getState());
-    const html = renderToString(<App />);
+    const html = await renderReadyHtml(<App />);
     expect(html).toContain("nav-link");
     expect(html).toContain("nav-n1-capsule");
     expect(html).toContain("Trang chủ");

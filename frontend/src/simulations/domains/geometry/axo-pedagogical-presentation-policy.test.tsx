@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, afterEach } from "vitest";
 import { renderToString } from "react-dom/server";
+import { renderReadyHtml } from "../../../test-source";
 import {
   classifySceneEntityProvenance,
   objectsAt,
@@ -733,17 +734,18 @@ describe("AXO Pedagogical Simulation Presentation Policy & Cross-Family Verifica
   });
 
   describe("11.F — Route 404 & WebGL / Error Recovery Preservation", () => {
-    it("renders minimalist 404 without reload loop and preserves problem statement + step dock when WebGL is unavailable", () => {
+    it("renders minimalist 404 without reload loop and preserves problem statement + step dock when WebGL is unavailable", async () => {
       try {
         useAppStore.getState().syncLocationRoute("/duong-dan-khong-ton-tai", "", "");
         syncStoreForSSR();
-        const notFoundHtml = renderToString(<App />);
+        const notFoundHtml = await renderReadyHtml(<App />);
         expect(notFoundHtml).toContain('data-error-kind="not_found"');
         expect(notFoundHtml).not.toMatch(/meta[^>]*http-equiv="refresh"/iu);
 
         useAppStore.getState().syncLocationRoute("/simulation/cau-cat-mat-phang", "", "");
+        await useAppStore.getState().waitForPendingSampleLoad();
         syncStoreForSSR();
-        const simHtml = renderToString(<App />);
+        const simHtml = await renderReadyHtml(<App />);
         expect(simHtml).not.toContain('data-error-kind="not_found"');
         expect(simHtml).toContain('id="ws-dock"');
         expect(simHtml).not.toContain('id="dock-math-results"');
