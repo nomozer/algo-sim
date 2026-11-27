@@ -1,0 +1,5542 @@
+{
+  "schema": "axo-perf-before/1",
+  "baseline_commit": "9809ece5c925259612c3c5d78cff32e60822cdce",
+  "throttleProfile": {
+    "name": "Fast3G_plus_4xCPU",
+    "downloadThroughputBytesPerSec": 204800,
+    "uploadThroughputBytesPerSec": 96000,
+    "latencyMs": 150,
+    "cpuThrottlingRate": 4
+  },
+  "local_summaries": {
+    "desktop:/": {
+      "runs": 5,
+      "requestCount": 17,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65856,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 732662,
+        "min": 732662,
+        "max": 732662,
+        "mean": 732662,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 163531,
+        "min": 163530,
+        "max": 163531,
+        "mean": 163530.8,
+        "stdev": 0.4
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 1686666,
+        "min": 1686665,
+        "max": 1686667,
+        "mean": 1686666.2,
+        "stdev": 0.75
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 4379209,
+        "min": 4379208,
+        "max": 4379209,
+        "mean": 4379208.8,
+        "stdev": 0.4
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 5,
+        "median": 700,
+        "min": 676,
+        "max": 8384,
+        "mean": 2228.8,
+        "stdev": 3077.63
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 716,
+        "min": 688,
+        "max": 8404,
+        "mean": 2253.6,
+        "stdev": 3075.33
+      },
+      "cls": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 52,
+        "mean": 10.4,
+        "stdev": 20.8
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 730,
+        "min": 697,
+        "max": 8244,
+        "mean": 2226.8,
+        "stdev": 3008.69
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-construct.png",
+          "type": "image",
+          "enc": 83401,
+          "dec": 83144,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-inspect.png",
+          "type": "image",
+          "enc": 89483,
+          "dec": 89226,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/about-cube-section.png",
+          "type": "image",
+          "enc": 128039,
+          "dec": 127781,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-sphere-pyramid.png",
+          "type": "image",
+          "enc": 150903,
+          "dec": 150645,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-oxyz-intersection.png",
+          "type": "image",
+          "enc": 104007,
+          "dec": 103749,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-distance-plane.png",
+          "type": "image",
+          "enc": 75065,
+          "dec": 74808,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-pyramid-section.png",
+          "type": "image",
+          "enc": 101764,
+          "dec": 101506,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2",
+          "type": "font",
+          "enc": 19122,
+          "dec": 19122,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/about": {
+      "runs": 2,
+      "requestCount": 17,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65857,
+      "imageEncodedBytes": {
+        "n": 2,
+        "median": 732662,
+        "min": 732662,
+        "max": 732662,
+        "mean": 732662,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 2,
+        "median": 163530.5,
+        "min": 163530,
+        "max": 163531,
+        "mean": 163530.5,
+        "stdev": 0.5
+      },
+      "totalEncodedBytes": {
+        "n": 2,
+        "median": 1686666,
+        "min": 1686666,
+        "max": 1686666,
+        "mean": 1686666,
+        "stdev": 0
+      },
+      "totalDecodedBytes": {
+        "n": 2,
+        "median": 4379208.5,
+        "min": 4379208,
+        "max": 4379209,
+        "mean": 4379208.5,
+        "stdev": 0.5
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 2,
+        "median": 714,
+        "min": 696,
+        "max": 732,
+        "mean": 714,
+        "stdev": 18
+      },
+      "lcpMs": {
+        "n": 2,
+        "median": 726,
+        "min": 708,
+        "max": 744,
+        "mean": 726,
+        "stdev": 18
+      },
+      "cls": {
+        "n": 2,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 2,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "readyMs": {
+        "n": 2,
+        "median": 744,
+        "min": 727,
+        "max": 761,
+        "mean": 744,
+        "stdev": 17
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/about",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1216,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-construct.png",
+          "type": "image",
+          "enc": 83401,
+          "dec": 83144,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-inspect.png",
+          "type": "image",
+          "enc": 89483,
+          "dec": 89226,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/about-cube-section.png",
+          "type": "image",
+          "enc": 128039,
+          "dec": 127781,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-sphere-pyramid.png",
+          "type": "image",
+          "enc": 150903,
+          "dec": 150645,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-oxyz-intersection.png",
+          "type": "image",
+          "enc": 104007,
+          "dec": 103749,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-distance-plane.png",
+          "type": "image",
+          "enc": 75065,
+          "dec": 74808,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-pyramid-section.png",
+          "type": "image",
+          "enc": 101764,
+          "dec": 101506,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48806,
+          "dec": 48806,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2",
+          "type": "font",
+          "enc": 19122,
+          "dec": 19122,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/library": {
+      "runs": 5,
+      "requestCount": 9,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65857,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 144409,
+        "min": 144408,
+        "max": 144409,
+        "mean": 144408.6,
+        "stdev": 0.49
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 934882,
+        "min": 934881,
+        "max": 934883,
+        "mean": 934881.8,
+        "stdev": 0.75
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 3627425,
+        "min": 3627424,
+        "max": 3627425,
+        "mean": 3627424.6,
+        "stdev": 0.49
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 5,
+        "median": 860,
+        "min": 760,
+        "max": 1104,
+        "mean": 880.8,
+        "stdev": 126.27
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 1128,
+        "min": 1020,
+        "max": 1500,
+        "mean": 1174.4,
+        "stdev": 173.98
+      },
+      "cls": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 421,
+        "min": 406,
+        "max": 549,
+        "mean": 444.4,
+        "stdev": 52.72
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 1145,
+        "min": 1037,
+        "max": 2180,
+        "mean": 1323.4,
+        "stdev": 432.9
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/library",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1216,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10786,
+          "dec": 10786,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/app": {
+      "runs": 5,
+      "requestCount": 9,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65856,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 144409,
+        "min": 144408,
+        "max": 144409,
+        "mean": 144408.6,
+        "stdev": 0.49
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 934882,
+        "min": 934881,
+        "max": 934882,
+        "mean": 934881.6,
+        "stdev": 0.49
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 3627425,
+        "min": 3627424,
+        "max": 3627425,
+        "mean": 3627424.6,
+        "stdev": 0.49
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 5,
+        "median": 844,
+        "min": 804,
+        "max": 1024,
+        "mean": 876.8,
+        "stdev": 78.69
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 844,
+        "min": 804,
+        "max": 1024,
+        "mean": 876.8,
+        "stdev": 78.69
+      },
+      "cls": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 196,
+        "min": 183,
+        "max": 200,
+        "mean": 193.4,
+        "stdev": 6.18
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 875,
+        "min": 837,
+        "max": 1055,
+        "mean": 909.6,
+        "stdev": 78.38
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/app",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10786,
+          "dec": 10786,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/login": {
+      "runs": 5,
+      "requestCount": 9,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65856,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 144409,
+        "min": 144409,
+        "max": 144409,
+        "mean": 144409,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 934882,
+        "min": 934882,
+        "max": 934883,
+        "mean": 934882.2,
+        "stdev": 0.4
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 3627425,
+        "min": 3627425,
+        "max": 3627425,
+        "mean": 3627425,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 5,
+        "median": 752,
+        "min": 740,
+        "max": 800,
+        "mean": 763.2,
+        "stdev": 21.97
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 800,
+        "min": 780,
+        "max": 836,
+        "mean": 803.2,
+        "stdev": 19.66
+      },
+      "cls": {
+        "n": 5,
+        "median": 0.19,
+        "min": 0.19,
+        "max": 0.19,
+        "mean": 0.19,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 161,
+        "min": 156,
+        "max": 168,
+        "mean": 161.6,
+        "stdev": 3.93
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 795,
+        "min": 786,
+        "max": 846,
+        "mean": 808,
+        "stdev": 22.72
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/login",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/register": {
+      "runs": 2,
+      "requestCount": 9,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65856,
+      "imageEncodedBytes": {
+        "n": 2,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 2,
+        "median": 144408,
+        "min": 144408,
+        "max": 144408,
+        "mean": 144408,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 2,
+        "median": 934881.5,
+        "min": 934881,
+        "max": 934882,
+        "mean": 934881.5,
+        "stdev": 0.5
+      },
+      "totalDecodedBytes": {
+        "n": 2,
+        "median": 3627424,
+        "min": 3627424,
+        "max": 3627424,
+        "mean": 3627424,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 2,
+        "median": 842,
+        "min": 828,
+        "max": 856,
+        "mean": 842,
+        "stdev": 14
+      },
+      "lcpMs": {
+        "n": 2,
+        "median": 884,
+        "min": 876,
+        "max": 892,
+        "mean": 884,
+        "stdev": 8
+      },
+      "cls": {
+        "n": 2,
+        "median": 0.19,
+        "min": 0.19,
+        "max": 0.19,
+        "mean": 0.19,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 2,
+        "median": 173.5,
+        "min": 160,
+        "max": 187,
+        "mean": 173.5,
+        "stdev": 13.5
+      },
+      "readyMs": {
+        "n": 2,
+        "median": 895,
+        "min": 889,
+        "max": 901,
+        "mean": 895,
+        "stdev": 6
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/register",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85230,
+          "dec": 85230,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/forgot-password": {
+      "runs": 2,
+      "requestCount": 9,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65856,
+      "imageEncodedBytes": {
+        "n": 2,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 2,
+        "median": 144409,
+        "min": 144409,
+        "max": 144409,
+        "mean": 144409,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 2,
+        "median": 934882,
+        "min": 934882,
+        "max": 934882,
+        "mean": 934882,
+        "stdev": 0
+      },
+      "totalDecodedBytes": {
+        "n": 2,
+        "median": 3627425,
+        "min": 3627425,
+        "max": 3627425,
+        "mean": 3627425,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 2,
+        "median": 832,
+        "min": 816,
+        "max": 848,
+        "mean": 832,
+        "stdev": 16
+      },
+      "lcpMs": {
+        "n": 2,
+        "median": 902,
+        "min": 892,
+        "max": 912,
+        "mean": 902,
+        "stdev": 10
+      },
+      "cls": {
+        "n": 2,
+        "median": 0.19,
+        "min": 0.19,
+        "max": 0.19,
+        "mean": 0.19,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 2,
+        "median": 166,
+        "min": 164,
+        "max": 168,
+        "mean": 166,
+        "stdev": 2
+      },
+      "readyMs": {
+        "n": 2,
+        "median": 873,
+        "min": 860,
+        "max": 886,
+        "mean": 873,
+        "stdev": 13
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/forgot-password",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85646,
+          "dec": 85646,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/admin": {
+      "runs": 2,
+      "requestCount": 9,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65857,
+      "imageEncodedBytes": {
+        "n": 2,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 2,
+        "median": 144409,
+        "min": 144409,
+        "max": 144409,
+        "mean": 144409,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 2,
+        "median": 934882.5,
+        "min": 934882,
+        "max": 934883,
+        "mean": 934882.5,
+        "stdev": 0.5
+      },
+      "totalDecodedBytes": {
+        "n": 2,
+        "median": 3627425,
+        "min": 3627425,
+        "max": 3627425,
+        "mean": 3627425,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 2,
+        "median": 848,
+        "min": 816,
+        "max": 880,
+        "mean": 848,
+        "stdev": 32
+      },
+      "lcpMs": {
+        "n": 2,
+        "median": 880,
+        "min": 848,
+        "max": 912,
+        "mean": 880,
+        "stdev": 32
+      },
+      "cls": {
+        "n": 2,
+        "median": 0.19,
+        "min": 0.19,
+        "max": 0.19,
+        "mean": 0.19,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 2,
+        "median": 168,
+        "min": 167,
+        "max": 169,
+        "mean": 168,
+        "stdev": 1
+      },
+      "readyMs": {
+        "n": 2,
+        "median": 892,
+        "min": 858,
+        "max": 926,
+        "mean": 892,
+        "stdev": 34
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/admin",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1216,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85646,
+          "dec": 85646,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/simulation/pyramid-circumscribed-sphere": {
+      "runs": 5,
+      "requestCount": 11,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65856,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 163531,
+        "min": 163530,
+        "max": 163531,
+        "mean": 163530.8,
+        "stdev": 0.4
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 954004,
+        "min": 954003,
+        "max": 954005,
+        "mean": 954004,
+        "stdev": 0.63
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 3646547,
+        "min": 3646546,
+        "max": 3646547,
+        "mean": 3646546.8,
+        "stdev": 0.4
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 5,
+        "median": 816,
+        "min": 760,
+        "max": 952,
+        "mean": 825.6,
+        "stdev": 68.19
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 1200,
+        "min": 1148,
+        "max": 1448,
+        "mean": 1229.6,
+        "stdev": 111.85
+      },
+      "cls": {
+        "n": 5,
+        "median": 0.02,
+        "min": 0.02,
+        "max": 0.02,
+        "mean": 0.02,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 532,
+        "min": 520,
+        "max": 571,
+        "mean": 536.4,
+        "stdev": 18.12
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 1260,
+        "min": 1206,
+        "max": 1909,
+        "mean": 1375.8,
+        "stdev": 267.79
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/simulation/pyramid-circumscribed-sphere",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M28 0H0v28' fill='none' stroke='%230f172a' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E",
+          "type": "image",
+          "enc": 0,
+          "dec": 0,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10370,
+          "dec": 10370,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2",
+          "type": "font",
+          "enc": 19122,
+          "dec": 19122,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/simulation/cube-hexagonal-plane-section": {
+      "runs": 2,
+      "requestCount": 10,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65856,
+      "imageEncodedBytes": {
+        "n": 2,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 2,
+        "median": 144408,
+        "min": 144408,
+        "max": 144408,
+        "mean": 144408,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 2,
+        "median": 934881,
+        "min": 934881,
+        "max": 934881,
+        "mean": 934881,
+        "stdev": 0
+      },
+      "totalDecodedBytes": {
+        "n": 2,
+        "median": 3627424,
+        "min": 3627424,
+        "max": 3627424,
+        "mean": 3627424,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 2,
+        "median": 838,
+        "min": 756,
+        "max": 920,
+        "mean": 838,
+        "stdev": 82
+      },
+      "lcpMs": {
+        "n": 2,
+        "median": 1218,
+        "min": 1132,
+        "max": 1304,
+        "mean": 1218,
+        "stdev": 86
+      },
+      "cls": {
+        "n": 2,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 2,
+        "median": 521.5,
+        "min": 513,
+        "max": 530,
+        "mean": 521.5,
+        "stdev": 8.5
+      },
+      "readyMs": {
+        "n": 2,
+        "median": 1410.5,
+        "min": 1196,
+        "max": 1625,
+        "mean": 1410.5,
+        "stdev": 214.5
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/simulation/cube-hexagonal-plane-section",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M28 0H0v28' fill='none' stroke='%230f172a' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E",
+          "type": "image",
+          "enc": 0,
+          "dec": 0,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10785,
+          "dec": 10785,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/simulation/sphere-secant-plane-intersection": {
+      "runs": 2,
+      "requestCount": 10,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65857,
+      "imageEncodedBytes": {
+        "n": 2,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 2,
+        "median": 144409,
+        "min": 144409,
+        "max": 144409,
+        "mean": 144409,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 2,
+        "median": 934882.5,
+        "min": 934882,
+        "max": 934883,
+        "mean": 934882.5,
+        "stdev": 0.5
+      },
+      "totalDecodedBytes": {
+        "n": 2,
+        "median": 3627425,
+        "min": 3627425,
+        "max": 3627425,
+        "mean": 3627425,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 2,
+        "median": 766,
+        "min": 760,
+        "max": 772,
+        "mean": 766,
+        "stdev": 6
+      },
+      "lcpMs": {
+        "n": 2,
+        "median": 1142,
+        "min": 1132,
+        "max": 1152,
+        "mean": 1142,
+        "stdev": 10
+      },
+      "cls": {
+        "n": 2,
+        "median": 0.03,
+        "min": 0.03,
+        "max": 0.03,
+        "mean": 0.03,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 2,
+        "median": 510.5,
+        "min": 496,
+        "max": 525,
+        "mean": 510.5,
+        "stdev": 14.5
+      },
+      "readyMs": {
+        "n": 2,
+        "median": 1190.5,
+        "min": 1181,
+        "max": 1200,
+        "mean": 1190.5,
+        "stdev": 9.5
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/simulation/sphere-secant-plane-intersection",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1216,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M28 0H0v28' fill='none' stroke='%230f172a' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E",
+          "type": "image",
+          "enc": 0,
+          "dec": 0,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        }
+      ]
+    },
+    "mobile:/": {
+      "runs": 5,
+      "requestCount": 17,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65856,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 732662,
+        "min": 732662,
+        "max": 732662,
+        "mean": 732662,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 163531,
+        "min": 163531,
+        "max": 163531,
+        "mean": 163531,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 1686666,
+        "min": 1686666,
+        "max": 1686666,
+        "mean": 1686666,
+        "stdev": 0
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 4379209,
+        "min": 4379209,
+        "max": 4379209,
+        "mean": 4379209,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 5,
+        "median": 668,
+        "min": 640,
+        "max": 692,
+        "mean": 664.8,
+        "stdev": 17.05
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 668,
+        "min": 640,
+        "max": 692,
+        "mean": 664.8,
+        "stdev": 17.05
+      },
+      "cls": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 61,
+        "mean": 12.2,
+        "stdev": 24.4
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 679,
+        "min": 658,
+        "max": 721,
+        "mean": 683.4,
+        "stdev": 21.58
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-construct.png",
+          "type": "image",
+          "enc": 83401,
+          "dec": 83144,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-inspect.png",
+          "type": "image",
+          "enc": 89483,
+          "dec": 89226,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/about-cube-section.png",
+          "type": "image",
+          "enc": 128039,
+          "dec": 127781,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-sphere-pyramid.png",
+          "type": "image",
+          "enc": 150903,
+          "dec": 150645,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-oxyz-intersection.png",
+          "type": "image",
+          "enc": 104007,
+          "dec": 103749,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-distance-plane.png",
+          "type": "image",
+          "enc": 75065,
+          "dec": 74808,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-pyramid-section.png",
+          "type": "image",
+          "enc": 101764,
+          "dec": 101506,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2",
+          "type": "font",
+          "enc": 19122,
+          "dec": 19122,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        }
+      ]
+    },
+    "mobile_slow:/": {
+      "runs": 5,
+      "requestCount": 6,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65856,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 790473,
+        "min": 790473,
+        "max": 790582,
+        "mean": 790495,
+        "stdev": 43.5
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 3483016,
+        "min": 3483016,
+        "max": 3483016,
+        "mean": 3483016,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 5,
+        "median": 5252,
+        "min": 5188,
+        "max": 5288,
+        "mean": 5248.8,
+        "stdev": 35.72
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 5252,
+        "min": 5188,
+        "max": 5288,
+        "mean": 5248.8,
+        "stdev": 35.72
+      },
+      "cls": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 207,
+        "min": 203,
+        "max": 266,
+        "mean": 219.8,
+        "stdev": 23.79
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 5379,
+        "min": 5287,
+        "max": 5463,
+        "mean": 5378.8,
+        "stdev": 57.87
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        }
+      ]
+    },
+    "warm_f5:/": {
+      "runs": 5,
+      "requestCount": 18,
+      "jsEncodedBytes": 0,
+      "cssEncodedBytes": 0,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 732662,
+        "min": 732662,
+        "max": 732662,
+        "mean": 732662,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 67730,
+        "min": 35355,
+        "max": 86878,
+        "mean": 63950.4,
+        "stdev": 16987.58
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 801291,
+        "min": 768916,
+        "max": 820439,
+        "mean": 797511.4,
+        "stdev": 16987.58
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 4283408,
+        "min": 4251033,
+        "max": 4302556,
+        "mean": 4279628.4,
+        "stdev": 16987.58
+      },
+      "threeChunkEncodedBytes": 0,
+      "geometrySamplesChunkEncodedBytes": 0,
+      "fcpMs": {
+        "n": 5,
+        "median": 76,
+        "min": 60,
+        "max": 104,
+        "mean": 78.4,
+        "stdev": 16.12
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 76,
+        "min": 60,
+        "max": 104,
+        "mean": 78.4,
+        "stdev": 16.12
+      },
+      "cls": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 83,
+        "min": 70,
+        "max": 111,
+        "mean": 86.2,
+        "stdev": 14.99
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10252,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 0,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 0,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 0,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 0,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 0,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 0,
+          "dec": 10252,
+          "status": 200
+        },
+        {
+          "url": "/",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/about-cube-section.png",
+          "type": "image",
+          "enc": 128039,
+          "dec": 127781,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-construct.png",
+          "type": "image",
+          "enc": 83401,
+          "dec": 83144,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-inspect.png",
+          "type": "image",
+          "enc": 89483,
+          "dec": 89226,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-sphere-pyramid.png",
+          "type": "image",
+          "enc": 150903,
+          "dec": 150645,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-oxyz-intersection.png",
+          "type": "image",
+          "enc": 104007,
+          "dec": 103749,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-distance-plane.png",
+          "type": "image",
+          "enc": 75065,
+          "dec": 74808,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-pyramid-section.png",
+          "type": "image",
+          "enc": 101764,
+          "dec": 101506,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 15646,
+          "dec": 15646,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2",
+          "type": "font",
+          "enc": 8378,
+          "dec": 8378,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 52483,
+          "dec": 52483,
+          "status": 200
+        }
+      ]
+    },
+    "mobile:/library": {
+      "runs": 3,
+      "requestCount": 9,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65858,
+      "imageEncodedBytes": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 3,
+        "median": 144408,
+        "min": 144408,
+        "max": 144409,
+        "mean": 144408.33,
+        "stdev": 0.47
+      },
+      "totalEncodedBytes": {
+        "n": 3,
+        "median": 934883,
+        "min": 934883,
+        "max": 934884,
+        "mean": 934883.33,
+        "stdev": 0.47
+      },
+      "totalDecodedBytes": {
+        "n": 3,
+        "median": 3627424,
+        "min": 3627424,
+        "max": 3627425,
+        "mean": 3627424.33,
+        "stdev": 0.47
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 3,
+        "median": 816,
+        "min": 772,
+        "max": 856,
+        "mean": 814.67,
+        "stdev": 34.31
+      },
+      "lcpMs": {
+        "n": 3,
+        "median": 1060,
+        "min": 1020,
+        "max": 1120,
+        "mean": 1066.67,
+        "stdev": 41.1
+      },
+      "cls": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 3,
+        "median": 397,
+        "min": 391,
+        "max": 442,
+        "mean": 410,
+        "stdev": 22.76
+      },
+      "readyMs": {
+        "n": 3,
+        "median": 1078,
+        "min": 1035,
+        "max": 1201,
+        "mean": 1104.67,
+        "stdev": 70.34
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/library",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1217,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        }
+      ]
+    },
+    "mobile_slow:/library": {
+      "runs": 3,
+      "requestCount": 9,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65858,
+      "imageEncodedBytes": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 3,
+        "median": 144409,
+        "min": 144409,
+        "max": 144409,
+        "mean": 144409,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 3,
+        "median": 934884,
+        "min": 934884,
+        "max": 934885,
+        "mean": 934884.33,
+        "stdev": 0.47
+      },
+      "totalDecodedBytes": {
+        "n": 3,
+        "median": 3627425,
+        "min": 3627425,
+        "max": 3627425,
+        "mean": 3627425,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 3,
+        "median": 6140,
+        "min": 6120,
+        "max": 6480,
+        "mean": 6246.67,
+        "stdev": 165.19
+      },
+      "lcpMs": {
+        "n": 3,
+        "median": 8064,
+        "min": 7928,
+        "max": 9236,
+        "mean": 8409.33,
+        "stdev": 587.17
+      },
+      "cls": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 3,
+        "median": 3506,
+        "min": 3104,
+        "max": 4954,
+        "mean": 3854.67,
+        "stdev": 794.48
+      },
+      "readyMs": {
+        "n": 3,
+        "median": 8638,
+        "min": 8468,
+        "max": 10041,
+        "mean": 9049,
+        "stdev": 704.87
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/library",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1217,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10786,
+          "dec": 10786,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        }
+      ]
+    },
+    "mobile:/app": {
+      "runs": 3,
+      "requestCount": 9,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65856,
+      "imageEncodedBytes": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 3,
+        "median": 144409,
+        "min": 144409,
+        "max": 144409,
+        "mean": 144409,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 3,
+        "median": 934882,
+        "min": 934882,
+        "max": 934882,
+        "mean": 934882,
+        "stdev": 0
+      },
+      "totalDecodedBytes": {
+        "n": 3,
+        "median": 3627425,
+        "min": 3627425,
+        "max": 3627425,
+        "mean": 3627425,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 3,
+        "median": 844,
+        "min": 824,
+        "max": 888,
+        "mean": 852,
+        "stdev": 26.73
+      },
+      "lcpMs": {
+        "n": 3,
+        "median": 844,
+        "min": 824,
+        "max": 888,
+        "mean": 852,
+        "stdev": 26.73
+      },
+      "cls": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 3,
+        "median": 201,
+        "min": 166,
+        "max": 239,
+        "mean": 202,
+        "stdev": 29.81
+      },
+      "readyMs": {
+        "n": 3,
+        "median": 871,
+        "min": 863,
+        "max": 934,
+        "mean": 889.33,
+        "stdev": 31.75
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/app",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        }
+      ]
+    },
+    "mobile_slow:/app": {
+      "runs": 3,
+      "requestCount": 7,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65856,
+      "imageEncodedBytes": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 3,
+        "median": 10371,
+        "min": 7876,
+        "max": 10371,
+        "mean": 9539.33,
+        "stdev": 1176.15
+      },
+      "totalEncodedBytes": {
+        "n": 3,
+        "median": 800844,
+        "min": 798422,
+        "max": 800844,
+        "mean": 800036.67,
+        "stdev": 1141.74
+      },
+      "totalDecodedBytes": {
+        "n": 3,
+        "median": 3493387,
+        "min": 3492460,
+        "max": 3493387,
+        "mean": 3493078,
+        "stdev": 436.99
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 3,
+        "median": 6772,
+        "min": 6756,
+        "max": 6848,
+        "mean": 6792,
+        "stdev": 40.13
+      },
+      "lcpMs": {
+        "n": 3,
+        "median": 6772,
+        "min": 6756,
+        "max": 6848,
+        "mean": 6792,
+        "stdev": 40.13
+      },
+      "cls": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 3,
+        "median": 2006,
+        "min": 1933,
+        "max": 2012,
+        "mean": 1983.67,
+        "stdev": 35.91
+      },
+      "readyMs": {
+        "n": 3,
+        "median": 7043,
+        "min": 6933,
+        "max": 7052,
+        "mean": 7009.33,
+        "stdev": 54.1
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/app",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        }
+      ]
+    },
+    "mobile:/simulation/pyramid-circumscribed-sphere": {
+      "runs": 3,
+      "requestCount": 11,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65858,
+      "imageEncodedBytes": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 3,
+        "median": 163532,
+        "min": 163530,
+        "max": 163532,
+        "mean": 163531.33,
+        "stdev": 0.94
+      },
+      "totalEncodedBytes": {
+        "n": 3,
+        "median": 954006,
+        "min": 954003,
+        "max": 954007,
+        "mean": 954005.33,
+        "stdev": 1.7
+      },
+      "totalDecodedBytes": {
+        "n": 3,
+        "median": 3646548,
+        "min": 3646546,
+        "max": 3646548,
+        "mean": 3646547.33,
+        "stdev": 0.94
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 3,
+        "median": 864,
+        "min": 768,
+        "max": 868,
+        "mean": 833.33,
+        "stdev": 46.23
+      },
+      "lcpMs": {
+        "n": 3,
+        "median": 1396,
+        "min": 1180,
+        "max": 1408,
+        "mean": 1328,
+        "stdev": 104.77
+      },
+      "cls": {
+        "n": 3,
+        "median": 0.07,
+        "min": 0.07,
+        "max": 0.07,
+        "mean": 0.07,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 3,
+        "median": 791,
+        "min": 548,
+        "max": 836,
+        "mean": 725,
+        "stdev": 126.5
+      },
+      "readyMs": {
+        "n": 3,
+        "median": 1931,
+        "min": 1270,
+        "max": 1941,
+        "mean": 1714,
+        "stdev": 313.98
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/simulation/pyramid-circumscribed-sphere",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1217,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M28 0H0v28' fill='none' stroke='%230f172a' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E",
+          "type": "image",
+          "enc": 0,
+          "dec": 0,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10786,
+          "dec": 10786,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2",
+          "type": "font",
+          "enc": 19123,
+          "dec": 19123,
+          "status": 200
+        }
+      ]
+    },
+    "mobile_slow:/simulation/pyramid-circumscribed-sphere": {
+      "runs": 3,
+      "requestCount": 11,
+      "jsEncodedBytes": 723718,
+      "cssEncodedBytes": 65858,
+      "imageEncodedBytes": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 3,
+        "median": 163532,
+        "min": 163531,
+        "max": 163532,
+        "mean": 163531.67,
+        "stdev": 0.47
+      },
+      "totalEncodedBytes": {
+        "n": 3,
+        "median": 954007,
+        "min": 954004,
+        "max": 954007,
+        "mean": 954006,
+        "stdev": 1.41
+      },
+      "totalDecodedBytes": {
+        "n": 3,
+        "median": 3646548,
+        "min": 3646547,
+        "max": 3646548,
+        "mean": 3646547.67,
+        "stdev": 0.47
+      },
+      "threeChunkEncodedBytes": 143538,
+      "geometrySamplesChunkEncodedBytes": 264287,
+      "fcpMs": {
+        "n": 3,
+        "median": 6684,
+        "min": 6176,
+        "max": 7052,
+        "mean": 6637.33,
+        "stdev": 359.14
+      },
+      "lcpMs": {
+        "n": 3,
+        "median": 9772,
+        "min": 8316,
+        "max": 10196,
+        "mean": 9428,
+        "stdev": 805.13
+      },
+      "cls": {
+        "n": 3,
+        "median": 0.07,
+        "min": 0.07,
+        "max": 0.07,
+        "mean": 0.07,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 3,
+        "median": 5077,
+        "min": 3863,
+        "max": 5803,
+        "mean": 4914.33,
+        "stdev": 800.31
+      },
+      "readyMs": {
+        "n": 3,
+        "median": 10742,
+        "min": 8985,
+        "max": 11196,
+        "mean": 10307.67,
+        "stdev": 953.45
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/simulation/pyramid-circumscribed-sphere",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1217,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 64641,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 143538,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 264287,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 315893,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M28 0H0v28' fill='none' stroke='%230f172a' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E",
+          "type": "image",
+          "enc": 0,
+          "dec": 0,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2",
+          "type": "font",
+          "enc": 19123,
+          "dec": 19123,
+          "status": 200
+        }
+      ]
+    },
+    "warm_f5:/simulation/pyramid-circumscribed-sphere": {
+      "runs": 3,
+      "requestCount": 11,
+      "jsEncodedBytes": 0,
+      "cssEncodedBytes": 0,
+      "imageEncodedBytes": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 3,
+        "median": 899,
+        "min": 899,
+        "max": 899,
+        "mean": 899,
+        "stdev": 0
+      },
+      "totalDecodedBytes": {
+        "n": 3,
+        "median": 3483016,
+        "min": 3483016,
+        "max": 3484584,
+        "mean": 3483538.67,
+        "stdev": 739.16
+      },
+      "threeChunkEncodedBytes": 0,
+      "geometrySamplesChunkEncodedBytes": 0,
+      "fcpMs": {
+        "n": 3,
+        "median": 192,
+        "min": 156,
+        "max": 404,
+        "mean": 250.67,
+        "stdev": 109.41
+      },
+      "lcpMs": {
+        "n": 3,
+        "median": 384,
+        "min": 384,
+        "max": 404,
+        "mean": 390.67,
+        "stdev": 9.43
+      },
+      "cls": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 3,
+        "median": 214,
+        "min": 180,
+        "max": 237,
+        "mean": 210.33,
+        "stdev": 23.41
+      },
+      "readyMs": {
+        "n": 3,
+        "median": 399,
+        "min": 398,
+        "max": 419,
+        "mean": 405.33,
+        "stdev": 9.67
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 0,
+          "dec": 11452,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 0,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 0,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 0,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 0,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/simulation/pyramid-circumscribed-sphere",
+          "type": "document",
+          "enc": 899,
+          "dec": 899,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/l/font?kit=UcCB3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfU5NJeWUdIOjBeTGiXZdOD2MHsQ&skey=c491285d6722e4fa&v=v20",
+          "type": "font",
+          "enc": 0,
+          "dec": 13600,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/l/font?kit=UcCB3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfU5NJeWUdIOjBeTGiXZdCD2MHsQ&skey=c491285d6722e4fa&v=v20",
+          "type": "font",
+          "enc": 0,
+          "dec": 7784,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/l/font?kit=UcCB3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfU5NJeWUdIOjBeTGiXZdDD2MHsQ&skey=c491285d6722e4fa&v=v20",
+          "type": "font",
+          "enc": 0,
+          "dec": 61788,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/l/font?kit=UcCB3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfU5NJeWUdIOjBeTGiXZdND2M&skey=c491285d6722e4fa&v=v20",
+          "type": "font",
+          "enc": 0,
+          "dec": 38380,
+          "status": 200
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M28 0H0v28' fill='none' stroke='%230f172a' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E",
+          "type": "image",
+          "enc": 0,
+          "dec": 0,
+          "status": 200
+        }
+      ]
+    }
+  },
+  "local_client_nav": {
+    "toLibraryMs": {
+      "n": 5,
+      "median": 706,
+      "min": 644,
+      "max": 758,
+      "mean": 701.6,
+      "stdev": 36.78
+    },
+    "firstSimMs": {
+      "n": 5,
+      "median": 397,
+      "min": 373,
+      "max": 414,
+      "mean": 395.2,
+      "stdev": 14.78
+    },
+    "repeatSimMs": {
+      "n": 5,
+      "median": 268,
+      "min": 250,
+      "max": 359,
+      "mean": 283.8,
+      "stdev": 38.59
+    },
+    "fullJourneyTotalBytes": {
+      "n": 5,
+      "median": 1686666,
+      "min": 1645483,
+      "max": 1686668,
+      "mean": 1678430.2,
+      "stdev": 16473.6
+    }
+  },
+  "local_responsive_issues": [],
+  "production_summaries": {
+    "desktop:/": {
+      "runs": 5,
+      "requestCount": 17,
+      "jsEncodedBytes": 716782,
+      "cssEncodedBytes": 75094,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 732576,
+        "min": 732527,
+        "max": 732598,
+        "mean": 732571.2,
+        "stdev": 24.03
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 163531,
+        "min": 122275,
+        "max": 163532,
+        "mean": 155280.2,
+        "stdev": 16502.6
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 1688925,
+        "min": 1647725,
+        "max": 1688966,
+        "mean": 1680682.2,
+        "stdev": 16478.64
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 4379182,
+        "min": 4339490,
+        "max": 4379207,
+        "mean": 4371240.8,
+        "stdev": 15875.42
+      },
+      "threeChunkEncodedBytes": 147625,
+      "geometrySamplesChunkEncodedBytes": 248026,
+      "fcpMs": {
+        "n": 5,
+        "median": 540,
+        "min": 492,
+        "max": 1392,
+        "mean": 710.4,
+        "stdev": 343.64
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 648,
+        "min": 600,
+        "max": 1392,
+        "mean": 793.6,
+        "stdev": 302.2
+      },
+      "cls": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 74,
+        "mean": 29.4,
+        "stdev": 36.01
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 559,
+        "min": 503,
+        "max": 1403,
+        "mean": 723,
+        "stdev": 343.2
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/",
+          "type": "document",
+          "enc": 960,
+          "dec": 960,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 73879,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 147625,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 321131,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 248026,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-construct.png",
+          "type": "image",
+          "enc": 83340,
+          "dec": 83144,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10786,
+          "dec": 10786,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-pyramid-section.png",
+          "type": "image",
+          "enc": 101757,
+          "dec": 101506,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2",
+          "type": "font",
+          "enc": 19123,
+          "dec": 19123,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-sphere-pyramid.png",
+          "type": "image",
+          "enc": 150896,
+          "dec": 150645,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-inspect.png",
+          "type": "image",
+          "enc": 89442,
+          "dec": 89226,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-oxyz-intersection.png",
+          "type": "image",
+          "enc": 103993,
+          "dec": 103749,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/about-cube-section.png",
+          "type": "image",
+          "enc": 128165,
+          "dec": 127781,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-distance-plane.png",
+          "type": "image",
+          "enc": 75005,
+          "dec": 74808,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/about": {
+      "runs": 2,
+      "requestCount": 17,
+      "jsEncodedBytes": 716835,
+      "cssEncodedBytes": 75012,
+      "imageEncodedBytes": {
+        "n": 2,
+        "median": 732567.5,
+        "min": 732549,
+        "max": 732586,
+        "mean": 732567.5,
+        "stdev": 18.5
+      },
+      "fontEncodedBytes": {
+        "n": 2,
+        "median": 163531.5,
+        "min": 163531,
+        "max": 163532,
+        "mean": 163531.5,
+        "stdev": 0.5
+      },
+      "totalEncodedBytes": {
+        "n": 2,
+        "median": 1688922,
+        "min": 1688905,
+        "max": 1688939,
+        "mean": 1688922,
+        "stdev": 17
+      },
+      "totalDecodedBytes": {
+        "n": 2,
+        "median": 4379191,
+        "min": 4379173,
+        "max": 4379209,
+        "mean": 4379191,
+        "stdev": 18
+      },
+      "threeChunkEncodedBytes": 147600,
+      "geometrySamplesChunkEncodedBytes": 248026,
+      "fcpMs": {
+        "n": 2,
+        "median": 490,
+        "min": 480,
+        "max": 500,
+        "mean": 490,
+        "stdev": 10
+      },
+      "lcpMs": {
+        "n": 2,
+        "median": 586,
+        "min": 584,
+        "max": 588,
+        "mean": 586,
+        "stdev": 2
+      },
+      "cls": {
+        "n": 2,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 2,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "readyMs": {
+        "n": 2,
+        "median": 506,
+        "min": 496,
+        "max": 516,
+        "mean": 506,
+        "stdev": 10
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/about",
+          "type": "document",
+          "enc": 975,
+          "dec": 975,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 73797,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 147600,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 321209,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 248026,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-inspect.png",
+          "type": "image",
+          "enc": 89463,
+          "dec": 89226,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-construct.png",
+          "type": "image",
+          "enc": 83336,
+          "dec": 83144,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/about-cube-section.png",
+          "type": "image",
+          "enc": 128001,
+          "dec": 127781,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-pyramid-section.png",
+          "type": "image",
+          "enc": 101711,
+          "dec": 101506,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-oxyz-intersection.png",
+          "type": "image",
+          "enc": 103957,
+          "dec": 103749,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-distance-plane.png",
+          "type": "image",
+          "enc": 75214,
+          "dec": 74808,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-sphere-pyramid.png",
+          "type": "image",
+          "enc": 150904,
+          "dec": 150645,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2",
+          "type": "font",
+          "enc": 19122,
+          "dec": 19122,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85646,
+          "dec": 85646,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/library": {
+      "runs": 5,
+      "requestCount": 9,
+      "jsEncodedBytes": 716833,
+      "cssEncodedBytes": 75012,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 144409,
+        "min": 144409,
+        "max": 144409,
+        "mean": 144409,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 937232,
+        "min": 937229,
+        "max": 937235,
+        "mean": 937232.2,
+        "stdev": 1.94
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 3627501,
+        "min": 3627501,
+        "max": 3627503,
+        "mean": 3627501.6,
+        "stdev": 0.8
+      },
+      "threeChunkEncodedBytes": 147598,
+      "geometrySamplesChunkEncodedBytes": 248105,
+      "fcpMs": {
+        "n": 5,
+        "median": 596,
+        "min": 564,
+        "max": 636,
+        "mean": 598.4,
+        "stdev": 24.48
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 852,
+        "min": 808,
+        "max": 908,
+        "mean": 860,
+        "stdev": 34.04
+      },
+      "cls": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 411,
+        "min": 385,
+        "max": 451,
+        "mean": 411.2,
+        "stdev": 22.24
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 864,
+        "min": 820,
+        "max": 923,
+        "mean": 871.2,
+        "stdev": 34.82
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/library",
+          "type": "document",
+          "enc": 975,
+          "dec": 975,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 147598,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 248105,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 73797,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 321130,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85646,
+          "dec": 85646,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/app": {
+      "runs": 5,
+      "requestCount": 9,
+      "jsEncodedBytes": 716834,
+      "cssEncodedBytes": 75012,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 144409,
+        "min": 144409,
+        "max": 144409,
+        "mean": 144409,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 937233,
+        "min": 937231,
+        "max": 937238,
+        "mean": 937233.6,
+        "stdev": 2.33
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 3627502,
+        "min": 3627500,
+        "max": 3627502,
+        "mean": 3627501.4,
+        "stdev": 0.8
+      },
+      "threeChunkEncodedBytes": 147598,
+      "geometrySamplesChunkEncodedBytes": 248106,
+      "fcpMs": {
+        "n": 5,
+        "median": 616,
+        "min": 568,
+        "max": 636,
+        "mean": 609.6,
+        "stdev": 22.43
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 616,
+        "min": 568,
+        "max": 636,
+        "mean": 609.6,
+        "stdev": 22.43
+      },
+      "cls": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 162,
+        "min": 150,
+        "max": 168,
+        "mean": 161,
+        "stdev": 6.32
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 640,
+        "min": 590,
+        "max": 651,
+        "mean": 633.4,
+        "stdev": 22.33
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/app",
+          "type": "document",
+          "enc": 976,
+          "dec": 976,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 73797,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 248106,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 321130,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 147598,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/login": {
+      "runs": 5,
+      "requestCount": 9,
+      "jsEncodedBytes": 716834,
+      "cssEncodedBytes": 75014,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 144409,
+        "min": 144409,
+        "max": 144409,
+        "mean": 144409,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 937234,
+        "min": 937233,
+        "max": 937259,
+        "mean": 937239.6,
+        "stdev": 9.85
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 3627503,
+        "min": 3627500,
+        "max": 3627503,
+        "mean": 3627502.2,
+        "stdev": 1.17
+      },
+      "threeChunkEncodedBytes": 147598,
+      "geometrySamplesChunkEncodedBytes": 248026,
+      "fcpMs": {
+        "n": 5,
+        "median": 592,
+        "min": 568,
+        "max": 660,
+        "mean": 608,
+        "stdev": 37.09
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 624,
+        "min": 600,
+        "max": 696,
+        "mean": 640.8,
+        "stdev": 38.23
+      },
+      "cls": {
+        "n": 5,
+        "median": 0.19,
+        "min": 0.19,
+        "max": 0.19,
+        "mean": 0.19,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 160,
+        "min": 157,
+        "max": 165,
+        "mean": 160.4,
+        "stdev": 2.65
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 631,
+        "min": 611,
+        "max": 705,
+        "mean": 649.6,
+        "stdev": 38.18
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/login",
+          "type": "document",
+          "enc": 977,
+          "dec": 977,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 73797,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 147598,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 321210,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 248026,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1217,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/admin": {
+      "runs": 2,
+      "requestCount": 9,
+      "jsEncodedBytes": 716834,
+      "cssEncodedBytes": 75012,
+      "imageEncodedBytes": {
+        "n": 2,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 2,
+        "median": 144409,
+        "min": 144409,
+        "max": 144409,
+        "mean": 144409,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 2,
+        "median": 937232.5,
+        "min": 937230,
+        "max": 937235,
+        "mean": 937232.5,
+        "stdev": 2.5
+      },
+      "totalDecodedBytes": {
+        "n": 2,
+        "median": 3627501,
+        "min": 3627501,
+        "max": 3627501,
+        "mean": 3627501,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 147598,
+      "geometrySamplesChunkEncodedBytes": 248026,
+      "fcpMs": {
+        "n": 2,
+        "median": 592,
+        "min": 580,
+        "max": 604,
+        "mean": 592,
+        "stdev": 12
+      },
+      "lcpMs": {
+        "n": 2,
+        "median": 624,
+        "min": 612,
+        "max": 636,
+        "mean": 624,
+        "stdev": 12
+      },
+      "cls": {
+        "n": 2,
+        "median": 0.19,
+        "min": 0.19,
+        "max": 0.19,
+        "mean": 0.19,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 2,
+        "median": 161,
+        "min": 157,
+        "max": 165,
+        "mean": 161,
+        "stdev": 4
+      },
+      "readyMs": {
+        "n": 2,
+        "median": 634.5,
+        "min": 624,
+        "max": 645,
+        "mean": 634.5,
+        "stdev": 10.5
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/admin",
+          "type": "document",
+          "enc": 975,
+          "dec": 975,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 321210,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 147598,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 73797,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 248026,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85646,
+          "dec": 85646,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        }
+      ]
+    },
+    "desktop:/simulation/pyramid-circumscribed-sphere": {
+      "runs": 5,
+      "requestCount": 11,
+      "jsEncodedBytes": 716835,
+      "cssEncodedBytes": 75014,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 163531,
+        "min": 163530,
+        "max": 163532,
+        "mean": 163531,
+        "stdev": 0.89
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 956356,
+        "min": 956352,
+        "max": 956361,
+        "mean": 956356.2,
+        "stdev": 3.12
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 3646624,
+        "min": 3646623,
+        "max": 3646626,
+        "mean": 3646624.2,
+        "stdev": 1.17
+      },
+      "threeChunkEncodedBytes": 147599,
+      "geometrySamplesChunkEncodedBytes": 248026,
+      "fcpMs": {
+        "n": 5,
+        "median": 596,
+        "min": 572,
+        "max": 624,
+        "mean": 596.8,
+        "stdev": 16.67
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 964,
+        "min": 944,
+        "max": 1072,
+        "mean": 985.6,
+        "stdev": 45.44
+      },
+      "cls": {
+        "n": 5,
+        "median": 0.02,
+        "min": 0.02,
+        "max": 0.02,
+        "mean": 0.02,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 537,
+        "min": 480,
+        "max": 590,
+        "mean": 531.6,
+        "stdev": 38.16
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 1039,
+        "min": 959,
+        "max": 1495,
+        "mean": 1113.8,
+        "stdev": 193.06
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/simulation/pyramid-circumscribed-sphere",
+          "type": "document",
+          "enc": 977,
+          "dec": 977,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 73797,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 147599,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 321210,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 248026,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1217,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M28 0H0v28' fill='none' stroke='%230f172a' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E",
+          "type": "image",
+          "enc": 0,
+          "dec": 0,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10371,
+          "dec": 10371,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85231,
+          "dec": 85231,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2",
+          "type": "font",
+          "enc": 19123,
+          "dec": 19123,
+          "status": 200
+        }
+      ]
+    },
+    "mobile:/": {
+      "runs": 5,
+      "requestCount": 16,
+      "jsEncodedBytes": 716834,
+      "cssEncodedBytes": 75012,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 732566,
+        "min": 732548,
+        "max": 732596,
+        "mean": 732565.6,
+        "stdev": 17.22
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 163530,
+        "min": 78300,
+        "max": 163531,
+        "mean": 146484.2,
+        "stdev": 34092.1
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 1688888,
+        "min": 1603670,
+        "max": 1688933,
+        "mean": 1671855.2,
+        "stdev": 34092.6
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 4379155,
+        "min": 4293941,
+        "max": 4379202,
+        "mean": 4362125,
+        "stdev": 34092
+      },
+      "threeChunkEncodedBytes": 147678,
+      "geometrySamplesChunkEncodedBytes": 248026,
+      "fcpMs": {
+        "n": 5,
+        "median": 520,
+        "min": 472,
+        "max": 652,
+        "mean": 531.2,
+        "stdev": 63.47
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 520,
+        "min": 472,
+        "max": 652,
+        "mean": 531.2,
+        "stdev": 63.47
+      },
+      "cls": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 103,
+        "mean": 32.8,
+        "stdev": 42.31
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 528,
+        "min": 484,
+        "max": 658,
+        "mean": 541.2,
+        "stdev": 61.23
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/",
+          "type": "document",
+          "enc": 958,
+          "dec": 958,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 147678,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 73797,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 248026,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 321130,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-inspect.png",
+          "type": "image",
+          "enc": 89462,
+          "dec": 89226,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/how-step-construct.png",
+          "type": "image",
+          "enc": 83336,
+          "dec": 83144,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/about-cube-section.png",
+          "type": "image",
+          "enc": 128001,
+          "dec": 127781,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-distance-plane.png",
+          "type": "image",
+          "enc": 74994,
+          "dec": 74808,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-oxyz-intersection.png",
+          "type": "image",
+          "enc": 103957,
+          "dec": 103749,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-pyramid-section.png",
+          "type": "image",
+          "enc": 101717,
+          "dec": 101506,
+          "status": 200
+        },
+        {
+          "url": "/assets/landing/product-renders/sample-sphere-pyramid.png",
+          "type": "image",
+          "enc": 151099,
+          "dec": 150645,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10786,
+          "dec": 10786,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2",
+          "type": "font",
+          "enc": 19122,
+          "dec": 19122,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        }
+      ]
+    },
+    "mobile_slow:/": {
+      "runs": 5,
+      "requestCount": 6,
+      "jsEncodedBytes": 716837,
+      "cssEncodedBytes": 75014,
+      "imageEncodedBytes": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 5,
+        "median": 792809,
+        "min": 792805,
+        "max": 792827,
+        "mean": 792811.8,
+        "stdev": 7.78
+      },
+      "totalDecodedBytes": {
+        "n": 5,
+        "median": 3483075,
+        "min": 3483074,
+        "max": 3483076,
+        "mean": 3483075.2,
+        "stdev": 0.75
+      },
+      "threeChunkEncodedBytes": 147601,
+      "geometrySamplesChunkEncodedBytes": 248106,
+      "fcpMs": {
+        "n": 5,
+        "median": 5080,
+        "min": 5024,
+        "max": 5160,
+        "mean": 5092.8,
+        "stdev": 48.09
+      },
+      "lcpMs": {
+        "n": 5,
+        "median": 5080,
+        "min": 5024,
+        "max": 5160,
+        "mean": 5092.8,
+        "stdev": 48.09
+      },
+      "cls": {
+        "n": 5,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 5,
+        "median": 210,
+        "min": 198,
+        "max": 250,
+        "mean": 217.2,
+        "stdev": 17.97
+      },
+      "readyMs": {
+        "n": 5,
+        "median": 5227,
+        "min": 5149,
+        "max": 5337,
+        "mean": 5238.2,
+        "stdev": 64.39
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/",
+          "type": "document",
+          "enc": 959,
+          "dec": 959,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1217,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 73797,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 147601,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 248106,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 321130,
+          "dec": 1094950,
+          "status": 200
+        }
+      ]
+    },
+    "mobile:/library": {
+      "runs": 3,
+      "requestCount": 9,
+      "jsEncodedBytes": 716838,
+      "cssEncodedBytes": 75012,
+      "imageEncodedBytes": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 3,
+        "median": 144406,
+        "min": 144406,
+        "max": 144406,
+        "mean": 144406,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 3,
+        "median": 937232,
+        "min": 937231,
+        "max": 937253,
+        "mean": 937238.67,
+        "stdev": 10.14
+      },
+      "totalDecodedBytes": {
+        "n": 3,
+        "median": 3627498,
+        "min": 3627497,
+        "max": 3627499,
+        "mean": 3627498,
+        "stdev": 0.82
+      },
+      "threeChunkEncodedBytes": 147598,
+      "geometrySamplesChunkEncodedBytes": 248029,
+      "fcpMs": {
+        "n": 3,
+        "median": 620,
+        "min": 596,
+        "max": 672,
+        "mean": 629.33,
+        "stdev": 31.72
+      },
+      "lcpMs": {
+        "n": 3,
+        "median": 892,
+        "min": 864,
+        "max": 940,
+        "mean": 898.67,
+        "stdev": 31.38
+      },
+      "cls": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 3,
+        "median": 424,
+        "min": 424,
+        "max": 428,
+        "mean": 425.33,
+        "stdev": 1.89
+      },
+      "readyMs": {
+        "n": 3,
+        "median": 929,
+        "min": 902,
+        "max": 958,
+        "mean": 929.67,
+        "stdev": 22.87
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/library",
+          "type": "document",
+          "enc": 975,
+          "dec": 975,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 73797,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 147598,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 321211,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 248029,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10785,
+          "dec": 10785,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48392,
+          "dec": 48392,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85229,
+          "dec": 85229,
+          "status": 200
+        }
+      ]
+    },
+    "mobile:/app": {
+      "runs": 3,
+      "requestCount": 9,
+      "jsEncodedBytes": 716784,
+      "cssEncodedBytes": 75065,
+      "imageEncodedBytes": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 3,
+        "median": 144406,
+        "min": 144406,
+        "max": 144406,
+        "mean": 144406,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 3,
+        "median": 937231,
+        "min": 937230,
+        "max": 937251,
+        "mean": 937237.33,
+        "stdev": 9.67
+      },
+      "totalDecodedBytes": {
+        "n": 3,
+        "median": 3627499,
+        "min": 3627499,
+        "max": 3627499,
+        "mean": 3627499,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 147598,
+      "geometrySamplesChunkEncodedBytes": 248056,
+      "fcpMs": {
+        "n": 3,
+        "median": 592,
+        "min": 576,
+        "max": 652,
+        "mean": 606.67,
+        "stdev": 32.71
+      },
+      "lcpMs": {
+        "n": 3,
+        "median": 592,
+        "min": 576,
+        "max": 652,
+        "mean": 606.67,
+        "stdev": 32.71
+      },
+      "cls": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 3,
+        "median": 167,
+        "min": 165,
+        "max": 170,
+        "mean": 167.33,
+        "stdev": 2.05
+      },
+      "readyMs": {
+        "n": 3,
+        "median": 611,
+        "min": 603,
+        "max": 676,
+        "mean": 630,
+        "stdev": 32.69
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/app",
+          "type": "document",
+          "enc": 976,
+          "dec": 976,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 73850,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 147598,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 248056,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1215,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 321130,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10370,
+          "dec": 10370,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85229,
+          "dec": 85229,
+          "status": 200
+        }
+      ]
+    },
+    "mobile:/simulation/pyramid-circumscribed-sphere": {
+      "runs": 3,
+      "requestCount": 11,
+      "jsEncodedBytes": 716835,
+      "cssEncodedBytes": 75014,
+      "imageEncodedBytes": {
+        "n": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "stdev": 0
+      },
+      "fontEncodedBytes": {
+        "n": 3,
+        "median": 163529,
+        "min": 163529,
+        "max": 163529,
+        "mean": 163529,
+        "stdev": 0
+      },
+      "totalEncodedBytes": {
+        "n": 3,
+        "median": 956356,
+        "min": 956354,
+        "max": 956357,
+        "mean": 956355.67,
+        "stdev": 1.25
+      },
+      "totalDecodedBytes": {
+        "n": 3,
+        "median": 3646622,
+        "min": 3646622,
+        "max": 3646622,
+        "mean": 3646622,
+        "stdev": 0
+      },
+      "threeChunkEncodedBytes": 147679,
+      "geometrySamplesChunkEncodedBytes": 248026,
+      "fcpMs": {
+        "n": 3,
+        "median": 576,
+        "min": 544,
+        "max": 580,
+        "mean": 566.67,
+        "stdev": 16.11
+      },
+      "lcpMs": {
+        "n": 3,
+        "median": 964,
+        "min": 936,
+        "max": 984,
+        "mean": 961.33,
+        "stdev": 19.69
+      },
+      "cls": {
+        "n": 3,
+        "median": 0.07,
+        "min": 0.07,
+        "max": 0.07,
+        "mean": 0.07,
+        "stdev": 0
+      },
+      "longTaskTotalMs": {
+        "n": 3,
+        "median": 551,
+        "min": 541,
+        "max": 569,
+        "mean": 553.67,
+        "stdev": 11.59
+      },
+      "readyMs": {
+        "n": 3,
+        "median": 1090,
+        "min": 1057,
+        "max": 1093,
+        "mean": 1080,
+        "stdev": 16.31
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "sampleUrls": [
+        {
+          "url": "/simulation/pyramid-circumscribed-sphere",
+          "type": "document",
+          "enc": 976,
+          "dec": 976,
+          "status": 200
+        },
+        {
+          "url": "/assets/vendor-three-DZzGZQF_.js",
+          "type": "script",
+          "enc": 147679,
+          "dec": 568241,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CIkMycCD.css",
+          "type": "stylesheet",
+          "enc": 73797,
+          "dec": 409101,
+          "status": 200
+        },
+        {
+          "url": "/assets/geometry-samples-DJZVi0c4.js",
+          "type": "script",
+          "enc": 248026,
+          "dec": 1399941,
+          "status": 200
+        },
+        {
+          "url": "/assets/index-CMUo9evk.js",
+          "type": "script",
+          "enc": 321130,
+          "dec": 1094950,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+          "type": "stylesheet",
+          "enc": 1217,
+          "dec": 9884,
+          "status": 200
+        },
+        {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M28 0H0v28' fill='none' stroke='%230f172a' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E",
+          "type": "image",
+          "enc": 0,
+          "dec": 0,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+          "type": "font",
+          "enc": 48807,
+          "dec": 48807,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2",
+          "type": "font",
+          "enc": 85229,
+          "dec": 85229,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2",
+          "type": "font",
+          "enc": 10370,
+          "dec": 10370,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2",
+          "type": "font",
+          "enc": 19123,
+          "dec": 19123,
+          "status": 200
+        }
+      ]
+    }
+  },
+  "s_abcd_journey": {
+    "wsReadyMs": 338,
+    "apiStatus": 200,
+    "apiMs": 1155,
+    "totalSubmitToSceneMs": 1466,
+    "routeDStatus": "SERVED",
+    "answer": null,
+    "canvasInfo": {
+      "hasCanvas": true,
+      "w": 809,
+      "h": 862,
+      "renderedCount": 11,
+      "hasGl": true
+    }
+  }
+}

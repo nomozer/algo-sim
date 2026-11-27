@@ -1,0 +1,54 @@
+{
+  "schema": "axo-regression-receipts/1",
+  "committed_head_tested": "ba9eec063",
+  "product_commit_sha": "ec034ab1f6a1524fcbfee7f0bfb2835a93da5024",
+  "test_commit_sha": "5255ac2a026f2cd9d099020bbed5ddf71b222e93",
+  "scene3d_decouple_commit_sha": "72b4d353c",
+  "measured_system_tree_hash": "92f8e24dd56b5bb0eda60fa85cdf3caabea71a0c7b5ed0e741922f7b2cbb1ab7",
+  "measured_system_files": 127,
+  "cache_version": "158",
+  "frontend": {
+    "build": "PASS (0 CSS warnings, 0 TS errors)",
+    "tsc": "PASS",
+    "vitest_files_passed": 194,
+    "vitest_files_total": 194,
+    "vitest_tests_passed": 2319,
+    "vitest_tests_total": 2319,
+    "vitest_failed": 0
+  },
+  "backend_offline": {
+    "allow_live_ai": 0,
+    "partition_geometry_initial_concurrent": {
+      "passed": 13247,
+      "failed": 1,
+      "skipped": 6,
+      "deselected": 3,
+      "xfailed": 12,
+      "note": "test_14_weak_device_performance_and_memory_stability_50_requests p50 58.5ms vs 50ms under concurrent Vitest CPU load"
+    },
+    "partition_geometry_ocr_perf_solo_rerun": {
+      "passed": 21,
+      "failed": 0,
+      "duration_s": 18.12
+    },
+    "partition_non_geometry": {
+      "passed": 1971,
+      "failed": 0,
+      "skipped": 2,
+      "deselected": 6,
+      "duration_s": 482.9
+    },
+    "effective_total_passed": 15219,
+    "effective_failed": 0
+  },
+  "security_and_governance": {
+    "npm_audit_prod": "0 vulnerabilities",
+    "npm_audit_all": "0 vulnerabilities",
+    "freeze_verify": "PASS (127 files, tree_hash 92f8e24dd56b5bb0)",
+    "freeze_verify_historical_active": "PASS",
+    "freeze_verify_historical_4978ac01f": "PASS",
+    "freeze_verify_historical_473cb68de": "PASS",
+    "lock_cache_identity": "PASS (CACHE_VERSION 158)",
+    "publication_safety_range": "PASS (scanned=51 messages=4 violations=0)"
+  }
+}

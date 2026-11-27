@@ -1,0 +1,324 @@
+{
+  "schema": "axo-bundle-inventory/1",
+  "before": {
+    "modulePreloads": [
+      "/assets/vendor-three-DZzGZQF_.js",
+      "/assets/geometry-samples-DJZVi0c4.js"
+    ],
+    "scriptSrcs": [
+      "/assets/index-CMUo9evk.js"
+    ],
+    "stylesheets": [
+      "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+      "/assets/index-CIkMycCD.css"
+    ],
+    "assets": [
+      {
+        "path": "assets/geometry-samples-DJZVi0c4.js",
+        "rawBytes": 1399941,
+        "gzipBytes": 262740,
+        "brotliBytes": 185184
+      },
+      {
+        "path": "assets/index-CIkMycCD.css",
+        "rawBytes": 409101,
+        "gzipBytes": 63620,
+        "brotliBytes": 51181
+      },
+      {
+        "path": "assets/index-CMUo9evk.js",
+        "rawBytes": 1094950,
+        "gzipBytes": 314886,
+        "brotliBytes": 256572
+      },
+      {
+        "path": "assets/landing/product-renders/about-cube-section.png",
+        "rawBytes": 127781,
+        "gzipBytes": 115199,
+        "brotliBytes": 114177
+      },
+      {
+        "path": "assets/landing/product-renders/how-step-construct.png",
+        "rawBytes": 83144,
+        "gzipBytes": 69955,
+        "brotliBytes": 69092
+      },
+      {
+        "path": "assets/landing/product-renders/how-step-inspect.png",
+        "rawBytes": 89226,
+        "gzipBytes": 75976,
+        "brotliBytes": 75472
+      },
+      {
+        "path": "assets/landing/product-renders/sample-distance-plane.png",
+        "rawBytes": 74808,
+        "gzipBytes": 59713,
+        "brotliBytes": 58869
+      },
+      {
+        "path": "assets/landing/product-renders/sample-oxyz-intersection.png",
+        "rawBytes": 103749,
+        "gzipBytes": 89153,
+        "brotliBytes": 88151
+      },
+      {
+        "path": "assets/landing/product-renders/sample-pyramid-section.png",
+        "rawBytes": 101506,
+        "gzipBytes": 85896,
+        "brotliBytes": 85186
+      },
+      {
+        "path": "assets/landing/product-renders/sample-sphere-pyramid.png",
+        "rawBytes": 150645,
+        "gzipBytes": 140045,
+        "brotliBytes": 139073
+      },
+      {
+        "path": "assets/pdf-AVAxhmeW.js",
+        "rawBytes": 501336,
+        "gzipBytes": 149657,
+        "brotliBytes": 124695
+      },
+      {
+        "path": "assets/pdf.worker.min-CIqJB0yW.mjs",
+        "rawBytes": 1271915,
+        "gzipBytes": 379243,
+        "brotliBytes": 310889
+      },
+      {
+        "path": "assets/vendor-three-DZzGZQF_.js",
+        "rawBytes": 568241,
+        "gzipBytes": 142619,
+        "brotliBytes": 117276
+      },
+      {
+        "path": "favicon-16x16.png",
+        "rawBytes": 752,
+        "gzipBytes": 775,
+        "brotliBytes": 756
+      },
+      {
+        "path": "favicon-32x32.png",
+        "rawBytes": 1673,
+        "gzipBytes": 1696,
+        "brotliBytes": 1677
+      },
+      {
+        "path": "favicon.svg",
+        "rawBytes": 5385,
+        "gzipBytes": 2193,
+        "brotliBytes": 1949
+      },
+      {
+        "path": "index.html",
+        "rawBytes": 1110,
+        "gzipBytes": 530,
+        "brotliBytes": 373
+      }
+    ]
+  },
+  "after": {
+    "modulePreloads": [],
+    "scriptSrcs": [
+      "/assets/index-BVCiJVhO.js"
+    ],
+    "stylesheets": [
+      "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+      "/assets/index-yFWweERD.css"
+    ],
+    "assets": [
+      {
+        "path": "assets/AccountSettingsModal-Cs6_lqT9.js",
+        "rawBytes": 14430,
+        "gzipBytes": 3914,
+        "brotliBytes": 3461
+      },
+      {
+        "path": "assets/AdminWorkspaceView-CRqydouC.js",
+        "rawBytes": 132778,
+        "gzipBytes": 29771,
+        "brotliBytes": 25146
+      },
+      {
+        "path": "assets/AuthGateModal-D5J9ph8M.js",
+        "rawBytes": 3233,
+        "gzipBytes": 1227,
+        "brotliBytes": 1049
+      },
+      {
+        "path": "assets/AuthPageView-4N4bXc94.js",
+        "rawBytes": 22938,
+        "gzipBytes": 5084,
+        "brotliBytes": 4468
+      },
+      {
+        "path": "assets/HomeView-DVo84t4N.js",
+        "rawBytes": 502,
+        "gzipBytes": 324,
+        "brotliBytes": 262
+      },
+      {
+        "path": "assets/LeftSidebar-Bezy8Otz.js",
+        "rawBytes": 44924,
+        "gzipBytes": 12181,
+        "brotliBytes": 10898
+      },
+      {
+        "path": "assets/LibraryView-CcKXQCUO.js",
+        "rawBytes": 55074,
+        "gzipBytes": 13993,
+        "brotliBytes": 12059
+      },
+      {
+        "path": "assets/ProblemInput-C_ku7lBO.js",
+        "rawBytes": 119103,
+        "gzipBytes": 35255,
+        "brotliBytes": 30511
+      },
+      {
+        "path": "assets/SimulationControls-CxFmEDxv.js",
+        "rawBytes": 11356,
+        "gzipBytes": 4508,
+        "brotliBytes": 4011
+      },
+      {
+        "path": "assets/SimulationWorkspace-Zw4xT25A.js",
+        "rawBytes": 868483,
+        "gzipBytes": 265581,
+        "brotliBytes": 215658
+      },
+      {
+        "path": "assets/WorkspaceTabBar-oivg_mvY.js",
+        "rawBytes": 7815,
+        "gzipBytes": 3000,
+        "brotliBytes": 2698
+      },
+      {
+        "path": "assets/auth-shared-DzcGSwz3.js",
+        "rawBytes": 1896,
+        "gzipBytes": 778,
+        "brotliBytes": 689
+      },
+      {
+        "path": "assets/geometry-samples-legacy-B2E4mb2j.js",
+        "rawBytes": 219100,
+        "gzipBytes": 16853,
+        "brotliBytes": 11863
+      },
+      {
+        "path": "assets/geometry-samples-public-DWF9q2gv.js",
+        "rawBytes": 543416,
+        "gzipBytes": 56689,
+        "brotliBytes": 26522
+      },
+      {
+        "path": "assets/index-BVCiJVhO.js",
+        "rawBytes": 473947,
+        "gzipBytes": 140221,
+        "brotliBytes": 117870
+      },
+      {
+        "path": "assets/index-yFWweERD.css",
+        "rawBytes": 58109,
+        "gzipBytes": 9886,
+        "brotliBytes": 8720
+      },
+      {
+        "path": "assets/landing/product-renders/about-cube-section.png",
+        "rawBytes": 127781,
+        "gzipBytes": 115199,
+        "brotliBytes": 114177
+      },
+      {
+        "path": "assets/landing/product-renders/how-step-construct.png",
+        "rawBytes": 83144,
+        "gzipBytes": 69955,
+        "brotliBytes": 69092
+      },
+      {
+        "path": "assets/landing/product-renders/how-step-inspect.png",
+        "rawBytes": 89226,
+        "gzipBytes": 75976,
+        "brotliBytes": 75472
+      },
+      {
+        "path": "assets/landing/product-renders/sample-distance-plane.png",
+        "rawBytes": 74808,
+        "gzipBytes": 59713,
+        "brotliBytes": 58869
+      },
+      {
+        "path": "assets/landing/product-renders/sample-oxyz-intersection.png",
+        "rawBytes": 103749,
+        "gzipBytes": 89153,
+        "brotliBytes": 88151
+      },
+      {
+        "path": "assets/landing/product-renders/sample-pyramid-section.png",
+        "rawBytes": 101506,
+        "gzipBytes": 85896,
+        "brotliBytes": 85186
+      },
+      {
+        "path": "assets/landing/product-renders/sample-sphere-pyramid.png",
+        "rawBytes": 150645,
+        "gzipBytes": 140045,
+        "brotliBytes": 139073
+      },
+      {
+        "path": "assets/load-app-styles-B7uApGzD.js",
+        "rawBytes": 43,
+        "gzipBytes": 63,
+        "brotliBytes": 47
+      },
+      {
+        "path": "assets/load-app-styles-NFpSamUZ.css",
+        "rawBytes": 363298,
+        "gzipBytes": 57107,
+        "brotliBytes": 45858
+      },
+      {
+        "path": "assets/pdf-AVAxhmeW.js",
+        "rawBytes": 501336,
+        "gzipBytes": 149657,
+        "brotliBytes": 124695
+      },
+      {
+        "path": "assets/pdf.worker.min-CIqJB0yW.mjs",
+        "rawBytes": 1271915,
+        "gzipBytes": 379243,
+        "brotliBytes": 310889
+      },
+      {
+        "path": "assets/vendor-three-DHULwKLh.js",
+        "rawBytes": 568241,
+        "gzipBytes": 142621,
+        "brotliBytes": 117294
+      },
+      {
+        "path": "favicon-16x16.png",
+        "rawBytes": 752,
+        "gzipBytes": 775,
+        "brotliBytes": 756
+      },
+      {
+        "path": "favicon-32x32.png",
+        "rawBytes": 1673,
+        "gzipBytes": 1696,
+        "brotliBytes": 1677
+      },
+      {
+        "path": "favicon.svg",
+        "rawBytes": 5385,
+        "gzipBytes": 2193,
+        "brotliBytes": 1949
+      },
+      {
+        "path": "index.html",
+        "rawBytes": 940,
+        "gzipBytes": 477,
+        "brotliBytes": 335
+      }
+    ]
+  }
+}

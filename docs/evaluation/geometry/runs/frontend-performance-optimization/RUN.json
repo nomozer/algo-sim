@@ -1,0 +1,19 @@
+{
+  "run_id": "frontend-performance-optimization",
+  "date": "2026-11-27",
+  "branch": "main",
+  "task_slug": "frontend-performance-optimization",
+  "base_commit": "9809ece5c925259612c3c5d78cff32e60822cdce",
+  "scene3d_decouple_commit": "72b4d353c",
+  "source_commit": "ec034ab1f6a1524fcbfee7f0bfb2835a93da5024",
+  "test_commit": "5255ac2a026f2cd9d099020bbed5ddf71b222e93",
+  "registration_commit": "ba9eec063",
+  "parent_historical_candidate": "473cb68ded13d35f413032e9c45aea36960928ea",
+  "measured_system_tree_hash": "92f8e24dd56b5bb0eda60fa85cdf3caabea71a0c7b5ed0e741922f7b2cbb1ab7",
+  "cache_version": "158",
+  "evaluation_status": "OFFLINE_REVALIDATED_ONLY",
+  "live_evaluation_status": "LIVE_EVALUATION_PENDING_AUTHORIZATION",
+  "production_verification": "PENDING_PUSH",
+  "images": "screenshots/",
+  "diagnostics": "after_metrics.json"
+}
