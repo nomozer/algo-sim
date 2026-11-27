@@ -36,8 +36,12 @@ describe("AXO Landing Redesign — 5-Band Architecture, Real Samples, Studio 3D 
     expect(html).toContain('id="landing-final-cta"');
     expect(html).toContain('id="landing-footer"');
 
-    // Role A Brand 3D visuals (Hero + Closing CTA) + Role B Real Axo Workspace 3D renders
-    expect(html).toContain("/assets/landing/hero-studio/hero-studio-diorama.png");
+    // Frameless Automatic Hero SVG Scenes + Real Axo Workspace 3D renders + Axonometric Closing SVG
+    expect(html).toContain('id="hero-scene-dodecahedron"');
+    expect(html).toContain('id="hero-scene-cylinder-section"');
+    expect(html).toContain('id="hero-scene-dihedral-planes"');
+    expect(html).not.toContain("hero-pyramid-section.png");
+    expect(html).not.toContain("axo-v14-hero-facts");
     expect(html).toContain("/assets/landing/product-renders/about-cube-section.png");
     expect(html).toContain("/assets/landing/product-renders/sample-pyramid-section.png");
     expect(html).toContain("/assets/landing/product-renders/how-step-construct.png");
@@ -45,7 +49,9 @@ describe("AXO Landing Redesign — 5-Band Architecture, Real Samples, Studio 3D 
     expect(html).toContain("/assets/landing/product-renders/sample-sphere-pyramid.png");
     expect(html).toContain("/assets/landing/product-renders/sample-oxyz-intersection.png");
     expect(html).toContain("/assets/landing/product-renders/sample-distance-plane.png");
-    expect(html).toContain("/assets/landing/studio-scenes/closing-scene.png");
+    expect(html).toContain('class="axo-v14-closing-svg"');
+    expect(html).not.toContain("/assets/landing/hero-studio/hero-studio-diorama.png");
+    expect(html).not.toContain("/assets/landing/studio-scenes/closing-scene.png");
     expect(html).not.toContain("/assets/landing/studio-scenes/about-scene.png");
     expect(html).not.toContain("/assets/landing/studio-scenes/how-it-works-scene.png");
     expect(html).not.toContain("/assets/landing/studio-scenes/samples-scene.png");
@@ -91,7 +97,7 @@ describe("AXO Landing Redesign — 5-Band Architecture, Real Samples, Studio 3D 
     expect(landingCss).toContain("@keyframes axoHeroLayerEnter");
     expect(landingCss).not.toContain("infinite");
     expect(landingCss).toMatch(/\.axo-sp-header-inner\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)\s+auto\s+minmax\(0,\s*1fr\)/);
-    expect(landingCss).toMatch(/@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*\.axo-v14-hero-atelier-img-main/);
+    expect(landingCss).toMatch(/@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*\.axo-hero-showcase-media/);
     expect(landingCss).toMatch(/@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*\.axo-v14-closing-media/);
     expect(landingCss).not.toMatch(/:\s*[^;]*#[0-9a-fA-F]{3,8}\b/);
 

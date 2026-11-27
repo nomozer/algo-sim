@@ -1,0 +1,113 @@
+{
+  "viewports": [
+    {
+      "viewport": "1920x1080",
+      "overflowX": 0,
+      "brokenImgs": 0,
+      "imgCount": 8,
+      "ctaOverlap": false,
+      "heroOverlap": false,
+      "h1Clipped": false,
+      "startH": 46,
+      "aboutH": 46,
+      "heroH": 724,
+      "footerH": 558,
+      "pass": true
+    },
+    {
+      "viewport": "1440x900",
+      "overflowX": 0,
+      "brokenImgs": 0,
+      "imgCount": 8,
+      "ctaOverlap": false,
+      "heroOverlap": false,
+      "h1Clipped": false,
+      "startH": 46,
+      "aboutH": 46,
+      "heroH": 706,
+      "footerH": 558,
+      "pass": true
+    },
+    {
+      "viewport": "1366x768",
+      "overflowX": 0,
+      "brokenImgs": 0,
+      "imgCount": 8,
+      "ctaOverlap": false,
+      "heroOverlap": false,
+      "h1Clipped": false,
+      "startH": 46,
+      "aboutH": 46,
+      "heroH": 671,
+      "footerH": 558,
+      "pass": true
+    },
+    {
+      "viewport": "768x1024",
+      "overflowX": 0,
+      "brokenImgs": 0,
+      "imgCount": 8,
+      "ctaOverlap": false,
+      "heroOverlap": false,
+      "h1Clipped": false,
+      "startH": 46,
+      "aboutH": 46,
+      "heroH": 1010,
+      "footerH": 678,
+      "pass": true
+    },
+    {
+      "viewport": "390x844",
+      "overflowX": 0,
+      "brokenImgs": 0,
+      "imgCount": 8,
+      "ctaOverlap": false,
+      "heroOverlap": false,
+      "h1Clipped": false,
+      "startH": 46,
+      "aboutH": 46,
+      "heroH": 883,
+      "footerH": 680,
+      "pass": true
+    },
+    {
+      "viewport": "375x812",
+      "overflowX": 0,
+      "brokenImgs": 0,
+      "imgCount": 8,
+      "ctaOverlap": false,
+      "heroOverlap": false,
+      "h1Clipped": false,
+      "startH": 46,
+      "aboutH": 46,
+      "heroH": 895,
+      "footerH": 725,
+      "pass": true
+    },
+    {
+      "viewport": "320x700",
+      "overflowX": 0,
+      "brokenImgs": 0,
+      "imgCount": 8,
+      "ctaOverlap": false,
+      "heroOverlap": false,
+      "h1Clipped": false,
+      "startH": 44,
+      "aboutH": 44,
+      "heroH": 839,
+      "footerH": 771,
+      "pass": true
+    }
+  ],
+  "interactions": {
+    "heroSpecimenTabs": {
+      "tabSphereSrc": "/assets/landing/product-renders/sample-sphere-pyramid.png",
+      "tabAfterArrowRight": "/assets/landing/product-renders/sample-distance-plane.png",
+      "pass": true
+    }
+  },
+  "deepLinkCheck": {
+    "pathname": "/simulation/pyramid-circumscribed-sphere",
+    "hasCanvasOrScene": true
+  }
+}

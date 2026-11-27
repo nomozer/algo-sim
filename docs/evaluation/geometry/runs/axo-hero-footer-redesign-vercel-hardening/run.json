@@ -1,0 +1,35 @@
+{
+  "run_slug": "axo-hero-footer-redesign-vercel-hardening",
+  "title": "AXO Final Responsive Hero, Sidebar Brand Wordmark & Vercel Deployment Closure",
+  "date": "2026-11-27",
+  "base_branch": "main",
+  "base_commit": "08b40cc3cff9c2a66adec60dfa0b5b3808f82a62",
+  "branch": "feat/axo-hero-footer-redesign",
+  "worktree": ".superpowers/worktrees/axo-landing-page-design",
+  "scope": [
+    "frontend/vercel.json",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AxoErrorExperience.tsx",
+    "frontend/src/vercel-config.test.ts",
+    "frontend/src/components/landing/LandingHeroV14.tsx",
+    "frontend/src/components/landing/LandingHowItWorks.tsx",
+    "frontend/src/components/landing/LandingFooter.tsx",
+    "frontend/src/components/landing/landing.css",
+    "frontend/src/components/LeftSidebar.tsx",
+    "frontend/src/styles/global.css",
+    "docs/architecture/VERCEL_FRONTEND_DEPLOYMENT_RUNBOOK.md"
+  ],
+  "statuses": {
+    "final_refinement": "AXO_FINAL_HERO_SIDEBAR_REFINEMENT_READY_FOR_OWNER_REVIEW",
+    "vercel_config": "VERCEL_CONFIG_READY",
+    "vercel_local_validation": "VERCEL_LOCAL_VALIDATION_PASS",
+    "vercel_preview_validation": "VERCEL_PREVIEW_VALIDATION_PENDING",
+    "vercel_production_deployment": "VERCEL_PRODUCTION_DEPLOYMENT_PENDING",
+    "backend_deployment": "BACKEND_DEPLOYMENT_PENDING"
+  },
+  "owner_review_urls": [
+    "http://localhost:3000/about",
+    "http://localhost:3000/app"
+  ],
+  "visual_metrics_file": "visual-metrics.json"
+}
