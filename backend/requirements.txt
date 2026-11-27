@@ -3,9 +3,13 @@ uvicorn[standard]
 sqlalchemy
 alembic
 httpx
+anyio>=4.14.2
+urllib3>=2.8.0
+certifi>=2026.10.18
+pyasn1>=0.6.5
 python-dotenv
 psycopg2-binary
 python-docx
-pillow
-pymupdf
+pillow>=13.0.0
+pymupdf>=1.24,<2
 lxml
