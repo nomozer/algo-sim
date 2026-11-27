@@ -18,6 +18,7 @@ import ipaddress
 import time
 from datetime import datetime, timezone
 from typing import Any, Literal
+from urllib.parse import urlsplit
 
 from fastapi import Cookie, FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -65,6 +66,7 @@ from app.runtime_identity import runtime_identity
 from app.accounts import service as accounts_service
 from app.accounts.policy import Role as AccountRole, entitlement_for
 from app.accounts.router import (
+    _peer_is_trusted_proxy,
     check_analyze_quota_and_maintenance,
     SESSION_REQUIRED,
     finalize_analysis_usage,
@@ -113,8 +115,53 @@ app.add_middleware(
 )
 
 
+_CSRF_PROTECTED_METHODS = frozenset({"POST", "PUT", "PATCH", "DELETE"})
+
+
+def _csrf_request_allowed(request: Request) -> bool:
+    """Defense-in-depth Origin/Referer/Sec-Fetch-Site check on mutating /api/* routes."""
+    if request.method.upper() not in _CSRF_PROTECTED_METHODS:
+        return True
+    if not request.url.path.startswith("/api/") or request.url.path == "/api/preview/hybrid":
+        return True
+
+    allowed_origins, _ = _resolve_cors_settings()
+    trusted = {o.rstrip("/").lower() for o in allowed_origins if o and o != "*"}
+    host = request.headers.get("host", "").strip().lower()
+    if host:
+        proto = ""
+        if _peer_is_trusted_proxy(request):
+            proto = request.headers.get("x-forwarded-proto", "").split(",", 1)[0].strip().lower()
+        scheme = proto or (request.url.scheme or str(request.scope.get("scheme") or "http")).lower()
+        if scheme in ("http", "https"):
+            trusted.add(f"{scheme}://{host}")
+
+    origin = request.headers.get("origin", "").strip()
+    if origin:
+        norm_origin = origin.rstrip("/").lower()
+        return norm_origin != "null" and norm_origin in trusted
+
+    referer = request.headers.get("referer", "").strip()
+    if referer:
+        parts = urlsplit(referer)
+        if not parts.scheme or not parts.netloc:
+            return False
+        return f"{parts.scheme}://{parts.netloc}".lower() in trusted
+
+    sec_fetch_site = request.headers.get("sec-fetch-site", "").strip().lower()
+    if sec_fetch_site == "cross-site":
+        return False
+    return True
+
+
 @app.middleware("http")
 async def _security_headers_middleware(request: Request, call_next):
+    if not _csrf_request_allowed(request):
+        return JSONResponse(
+            status_code=403,
+            headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
+            content={"detail": "Nguồn yêu cầu không hợp lệ (CSRF guard)."},
+        )
     response = await call_next(request)
     response.headers.setdefault("X-Content-Type-Options", "nosniff")
     return response

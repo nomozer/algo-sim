@@ -71,18 +71,49 @@ class TestCookieAndSecurityHeaders:
         assert accounts_router._cookie_settings(_fake_request(scheme="http"))["secure"] is True
         assert accounts_router._cookie_settings(_fake_request(scheme="http"))["samesite"] == "none"
 
-    def test_x_forwarded_proto_only_trusted_when_enabled(self, monkeypatch):
+    def test_x_forwarded_proto_only_trusted_when_enabled_and_peer_trusted(self, monkeypatch):
         monkeypatch.delenv("COOKIE_SECURE", raising=False)
         monkeypatch.delenv("ALGOSIM_PUBLIC_APP_URL", raising=False)
-        req = _fake_request(scheme="http", headers={"X-Forwarded-Proto": "https", "X-Forwarded-For": "198.51.100.7"})
+        monkeypatch.delenv("UVICORN_FORWARDED_ALLOW_IPS", raising=False)
+
+        untrusted_req = _fake_request(
+            scheme="http",
+            client_host="203.0.113.10",
+            headers={"X-Forwarded-Proto": "https", "X-Forwarded-For": "198.51.100.7"},
+        )
+        trusted_req = _fake_request(
+            scheme="http",
+            client_host="127.0.0.1",
+            headers={"X-Forwarded-Proto": "https", "X-Forwarded-For": "1.2.3.4, 198.51.100.7"},
+        )
 
         monkeypatch.delenv("TRUST_PROXY_HEADERS", raising=False)
-        assert accounts_router._cookie_settings(req)["secure"] is False
-        assert accounts_router._client_ip(req) == "203.0.113.10"
+        assert accounts_router._cookie_settings(untrusted_req)["secure"] is False
+        assert accounts_router._client_ip(untrusted_req) == "203.0.113.10"
+        assert accounts_router._cookie_settings(trusted_req)["secure"] is False
+        assert accounts_router._client_ip(trusted_req) == "127.0.0.1"
 
+        # Even with TRUST_PROXY_HEADERS=1, an untrusted TCP peer CANNOT spoof X-Forwarded-For / X-Forwarded-Proto
         monkeypatch.setenv("TRUST_PROXY_HEADERS", "1")
-        assert accounts_router._cookie_settings(req)["secure"] is True
-        assert accounts_router._client_ip(req) == "198.51.100.7"
+        assert accounts_router._cookie_settings(untrusted_req)["secure"] is False
+        assert accounts_router._client_ip(untrusted_req) == "203.0.113.10"
+
+        # Trusted peer (127.0.0.1) uses rightmost untrusted hop, defeating client-prepended spoofed XFF
+        assert accounts_router._cookie_settings(trusted_req)["secure"] is True
+        assert accounts_router._client_ip(trusted_req) == "198.51.100.7"
+
+        # Multi-proxy chain with CIDR trust skips trusted Docker bridge hop and returns real client IP
+        monkeypatch.setenv("UVICORN_FORWARDED_ALLOW_IPS", "127.0.0.1,172.18.0.0/16")
+        bridge_req = _fake_request(
+            scheme="http",
+            client_host="172.18.0.5",
+            headers={
+                "X-Forwarded-Proto": "https",
+                "X-Forwarded-For": "bad-token, 198.0.2.99, 198.51.100.42, 172.18.0.2",
+            },
+        )
+        assert accounts_router._cookie_settings(bridge_req)["secure"] is True
+        assert accounts_router._client_ip(bridge_req) == "198.51.100.42"
 
     def test_cookie_secure_header_emitted_on_me_login_and_logout(self, api, monkeypatch):
         monkeypatch.setenv("COOKIE_SECURE", "1")
@@ -250,3 +281,116 @@ class TestCorsHealthAndDatabaseHardening:
         assert 'startswith("postgres://")' in db_src
         assert 'startswith("postgresql://")' in db_src
         assert '"postgresql+psycopg2://"' in db_src
+
+    def test_diagnostics_runtime_stays_200_during_db_outage_without_secrets(self, api, monkeypatch):
+        class _BrokenSession:
+            def __enter__(self):
+                raise RuntimeError("simulated db outage")
+
+            def __exit__(self, *args):
+                return False
+
+        monkeypatch.setattr(main_mod, "SessionLocal", lambda: _BrokenSession())
+        assert api.get("/api/health").status_code == 503
+        diag = api.get("/api/diagnostics/runtime")
+        assert diag.status_code == 200
+        body = diag.json()
+        assert body["cache_version"]
+        assert "GEMINI_API_KEY" not in diag.text
+
+
+class TestCsrfAndProxyTrustDefense:
+    def test_csrf_guard_allows_hoclieu_cross_origin_and_blocks_evil_origin_referer_null_and_cross_site(self, api):
+        r_reg = register(api, email="csrf.user@axo.edu.vn", name="Người dùng CSRF")
+        assert r_reg.status_code == 200
+
+        # Untrusted Origin cannot mutate state even with an active session cookie (bodyless POST /api/auth/logout)
+        r_evil_orig = api.post("/api/auth/logout", headers={"Origin": "https://evil.example"})
+        assert r_evil_orig.status_code == 403
+        assert r_evil_orig.headers.get("access-control-allow-origin") is None
+        assert r_evil_orig.headers.get("x-content-type-options") == "nosniff"
+        assert api.get("/api/auth/me").json()["user"]["email"] == "csrf.user@axo.edu.vn"
+
+        # Null Origin (e.g. sandboxed iframe) rejected on state-changing endpoint
+        assert api.post("/api/auth/logout", headers={"Origin": "null"}).status_code == 403
+
+        # Untrusted Referer without Origin rejected
+        assert api.post("/api/auth/logout", headers={"Referer": "https://evil.example/form.html"}).status_code == 403
+
+        # Cross-site Sec-Fetch-Site without Origin/Referer rejected
+        assert api.post("/api/auth/logout", headers={"Sec-Fetch-Site": "cross-site"}).status_code == 403
+
+        # Form-encoded POST rejected both by CSRF when cross-origin and by JSON schema when missing Origin
+        r_form_evil = api.post(
+            "/api/auth/login",
+            data={"email": "csrf.user@axo.edu.vn", "password": TEST_PASSWORD},
+            headers={"Origin": "https://evil.example"},
+        )
+        assert r_form_evil.status_code == 403
+        r_form_no_orig = api.post(
+            "/api/auth/login",
+            data={"email": "csrf.user@axo.edu.vn", "password": TEST_PASSWORD},
+        )
+        assert r_form_no_orig.status_code == 422
+
+        # Trusted same-site cross-origin https://hoclieu.tech allowed on preflight & bodyless logout
+        r_preflight = api.options(
+            "/api/auth/logout",
+            headers={"Origin": "https://hoclieu.tech", "Access-Control-Request-Method": "POST"},
+        )
+        assert r_preflight.status_code == 200
+        assert r_preflight.headers.get("access-control-allow-origin") == "https://hoclieu.tech"
+
+        r_ok_logout = api.post(
+            "/api/auth/logout",
+            headers={"Origin": "https://hoclieu.tech", "Sec-Fetch-Site": "same-site"},
+        )
+        assert r_ok_logout.status_code == 200
+        assert r_ok_logout.headers.get("access-control-allow-origin") == "https://hoclieu.tech"
+        assert api.get("/api/auth/me").json()["user"] is None
+
+    def test_csrf_guard_wildcard_cors_env_never_whitelists_evil_origin(self, api, monkeypatch):
+        monkeypatch.setenv("CORS_ALLOW_ORIGINS", "*")
+        r = api.post("/api/auth/logout", headers={"Origin": "https://evil.example"})
+        assert r.status_code == 403
+
+    def test_rate_limiter_rightmost_xff_anti_spoofing_and_concurrent_bucket_eviction(self, monkeypatch):
+        from concurrent.futures import ThreadPoolExecutor
+
+        monkeypatch.setenv("TRUST_PROXY_HEADERS", "1")
+        monkeypatch.setenv("UVICORN_FORWARDED_ALLOW_IPS", "127.0.0.1")
+        monkeypatch.setenv("AUTH_RATE_LIMIT_MAX_ATTEMPTS", "3")
+        monkeypatch.setenv("AUTH_RATE_LIMIT_IP_MAX_ATTEMPTS", "20")
+        monkeypatch.setenv("AUTH_RATE_LIMIT_WINDOW_SECONDS", "60")
+
+        # Client sends fake leftmost X-Forwarded-For behind trusted proxy appending real IP 198.51.100.88
+        for idx in range(3):
+            req = _fake_request(
+                client_host="127.0.0.1",
+                headers={"X-Forwarded-For": f"10.0.0.{idx + 1}, 198.51.100.88"},
+            )
+            accounts_router._consume_auth_rate_limit("login", req, "spoof-target@axo.edu.vn")
+
+        spoofed_next = _fake_request(
+            client_host="127.0.0.1",
+            headers={"X-Forwarded-For": "10.0.0.99, 198.51.100.88"},
+        )
+        with pytest.raises(accounts_router.HTTPException) as exc_info:
+            accounts_router._consume_auth_rate_limit("login", spoofed_next, "spoof-target@axo.edu.vn")
+        assert exc_info.value.status_code == 429
+
+        # Concurrency & bounded bucket eviction preserve active attacker counter
+        monkeypatch.setattr(accounts_router, "_AUTH_RATE_MAX_BUCKETS", 12)
+        with ThreadPoolExecutor(max_workers=6) as pool:
+            list(
+                pool.map(
+                    lambda i: accounts_router._consume_auth_rate_limit(
+                        "login",
+                        _fake_request(client_host="127.0.0.1", headers={"X-Forwarded-For": f"198.51.100.{100 + i}"}),
+                        f"burst{i}@axo.edu.vn",
+                    ),
+                    range(25),
+                )
+            )
+        assert len(accounts_router._AUTH_RATE_BUCKETS) <= 12
+

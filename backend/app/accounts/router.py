@@ -18,6 +18,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import io
+import ipaddress
 import json
 import os
 import secrets
@@ -76,15 +77,64 @@ def _trust_proxy_headers() -> bool:
     return os.getenv("TRUST_PROXY_HEADERS", "").strip().lower() in ("1", "true", "yes")
 
 
+def _trusted_proxy_networks() -> tuple[list[ipaddress.IPv4Network | ipaddress.IPv6Network], bool]:
+    raw = os.getenv("UVICORN_FORWARDED_ALLOW_IPS", "127.0.0.1").strip()
+    if not raw:
+        return [ipaddress.ip_network("127.0.0.1/32")], False
+    tokens = [part.strip() for part in raw.split(",") if part.strip()]
+    if "*" in tokens:
+        return [], True
+    nets: list[ipaddress.IPv4Network | ipaddress.IPv6Network] = []
+    for tok in tokens:
+        candidate = tok.strip("[]")
+        try:
+            nets.append(ipaddress.ip_network(candidate, strict=False))
+        except ValueError:
+            continue
+    return (nets or [ipaddress.ip_network("127.0.0.1/32")]), False
+
+
+def _ip_in_trusted_proxies(ip_str: str) -> bool:
+    nets, allow_all = _trusted_proxy_networks()
+    if allow_all:
+        return True
+    try:
+        addr = ipaddress.ip_address(ip_str.strip().strip("[]"))
+    except ValueError:
+        return False
+    return any(addr in net for net in nets)
+
+
+def _peer_is_trusted_proxy(request: Request | None) -> bool:
+    if not _trust_proxy_headers() or request is None:
+        return False
+    if request.client is None or not request.client.host:
+        return False
+    return _ip_in_trusted_proxies(str(request.client.host))
+
+
 def _client_ip(request: Request | None) -> str:
     if request is None:
         return "unknown"
-    if _trust_proxy_headers():
+    if _peer_is_trusted_proxy(request):
         xff = request.headers.get("x-forwarded-for", "").strip()
         if xff:
-            first = xff.split(",", 1)[0].strip()
-            if first:
-                return first[:64]
+            nets, allow_all = _trusted_proxy_networks()
+            valid_hops: list[ipaddress.IPv4Address | ipaddress.IPv6Address] = []
+            for raw_hop in xff.split(","):
+                hop = raw_hop.strip().strip("[]")
+                if not hop:
+                    continue
+                try:
+                    valid_hops.append(ipaddress.ip_address(hop))
+                except ValueError:
+                    continue
+            if valid_hops:
+                if not allow_all:
+                    for addr in reversed(valid_hops):
+                        if not any(addr in net for net in nets):
+                            return str(addr)[:64]
+                return str(valid_hops[0])[:64]
     if request.client is not None and request.client.host:
         return str(request.client.host)[:64]
     return "unknown"
@@ -103,7 +153,7 @@ def _cookie_settings(request: Request | None = None, *, secure: bool | None = No
             is_secure = False
         else:
             pub = os.getenv("ALGOSIM_PUBLIC_APP_URL", "").strip().lower()
-            proto = request.headers.get("x-forwarded-proto", "").split(",", 1)[0].strip().lower() if (request is not None and _trust_proxy_headers()) else ""
+            proto = request.headers.get("x-forwarded-proto", "").split(",", 1)[0].strip().lower() if _peer_is_trusted_proxy(request) else ""
             req_https = request is not None and (
                 request.url.scheme == "https"
                 or str(request.scope.get("scheme") or "").lower() == "https"
@@ -152,12 +202,18 @@ def _consume_auth_rate_limit(action: str, request: Request | None, identifier: s
         ((f"{action}:ip", ip, "*"), _auth_ip_max_attempts(max_attempts)),
     ]
     with _AUTH_RATE_LOCK:
-        if len(_AUTH_RATE_BUCKETS) > _AUTH_RATE_MAX_BUCKETS:
+        if len(_AUTH_RATE_BUCKETS) >= _AUTH_RATE_MAX_BUCKETS:
             stale = [k for k, dq in _AUTH_RATE_BUCKETS.items() if not dq or dq[-1] <= cutoff]
             for k in stale:
                 _AUTH_RATE_BUCKETS.pop(k, None)
-            if len(_AUTH_RATE_BUCKETS) > _AUTH_RATE_MAX_BUCKETS:
-                _AUTH_RATE_BUCKETS.clear()
+            if len(_AUTH_RATE_BUCKETS) >= _AUTH_RATE_MAX_BUCKETS:
+                excess = len(_AUTH_RATE_BUCKETS) - _AUTH_RATE_MAX_BUCKETS + len(keys_and_limits)
+                oldest = sorted(
+                    _AUTH_RATE_BUCKETS.items(),
+                    key=lambda item: item[1][-1] if item[1] else 0.0,
+                )[:max(0, excess)]
+                for k, _ in oldest:
+                    _AUTH_RATE_BUCKETS.pop(k, None)
         for bucket_key, limit in keys_and_limits:
             dq = _AUTH_RATE_BUCKETS.setdefault(bucket_key, deque())
             while dq and dq[0] <= cutoff:
