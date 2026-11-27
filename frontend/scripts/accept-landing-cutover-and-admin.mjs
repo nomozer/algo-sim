@@ -422,7 +422,9 @@ function attachLogs(page, label) {
     await page.waitForSelector("#view-login");
 
     // Public admin registration attempt must be blocked 403 by backend (even if legacy signup code is passed)
-    const publicAdminRegStatus = await page.evaluate(async () => {
+    const blockedRegPw =
+      process.env.E2E_BLOCKED_PW || ["Blocked", "Admin", "Probe", "2026!"].join("-");
+    const publicAdminRegStatus = await page.evaluate(async (blockedPw) => {
       const r = await fetch("/api/auth/register", {
         method: "POST",
         credentials: "include",
@@ -430,13 +432,13 @@ function attachLogs(page, label) {
         body: JSON.stringify({
           email: `blocked.admin.${Date.now()}@axo.edu.vn`,
           displayName: "Blocked",
-          password: process.env.E2E_BLOCKED_PW || ["Blocked", "Admin", "Probe"].join("-") + "!9",
+          password: blockedPw,
           role: "admin",
           teacherCode: "LEGACY-CODE-BLOCKED",
         }),
       });
       return r.status;
-    });
+    }, blockedRegPw);
 
     // Student Login -> Workspace /app
     await page.fill("#login-email-input", STUDENT_EMAIL);
