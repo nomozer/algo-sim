@@ -1,0 +1,116 @@
+{
+  "schema": "auth-recovery-prod-verification/1",
+  "origin": "https://hoclieu.tech",
+  "entryScript": "/assets/index-COgT5hxJ.js",
+  "entryCss": "/assets/index-yFWweERD.css",
+  "modulepreloadHrefs": [],
+  "rootHeaders": {
+    "strict-transport-security": "max-age=63072000",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "cache-control": "public, max-age=0, must-revalidate",
+    "x-vercel-cache": "HIT"
+  },
+  "routeStatuses": {
+    "/": 200,
+    "/about": 200,
+    "/login": 200,
+    "/register": 200,
+    "/forgot": 200,
+    "/forgot-password": 200,
+    "/reset": 200,
+    "/verify-email": 200,
+    "/library": 200,
+    "/app": 200,
+    "/admin": 200,
+    "/simulation/pyramid-circumscribed-sphere": 200
+  },
+  "allRoutes200": true,
+  "heavyPreloadsAbsent": true,
+  "backendDeploymentStatus": "BACKEND_DEPLOYMENT_PENDING",
+  "browserChecks": {
+    "/": {
+      "jsEncodedBytes": 475794,
+      "jsDecodedBytes": 475794,
+      "cssEncodedBytes": 58109,
+      "threeChunkBytes": 0,
+      "geometrySamplesChunkBytes": 0,
+      "adminChunkBytes": 0,
+      "authChunkLoaded": false,
+      "pageErrors": [],
+      "assets": [
+        "/assets/index-COgT5hxJ.js",
+        "/assets/index-yFWweERD.css"
+      ]
+    },
+    "/login": {
+      "jsEncodedBytes": 669335,
+      "jsDecodedBytes": 669335,
+      "cssEncodedBytes": 421407,
+      "threeChunkBytes": 0,
+      "geometrySamplesChunkBytes": 0,
+      "adminChunkBytes": 0,
+      "authChunkLoaded": true,
+      "pageErrors": [],
+      "assets": [
+        "/assets/index-COgT5hxJ.js",
+        "/assets/load-app-styles-B7uApGzD.js",
+        "/assets/ProblemInput-B5cmEu_a.js",
+        "/assets/HomeView-Dkgq4xeU.js",
+        "/assets/LeftSidebar-OwVr0OxB.js",
+        "/assets/auth-shared-C9BMTySr.js",
+        "/assets/AuthPageView-yj-SJ9T1.js",
+        "/assets/index-yFWweERD.css",
+        "/assets/load-app-styles-NFpSamUZ.css"
+      ],
+      "loginRendered": true
+    },
+    "/forgot-password": {
+      "jsEncodedBytes": 669335,
+      "jsDecodedBytes": 669335,
+      "cssEncodedBytes": 421407,
+      "threeChunkBytes": 0,
+      "geometrySamplesChunkBytes": 0,
+      "adminChunkBytes": 0,
+      "authChunkLoaded": true,
+      "pageErrors": [],
+      "assets": [
+        "/assets/index-COgT5hxJ.js",
+        "/assets/load-app-styles-B7uApGzD.js",
+        "/assets/LeftSidebar-OwVr0OxB.js",
+        "/assets/HomeView-Dkgq4xeU.js",
+        "/assets/ProblemInput-B5cmEu_a.js",
+        "/assets/auth-shared-C9BMTySr.js",
+        "/assets/AuthPageView-yj-SJ9T1.js",
+        "/assets/index-yFWweERD.css",
+        "/assets/load-app-styles-NFpSamUZ.css"
+      ],
+      "forgotRendered": true,
+      "unavailableNoticeShown": true
+    },
+    "/verify-email": {
+      "jsEncodedBytes": 669335,
+      "jsDecodedBytes": 669335,
+      "cssEncodedBytes": 421407,
+      "threeChunkBytes": 0,
+      "geometrySamplesChunkBytes": 0,
+      "adminChunkBytes": 0,
+      "authChunkLoaded": true,
+      "pageErrors": [],
+      "assets": [
+        "/assets/index-COgT5hxJ.js",
+        "/assets/load-app-styles-B7uApGzD.js",
+        "/assets/LeftSidebar-OwVr0OxB.js",
+        "/assets/HomeView-Dkgq4xeU.js",
+        "/assets/auth-shared-C9BMTySr.js",
+        "/assets/AuthPageView-yj-SJ9T1.js",
+        "/assets/ProblemInput-B5cmEu_a.js",
+        "/assets/index-yFWweERD.css",
+        "/assets/load-app-styles-NFpSamUZ.css"
+      ],
+      "verifyRendered": true,
+      "incompleteNoticeShown": true
+    }
+  }
+}

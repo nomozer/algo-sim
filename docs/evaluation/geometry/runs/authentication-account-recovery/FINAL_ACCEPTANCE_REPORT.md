@@ -1,7 +1,7 @@
 # Authentication & Account Recovery — Báo Cáo Nghiệm Thu Cuối
 
 > **Trạng thái tổng thể:** `AUTHENTICATION_IMPLEMENTATION_COMPLETE`  
-> **Verdict thành phần:** `ADMIN_LOGIN_VERIFIED` · `ADMIN_PROVISIONING_READY` · `EMAIL_INTEGRATION_READY` · `EMAIL_VERIFICATION_VERIFIED` · `PASSWORD_RECOVERY_VERIFIED` · `AUTH_SECURITY_VERIFIED` · `AUTH_REGRESSION_PASS` · `FREEZE_GOVERNANCE_VERIFIED` · `REAL_EMAIL_SMOKE_PENDING_OWNER_CONFIGURATION` · `LOCAL_ADMIN_SETUP_PENDING_OWNER_ACTION` · `BACKEND_DEPLOYMENT_PENDING` (`REMOTE_RELEASE_VERIFIED` đang chờ push & kiểm chứng Vercel ở bước phát hành).  
+> **Verdict thành phần:** `ADMIN_LOGIN_VERIFIED` · `ADMIN_PROVISIONING_READY` · `EMAIL_INTEGRATION_READY` · `EMAIL_VERIFICATION_VERIFIED` · `PASSWORD_RECOVERY_VERIFIED` · `AUTH_SECURITY_VERIFIED` · `AUTH_REGRESSION_PASS` · `FREEZE_GOVERNANCE_VERIFIED` · `REMOTE_RELEASE_VERIFIED` · `REAL_EMAIL_SMOKE_PENDING_OWNER_CONFIGURATION` · `LOCAL_ADMIN_SETUP_PENDING_OWNER_ACTION` · `BACKEND_DEPLOYMENT_PENDING`.  
 > **Ngày thực hiện:** 2026-11-28 · **Nhánh:** `main` · **Run ID:** `authentication-account-recovery`
 
 ---
@@ -157,6 +157,7 @@ Kiểm tra chỉ-đọc thực tế trên hạ tầng của Owner chứng minh �
 - Bảo toàn Cookie `HttpOnly; SameSite=Lax`, `Secure` theo `COOKIE_SECURE`/HTTPS, CSRF origin check, reverse proxy trust.
 - `npm audit`: **0 lỗ hổng** (`info: 0, low: 0, moderate: 0, high: 0, critical: 0`).
 - Quét `frontend/dist/assets/*.js`: **0 dấu vết** `RESEND_API_KEY`, `GEMINI_API_KEY`, `ADMIN_PASSWORD`, `api.resend.com`.
+- Cổng an toàn xuất bản (`check_publication_safety.py --range cadb168ea..HEAD`): **`verdict=PASS`** (`scanned=51, messages=8, violations=0, pending_exception=0`). Quét toàn cây `--head` báo `verdict=BLOCKED` (`96 pending_exception`) do **96 ngoại lệ lịch sử `PENDING_OWNER_DECISION` đã tồn tại trước `cadb168ea`** (`classroom-band-fit`, `w17`, `w18`, `w20`, `photo-problem-to-scene/docker-backend-dev-auto-refresh/SECRET_SCAN.json` — giữ nguyên không sửa đổi); toàn bộ dải commit mới có `0` vi phạm.
 - Khắc phục lỗi treo test Windows trong `backend/conftest.py`: chuyển `socketpair` sang `SO_EXCLUSIVEADDRUSE` để tránh `SO_REUSEADDR` nối nhầm self-pipe vào tiến trình lắng nghe khác.
 
 ---
@@ -246,19 +247,28 @@ Kiểm tra chỉ-đọc thực tế trên hạ tầng của Owner chứng minh �
 - `cab9d4ab5` — `docs(auth): document account setup and recovery`
 - `6d11c03b6` — `feat(governance): register authentication and account recovery candidate`
 - `758a569a7` — `test(governance): update measured file count pin to 130 for integrated auth candidate`
-- *(Commit bằng chứng này & commit xác minh Vercel sẽ được cập nhật ở bước phát hành tiếp theo.)*
+- `a1b0a7473` — `docs(auth): record authentication and account recovery evidence pack`
+- *(Commit xác minh remote/Vercel này cập nhật `production_verification.json`, `RUN.json` và `FINAL_ACCEPTANCE_REPORT.md`.)*
 
 ---
 
 ## 23. Kiểm Chứng Remote (`origin/main`)
 
-- Chưa push tại thời điểm ghi bản báo cáo này; sẽ cập nhật sau khi cổng publication safety PASS và hoàn tất `git push origin main`.
+- Đã push sạch (fast-forward, không force push) `cadb168ea..a1b0a7473` lên `origin/main` (`https://github.com/nomozer/algo-sim.git`).
+- Đối chiếu `git ls-remote origin refs/heads/main` và `git rev-parse HEAD`: khớp tuyệt đối **`a1b0a74732d3bbfd189bfdf915a694698e7b2259`** (sau đó tiếp tục push commit cập nhật bằng chứng xác minh Vercel này lên `origin/main`).
 
 ---
 
 ## 24. Kiểm Chứng Vercel (`https://hoclieu.tech`)
 
-- Chưa kiểm tra bản phát hành mới trên Vercel tại thời điểm ghi bản báo cáo này; sẽ cập nhật ngay sau khi push. Lưu ý: backend VPS vẫn ở trạng thái **`BACKEND_DEPLOYMENT_PENDING`**, nên chức năng xác thực production trên `https://hoclieu.tech` chưa hoạt động đầu cuối và UI Quên mật khẩu sẽ giữ trạng thái không khả dụng một cách trung thực.
+- **Bằng chứng live:** [`production_verification.json`](file:///d:/Documents/projects/algo-sim/docs/evaluation/geometry/runs/authentication-account-recovery/production_verification.json) (đo sau khi `a1b0a7473` lên Vercel).
+- **Build live mới khớp 100%:** Entry JS chuyển từ `index-DGe9aikc.js` sang **`/assets/index-COgT5hxJ.js`**, Entry CSS `/assets/index-yFWweERD.css`, `modulepreload` rỗng (`[]`, **không** preload `vendor-three` hay `geometry-samples`).
+- **12/12 SPA routes trả HTTP `200`:** `/`, `/about`, `/login`, `/register`, `/forgot`, `/forgot-password`, `/reset`, `/verify-email`, `/library`, `/app`, `/admin`, `/simulation/pyramid-circumscribed-sphere`.
+- **Security headers xác nhận trên `/`:** `strict-transport-security: max-age=63072000`, `x-content-type-options: nosniff`, `x-frame-options: DENY`, `referrer-policy: strict-origin-when-cross-origin`, `cache-control: public, max-age=0, must-revalidate`.
+- **Headless Playwright trên `https://hoclieu.tech` (`1440x900`):**
+  - `/` (Landing): JS `475,794 B` decoded, CSS `58,109 B`, `threeChunkBytes = 0`, `geometrySamplesChunkBytes = 0`, `adminChunkBytes = 0`, `authChunkLoaded = false`, `pageErrors = []`.
+  - `/login`, `/forgot-password`, `/verify-email`: render sạch `#view-login`, `#view-forgot`, `#view-verify`, tải lazy `AuthPageView-yj-SJ9T1.js` + `auth-shared-C9BMTySr.js`, JS `669,335 B` decoded, vẫn `0 B` Three.js / Samples / Admin, `pageErrors = []`.
+  - `/forgot-password` hiển thị trung thực `#forgot-unavailable-note` (`unavailableNoticeShown = true`) và `/verify-email` hiển thị trạng thái liên kết không đầy đủ (`incompleteNoticeShown = true`), **không** hứa hẹn thành công giả vì backend VPS vẫn ở trạng thái **`BACKEND_DEPLOYMENT_PENDING`**.
 
 ---
 
@@ -290,7 +300,7 @@ Kiểm tra chỉ-đọc thực tế trên hạ tầng của Owner chứng minh �
 | V | Security regression | **PASS** | `test_auth_account_recovery` (40/40), `test_deployment_security`, `npm audit` (0), secret scan dist (0) PASS |
 | W | Full regression | **PASS** | Frontend `195/2325` PASS; Backend Partition 1 (`13,242` + rerun `5/5` + IA `42/42`) & Partition 2 (`2,013/2,013`) PASS |
 | X | Freeze governance | **PASS** | `6d11c03b6` (`130` file, `core_evaluation_changed=[]`, tất cả historical `--verify-historical` PASS) |
-| Y | Git release & Vercel verification | **NOT_EXECUTED** | Chờ push & kiểm chứng Vercel ở bước phát hành ngay sau commit bằng chứng này |
+| Y | Git release & Vercel verification | **PASS** | `a1b0a7473` đã push `origin/main` khớp SHA; Vercel live `/assets/index-COgT5hxJ.js`, 12/12 routes HTTP 200, headers & bundle isolation PASS (VPS backend vẫn `BACKEND_DEPLOYMENT_PENDING`) |
 | Z | Owner handoff & real email smoke readiness | **PENDING_OWNER_CONFIGURATION** | Runbook + `email_smoke_test.py` sẵn sàng; chờ Owner điền `RESEND_API_KEY` & chạy thử |
 
 ---
