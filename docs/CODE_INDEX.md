@@ -1,5 +1,14 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Vercel Deployment Hardening & Hero/Footer Redesign (2026-11-27)
+
+| Hạng mục / Vai trò | Đường dẫn |
+|---|---|
+| Cấu hình Vercel SPA rewrite, cache (`must-revalidate` HTML, `immutable` riêng hashed 8 ký tự `/assets/*-[A-Za-z0-9_-]{8}.{js,mjs,css}`) & security headers (`camera=(self)`) | `frontend/vercel.json` · kiểm: `frontend/src/vercel-config.test.ts` |
+| Bổ sung alias `/forgot-password` giữ nguyên `/forgot` làm canonical route và đồng bộ `canonicalizeLandingLocation` khi hydrate URL alias/preview | `frontend/src/components/AxoErrorExperience.tsx`, `frontend/src/App.tsx` · kiểm: `frontend/src/vercel-config.test.ts` |
+| Thiết kế lại Hero không khung với trình diễn hình học tự động 3 scene SVG trực giao chính xác (thập nhị diện đều, thiết diện elip trên khối trụ, hai mặt phẳng giao tuyến Δ & góc nhị diện), bỏ supporting facts & tab/PNG cũ + Closing CTA mở trực giao + 3-zone Footer bar + bỏ `loading="lazy"` ở bước dựng `Cách hoạt động`, xoá asset cũ | `frontend/src/components/landing/LandingHeroV14.tsx`, `frontend/src/components/landing/LandingHowItWorks.tsx`, `frontend/src/components/landing/LandingFooter.tsx`, `frontend/src/components/landing/landing.css` · kiểm: `frontend/src/components/__tests__/landing-*.test.tsx` |
+| Tài liệu vận hành triển khai Vercel | `docs/architecture/VERCEL_FRONTEND_DEPLOYMENT_RUNBOOK.md` |
+
 ## Authoritative measurement, Holdout-7 prospective acceptance & pre-merge closure (AXO HYBRID /19, 2026-11-21)
 
 - **Windows clean-checkout LF pin (no product or frozen-harness modification):** `.gitattributes` (pins `docs/evaluation/geometry/runs/axo-hybrid-compositional-geometry-language-grounded-simulation/V12_ACCEPTANCE_MANIFEST.json` `text eol=lf` so detached checkouts preserve the byte-locked `/12` manifest while keeping CRLF fixtures intact; checked by `backend/tests/geometry/test_shared_live_harness.py`).

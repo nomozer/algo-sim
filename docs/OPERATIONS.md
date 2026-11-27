@@ -247,3 +247,8 @@ dependency mới theo kiểu tùy tiện. Trước khi thêm dep, **kiểm chín
 và dùng lại nguồn chân lý sẵn có (runtime → `requirements.txt`; chỉ-test →
 `requirements-dev.txt`). Không nhân bản cùng một dep qua nhiều manifest. Dep chỉ
 cần cho một lần kiểm thủ công thì **đừng commit** trừ khi nó thành workflow bền.
+
+## Triển khai Frontend trên Vercel (`hoclieu.tech`)
+
+- Cấu hình triển khai chính thức đặt duy nhất tại [`frontend/vercel.json`](../frontend/vercel.json) (Root Directory trên Vercel là `frontend`).
+- Hướng dẫn cấu hình Dashboard, SPA rewrite loại trừ `/api/*` & `/assets/*`, cache, security headers, điều tra lỗi 404 và rollback xem tại [`docs/architecture/VERCEL_FRONTEND_DEPLOYMENT_RUNBOOK.md`](architecture/VERCEL_FRONTEND_DEPLOYMENT_RUNBOOK.md).

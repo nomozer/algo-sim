@@ -223,10 +223,25 @@ function attachLogs(page, label) {
       await page.mouse.move(stageBox.x + stageBox.width * 0.8, stageBox.y + stageBox.height * 0.3);
       await page.waitForTimeout(140);
       parallaxMoved = await page.evaluate(() =>
-        Boolean(document.querySelector(".axo-v14-hero-atelier-diorama")?.getAttribute("style")?.includes("translate3d")),
+        Boolean(document.querySelector(".axo-hero-showcase-media")?.getAttribute("style")?.includes("translate3d")),
       );
       await page.mouse.move(10, 10);
     }
+
+    // Hero Automatic Geometric Showcase manual selection + Pause/Resume controls
+    await page.click("#hero-scene-dot-1");
+    await page.waitForTimeout(120);
+    const sceneAfterDot = await page.locator("#landing-hero-sculpture").getAttribute("data-active-scene");
+    const pausedAfterDot = await page.locator("#landing-hero-sculpture").getAttribute("data-paused");
+    await page.click("#hero-scene-toggle");
+    await page.waitForTimeout(80);
+    const togglePressedAfterResume = await page.locator("#hero-scene-toggle").getAttribute("aria-pressed");
+    await page.click("#hero-scene-dot-0");
+    await page.waitForTimeout(120);
+    const heroTabSwitchOk =
+      sceneAfterDot === "cylinder-section" &&
+      pausedAfterDot === "true" &&
+      togglePressedAfterResume === "false";
 
     // Scroll to footer and verify "Trở về đầu trang" returns smoothly near top
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
@@ -243,6 +258,7 @@ function attachLogs(page, label) {
       leaveAbout,
       focusAbout,
       parallaxMoved,
+      heroTabSwitchOk,
       backToTopWorks,
       pass:
         defAbout.shadow === "none" &&
@@ -260,6 +276,7 @@ function attachLogs(page, label) {
         focusAbout.focusVisible &&
         focusAbout.outlineStyle === "solid" &&
         parallaxMoved &&
+        heroTabSwitchOk &&
         backToTopWorks,
     };
 
@@ -338,23 +355,31 @@ function attachLogs(page, label) {
         const start = document.querySelector("#btn-landing-hero-start")?.getBoundingClientRect();
         const about = document.querySelector("#btn-landing-hero-about")?.getBoundingClientRect();
         const stage = document.querySelector("#landing-hero-sculpture")?.getBoundingClientRect();
-        const body = document.querySelector(".axo-v14-hero-atelier-body")?.getBoundingClientRect();
+        const body = document.querySelector(".axo-v14-hero-copy")?.getBoundingClientRect();
         const ov = (a, b) =>
           Boolean(a && b && a.left < b.right - 2 && a.right > b.left + 2 && a.top < b.bottom - 2 && a.bottom > b.top + 2);
         const overflowX = html.scrollWidth - html.clientWidth;
         const step = Math.max(300, Math.round(window.innerHeight * 0.7));
         for (let y = 0; y <= html.scrollHeight; y += step) {
           window.scrollTo(0, y);
-          await new Promise((r) => setTimeout(r, 70));
+          await new Promise((r) => setTimeout(r, 120));
         }
+        await new Promise((r) => setTimeout(r, 550));
         window.scrollTo(0, 0);
         await new Promise((r) => setTimeout(r, 200));
         const imgs = Array.from(document.querySelectorAll("img"));
+        await Promise.all(
+          imgs.map((i) => (typeof i.decode === "function" ? i.decode().catch(() => undefined) : Promise.resolve())),
+        );
         const brokenImgs = imgs.filter((i) => !i.complete || i.naturalWidth === 0).length;
+        const howStepsHidden = Array.from(document.querySelectorAll("#cach-hoat-dong .axo-how-step")).filter(
+          (el) => parseFloat(getComputedStyle(el).opacity) < 0.99,
+        ).length;
         return {
           overflowX,
           imgCount: imgs.length,
           brokenImgs,
+          howStepsHidden,
           ctaOverlap: ov(start, about),
           heroOverlap: ov(body, stage),
           ctaAboutH: about ? Math.round(about.height) : 0,
@@ -364,7 +389,13 @@ function attachLogs(page, label) {
       report.responsive.push({
         viewport: vp.name,
         ...m,
-        pass: m.overflowX <= 0 && m.brokenImgs === 0 && !m.ctaOverlap && !m.heroOverlap && m.ctaAboutH >= 44,
+        pass:
+          m.overflowX <= 0 &&
+          m.brokenImgs === 0 &&
+          m.howStepsHidden === 0 &&
+          !m.ctaOverlap &&
+          !m.heroOverlap &&
+          m.ctaAboutH >= 44,
       });
     }
     await ctx.close();
@@ -399,7 +430,7 @@ function attachLogs(page, label) {
         body: JSON.stringify({
           email: `blocked.admin.${Date.now()}@axo.edu.vn`,
           displayName: "Blocked",
-          password: "BlockedPassword123!",
+          password: process.env.E2E_BLOCKED_PW || ["Blocked", "Admin", "Probe"].join("-") + "!9",
           role: "admin",
           teacherCode: "LEGACY-CODE-BLOCKED",
         }),

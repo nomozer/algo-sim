@@ -33,6 +33,7 @@ const STATIC_PATH_TO_VIEW: Readonly<Record<string, Exclude<AppView, "not_found">
   "/login": "login",
   "/register": "register",
   "/forgot": "forgot",
+  "/forgot-password": "forgot",
   "/reset": "reset",
   "/admin": "admin",
   "/account": "account",

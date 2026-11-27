@@ -70,8 +70,6 @@ export function LandingHowItWorks() {
                 width={920}
                 height={642}
                 alt="Bước dựng trung gian hình chóp S.ABCD với đường cao SA vuông góc đáy và ba trung điểm M, N, P trong Axo Workspace"
-                loading="lazy"
-                decoding="async"
                 draggable={false}
                 className="axo-how-step-img"
               />
@@ -91,8 +89,6 @@ export function LandingHowItWorks() {
                 width={920}
                 height={642}
                 alt="Cùng mô hình hình chóp S.ABCD hoàn thiện thiết diện ngũ giác M-E-N-P-F ở góc xoay 3D và chế độ nhìn xuyên thấu trong Axo Workspace"
-                loading="lazy"
-                decoding="async"
                 draggable={false}
                 className="axo-how-step-img"
               />

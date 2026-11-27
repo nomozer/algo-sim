@@ -28,9 +28,12 @@ describe("Landing Footer — Two-Tier Closing Scene (3D Visual + Pastel CTA) & 3
     expect(html).toContain('id="btn-landing-final-start"');
     expect(html).toContain("Sẵn sàng nhìn hình học theo cách khác?");
     expect(html).toContain("Bắt đầu dựng hình");
-    expect(html).toContain("/assets/landing/studio-scenes/closing-scene.png");
+    expect(html).toContain('class="axo-v14-closing-svg"');
+    expect(html).toContain('class="axo-closing-hex-visible"');
+    expect(html).not.toContain("closing-scene.png");
 
     expect(html).toContain('class="axo-v14-footer-bar"');
+    expect(html).toContain("axo-v14-footer-brand");
     expect(html).toContain("axo-sp-logo-mark");
     expect(html).toContain(logoSvg);
     expect(html).not.toContain("<canvas");
