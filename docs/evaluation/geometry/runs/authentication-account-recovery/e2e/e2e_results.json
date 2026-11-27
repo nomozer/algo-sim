@@ -1,0 +1,167 @@
+{
+  "run": "authentication-account-recovery",
+  "kind": "browser-e2e",
+  "backend": "uvicorn + isolated PostgreSQL 16 (throw-away container)",
+  "frontend": "production build (frontend/dist) on http://localhost:3000",
+  "email": "fake transport (JSONL outbox); no real email sent",
+  "passed": 26,
+  "total": 26,
+  "results": [
+    {
+      "id": "PG-1",
+      "title": "migration preflight --startup on empty Postgres",
+      "status": "PASS",
+      "detail": "MIGRATION_PREFLIGHT=PASS reason=SAFE_NO_DESTRUCTIVE_OPERATIONS :: Migration preflight passed cleanly with zero destructive operations."
+    },
+    {
+      "id": "PG-2",
+      "title": "alembic upgrade head on Postgres",
+      "status": "PASS",
+      "detail": "reached b6d2f0a8c4e1"
+    },
+    {
+      "id": "ADM-1",
+      "title": "manage_admin --check before provisioning reports ADMIN_NOT_CREATED (read-only)",
+      "status": "PASS",
+      "detail": "diagnosis=ADMIN_NOT_CREATED alembic=b6d2f0a8c4e1"
+    },
+    {
+      "id": "ADM-2",
+      "title": "manage_admin --apply --create-if-missing creates exactly one admin",
+      "status": "PASS",
+      "detail": "action=created"
+    },
+    {
+      "id": "ADM-3",
+      "title": "second --apply is idempotent (updated, no duplicate)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "ADM-4",
+      "title": "manage_admin --check after provisioning: OK, 1 admin, password synchronized, email masked",
+      "status": "PASS",
+      "detail": "diagnosis=OK adminCount=1"
+    },
+    {
+      "id": "E2E-1",
+      "title": "Admin logs in with username `admin` and lands on /admin",
+      "status": "PASS",
+      "detail": "http://localhost:3000/admin"
+    },
+    {
+      "id": "E2E-2",
+      "title": "Admin logs in with ADMIN_EMAIL — same identity, lands on /admin",
+      "status": "PASS",
+      "detail": "role=admin"
+    },
+    {
+      "id": "E2E-3",
+      "title": "Wrong admin password: generic error, no account enumeration",
+      "status": "PASS",
+      "detail": "Email, tên đăng nhập hoặc mật khẩu không đúng."
+    },
+    {
+      "id": "E2E-4",
+      "title": "Admin session persists across backend restart (PostgreSQL)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "E2E-5",
+      "title": "Registration queues exactly one verification email (fake transport) and shows confirmation",
+      "status": "PASS",
+      "detail": "emails=1 toast=true"
+    },
+    {
+      "id": "E2E-6",
+      "title": "Verification link uses ALGOSIM_PUBLIC_APP_URL and /verify-email path",
+      "status": "PASS",
+      "detail": "http://localhost:3000/verify-email?token=***"
+    },
+    {
+      "id": "E2E-7",
+      "title": "Token removed from address bar after load; referrer policy no-referrer",
+      "status": "PASS",
+      "detail": "url=http://localhost:3000/verify-email referrer=no-referrer"
+    },
+    {
+      "id": "E2E-8",
+      "title": "Verify button (POST) marks email verified",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "E2E-9",
+      "title": "Refresh/direct /verify-email without token shows incomplete-link state (no API call needed)",
+      "status": "PASS",
+      "detail": "Liên kết xác minh không đầy đủ. Vui lòng mở lại liên kết trong email."
+    },
+    {
+      "id": "E2E-10",
+      "title": "Reused verification link is rejected",
+      "status": "PASS",
+      "detail": "Liên kết xác minh email không hợp lệ, đã được dùng hoặc đã hết hạn."
+    },
+    {
+      "id": "E2E-11",
+      "title": "Student is denied the admin area (UI + API 403)",
+      "status": "PASS",
+      "detail": "ui=true api=403"
+    },
+    {
+      "id": "E2E-12",
+      "title": "Forgot-password shows the same neutral message for admin and student",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "E2E-13",
+      "title": "Admin is excluded from public recovery (no email); student receives one reset email",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "E2E-14",
+      "title": "Reset link opens /reset, token stripped from URL, kept in form, no-referrer",
+      "status": "PASS",
+      "detail": "url=http://localhost:3000/reset"
+    },
+    {
+      "id": "E2E-15",
+      "title": "Password reset succeeds; password-changed notification queued",
+      "status": "PASS",
+      "detail": "Mật khẩu của bạn đã được đặt lại thành công. Bạn có thể đăng nhập bằng mật khẩu mới."
+    },
+    {
+      "id": "E2E-16",
+      "title": "Old session of the student is revoked after reset",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "E2E-17",
+      "title": "Old password rejected, new password accepted",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "E2E-18",
+      "title": "Logout ends the session",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "E2E-19",
+      "title": "Reused reset link rejected with \"request a new link\" action",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "E2E-20",
+      "title": "No external requests besides the pre-existing Google Fonts stylesheet; auth/token traffic stays local",
+      "status": "PASS",
+      "detail": "fonts=https://fonts.googleapis.com,https://fonts.gstatic.com other=none"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "run": "authentication-account-recovery",
+  "postgres_container": "auth-recovery-test-pg (isolated throw-away postgres:16-alpine, 127.0.0.1:47432/pg_auth_verify)",
+  "prior_head": "f8a2c41d9e05",
+  "upgraded_head": "b6d2f0a8c4e1",
+  "preflight_exit": 0,
+  "alembic_upgrade_exit": 0,
+  "alembic_check_exit": 0,
+  "legacy_accounts_preserved": true,
+  "legacy_accounts_auto_verified": false,
+  "admin_username_and_email_login": "PASS",
+  "teacher_signup_without_code_status": 403,
+  "teacher_signup_with_code_status": 200,
+  "teacher_login_status": 200,
+  "concurrent_token_redemption_8_threads": {
+    "wins": 1,
+    "losses": 7
+  },
+  "token_persisted_and_consumed_after_postgres_restart": true,
+  "stale_token_gt_7d_purged_on_issue": true,
+  "email_smoke_check_on_env_example": {
+    "provider": "resend",
+    "enabled": false,
+    "available": false,
+    "issues": [
+      "EMAIL_DISABLED",
+      "RESEND_API_KEY_MISSING"
+    ],
+    "senderDomain": "mail.hoclieu.tech",
+    "publicAppUrl": "http://localhost:3000",
+    "resendApiKeyPresent": false
+  },
+  "verdict": "PASS"
+}

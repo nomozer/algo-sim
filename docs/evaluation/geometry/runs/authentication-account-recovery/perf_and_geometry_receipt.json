@@ -1,0 +1,152 @@
+{
+  "run": "authentication-account-recovery",
+  "routeMetrics": {
+    "/": {
+      "runs": 3,
+      "jsDecodedMedianBytes": 475794,
+      "jsTransferredMedianBytes": 475794,
+      "cssTransferredMedianBytes": 58109,
+      "threeChunkBytes": 0,
+      "geometrySamplesChunkBytes": 0,
+      "adminChunkBytes": 0,
+      "authChunkLoaded": false,
+      "authChunkNeverLoaded": true,
+      "pageErrors": [],
+      "sampleAssets": [
+        "/assets/index-yFWweERD.css",
+        "/assets/index-COgT5hxJ.js",
+        "/assets/landing/product-renders/how-step-construct.png",
+        "/assets/landing/product-renders/how-step-inspect.png",
+        "/assets/landing/product-renders/about-cube-section.png",
+        "/assets/landing/product-renders/sample-sphere-pyramid.png",
+        "/assets/landing/product-renders/sample-oxyz-intersection.png",
+        "/assets/landing/product-renders/sample-distance-plane.png",
+        "/assets/landing/product-renders/sample-pyramid-section.png"
+      ]
+    },
+    "/about": {
+      "runs": 3,
+      "jsDecodedMedianBytes": 475794,
+      "jsTransferredMedianBytes": 475794,
+      "cssTransferredMedianBytes": 58109,
+      "threeChunkBytes": 0,
+      "geometrySamplesChunkBytes": 0,
+      "adminChunkBytes": 0,
+      "authChunkLoaded": false,
+      "authChunkNeverLoaded": true,
+      "pageErrors": [],
+      "sampleAssets": [
+        "/assets/index-yFWweERD.css",
+        "/assets/index-COgT5hxJ.js",
+        "/assets/landing/product-renders/how-step-construct.png",
+        "/assets/landing/product-renders/how-step-inspect.png",
+        "/assets/landing/product-renders/about-cube-section.png",
+        "/assets/landing/product-renders/sample-sphere-pyramid.png",
+        "/assets/landing/product-renders/sample-oxyz-intersection.png",
+        "/assets/landing/product-renders/sample-distance-plane.png",
+        "/assets/landing/product-renders/sample-pyramid-section.png"
+      ]
+    },
+    "/login": {
+      "runs": 3,
+      "jsDecodedMedianBytes": 669335,
+      "jsTransferredMedianBytes": 669335,
+      "cssTransferredMedianBytes": 421407,
+      "threeChunkBytes": 0,
+      "geometrySamplesChunkBytes": 0,
+      "adminChunkBytes": 0,
+      "authChunkLoaded": true,
+      "authChunkNeverLoaded": false,
+      "pageErrors": [],
+      "sampleAssets": [
+        "/assets/index-yFWweERD.css",
+        "/assets/index-COgT5hxJ.js",
+        "/assets/load-app-styles-NFpSamUZ.css",
+        "/assets/load-app-styles-B7uApGzD.js",
+        "/assets/HomeView-Dkgq4xeU.js",
+        "/assets/LeftSidebar-OwVr0OxB.js",
+        "/assets/ProblemInput-B5cmEu_a.js",
+        "/assets/auth-shared-C9BMTySr.js",
+        "/assets/AuthPageView-yj-SJ9T1.js"
+      ]
+    },
+    "/forgot-password": {
+      "runs": 3,
+      "jsDecodedMedianBytes": 669335,
+      "jsTransferredMedianBytes": 669335,
+      "cssTransferredMedianBytes": 421407,
+      "threeChunkBytes": 0,
+      "geometrySamplesChunkBytes": 0,
+      "adminChunkBytes": 0,
+      "authChunkLoaded": true,
+      "authChunkNeverLoaded": false,
+      "pageErrors": [],
+      "sampleAssets": [
+        "/assets/index-yFWweERD.css",
+        "/assets/index-COgT5hxJ.js",
+        "/assets/load-app-styles-NFpSamUZ.css",
+        "/assets/load-app-styles-B7uApGzD.js",
+        "/assets/LeftSidebar-OwVr0OxB.js",
+        "/assets/HomeView-Dkgq4xeU.js",
+        "/assets/ProblemInput-B5cmEu_a.js",
+        "/assets/AuthPageView-yj-SJ9T1.js",
+        "/assets/auth-shared-C9BMTySr.js"
+      ]
+    },
+    "/verify-email": {
+      "runs": 3,
+      "jsDecodedMedianBytes": 669335,
+      "jsTransferredMedianBytes": 669335,
+      "cssTransferredMedianBytes": 421407,
+      "threeChunkBytes": 0,
+      "geometrySamplesChunkBytes": 0,
+      "adminChunkBytes": 0,
+      "authChunkLoaded": true,
+      "authChunkNeverLoaded": false,
+      "pageErrors": [],
+      "sampleAssets": [
+        "/assets/index-yFWweERD.css",
+        "/assets/index-COgT5hxJ.js",
+        "/assets/load-app-styles-NFpSamUZ.css",
+        "/assets/load-app-styles-B7uApGzD.js",
+        "/assets/LeftSidebar-OwVr0OxB.js",
+        "/assets/HomeView-Dkgq4xeU.js",
+        "/assets/ProblemInput-B5cmEu_a.js",
+        "/assets/AuthPageView-yj-SJ9T1.js",
+        "/assets/auth-shared-C9BMTySr.js"
+      ]
+    }
+  },
+  "teacherPolicy": {
+    "withoutCodeStatus": 403,
+    "wrongCodeStatus": 403,
+    "withValidCodeStatus": 200,
+    "registeredRole": "teacher",
+    "loginStatus": 200,
+    "loggedInRole": "teacher"
+  },
+  "chunkRecovery": {
+    "errorVisible": true,
+    "hasRetryBtn": true,
+    "libraryRecovered": true,
+    "draftPreserved": true
+  },
+  "sAbcdJourney": {
+    "wsReadyMs": 607,
+    "apiStatus": 200,
+    "apiMs": 653,
+    "totalSubmitToSceneMs": 1169,
+    "routeStatus": "SERVED",
+    "chosenRoute": null,
+    "externalAiCalls": 0,
+    "hasExactAnswer16": true,
+    "canvasInfo": {
+      "hasCanvas": true,
+      "w": 809,
+      "h": 862,
+      "renderedCount": 11,
+      "hasGl": true
+    },
+    "externalRequestsCount": 0
+  }
+}
