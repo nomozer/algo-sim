@@ -34,6 +34,38 @@ function compileVercelSourcePattern(source: string): RegExp {
   return new RegExp(`^${source}$`);
 }
 
+function findNestedCapturingGroup(source: string): string | null {
+  // Vercel's @vercel/routing-utils rejects nested unnamed capturing groups `(...)` inside an outer `(...)`.
+  const stack: Array<{ capturing: boolean }> = [];
+  let inCharClass = false;
+  for (let i = 0; i < source.length; i += 1) {
+    const ch = source[i]!;
+    if (ch === "\\") {
+      i += 1;
+      continue;
+    }
+    if (inCharClass) {
+      if (ch === "]") inCharClass = false;
+      continue;
+    }
+    if (ch === "[") {
+      inCharClass = true;
+      continue;
+    }
+    if (ch === "(") {
+      const next = source[i + 1];
+      const capturing = next !== "?";
+      if (capturing && stack.some((entry) => entry.capturing)) {
+        return `Nested capturing group at index ${i} in "${source}" (use non-capturing "(?:...)" inside outer groups)`;
+      }
+      stack.push({ capturing });
+    } else if (ch === ")" && stack.length > 0) {
+      stack.pop();
+    }
+  }
+  return null;
+}
+
 describe("Vercel production deployment configuration & SPA routing contract", () => {
   it("keeps a single canonical frontend/vercel.json using the official Vite schema without duplicates", () => {
     expect(existsSync(VERCEL_JSON_PATH)).toBe(true);
@@ -57,6 +89,7 @@ describe("Vercel production deployment configuration & SPA routing contract", ()
     expect(cfg.rewrites).toHaveLength(1);
     const spaRewrite = cfg.rewrites![0]!;
     expect(spaRewrite.destination).toBe("/index.html");
+    expect(findNestedCapturingGroup(spaRewrite.source)).toBeNull();
 
     const matcher = compileVercelSourcePattern(spaRewrite.source);
     const expectedSpaPaths = [
@@ -111,11 +144,17 @@ describe("Vercel production deployment configuration & SPA routing contract", ()
   it("configures security headers (keeping camera=(self)) and safe cache policies (immutable only for hashed Vite assets)", () => {
     const cfg = loadVercelConfig();
     const rules = cfg.headers ?? [];
+    for (const rule of rules) {
+      expect(findNestedCapturingGroup(rule.source)).toBeNull();
+    }
+    expect(findNestedCapturingGroup("/assets/([^/]+-[A-Za-z0-9_-]{8}\\.(js|mjs|css))")).not.toBeNull();
+    expect(findNestedCapturingGroup("/assets/([^/]+-[A-Za-z0-9_-]{8}\\.(?:js|mjs|css))")).toBeNull();
 
     const globalRule = rules.find((r) => r.source === "/(.*)");
     expect(globalRule).toBeDefined();
     const globalHeaderMap = new Map(globalRule!.headers.map((h) => [h.key.toLowerCase(), h.value]));
     expect(globalHeaderMap.get("x-content-type-options")).toBe("nosniff");
+    expect(globalHeaderMap.get("x-frame-options")).toBe("DENY");
     expect(globalHeaderMap.get("referrer-policy")).toBe("strict-origin-when-cross-origin");
     expect(globalHeaderMap.get("permissions-policy")).toContain("camera=(self)");
 
