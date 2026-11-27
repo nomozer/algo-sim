@@ -124,6 +124,51 @@ export function reconcileCrashedResetKey(
   return crashedResetKey === currentResetKey ? crashedResetKey : null;
 }
 
+function canonicalizeLandingLocation(currentPath: string): void {
+  if (typeof window === "undefined") return;
+  if (
+    currentPath !== "/gioi-thieu" &&
+    currentPath !== "/" &&
+    currentPath !== "/about" &&
+    currentPath !== "/landing" &&
+    currentPath !== "/welcome" &&
+    currentPath !== "/intro"
+  ) {
+    return;
+  }
+  const searchParams = new URLSearchParams(window.location.search ?? "");
+  const hasLegacyPreviewParam = searchParams.has("preview");
+  const isLegacyLandingAlias =
+    currentPath === "/gioi-thieu" ||
+    currentPath === "/landing" ||
+    currentPath === "/welcome" ||
+    currentPath === "/intro";
+  if (!isLegacyLandingAlias && !hasLegacyPreviewParam) return;
+  try {
+    if (hasLegacyPreviewParam) {
+      searchParams.delete("preview");
+    }
+    const cleanSearch = searchParams.toString();
+    const suffix = `${cleanSearch ? `?${cleanSearch}` : ""}${window.location.hash ?? ""}`;
+    const targetLandingPath = currentPath === "/" ? `/${suffix}` : `/about${suffix}`;
+    if (typeof window.history?.replaceState === "function") {
+      window.history.replaceState(
+        {
+          axoView: "landing",
+          axoTabId: null,
+          tabId: null,
+          sampleId: null,
+          historyId: null,
+        },
+        "",
+        targetLandingPath,
+      );
+    }
+  } catch {
+    /* bỏ qua nếu môi trường kiểm thử chặn replaceState */
+  }
+}
+
 /**
  * MỘT VỎ, MỘT THANH TRÊN.
  *
@@ -383,6 +428,8 @@ export default function App() {
             } catch {
               /* bỏ qua nếu môi trường kiểm thử chặn replaceState */
             }
+          } else if (st.view === "landing") {
+            canonicalizeLandingLocation(curPath);
           }
         }
       } finally {
@@ -562,38 +609,7 @@ export default function App() {
         currentPath === "/welcome" ||
         currentPath === "/intro")
     ) {
-      const searchParams = new URLSearchParams(window.location.search ?? "");
-      const hasLegacyPreviewParam = searchParams.has("preview");
-      const isLegacyLandingAlias =
-        currentPath === "/gioi-thieu" ||
-        currentPath === "/landing" ||
-        currentPath === "/welcome" ||
-        currentPath === "/intro";
-      if (isLegacyLandingAlias || hasLegacyPreviewParam) {
-        try {
-          if (hasLegacyPreviewParam) {
-            searchParams.delete("preview");
-          }
-          const cleanSearch = searchParams.toString();
-          const suffix = `${cleanSearch ? `?${cleanSearch}` : ""}${window.location.hash ?? ""}`;
-          const targetLandingPath = currentPath === "/" ? `/${suffix}` : `/about${suffix}`;
-          if (typeof window.history?.replaceState === "function") {
-            window.history.replaceState(
-              {
-                axoView: "landing",
-                axoTabId: null,
-                tabId: null,
-                sampleId: null,
-                historyId: null,
-              },
-              "",
-              targetLandingPath,
-            );
-          }
-        } catch {
-          /* bỏ qua nếu môi trường kiểm thử chặn replaceState */
-        }
-      }
+      canonicalizeLandingLocation(currentPath);
       return;
     }
     if (currentPath === targetPath && !sameWorkspaceTabRoute) return;
