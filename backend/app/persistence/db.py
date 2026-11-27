@@ -16,15 +16,22 @@ from dotenv import load_dotenv
 from sqlalchemy import DateTime, Integer, String, Text, create_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
 
-# Nạp backend/.env trước khi đọc biến môi trường
-load_dotenv(Path(__file__).resolve().parent.parent.parent / ".env")
+# Nạp backend/.env trước khi đọc biến môi trường (trừ khi CLI/test yêu cầu cô lập --no-dotenv / --env-file)
+if os.getenv("ALGOSIM_DISABLE_DOTENV", "").strip() != "1":
+    load_dotenv(Path(__file__).resolve().parent.parent.parent / ".env")
 
 # SQLite fallback NEO VÀO backend/ (không phải thư mục đang chạy). Trước đây là
 # "sqlite:///./algosim.db" — tương đối theo CWD, nên chạy một script từ gốc repo
 # sẽ đẻ ra `algosim.db` ngay tại gốc, lọt khỏi .gitignore (chỉ chặn backend/*.db)
 # và bị commit nhầm. Neo tuyệt đối: chạy từ đâu file cũng nằm đúng backend/.
 _BACKEND_DIR = Path(__file__).resolve().parent.parent.parent
-DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{_BACKEND_DIR / 'algosim.db'}")
+_RAW_DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{_BACKEND_DIR / 'algosim.db'}").strip()
+if _RAW_DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = "postgresql+psycopg2://" + _RAW_DATABASE_URL[len("postgres://"):]
+elif _RAW_DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = "postgresql+psycopg2://" + _RAW_DATABASE_URL[len("postgresql://"):]
+else:
+    DATABASE_URL = _RAW_DATABASE_URL
 IS_SQLITE = DATABASE_URL.startswith("sqlite")
 
 

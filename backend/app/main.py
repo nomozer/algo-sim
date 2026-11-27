@@ -77,16 +77,47 @@ from app.accounts.router import (
 from app.ai.telemetry import begin_request_usage
 from app.persistence.classroom_models import User as AccountUser
 
+_DEFAULT_CORS_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173",
+    "https://hoclieu.tech",
+    "https://www.hoclieu.tech",
+]
+
+
+def _resolve_cors_settings() -> tuple[list[str], bool]:
+    raw = os.getenv("CORS_ALLOW_ORIGINS", "").strip()
+    if not raw:
+        return list(_DEFAULT_CORS_ORIGINS), True
+    origins = [part.strip().rstrip("/") for part in raw.split(",") if part.strip()]
+    if not origins:
+        return list(_DEFAULT_CORS_ORIGINS), True
+    if "*" in origins:
+        return ["*"], False
+    return origins, True
+
+
+_CORS_ORIGINS, _CORS_ALLOW_CREDENTIALS = _resolve_cors_settings()
+
 app = FastAPI(title="AlgoSim backend", version="0.3.0")
 _telemetry_log = logging.getLogger("algosim.telemetry")
 
-# Dev dùng vite proxy nên CORS không bắt buộc; mở sẵn cho trường hợp gọi thẳng
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=_CORS_ORIGINS,
+    allow_credentials=_CORS_ALLOW_CREDENTIALS,
+    allow_methods=["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "X-AlgoSim-Preview-Token", "X-Attempt-Id"],
 )
+
+
+@app.middleware("http")
+async def _security_headers_middleware(request: Request, call_next):
+    response = await call_next(request)
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    return response
 
 init_db()
 
@@ -1186,10 +1217,23 @@ def _cache_lookup(session, key: str, policy_version: str | None = None) -> Simul
 def health():
     from app.ai.hybrid_offline import build_local_ai_ux_descriptor, local_slm_ready_status
 
-    with SessionLocal() as session:
-        count = session.query(SimulationCache).count()
-        patterns = session.query(SimulationPattern).count()
-        reuse = read_metrics(session)
+    try:
+        with SessionLocal() as session:
+            count = session.query(SimulationCache).count()
+            patterns = session.query(SimulationPattern).count()
+            reuse = read_metrics(session)
+    except Exception:
+        _telemetry_log.warning("health database check failed", exc_info=True)
+        return JSONResponse(
+            status_code=503,
+            headers={"Cache-Control": "no-store"},
+            content={
+                "ok": False,
+                "dbConnected": False,
+                "db": db_dialect(),
+                "runtime": runtime_identity(),
+            },
+        )
     route_mode = hybrid_route_mode()
     local_stat = local_slm_ready_status(os.environ, route_mode)
     has_key = bool(os.getenv("GEMINI_API_KEY"))
@@ -1200,6 +1244,7 @@ def health():
     )
     payload: dict[str, Any] = {
         "ok": True,
+        "dbConnected": True,
         "hasKey": has_key,
         "cachedProblems": count,
         "patterns": patterns,

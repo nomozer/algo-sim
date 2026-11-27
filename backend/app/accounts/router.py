@@ -22,12 +22,15 @@ import json
 import os
 import secrets
 import smtplib
+import threading
+import time
+from collections import deque
 from collections.abc import Callable
 from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
 from typing import Any
 
-from fastapi import APIRouter, Cookie, Depends, HTTPException, Response
+from fastapi import APIRouter, Cookie, Depends, HTTPException, Request, Response
 from pydantic import BaseModel, Field
 import logging
 import uuid
@@ -63,6 +66,122 @@ router = APIRouter(prefix="/api", tags=["accounts"])
 #: khi có XSS); `samesite=lax` chặn CSRF cho mọi request đổi trạng thái đến từ
 #: site khác mà vẫn cho điều hướng thường hoạt động.
 _COOKIE_KW = {"httponly": True, "samesite": "lax", "path": "/"}
+
+_AUTH_RATE_LOCK = threading.Lock()
+_AUTH_RATE_BUCKETS: dict[tuple[str, str, str], deque[float]] = {}
+_AUTH_RATE_MAX_BUCKETS = 4096
+
+
+def _trust_proxy_headers() -> bool:
+    return os.getenv("TRUST_PROXY_HEADERS", "").strip().lower() in ("1", "true", "yes")
+
+
+def _client_ip(request: Request | None) -> str:
+    if request is None:
+        return "unknown"
+    if _trust_proxy_headers():
+        xff = request.headers.get("x-forwarded-for", "").strip()
+        if xff:
+            first = xff.split(",", 1)[0].strip()
+            if first:
+                return first[:64]
+    if request.client is not None and request.client.host:
+        return str(request.client.host)[:64]
+    return "unknown"
+
+
+def _cookie_settings(request: Request | None = None, *, secure: bool | None = None) -> dict[str, Any]:
+    raw_samesite = os.getenv("COOKIE_SAMESITE", "lax").strip().lower()
+    samesite = raw_samesite if raw_samesite in ("lax", "strict", "none") else "lax"
+    if secure is not None:
+        is_secure = bool(secure)
+    else:
+        raw_secure = os.getenv("COOKIE_SECURE", "").strip().lower()
+        if raw_secure in ("1", "true", "yes"):
+            is_secure = True
+        elif raw_secure in ("0", "false", "no"):
+            is_secure = False
+        else:
+            pub = os.getenv("ALGOSIM_PUBLIC_APP_URL", "").strip().lower()
+            proto = request.headers.get("x-forwarded-proto", "").split(",", 1)[0].strip().lower() if (request is not None and _trust_proxy_headers()) else ""
+            req_https = request is not None and (
+                request.url.scheme == "https"
+                or str(request.scope.get("scheme") or "").lower() == "https"
+            )
+            is_secure = pub.startswith("https://") or proto == "https" or req_https
+    if samesite == "none":
+        is_secure = True
+    return {"httponly": True, "samesite": samesite, "secure": is_secure, "path": "/"}
+
+
+#: Giới hạn tốc độ xác thực lưu trong bộ nhớ tiến trình (per-worker; đặt lại khi restart).
+#: Phù hợp mô hình VPS 1 worker uvicorn; nếu mở rộng nhiều worker cần lớp limit ở Nginx/store dùng chung.
+def _auth_rate_config() -> tuple[int, float]:
+    raw_max = os.getenv("AUTH_RATE_LIMIT_MAX_ATTEMPTS", "15").strip()
+    raw_win = os.getenv("AUTH_RATE_LIMIT_WINDOW_SECONDS", "60").strip()
+    try:
+        max_attempts = max(0, int(raw_max))
+    except ValueError:
+        max_attempts = 15
+    try:
+        window_s = max(1.0, float(raw_win))
+    except ValueError:
+        window_s = 60.0
+    return max_attempts, window_s
+
+
+def _auth_ip_max_attempts(max_attempts: int) -> int:
+    raw_ip_max = os.getenv("AUTH_RATE_LIMIT_IP_MAX_ATTEMPTS", "240").strip()
+    try:
+        ip_max = max(1, int(raw_ip_max))
+    except ValueError:
+        ip_max = 240
+    return max(max_attempts * 4, ip_max)
+
+
+def _consume_auth_rate_limit(action: str, request: Request | None, identifier: str = "") -> None:
+    max_attempts, window_s = _auth_rate_config()
+    if max_attempts <= 0:
+        return
+    ip = _client_ip(request)
+    ident_hash = hashlib.sha256(identifier.strip().lower().encode("utf-8")).hexdigest()[:16] if identifier else "_"
+    now = time.monotonic()
+    cutoff = now - window_s
+    keys_and_limits = [
+        ((action, ip, ident_hash), max_attempts),
+        ((f"{action}:ip", ip, "*"), _auth_ip_max_attempts(max_attempts)),
+    ]
+    with _AUTH_RATE_LOCK:
+        if len(_AUTH_RATE_BUCKETS) > _AUTH_RATE_MAX_BUCKETS:
+            stale = [k for k, dq in _AUTH_RATE_BUCKETS.items() if not dq or dq[-1] <= cutoff]
+            for k in stale:
+                _AUTH_RATE_BUCKETS.pop(k, None)
+            if len(_AUTH_RATE_BUCKETS) > _AUTH_RATE_MAX_BUCKETS:
+                _AUTH_RATE_BUCKETS.clear()
+        for bucket_key, limit in keys_and_limits:
+            dq = _AUTH_RATE_BUCKETS.setdefault(bucket_key, deque())
+            while dq and dq[0] <= cutoff:
+                dq.popleft()
+            if len(dq) >= limit:
+                retry_after = max(1, int(window_s - (now - dq[0])) + 1)
+                raise HTTPException(
+                    status_code=429,
+                    detail="Bạn thao tác quá nhanh. Vui lòng chờ một lát rồi thử lại.",
+                    headers={"Retry-After": str(retry_after)},
+                )
+        for bucket_key, _ in keys_and_limits:
+            _AUTH_RATE_BUCKETS[bucket_key].append(now)
+
+
+def _clear_auth_rate_limit(action: str, request: Request | None, identifier: str = "") -> None:
+    ip = _client_ip(request)
+    ident_hash = hashlib.sha256(identifier.strip().lower().encode("utf-8")).hexdigest()[:16] if identifier else "_"
+    with _AUTH_RATE_LOCK:
+        _AUTH_RATE_BUCKETS.pop((action, ip, ident_hash), None)
+        # Đăng nhập thành công không tiêu tốn ngân sách thất bại chung IP (tránh khóa nhầm cả lớp dùng chung NAT trường học).
+        ip_dq = _AUTH_RATE_BUCKETS.get((f"{action}:ip", ip, "*"))
+        if ip_dq:
+            ip_dq.pop()
 
 #: Giá trị cấu hình hệ thống mặc định (nguồn chân lý thực tế nằm tại bảng `admin_system_settings`).
 _DEFAULT_SYSTEM_SETTINGS: dict[str, Any] = {
@@ -288,19 +407,31 @@ def _revoke_user_sessions(db, user_id: int) -> None:
     db.flush()
 
 
-def _ensure_session(db, auth: AuthSession | None, response: Response) -> AuthSession:
+def _ensure_session(
+    db, auth: AuthSession | None, response: Response, *, request: Request | None = None
+) -> AuthSession:
     """Có phiên thì dùng lại, chưa có thì mở và đặt cookie."""
     if auth is not None:
         return auth
     fresh = service.new_session(db)
-    set_session_cookie(response, fresh.token)
+    set_session_cookie(response, fresh.token, request=request)
     return fresh
 
 
-def set_session_cookie(response, token: str) -> None:
+def set_session_cookie(
+    response,
+    token: str,
+    *,
+    request: Request | None = None,
+    secure: bool | None = None,
+) -> None:
     """The one place a session cookie is written (httponly, samesite=lax, server-issued opaque token)."""
-    response.set_cookie(service.SESSION_COOKIE, token,
-                        max_age=int(service.SESSION_TTL.total_seconds()), **_COOKIE_KW)
+    response.set_cookie(
+        service.SESSION_COOKIE,
+        token,
+        max_age=int(service.SESSION_TTL.total_seconds()),
+        **_cookie_settings(request, secure=secure),
+    )
 
 
 #: No valid session ⇒ provider work is refused; the caller issues a fresh guest session so the client's retry counts.
@@ -742,18 +873,19 @@ class PasswordBody(BaseModel):
 
 
 @router.get("/auth/me")
-def me(response: Response, caller: Caller = Depends(get_caller)):
+def me(request: Request, response: Response, caller: Caller = Depends(get_caller)):
     """Danh tính + quyền hiện tại. Luôn 200 — khách cũng là một câu trả lời hợp lệ.
 
     Đây cũng là nơi phiên KHÁCH ra đời, nên đếm lượt dùng thử có chỗ bám ngay từ
     lần đầu mở trang.
     """
-    auth = _ensure_session(caller.db, caller.auth, response)
+    auth = _ensure_session(caller.db, caller.auth, response, request=request)
     return _me_payload(caller, auth)
 
 
 @router.post("/auth/register")
-def register(body: RegisterBody, response: Response, caller: Caller = Depends(get_caller)):
+def register(body: RegisterBody, request: Request, response: Response, caller: Caller = Depends(get_caller)):
+    _consume_auth_rate_limit("register", request, body.email)
     settings = _load_system_settings(caller.db)
     if not settings.get("allowNewRegistrations", True):
         raise HTTPException(
@@ -799,15 +931,16 @@ def register(body: RegisterBody, response: Response, caller: Caller = Depends(ge
         meta_row.subject = body.subject.strip()[:120]
     caller.db.flush()
 
-    auth = _ensure_session(caller.db, caller.auth, response)
+    auth = _ensure_session(caller.db, caller.auth, response, request=request)
     service.attach_user(caller.db, auth, user)
     caller.user = user
     return _me_payload(caller, auth)
 
 
 @router.post("/auth/login")
-def login(body: LoginBody, response: Response, caller: Caller = Depends(get_caller)):
+def login(body: LoginBody, request: Request, response: Response, caller: Caller = Depends(get_caller)):
     login_identifier = (body.identifier or body.email or body.username or "").strip()
+    _consume_auth_rate_limit("login", request, login_identifier)
     user = service.authenticate(
         caller.db,
         identifier=login_identifier,
@@ -816,6 +949,7 @@ def login(body: LoginBody, response: Response, caller: Caller = Depends(get_call
     if user is None:
         # MỘT câu cho mọi ca (email lạ / tên đăng nhập lạ / sai mật khẩu) — không cho dò tài khoản.
         raise HTTPException(401, "Email, tên đăng nhập hoặc mật khẩu không đúng.")
+    _clear_auth_rate_limit("login", request, login_identifier)
     meta_row = _get_user_meta_row(caller.db, user.id)
     if meta_row is not None and meta_row.status == "suspended":
         raise HTTPException(403, "Tài khoản này đang bị tạm khóa bởi Quản trị viên.")
@@ -825,16 +959,23 @@ def login(body: LoginBody, response: Response, caller: Caller = Depends(get_call
             503,
             "Hệ thống đang trong chế độ bảo trì. Vui lòng quay lại sau.",
         )
-    auth = _ensure_session(caller.db, caller.auth, response)
+    auth = _ensure_session(caller.db, caller.auth, response, request=request)
     service.attach_user(caller.db, auth, user)
     caller.user = user
     return _me_payload(caller, auth)
 
 
 @router.post("/auth/logout")
-def logout(response: Response, caller: Caller = Depends(get_caller)):
+def logout(request: Request, response: Response, caller: Caller = Depends(get_caller)):
     service.end_session(caller.db, caller.auth.token if caller.auth else None)
-    response.delete_cookie(service.SESSION_COOKIE, path="/")
+    kw = _cookie_settings(request)
+    response.delete_cookie(
+        service.SESSION_COOKIE,
+        path=kw["path"],
+        httponly=kw["httponly"],
+        samesite=kw["samesite"],
+        secure=kw["secure"],
+    )
     return {"ok": True}
 
 
@@ -1252,9 +1393,10 @@ def recovery_status():
 
 @router.post("/auth/forgot-password")
 def forgot_password(
-    body: ForgotPasswordBody, caller: Caller = Depends(get_caller)
+    body: ForgotPasswordBody, request: Request, caller: Caller = Depends(get_caller)
 ):
     clean_email = service.normalize_email(body.email)
+    _consume_auth_rate_limit("forgot_password", request, clean_email)
     if not clean_email or "@" not in clean_email:
         raise HTTPException(400, "Vui lòng nhập địa chỉ email hợp lệ.")
 
@@ -1277,6 +1419,9 @@ def forgot_password(
     ]
     for k in expired_keys:
         _PASSWORD_RESET_TOKENS.pop(k, None)
+
+    if len(_PASSWORD_RESET_TOKENS) > 2048:
+        _PASSWORD_RESET_TOKENS.clear()
 
     user = caller.db.execute(
         select(User).where(User.email == clean_email)
@@ -1314,7 +1459,8 @@ def forgot_password(
 
 
 @router.post("/auth/reset-password")
-def reset_password(body: ResetPasswordBody, caller: Caller = Depends(get_caller)):
+def reset_password(body: ResetPasswordBody, request: Request, caller: Caller = Depends(get_caller)):
+    _consume_auth_rate_limit("reset_password", request)
     raw_token = (body.token or "").strip()
     now = datetime.now(timezone.utc)
 
