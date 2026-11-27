@@ -1,5 +1,16 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Tài khoản, xác minh email & khôi phục mật khẩu (2026-11-28)
+
+| Hạng mục / Vai trò | Đường dẫn |
+|---|---|
+| Token dùng một lần (SHA-256, theo mục đích `email_verification`/`password_reset`, tiêu thụ nguyên tử bằng một `UPDATE` có điều kiện, thu hồi, TTL từ môi trường) và trạng thái xác minh email | `backend/app/accounts/tokens.py` · bảng `auth_tokens`, `email_verifications` trong `backend/app/persistence/classroom_models.py` · migration `backend/alembic/versions/b6d2f0a8c4e1_auth_tokens_and_email_verifications.py` |
+| Thư giao dịch: Resend REST qua `httpx` (một lần thử, timeout, `Idempotency-Key`), SMTP cũ, `readiness()` không lộ bí mật, giới hạn khối lượng theo người nhận, móc kênh giả cho kiểm thử | `backend/app/accounts/mailer.py`, `backend/app/accounts/email_templates.py` · kiểm cấu hình/gửi thử: `backend/scripts/email_smoke_test.py` |
+| Endpoint: `POST /api/auth/forgot-password` (trung tính, Admin bị loại), `POST /api/auth/reset-password`, `POST /api/auth/verify-email`, `POST /api/auth/verify-email/resend`, thông báo đổi mật khẩu, thu hồi phiên | `backend/app/accounts/router.py` |
+| Admin duy nhất: đăng nhập bằng `ADMIN_USERNAME` hoặc email (cùng tài khoản), chẩn đoán CHỈ ĐỌC `--check` (`ADMIN_NOT_CREATED`, `ADMIN_PASSWORD_NOT_SYNCHRONIZED`, `ADMIN_CONFIGURATION_MISMATCH`, `MULTIPLE_ADMINS`, `SCHEMA_MISSING`) | `backend/app/accounts/service.py`, `backend/scripts/manage_admin.py` |
+| Giao diện: view `verify` (`/verify-email`, xác minh bằng nút bấm), gỡ token khỏi URL + `no-referrer`, câu trung tính, trạng thái xác minh/gửi lại trong Cài đặt tài khoản | `frontend/src/components/AuthPageView.tsx`, `frontend/src/components/AccountSettingsModal.tsx`, `frontend/src/state/auth.ts` |
+| Kiểm thử | `backend/tests/test_auth_account_recovery.py`, `backend/tests/test_v28_admin_account.py`, `frontend/src/components/auth-account-recovery.test.tsx` · cách ly thư trong pytest: fixture `isolate_transactional_email` ở `backend/conftest.py` |
+
 ## Frontend Performance Optimization, Route Lazy Loading & Bundle Isolation (2026-11-27)
 
 | Hạng mục / Vai trò | Đường dẫn |

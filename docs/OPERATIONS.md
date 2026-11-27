@@ -299,3 +299,42 @@ cần cho một lần kiểm thủ công thì **đừng commit** trừ khi nó t
     curl -sS -i -X POST https://api.hoclieu.tech/api/auth/logout -H "Origin: https://evil.example"   # phải trả 403 (CSRF guard)
     # Kiểm tra đăng nhập sai lặp lại trả 429 + Retry-After, cookie trả HttpOnly; Secure; SameSite=Lax, và x-content-type-options: nosniff
     ```
+
+## Tài khoản Admin, email giao dịch & khôi phục mật khẩu
+
+> Run `authentication-account-recovery` (2026-11-28). Không lệnh nào dưới đây tự chạy khi backend khởi động.
+
+### Admin duy nhất
+
+- Backend **không bao giờ** tự tạo hay tự đổi mật khẩu Admin. Điền `ADMIN_PASSWORD` vào `backend/.env` không tạo tài khoản; công cụ duy nhất là `scripts/manage_admin.py`, chạy trên **đúng CSDL mà backend đang dùng**.
+- Đăng nhập Admin: `ADMIN_USERNAME` (mặc định `admin`) hoặc email của tài khoản Admin — cả hai là cùng một bản ghi `role = "admin"`. `ADMIN_EMAIL` lệch email đã lưu không còn khoá đăng nhập bằng tên khi chỉ có một Admin; nhiều Admin ⇒ đăng nhập bằng tên bị từ chối (fail-closed).
+- Admin không dùng "Quên mật khẩu" công khai (phản hồi vẫn trung tính); khôi phục bằng `manage_admin.py --apply` trên máy chủ.
+
+| Môi trường | Kiểm tra (chỉ đọc) | Tạo lần đầu / đồng bộ mật khẩu |
+|---|---|---|
+| Docker Compose (local) | `docker compose exec backend python scripts/manage_admin.py --check` | `docker compose exec backend python scripts/manage_admin.py --apply --create-if-missing` |
+| Chạy trực tiếp trên Windows (không `DATABASE_URL`) | `backend\.venv\Scripts\python.exe backend\scripts\manage_admin.py --check` | `... manage_admin.py --apply --create-if-missing` (ghi vào SQLite `backend/algosim.db`) |
+| VPS (PostgreSQL) | như Docker Compose, trong thư mục triển khai | như Docker Compose |
+
+`--check` in `databaseTarget` (không kèm mật khẩu), `alembicRevision`, `adminCount`, email đã che và `diagnosis`. Đổi `backend/.env` thì phải **tạo lại** container (`docker compose up -d --force-recreate backend`) — `docker compose start`/khởi động lại Docker Desktop giữ nguyên biến môi trường cũ của container.
+
+### Email giao dịch (Resend)
+
+- Biến: `EMAIL_PROVIDER=resend`, `RESEND_API_KEY` (bí mật, chỉ trong `.env` của máy chủ), `EMAIL_FROM="Axo <noreply@mail.hoclieu.tech>"`, `EMAIL_ENABLED`, `EMAIL_VERIFICATION_TOKEN_TTL_MINUTES=1440`, `PASSWORD_RESET_TOKEN_TTL_MINUTES=15`, `ALGOSIM_PUBLIC_APP_URL` (liên kết trong thư luôn dựng từ biến này, không từ Host header). Mẫu: [`backend/.env.example`](../backend/.env.example).
+- Thiếu cấu hình ⇒ không khả dụng một cách trung thực: `GET /api/auth/recovery-status` trả `false`, đăng ký vẫn thành công (`verification.status = "unavailable"`), không giả vờ đã gửi.
+- Kiểm tra: `python scripts/email_smoke_test.py --check` · gửi một thư thử (chủ động): `--send --to <địa chỉ>` · trạng thái giao: `--status <email-id>`. Kết quả `accepted` nghĩa là Resend đã nhận yêu cầu, không phải người nhận đã nhận thư.
+- Giới hạn: khoảng chờ 60 giây giữa hai thư cùng mục đích cho một tài khoản (lưu trong CSDL); 5 thư/người nhận/giờ và 200 thư/giờ mỗi tiến trình (`EMAIL_MAX_PER_RECIPIENT_PER_HOUR`, `EMAIL_MAX_PER_HOUR`); giới hạn tốc độ endpoint xác thực dùng `AUTH_RATE_LIMIT_*`. Các bộ đếm trong bộ nhớ là theo từng worker.
+
+### Migration `b6d2f0a8c4e1` và CSDL Docker cũ
+
+- `b6d2f0a8c4e1` chỉ **thêm** `auth_tokens`, `email_verifications`; Dockerfile chạy `migration_preflight.py --startup && alembic upgrade head` khi khởi động. Trên SQLite cục bộ, backend tự tạo hai bảng còn thiếu; trên PostgreSQL schema thuộc về Alembic.
+- CSDL Postgres tạo bởi image cũ (trước khi có preflight) có thể đứng ở `a1c7e4b90d52` trong khi runtime đã tự tạo các bảng quản trị của `d5f9b82c3a14`/`e437149641fa` ⇒ preflight chặn (`PARTIAL_MIGRATION_PRE_EXISTING_OBJECT`). Quy trình hoà giải đã thử trên bản sao schema (xem báo cáo run), luôn **sao lưu trước**:
+  ```powershell
+  docker compose stop backend
+  docker compose build backend
+  docker compose exec -T db pg_dump -U algosim -d algosim -Fc > algosim_backup.dump
+  docker compose run --rm --no-deps backend python -m alembic upgrade a1c7e4b90d52:c4e8a91b2f03 --sql | docker compose exec -T db psql -U algosim -d algosim -v ON_ERROR_STOP=1
+  docker compose run --rm --no-deps backend python -m alembic stamp --purge e437149641fa
+  docker compose up -d --build --force-recreate backend
+  ```
+  Bước `stamp --purge` vẫn đi qua cổng preflight (kiểm tra schema khớp tuyệt đối với `e437149641fa`) — nếu báo `INVALID_STAMP_SCHEMA_MISMATCH` thì dừng lại và đối chiếu, không ép.
