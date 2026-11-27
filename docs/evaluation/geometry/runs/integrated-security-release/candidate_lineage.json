@@ -1,0 +1,125 @@
+{
+  "schema_version": "integrated-candidate-lineage/1",
+  "created_at_utc": "2026-11-27T12:28:00Z",
+  "creation_reason": "Product integration and security hardening outside the core geometry/AI evaluation boundary (C5 auth/cookie/CORS/DB hardening + proxy trust & CSRF middleware closure).",
+  "parent_historical_candidate": {
+    "commit": "4978ac01f3240d08ae259d532edcc83c2c5af5e4",
+    "manifest_commit": "f2cc62b1e",
+    "product_commit_sha": "3104635dbd74118d2bb6db9b1f91fbd0a5f734ae",
+    "measured_system_tree_hash": "7bd85b6e2c8719e4fb6192e362ce17505588081623c90514dda0a83e88b4dd04",
+    "so_file": 127,
+    "cache_version": "158",
+    "archive_path": "docs/evaluation/geometry/runs/integrated-security-release/prior-EVALUATION_CANDIDATE-4978ac01f.json",
+    "archive_sha256": "d5198276e8415014507f42502e7efeaacdf9767f3dc0c63fc17c40370c871a68",
+    "byte_identical_verified": true
+  },
+  "integrated_candidate": {
+    "manifest_path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "manifest_sha256": "4d75487bfbe66bcfbe880e998a9b4cfef0b9a2d67a3f48d4b9aa971371a764af",
+    "registration_commit": "ebe257fbf9e33d8569851dae3f09bcd6d8c701aa",
+    "source_commit": "473cb68ded13d35f413032e9c45aea36960928ea",
+    "product_commit_sha": "473cb68ded13d35f413032e9c45aea36960928ea",
+    "product_commit_rule": "product-paths-excluding-test-only/1",
+    "measured_system_tree_hash": "92f8e24dd56b5bb0eda60fa85cdf3caabea71a0c7b5ed0e741922f7b2cbb1ab7",
+    "so_file": 127,
+    "cay_lam_viec_sach": true,
+    "cache_version": "158",
+    "semantic_environment_hash": "f9df4bf0c8bd458aaed77710a619863a0290e44711b651153a4649c00675c555",
+    "default_runtime_mode": "live",
+    "default_route_policy": "HYBRID"
+  },
+  "measured_system_diff_vs_parent": {
+    "core_evaluation_changed": [],
+    "changed_files": [
+      "backend/app/accounts/router.py",
+      "backend/app/main.py",
+      "backend/app/persistence/db.py"
+    ],
+    "classification": "http_auth_security_csrf_proxy_and_db_dialect_outside_geometry_core"
+  },
+  "model_artifact_identity": {
+    "configured_gemini_model": "gemini-2.5-flash",
+    "local_slm_model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+    "local_slm_provisioned_on_dev_host": true,
+    "retrained_in_this_release": false
+  },
+  "runtime_environment_fingerprints": {
+    "windows_local_venv": {
+      "os": "Windows",
+      "python_version": "3.12.10",
+      "package_count": 55,
+      "requirements_txt_sha256": "8565b6bfbe8ae553a64c32183dcf7b74e1a3c974ebaac32c6c91425ceb9cafa6",
+      "pip_audit_vulnerabilities": 0,
+      "notes": "Development/test environment; kept strictly distinct from Linux container."
+    },
+    "docker_linux_container": {
+      "os": "Linux x86_64",
+      "base_image": "python:3.12-slim",
+      "base_image_digest": "sha256:191083cdf6c7bda8c76158983163ead5d5cf7b77cf3033e805bb0f5296f51b4b",
+      "final_image_id": "sha256:7584820b587ddf6ce14190cd7f93067dd879b3af5cef72188521d6fa828eec0e",
+      "image_size_bytes": 473473197,
+      "debian_dpkg_count": 87,
+      "python_package_count": 35,
+      "dependency_inventory_path": "docs/evaluation/geometry/runs/integrated-security-release/docker_dependency_inventory.txt",
+      "dependency_inventory_sha256": "c054baec4abf9ae67a06a5c2226ad0133bfef865b529e917a70e47c9512f2f09",
+      "pip_audit_runtime_app_packages_vulns": 0,
+      "pip_audit_base_build_tool_vulns": {
+        "package": "pip",
+        "version": "25.0.1",
+        "cve_ids": [
+          "CVE-2025-8869",
+          "CVE-2026-1703",
+          "CVE-2026-3219",
+          "CVE-2026-6357",
+          "CVE-2026-8643",
+          "CVE-2026-13346"
+        ],
+        "fixed_in": "26.2.0",
+        "runtime_exposure": "NONE (build-time CLI only, never imported or executed by FastAPI/Uvicorn/Alembic at runtime)"
+      },
+      "os_cve_scan_status": "INCONCLUSIVE_NO_AUTHENTICATED_OS_SCANNER"
+    }
+  },
+  "approval_governance": {
+    "status": "PENDING_OWNER_DECISION",
+    "live_evaluation_status": "LIVE_EVALUATION_PENDING_AUTHORIZATION",
+    "c21_pending_templates": [
+      "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+      "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json",
+      "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json"
+    ],
+    "paid_project_confirmed": false,
+    "refresh_receipt_path": "docs/evaluation/geometry/runs/integrated-security-release/pending_template_refresh.json"
+  },
+  "evaluation_status": "OFFLINE_REVALIDATED_ONLY",
+  "benchmark_inheritance_policy": {
+    "historical_results_attributed_to": "4978ac01f3240d08ae259d532edcc83c2c5af5e4",
+    "historical_scores_copied_to_new_candidate": false,
+    "full_gemini_equivalence_claimed": false,
+    "slm_full_replacement_claimed": false,
+    "statement": "Historical benchmark results and receipts remain bound strictly to 4978ac01f3240d08ae259d532edcc83c2c5af5e4. The integrated candidate 473cb68ded13d35f413032e9c45aea36960928ea has verified unchanged geometry/AI core (core_evaluation_changed == []) and has passed offline revalidation and isolated runtime verification only; live evaluation remains PENDING Owner authorization."
+  },
+  "offline_revalidation_receipts": {
+    "allow_live_ai": 0,
+    "external_provider_calls": 0,
+    "baseline_v2_expressibility": "6/6 CANONICAL_EXECUTABLE (6/6 derived points)",
+    "offline_pytest_suites_passed": "268 passed in 22.09s (0 failed)",
+    "reference_smoke_s_abcd": {
+      "http_status": 200,
+      "route_status": "SERVED",
+      "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+      "extraction_mode": "LOCAL_DETERMINISTIC_PARSER",
+      "answer_q1": "16",
+      "scene3d_object_count": 12,
+      "windows_cold_ms": 725.67,
+      "windows_cache_hit_ms": 47.33
+    },
+    "multi_case_offline_checks": {
+      "regular_tri_pyramid": "SERVED (√23/3, 144.37ms)",
+      "cube_volume": "SERVED (27, 84.64ms)",
+      "regular_square_pyramid_lat": "SERVED (16√17/3, 89.52ms)",
+      "fail_closed_missing_dim": "REFUSED (82.37ms)",
+      "out_of_scope_algo": "unsupported / gate_out_of_scope (34.79ms)"
+    }
+  }
+}

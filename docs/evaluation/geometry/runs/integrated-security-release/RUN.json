@@ -1,0 +1,16 @@
+{
+  "run_id": "integrated-security-release",
+  "date": "2026-11-27",
+  "branch": "main",
+  "task_slug": "integrated-security-release",
+  "source_commit": "473cb68ded13d35f413032e9c45aea36960928ea",
+  "registration_commit": "ebe257fbf9e33d8569851dae3f09bcd6d8c701aa",
+  "negative_test_commit": "a0535e9684cac3e20caae52b320f4b2373088488",
+  "parent_historical_candidate": "4978ac01f3240d08ae259d532edcc83c2c5af5e4",
+  "measured_system_tree_hash": "92f8e24dd56b5bb0eda60fa85cdf3caabea71a0c7b5ed0e741922f7b2cbb1ab7",
+  "cache_version": "158",
+  "evaluation_status": "OFFLINE_REVALIDATED_ONLY",
+  "live_evaluation_status": "LIVE_EVALUATION_PENDING_AUTHORIZATION",
+  "images": "NOT_APPLICABLE",
+  "diagnostics": "NOT_APPLICABLE"
+}

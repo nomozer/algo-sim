@@ -1,63 +1,53 @@
-# Freeze Verification Contract — Historical Freeze Integrity vs Current Product Integrity
+# Freeze Verification Contract — Historical Freeze Integrity vs Integrated Candidate Lifecycle
 
-> **Trạng thái:** Hợp đồng vận hành hiện hành (bổ sung theo Phương án 1, 2026-11-21).  
-> **Nguyên tắc bất biến:** Không sửa [EVALUATION_CANDIDATE.json](../evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json), không sửa `freeze_protocol.md` lịch sử và không sửa kết quả benchmark đã niêm phong.
+> **Trạng thái:** Hợp đồng vận hành hiện hành (cập nhật 2026-11-27 kèm quy trình Integrated Candidate Lifecycle).  
+> **Nguyên tắc bất biến:** Không sửa bản lưu lịch sử, không sửa `freeze_protocol.md` lịch sử và không gán kết quả benchmark cũ thành phép đo mới cho candidate sau.
 
 ---
 
-## 1. Mốc Candidate Lịch Sử Hiện Đang Bảo Toàn
+## 1. Dòng Phả Hệ Candidate (`4978ac01f` → Integrated Security Release)
 
-- **Tệp manifest:** `docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json`
-- **Commit nguồn đã đóng băng:** `600f5105d4222cd6835cc916b34d5cb3f11610e6` (`2026-11-19T10:09:18+00:00`)
-- **Luật danh tính sản phẩm:** `product-paths-excluding-test-only/1` (`product_commit_sha = 600f5105d4222cd6835cc916b34d5cb3f11610e6`)
-- **Mã sản phẩm đo đạc (`measured_system`):** `109` tệp · `tree_hash = 78edfa1784625e9bca8f1a4cd70b60359d198ba77530986903175a57e18206a7`
-- **Phiên bản bộ nhớ đệm & hợp đồng IR:** `CACHE_VERSION = 132` · `spec_version_ir = 1.0` · `SEALED = DA_NIEM_PHONG`
+1. **Mốc lịch sử được bảo toàn (`4978ac01f`, manifest tại `f2cc62b1e`):**
+   - **Archive byte-identical:** [`prior-EVALUATION_CANDIDATE-4978ac01f.json`](../evaluation/geometry/runs/integrated-security-release/prior-EVALUATION_CANDIDATE-4978ac01f.json) (`SHA-256 = d5198276e8415014507f42502e7efeaacdf9767f3dc0c63fc17c40370c871a68`).
+   - **Commit nguồn:** `4978ac01f3240d08ae259d532edcc83c2c5af5e4` (`product_commit_sha = 3104635dbd74118d2bb6db9b1f91fbd0a5f734ae`).
+   - **Mã đo đạc:** `127` tệp · `tree_hash = 7bd85b6e2c8719e4fb6192e362ce17505588081623c90514dda0a83e88b4dd04` · `CACHE_VERSION = 158`.
+   - **Mốc sớm hơn:** `600f5105d4222cd6835cc916b34d5cb3f11610e6` (`109` tệp, `CACHE_VERSION = 132`) vẫn được Git history & `test_I2_every_historical_candidate_reproduces_under_its_recorded_rule` xác minh tự động.
+2. **Active Integrated Candidate (`EVALUATION_CANDIDATE.json` hiện hành):**
+   - **Tệp manifest:** [`EVALUATION_CANDIDATE.json`](../evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json).
+   - **Commit nguồn (`source` / `product_commit_sha`):** `473cb68ded13d35f413032e9c45aea36960928ea` (C5 auth/cookie/CORS/DB + proxy trust & CSRF closure).
+   - **Mã đo đạc:** `127` tệp · `tree_hash = 92f8e24dd56b5bb0eda60fa85cdf3caabea71a0c7b5ed0e741922f7b2cbb1ab7` · `cay_lam_viec_sach = true` · `CACHE_VERSION = 158`.
+   - **Biên thay đổi:** chỉ `backend/app/accounts/router.py`, `backend/app/main.py`, `backend/app/persistence/db.py` (`core_evaluation_changed == []`).
+   - **Trạng thái đánh giá:** `OFFLINE_REVALIDATED_ONLY` · `LIVE_EVALUATION_PENDING_AUTHORIZATION` (xem [`candidate_lineage.json`](../evaluation/geometry/runs/integrated-security-release/candidate_lineage.json)).
 
 ---
 
 ## 2. Hai Chế Độ Kiểm Chứng Độc Lập (`freeze_evaluation_candidate.py`)
 
-| Chế độ | Lệnh thực thi | Ý nghĩa kỹ thuật | Kết quả kỳ vọng sau khi phát triển thêm Landing / Auth |
-|---|---|---|---|
-| **Historical Freeze Integrity (`--verify-historical`)** | `python backend/scripts/freeze_evaluation_candidate.py --verify-historical --json` | Đọc `EVALUATION_CANDIDATE.json`, xác minh `commit` tồn tại trong Git object DB, băm lại trực tiếp toàn bộ `measured_system.paths`, `schema_semantic_program`, `dev/cases.json` và `product_commit_sha` từ **Git tree tại đúng commit nguồn** (không checkout, không chạm working tree), đồng thời đối chiếu byte của manifest trong working tree với `HEAD`. | **PASS (exit `0`)** chừng nào bản đóng băng lịch sử và Git history gốc còn nguyên vẹn. |
-| **Strict Current Verification (`--verify`)** | `python backend/scripts/freeze_evaluation_candidate.py --verify` | Băm trực tiếp **working tree / HEAD hiện tại** của `MEASURED_SYSTEM_PATHS` (`backend/app`, `frontend/src/simulations/domains/semantic/...`) và `product_commit_sha` hiện tại so với `EVALUATION_CANDIDATE.json`. | **FAIL (exit `1`)** là kết quả **đúng theo hợp đồng** khi có thay đổi mã sản phẩm hợp lệ sau mốc `600f5105d` (vd: `backend/app/accounts/` hoặc Landing frontend). |
+| Chế độ | Lệnh thực thi | Ý nghĩa kỹ thuật |
+|---|---|---|
+| **Active Strict Verification (`--verify`)** | `python backend/scripts/freeze_evaluation_candidate.py --verify` | Băm trực tiếp working tree / `HEAD` của `MEASURED_SYSTEM_PATHS` và `product_commit_sha` so với `EVALUATION_CANDIDATE.json` đang active. Phải trả exit `0` khi ở trạng thái phát hành sạch và báo `FAIL` (exit `1`) ngay nếu bất kỳ mã sản phẩm nào trôi. |
+| **Historical Provenance Verification (`--verify-historical`)** | `python backend/scripts/freeze_evaluation_candidate.py --verify-historical --manifest <path> --json` | Kiểm tra từng byte của bản snapshot lịch sử (mặc định là active manifest, hoặc bản archive `prior-EVALUATION_CANDIDATE-*.json`) khớp với Git tree tại đúng commit nguồn lịch sử — bảo đảm dữ liệu nghiên cứu cũ không bao giờ bị sửa lặng lẽ. |
 
-> **Ranh giới diễn giải bắt buộc:** Một kết quả `--verify-historical` đạt **PASS** chỉ chứng minh bản đóng băng nghiên cứu tại `600f5105d` còn nguyên vẹn và tái lập được; nó **không** khẳng định mã sản phẩm ở `HEAD` hiện tại đồng nhất với bản đóng băng hay tự động kế thừa kết quả benchmark cũ.
-
----
-
-## 3. Phân Tách Tác Động Của Thay Đổi Sản Phẩm Sau Mốc Đóng Băng
-
-1. **Thay đổi tầng ứng dụng ngoài vùng đánh giá** (như giao diện Landing `/about`, đăng nhập Admin tại `backend/app/accounts/`, CLI `manage_admin.py`):
-   - **Không** sửa dữ liệu hay kết quả nghiên cứu lịch sử.
-   - Phải được kiểm chứng bằng bộ hồi quy sản phẩm (Frontend Vitest, Backend Auth/Security/DB Pytest, Playwright E2E) và kiểm chứng bảo toàn vùng lõi (`diff_measured_system_vs_commit` xác nhận `core_evaluation_changed == []`).
-   - Không khẳng định hệ tích hợp hiện hành đã chạy lại benchmark mới.
-2. **Khi nào bắt buộc chạy lại benchmark:**
-   - Bất kỳ chỉnh sửa nào trong vùng lõi đánh giá: `backend/app/simulation/`, `backend/app/ai/`, `frontend/src/simulations/domains/semantic/`, prompt trích xuất, taxonomy nghĩa vụ, tập visual primitives, schema IR, hoặc `CACHE_VERSION`.
-   - Khi đó bài kiểm thử bảo toàn vùng lõi (`test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang`) sẽ báo **FAIL** ngay lập tức.
-3. **Khi nào tạo candidate nghiên cứu mới:**
-   - Chỉ khi khởi động một chiến dịch đánh giá mới được Owner phê duyệt, với quy trình ghi nhận phiên bản, commit sạch (`cay_lam_viec_sach = true`) và provenance riêng — **không** ghi đè candidate lịch sử để dập tắt cảnh báo của các tính năng sản phẩm không thuộc nghiên cứu.
+> **Ranh giới diễn giải bắt buộc:** Bảo toàn vùng lõi (`core_evaluation_changed == []`) chỉ chứng minh mã thuật toán hình học/AI không đổi; nó không tự động sao chép điểm benchmark lịch sử của `4978ac01f` làm kết quả đo mới của integrated candidate, và không tự cấp quyền chạy live evaluation (`PENDING_OWNER_DECISION` / `paid_project_confirmed=false`).
 
 ---
 
-## 4. Cách Tái Kiểm Chứng Snapshot Lịch Sử
+## 3. Quy Trình Phân Loại Thay Đổi & Tái Sử Dụng Candidate Lifecycle
 
-Chạy từ gốc kho hoặc từ bất kỳ Git worktree nào (không làm bẩn working tree):
+| Loại thay đổi | Ví dụ vùng mã | Yêu cầu cập nhật Candidate & Kiểm chứng |
+|---|---|---|
+| **1. Product-only ngoài `MEASURED_SYSTEM_PATHS`** | Landing UI, Sidebar, static assets, `frontend/vercel.json` | Chú ý `product_commit_sha` đổi khi chạm `frontend/src/**`: nếu chỉ giữ snapshot cũ thì `--verify-historical` PASS còn `--verify` sẽ báo `product_commit_sha` drift; trước release sản phẩm tích hợp, xác lập integrated candidate mới theo đúng quy trình sạch. |
+| **2. Measured-system ngoài lõi Hình học/AI** | HTTP/Auth/CSRF/Proxy (`accounts/`, `main.py`), `persistence/db.py`, Docker/deps | Lưu archive bản candidate cũ (`prior-*.json`), commit mã nguồn sạch trước (`<SOURCE_SHA>`), chạy `freeze_evaluation_candidate.py` từ bản clone/worktree sạch (`cay_lam_viec_sach=true`), giữ `core_evaluation_changed == []`, ghi `candidate_lineage.json` (kèm runtime env & dependency fingerprint), chạy `refresh_pending_templates.py` giữ nguyên `PENDING_OWNER_DECISION`, chạy offline revalidation & full regression. |
+| **3. Thay đổi Lõi Đánh Giá (Core Evaluation)** | `backend/app/simulation/`, `backend/app/ai/`, prompts, taxonomy, schema IR, SLM, `CACHE_VERSION` | Bắt buộc tuân thủ đầy đủ chính sách đánh giá nghiên cứu (offline + đề xuất live pilot riêng nếu chạm bề mặt model/prompt), tuyệt đối không tái dùng kết quả cũ. |
+| **4. Live Evaluation (`C21`/`C26`/Pilot mới)** | Chạy `run_s2_student_language_pilot.py` | Luôn đòi hỏi template khớp chính xác `measured_system` hiện hành và phê duyệt tường minh của Owner (`APPROVED_BY_USER` / `EXPLICIT_OWNER_DELEGATED_EXECUTION` + paid verification). Approval của `4978ac01f` bị từ chối tuyệt đối trên runtime mới. |
 
-```bash
-python backend/scripts/freeze_evaluation_candidate.py --verify-historical --json
-python backend/scripts/lock_cache_identity.py --verify
-```
+---
 
-Để kiểm tra xem working tree hiện tại đã khác gì so với mốc đóng băng:
+## 4. Lệnh Tái Kiểm Chứng Nhanh
 
 ```bash
 python backend/scripts/freeze_evaluation_candidate.py --verify
+python backend/scripts/freeze_evaluation_candidate.py --verify-historical --json
+python backend/scripts/freeze_evaluation_candidate.py --verify-historical --manifest docs/evaluation/geometry/runs/integrated-security-release/prior-EVALUATION_CANDIDATE-4978ac01f.json --json
+python backend/scripts/lock_cache_identity.py --verify
 ```
-
----
-
-## 5. Giới Hạn Bảo Đảm Của Cơ Chế Kiểm Chứng
-
-- **Phát hiện được:** sửa hash/số file trong manifest; trỏ tới commit không tồn tại hoặc Git object bị hỏng; sửa metadata không hợp lệ (`cay_lam_viec_sach=false`, rule lạ, JSON hỏng); sửa **đồng thời** cả `commit` lẫn `tree_hash` của `EVALUATION_CANDIDATE.json` trong working tree (bị chặn bởi `git_head_provenance: manifest_modified_vs_head`); sửa bất kỳ tệp nào trong vùng lõi `backend/app/simulation/`, `backend/app/ai/`, `frontend/src/simulations/domains/semantic/`.
-- **Giới hạn trung thực:** Cơ chế `git_head_provenance` dựa trên lịch sử Git `HEAD` cục bộ. Nếu một tác nhân có toàn quyền viết lại lịch sử commit Git (rewrite history + sửa manifest đã commit), việc chống giả mạo tuyệt đối đòi hỏi chữ ký commit mật mã (GPG/SSH signed commits) hoặc bản ghi chứng thực bất biến ngoài kho Git (external attestation / immutable release artifact).
