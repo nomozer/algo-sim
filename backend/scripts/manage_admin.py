@@ -32,7 +32,8 @@ import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
-from sqlalchemy import create_engine, select
+from sqlalchemy import create_engine, inspect, select, text
+from sqlalchemy.engine import make_url
 from sqlalchemy.orm import sessionmaker
 
 BACKEND_ROOT = Path(__file__).resolve().parents[1]
@@ -95,45 +96,89 @@ def _make_engine(db_url: str):
     return eng
 
 
+def _mask_email(email: str | None) -> str | None:
+    """Che bớt email khi in chẩn đoán (đủ để nhận diện, không lộ toàn bộ địa chỉ trong log/terminal chia sẻ)."""
+    if not email or "@" not in email:
+        return None
+    local, domain = email.split("@", 1)
+    return f"{local[:2]}***@{domain}"
+
+
+def _database_target(db_url: str) -> dict[str, object]:
+    """Mô tả CSDL đích KHÔNG kèm thông tin đăng nhập."""
+    url = make_url(db_url)
+    if url.get_backend_name() == "sqlite":
+        return {"dialect": "sqlite", "database": Path(url.database or "").name or ":memory:"}
+    return {"dialect": url.get_backend_name(), "host": url.host, "port": url.port, "database": url.database}
+
+
 def inspect_admin_state(db_url: str) -> dict[str, object]:
+    """Chẩn đoán CHỈ ĐỌC: không tạo bảng, không tạo tệp SQLite, không ghi gì vào CSDL."""
     accounts_service, _, User, _, _ = _app_deps()
-    eng = _make_engine(db_url)
-    Session = sessionmaker(bind=eng, autoflush=False, autocommit=False, future=True)
+    from app.accounts.passwords import verify_password
+
+    username = accounts_service.configured_admin_username()
+    env_email = accounts_service.configured_admin_email()
+    env_password = os.getenv("ADMIN_PASSWORD", "")
+    resolved_email: str | None = None
+    state: dict[str, object] = {
+        "databaseTarget": _database_target(db_url),
+        "schemaReady": False,
+        "alembicRevision": None,
+        "adminCount": 0,
+        "ambiguous": False,
+        "configuredUsername": username,
+        "usernameAliasValid": bool(username),
+        "configuredEmailEnv": _mask_email(env_email),
+        "envAdminPasswordPresent": bool(env_password.strip()),
+        "configuredPasswordMatchesStoredHash": None,
+        "resolvedAdmin": None,
+        "admins": [],
+    }
+    url = make_url(db_url)
+    if url.get_backend_name() == "sqlite" and url.database and not Path(url.database).is_file():
+        state.update(diagnosis="SCHEMA_MISSING", nextStep="Khởi động backend một lần để tạo CSDL, rồi chạy --apply --create-if-missing.")
+        return state
+    kwargs = {"connect_args": {"check_same_thread": False}} if db_url.startswith("sqlite") else {"pool_pre_ping": True}
+    eng = create_engine(db_url, future=True, **kwargs)
     try:
+        tables = set(inspect(eng).get_table_names())
+        if "alembic_version" in tables:
+            with eng.connect() as conn:
+                state["alembicRevision"] = conn.execute(text("SELECT version_num FROM alembic_version")).scalar()
+        if "users" not in tables:
+            state.update(diagnosis="SCHEMA_MISSING", nextStep="Chạy migration (alembic upgrade head) hoặc khởi động backend trước.")
+            return state
+        state["schemaReady"] = True
+        Session = sessionmaker(bind=eng, autoflush=False, autocommit=False, future=True)
         with Session() as db:
-            admins = (
-                db.execute(select(User).where(User.role == "admin").order_by(User.id.asc()))
-                .scalars()
-                .all()
-            )
+            admins = db.execute(select(User).where(User.role == "admin").order_by(User.id.asc())).scalars().all()
             resolved = accounts_service.resolve_admin_user(db)
-            return {
-                "adminCount": len(admins),
-                "ambiguous": len(admins) > 1 and resolved is None,
-                "configuredUsername": accounts_service.configured_admin_username(),
-                "configuredEmailEnv": accounts_service.configured_admin_email(),
-                "resolvedAdmin": (
-                    {
-                        "id": resolved.id,
-                        "email": resolved.email,
-                        "displayName": resolved.display_name,
-                        "role": resolved.role,
-                    }
-                    if resolved is not None
-                    else None
-                ),
-                "admins": [
-                    {
-                        "id": a.id,
-                        "email": a.email,
-                        "displayName": a.display_name,
-                        "role": a.role,
-                    }
-                    for a in admins
-                ],
-            }
+            resolved_email = resolved.email if resolved is not None else None
+            state["adminCount"] = len(admins)
+            state["ambiguous"] = len(admins) > 1 and resolved is None
+            public = lambda u: {"id": u.id, "email": _mask_email(u.email), "displayName": u.display_name, "role": u.role}
+            state["admins"] = [public(a) for a in admins]
+            state["resolvedAdmin"] = public(resolved) if resolved is not None else None
+            if resolved is not None and env_password.strip():
+                state["configuredPasswordMatchesStoredHash"] = bool(verify_password(env_password.strip(), resolved.password_hash))
+            db.rollback()
     finally:
         eng.dispose()
+
+    if state["adminCount"] == 0:
+        diagnosis, hint = "ADMIN_NOT_CREATED", "Chạy: python scripts/manage_admin.py --apply --create-if-missing"
+    elif state["ambiguous"]:
+        diagnosis, hint = "MULTIPLE_ADMINS", "Có nhiều tài khoản Admin; chỉ định --email của tài khoản cần giữ và rà soát thủ công."
+    elif not state["usernameAliasValid"] or (env_email and resolved_email is not None and env_email != resolved_email):
+        diagnosis, hint = "ADMIN_CONFIGURATION_MISMATCH", "ADMIN_USERNAME/ADMIN_EMAIL không khớp tài khoản Admin trong CSDL; chạy --apply để đồng bộ."
+    elif state["configuredPasswordMatchesStoredHash"] is False:
+        diagnosis, hint = "ADMIN_PASSWORD_NOT_SYNCHRONIZED", "ADMIN_PASSWORD trong môi trường khác mật khẩu đã lưu; chạy --apply nếu muốn đồng bộ."
+    else:
+        diagnosis, hint = "OK", None
+    state["diagnosis"] = diagnosis
+    state["nextStep"] = hint
+    return state
 
 
 def apply_admin_update(

@@ -156,11 +156,16 @@ def resolve_admin_user(session, *, email: str | None = None) -> User | None:
     Fail-closed nếu không có admin hoặc nhập nhằng giữa nhiều tài khoản admin mà
     không có `ADMIN_EMAIL` chỉ rõ.
     """
-    target_email = normalize_email(email) if email else configured_admin_email()
+    explicit_email = normalize_email(email) if email else None
+    target_email = explicit_email or configured_admin_email()
     if target_email:
-        return session.execute(
+        match = session.execute(
             select(User).where(User.role == "admin", User.email == target_email)
         ).scalar_one_or_none()
+        if match is not None or explicit_email:
+            return match
+        # `ADMIN_EMAIL` trong môi trường lệch với email Admin đã lưu (đổi email trong .env mà chưa chạy
+        # `manage_admin.py --apply`): vẫn ánh xạ bí danh tới Admin DUY NHẤT thay vì khoá ngoài Admin.
 
     admins = (
         session.execute(
@@ -260,6 +265,10 @@ def upsert_or_rotate_admin_credentials(
             if clash is not None:
                 raise ValueError(f"Email '{target_email}' đang thuộc về một tài khoản khác.")
             existing.email = target_email
+            # Token gửi tới địa chỉ cũ không còn giá trị với địa chỉ mới.
+            from .tokens import revoke_user_tokens
+
+            revoke_user_tokens(session, existing.id)
         if display_name and display_name.strip():
             existing.display_name = display_name.strip()[:120]
         set_password(session, existing, password)
