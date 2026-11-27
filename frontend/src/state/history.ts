@@ -1,6 +1,6 @@
 import type { SimulationEnvelope, VisualMode } from "../simulations/types";
 import { hopLeScene3D } from "../simulations/domains/geometry/scene3d-model";
-import { normalizeCylinderEnvelopeTitle } from "../simulations/domains/geometry/scene3d-semantic-policy";
+import { normalizeCylinderEnvelopeTitle } from "../simulations/domains/geometry/scene3d-metadata";
 import { hybridViewCua, kiemHybridView, KHOA_HYBRID_VIEW } from "../simulations/domains/geometry/hybrid-preview-adapter";
 
 /**
