@@ -39,23 +39,55 @@ BACKEND_ROOT = Path(__file__).resolve().parents[1]
 if str(BACKEND_ROOT) not in sys.path:
     sys.path.insert(0, str(BACKEND_ROOT))
 
-from app.accounts import service as accounts_service  # noqa: E402
-from app.accounts.passwords import WeakPasswordError  # noqa: E402
-from app.persistence.classroom_models import User  # noqa: E402
-from app.persistence.db import Base, sqlite_owns_schema  # noqa: E402
+def _app_deps():
+    from app.accounts import service as accounts_service
+    from app.accounts.passwords import WeakPasswordError
+    from app.persistence.classroom_models import User
+    from app.persistence.db import Base, sqlite_owns_schema
+
+    return accounts_service, WeakPasswordError, User, Base, sqlite_owns_schema
 
 
-def _resolve_db_url(explicit_url: str | None) -> str:
-    if explicit_url and explicit_url.strip():
-        return explicit_url.strip()
+def _load_admin_dotenv(*, env_file: Path | None = None, no_dotenv: bool = False) -> None:
+    if no_dotenv or os.getenv("ALGOSIM_MANAGE_ADMIN_NO_DOTENV", "").strip() == "1":
+        # Neo trước các khóa nhạy cảm để `app.persistence.db` (`load_dotenv(..., override=False)`) không nạp nhầm backend/.env cục bộ.
+        os.environ.setdefault("ADMIN_PASSWORD", "")
+        os.environ.setdefault("ADMIN_EMAIL", "")
+        os.environ.setdefault("ADMIN_USERNAME", "admin")
+        return
+    if env_file is not None:
+        if not env_file.is_file():
+            raise FileNotFoundError(f"Không tìm thấy tệp môi trường: {env_file}")
+        load_dotenv(env_file, override=False)
+        os.environ.setdefault("ADMIN_PASSWORD", "")
+        os.environ.setdefault("ADMIN_EMAIL", "")
+        os.environ.setdefault("ADMIN_USERNAME", "admin")
+        return
     load_dotenv(BACKEND_ROOT / ".env", override=False)
+
+
+def _resolve_db_url(
+    explicit_url: str | None,
+    *,
+    env_file: Path | None = None,
+    no_dotenv: bool = False,
+) -> str:
+    isolated = bool(no_dotenv or env_file is not None or os.getenv("ALGOSIM_MANAGE_ADMIN_NO_DOTENV", "").strip() == "1")
+    if explicit_url and explicit_url.strip():
+        resolved = explicit_url.strip()
+        if isolated:
+            os.environ.setdefault("DATABASE_URL", resolved)
+        return resolved
+    _load_admin_dotenv(env_file=env_file, no_dotenv=no_dotenv)
     env_url = os.getenv("DATABASE_URL", "").strip()
-    if env_url:
-        return env_url
-    return f"sqlite:///{(BACKEND_ROOT / 'algosim.db').as_posix()}"
+    resolved = env_url if env_url else f"sqlite:///{(BACKEND_ROOT / 'algosim.db').as_posix()}"
+    if isolated:
+        os.environ.setdefault("DATABASE_URL", resolved)
+    return resolved
 
 
 def _make_engine(db_url: str):
+    _, _, _, Base, sqlite_owns_schema = _app_deps()
     kwargs = {"connect_args": {"check_same_thread": False}} if db_url.startswith("sqlite") else {"pool_pre_ping": True}
     eng = create_engine(db_url, future=True, **kwargs)
     if sqlite_owns_schema(eng):
@@ -64,6 +96,7 @@ def _make_engine(db_url: str):
 
 
 def inspect_admin_state(db_url: str) -> dict[str, object]:
+    accounts_service, _, User, _, _ = _app_deps()
     eng = _make_engine(db_url)
     Session = sessionmaker(bind=eng, autoflush=False, autocommit=False, future=True)
     try:
@@ -111,6 +144,7 @@ def apply_admin_update(
     display_name: str | None = None,
     create_if_missing: bool = False,
 ) -> dict[str, object]:
+    accounts_service, _, _, _, _ = _app_deps()
     eng = _make_engine(db_url)
     Session = sessionmaker(bind=eng, autoflush=False, autocommit=False, future=True)
     try:
@@ -173,11 +207,31 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Chỉ tạo duy nhất 1 tài khoản Admin mới khi DB hiện chưa có tài khoản Admin nào.",
     )
+    dotenv_group = parser.add_mutually_exclusive_group()
+    dotenv_group.add_argument(
+        "--no-dotenv",
+        action="store_true",
+        help="Không tự nạp backend/.env (chỉ đọc biến môi trường tiến trình — dùng cho kiểm thử cô lập/CI).",
+    )
+    dotenv_group.add_argument(
+        "--env-file",
+        default=None,
+        help="Đường dẫn tới tệp .env chỉ định thay cho backend/.env mặc định.",
+    )
     parser.add_argument("--json", action="store_true", help="Xuất kết quả JSON (không bao giờ chứa mật khẩu).")
     args = parser.parse_args(argv)
 
-    load_dotenv(BACKEND_ROOT / ".env", override=False)
-    db_url = _resolve_db_url(args.database_url)
+    env_path = Path(args.env_file).expanduser().resolve() if args.env_file else None
+    try:
+        _load_admin_dotenv(env_file=env_path, no_dotenv=bool(args.no_dotenv))
+        db_url = _resolve_db_url(
+            args.database_url,
+            env_file=env_path,
+            no_dotenv=bool(args.no_dotenv),
+        )
+    except FileNotFoundError as exc:
+        print(f"LỖI: {exc}", file=sys.stderr)
+        return 2
 
     if args.check:
         state = inspect_admin_state(db_url)
@@ -200,6 +254,7 @@ def main(argv: list[str] | None = None) -> int:
         raw_pw = p1
 
     target_email = args.email or os.getenv("ADMIN_EMAIL", "").strip() or None
+    _, WeakPasswordError, _, _, _ = _app_deps()
     try:
         result = apply_admin_update(
             db_url,

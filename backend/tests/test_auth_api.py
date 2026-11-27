@@ -477,23 +477,23 @@ class TestAdminUsernameEmailVaBaoMat:
         env_base = {**dict(os.environ), "ADMIN_USERNAME": "admin", "ADMIN_PASSWORD": NEW_TEST_PASSWORD + "-init"}
         env_base.pop("ADMIN_EMAIL", None)
         chk0 = subprocess.run(
-            [sys.executable, "-X", "utf8", str(script), "--database-url", empty_url, "--check", "--json"],
+            [sys.executable, "-X", "utf8", str(script), "--no-dotenv", "--database-url", empty_url, "--check", "--json"],
             stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env_base, check=False,
         )
         assert chk0.returncode == 0, chk0.stderr
         assert _json.loads(chk0.stdout)["adminCount"] == 0
         fail_no_create = subprocess.run(
-            [sys.executable, "-X", "utf8", str(script), "--database-url", empty_url, "--apply", "--json"],
+            [sys.executable, "-X", "utf8", str(script), "--no-dotenv", "--database-url", empty_url, "--apply", "--json"],
             stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env_base, check=False,
         )
         assert fail_no_create.returncode != 0
         assert (NEW_TEST_PASSWORD + "-init") not in (fail_no_create.stdout + fail_no_create.stderr)
 
-        # Case B: Thiếu ADMIN_PASSWORD ở chế độ non-interactive -> mã lỗi 2
+        # Case B: Thiếu ADMIN_PASSWORD ở chế độ non-interactive -> mã lỗi 2 (kể cả khi máy chủ có backend/.env cục bộ)
         env_nopw = {**env_base}
         env_nopw.pop("ADMIN_PASSWORD", None)
         fail_nopw = subprocess.run(
-            [sys.executable, "-X", "utf8", str(script), "--database-url", empty_url, "--apply", "--create-if-missing"],
+            [sys.executable, "-X", "utf8", str(script), "--no-dotenv", "--database-url", empty_url, "--apply", "--create-if-missing"],
             stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env_nopw, check=False,
         )
         assert fail_nopw.returncode == 2
@@ -501,7 +501,7 @@ class TestAdminUsernameEmailVaBaoMat:
         # Case C: Mật khẩu yếu -> từ chối với mã lỗi != 0 và không in mật khẩu yếu
         env_weak = {**env_base, "ADMIN_PASSWORD": "123"}
         fail_weak = subprocess.run(
-            [sys.executable, "-X", "utf8", str(script), "--database-url", empty_url, "--apply", "--create-if-missing"],
+            [sys.executable, "-X", "utf8", str(script), "--no-dotenv", "--database-url", empty_url, "--apply", "--create-if-missing"],
             stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env_weak, check=False,
         )
         assert fail_weak.returncode != 0
@@ -536,7 +536,7 @@ class TestAdminUsernameEmailVaBaoMat:
         env.pop("ADMIN_EMAIL", None)
 
         res1 = subprocess.run(
-            [sys.executable, "-X", "utf8", str(script), "--database-url", db_url, "--apply", "--json"],
+            [sys.executable, "-X", "utf8", str(script), "--no-dotenv", "--database-url", db_url, "--apply", "--json"],
             stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env, check=False,
         )
         assert res1.returncode == 0, res1.stderr
@@ -550,7 +550,7 @@ class TestAdminUsernameEmailVaBaoMat:
 
         # Chạy --apply lần 2 (idempotent, không tạo bản ghi thứ hai)
         res2 = subprocess.run(
-            [sys.executable, "-X", "utf8", str(script), "--database-url", db_url, "--apply", "--json"],
+            [sys.executable, "-X", "utf8", str(script), "--no-dotenv", "--database-url", db_url, "--apply", "--json"],
             stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env, check=False,
         )
         assert res2.returncode == 0, res2.stderr
@@ -576,7 +576,7 @@ class TestAdminUsernameEmailVaBaoMat:
             second_admin_id = second_admin.id
 
         chk_multi = subprocess.run(
-            [sys.executable, "-X", "utf8", str(script), "--database-url", db_url, "--check", "--json"],
+            [sys.executable, "-X", "utf8", str(script), "--no-dotenv", "--database-url", db_url, "--check", "--json"],
             stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env, check=False,
         )
         assert chk_multi.returncode == 0
@@ -586,7 +586,7 @@ class TestAdminUsernameEmailVaBaoMat:
         assert multi_state["resolvedAdmin"] is None
 
         fail_ambig = subprocess.run(
-            [sys.executable, "-X", "utf8", str(script), "--database-url", db_url, "--apply", "--create-if-missing", "--json"],
+            [sys.executable, "-X", "utf8", str(script), "--no-dotenv", "--database-url", db_url, "--apply", "--create-if-missing", "--json"],
             stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env, check=False,
         )
         assert fail_ambig.returncode != 0
@@ -594,7 +594,7 @@ class TestAdminUsernameEmailVaBaoMat:
 
         # Chỉ định rõ --email gỡ nhập nhằng -> cập nhật ĐÚNG tài khoản đích, không tạo Admin thứ 3
         ok_targeted = subprocess.run(
-            [sys.executable, "-X", "utf8", str(script), "--database-url", db_url, "--apply", "--email", "second.admin@axo.edu.vn", "--json"],
+            [sys.executable, "-X", "utf8", str(script), "--no-dotenv", "--database-url", db_url, "--apply", "--email", "second.admin@axo.edu.vn", "--json"],
             stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env, check=False,
         )
         assert ok_targeted.returncode == 0, ok_targeted.stderr
@@ -616,7 +616,7 @@ class TestAdminUsernameEmailVaBaoMat:
         fail_clash = subprocess.run(
             [
                 sys.executable, "-X", "utf8", str(script),
-                "--database-url", clash_url, "--apply", "--create-if-missing",
+                "--no-dotenv", "--database-url", clash_url, "--apply", "--create-if-missing",
                 "--email", "student.only@axo.edu.vn",
             ],
             stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=env, check=False,
@@ -627,6 +627,27 @@ class TestAdminUsernameEmailVaBaoMat:
             assert u.role == "student"
         clash_eng.dispose()
         eng.dispose()
+
+        # Case G: --env-file cho phép nạp tệp .env cô lập (ghi đè backend/.env mặc định trong CLI vận hành)
+        envfile_db = tmp_path / "admin-envfile.db"
+        envfile_url = f"sqlite:///{envfile_db.as_posix()}"
+        custom_env = tmp_path / "custom.env"
+        custom_env_pw = NEW_TEST_PASSWORD + "-envfile"
+        custom_env.write_text(
+            f"DATABASE_URL={envfile_url}\n"
+            f"ADMIN_USERNAME=admin\n"
+            f"ADMIN_EMAIL=isolated.env@axo.edu.vn\n"
+            f"ADMIN_PASSWORD={custom_env_pw}\n",
+            encoding="utf-8",
+        )
+        clean_env = {k: v for k, v in os.environ.items() if k not in ("DATABASE_URL", "ADMIN_USERNAME", "ADMIN_EMAIL", "ADMIN_PASSWORD", "ALGOSIM_MANAGE_ADMIN_NO_DOTENV")}
+        ok_envfile = subprocess.run(
+            [sys.executable, "-X", "utf8", str(script), "--env-file", str(custom_env), "--apply", "--create-if-missing", "--json"],
+            stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding="utf-8", env=clean_env, check=False,
+        )
+        assert ok_envfile.returncode == 0, ok_envfile.stderr
+        assert custom_env_pw not in (ok_envfile.stdout + ok_envfile.stderr)
+        assert _json.loads(ok_envfile.stdout)["email"] == "isolated.env@axo.edu.vn"
 
     def test_khoi_dong_backend_khong_tu_dong_tao_hoac_sua_admin(self, api, monkeypatch):
         """§5.1: Khởi động/gọi health/auth trên backend KHÔNG BAO GIỜ tự tạo hoặc tự đổi mật khẩu Admin từ env."""
