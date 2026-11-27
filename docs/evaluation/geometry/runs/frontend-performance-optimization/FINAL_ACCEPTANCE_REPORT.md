@@ -1,8 +1,8 @@
 # AXO — FRONTEND PERFORMANCE OPTIMIZATION, ROUTE-LEVEL LAZY LOADING & BUNDLE ISOLATION — FINAL ACCEPTANCE REPORT
 
-> **Trạng thái:** Đang hoàn tất phát hành (`ba9eec063`), chờ cập nhật kết quả đo trực tiếp `https://hoclieu.tech` sau `git push origin main`.
+> **Trạng thái:** `AXO_FRONTEND_PERFORMANCE_OPTIMIZATION_COMPLETE` · `BACKEND_DEPLOYMENT_PENDING`
 > **Ngày thực hiện:** 2026-11-27
-> **Nhánh:** `main` (Base: `9809ece5c925259612c3c5d78cff32e60822cdce` → Candidate `ba9eec063`)
+> **Nhánh:** `main` (Base: `9809ece5c925259612c3c5d78cff32e60822cdce` → Code/Governance `ba9eec063` → Evidence/Live Vercel `dfba680e7`)
 
 ---
 
@@ -85,7 +85,17 @@
 
 ## 6. Kiểm chứng Production `https://hoclieu.tech` (Sau Push)
 
-- *Sẽ cập nhật ngay sau khi đẩy `main` và xác minh deployment Vercel.*
+- **Triển khai Vercel thực tế:** `https://hoclieu.tech/index.html` phục vụ đúng cặp asset mới (`/assets/index-DGe9aikc.js`, `/assets/index-yFWweERD.css`), không preload `vendor-three` / `geometry-samples`.
+- **9 SPA routes trên `https://hoclieu.tech` đều trả `200 OK`:** `/`, `/about`, `/library`, `/app`, `/login`, `/register`, `/forgot-password`, `/admin`, `/simulation/pyramid-circumscribed-sphere`.
+- **Đo trực tiếp `https://hoclieu.tech` BEFORE vs AFTER (`n=5` median):**
+  - `desktop:/`: JS `716,782 B` → **`144,309 B` (-79.9%)**, CSS `75,094 B` → **`13,161 B` (-82.5%)**, `three` `147,625 B` → **`0 B`**, `samples` `248,026 B` → **`0 B`**, Total `1,688,925 B` → **`1,054,598 B`**, LCP `648 ms` → `680 ms`, Ready `559 ms` → `596 ms`.
+  - `desktop:/about`: JS `144,308 B`, CSS `13,046 B`, `three=0`, `samp=0`, LCP **`632 ms`**, Ready **`520 ms`**.
+  - `desktop:/library`: JS `212,948 B`, Total `437,651 B`, `three=0`, `samp=0`, LCP **`584 ms`**, Ready **`581 ms`**.
+  - `desktop:/app`: JS `194,898 B`, Total `419,604 B`, `three=0`, `samp=0`, LCP **`520 ms`**, Ready **`533 ms`**.
+  - `desktop:/login`: JS `201,566 B`, Total `426,186 B`, `three=0`, `samp=0`, LCP **`508 ms`**, Ready **`532 ms`**.
+  - `desktop:/admin`: JS `225,827 B`, Total `450,529.5 B`, `three=0`, `samp=0`, LCP **`624 ms`**.
+  - `desktop:/simulation/pyramid-circumscribed-sphere`: `samples` `248,026 B` → **`60,121 B` (-75.8%)**, LCP **`960 ms`**, Ready **`1,009 ms`**.
+  - `mobile_slow:/` (Fast3G+4xCPU): Total `792,809 B` → **`158,699 B` (-80.0%)**, LCP `5,080 ms` → **`1,952 ms` (-61.6%)**, Ready `5,227 ms` → **`2,180 ms` (-58.3%)**.
 
 ---
 
@@ -100,4 +110,6 @@
 | O–R | Hồi quy toàn phần Frontend (`194/194` files, `2,319/2,319` tests) & Backend offline (`15,219` passed hiệu lực) | **PASS** |
 | S–V | Đo BEFORE vs AFTER local & Fast3G (`desktop:/` JS `-80.5%`, `mobile_slow:/` LCP `-52.9%`), 7 responsive viewports, thị giác 6 trang | **PASS** |
 | W–Y | E2E `S.ABCD` (`SERVED`, đáp án `16`), khôi phục lỗi chunk + giữ nháp, WebGL stability (`0` context lost), `npm audit` `0`, `publication_safety` & 5 cổng Freeze Governance | **PASS** |
-| Z | Đẩy `origin/main` & xác minh trực tiếp `https://hoclieu.tech` | **PENDING_PUSH** |
+| Z | Đẩy `origin/main` & xác minh trực tiếp `https://hoclieu.tech` (9/9 SPA 200 OK, `mobile_slow:/` LCP `-61.6%`) | **PASS** |
+
+- **Verdict chính thức:** `AXO_FRONTEND_PERFORMANCE_OPTIMIZATION_COMPLETE` · `BACKEND_DEPLOYMENT_PENDING`

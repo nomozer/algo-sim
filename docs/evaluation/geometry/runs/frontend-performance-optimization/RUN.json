@@ -13,7 +13,8 @@
   "cache_version": "158",
   "evaluation_status": "OFFLINE_REVALIDATED_ONLY",
   "live_evaluation_status": "LIVE_EVALUATION_PENDING_AUTHORIZATION",
-  "production_verification": "PENDING_PUSH",
+  "production_verification": "VERIFIED",
+  "verified_live_commit": "dfba680e73571ae77235ca4e3d232b12f549a5e9",
   "images": "screenshots/",
   "diagnostics": "after_metrics.json"
 }
