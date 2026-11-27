@@ -357,6 +357,7 @@ export const TEN_TRANG: Partial<Record<AppView, string>> = {
   history: "Lịch sử",
   account: "Tài khoản",
   admin: "Trung tâm quản trị",
+  verify: "Xác minh email",
 };
 
 export function itemsForRole(_role?: "student" | "teacher" | "admin"): Item[] {

@@ -38,6 +38,7 @@ const STATIC_PATH_TO_VIEW: Readonly<Record<string, Exclude<AppView, "not_found">
   "/forgot": "forgot",
   "/forgot-password": "forgot",
   "/reset": "reset",
+  "/verify-email": "verify",
   "/admin": "admin",
   "/account": "account",
 };
@@ -65,6 +66,8 @@ export function canonicalPathForView(
       return "/forgot";
     case "reset":
       return "/reset";
+    case "verify":
+      return "/verify-email";
     case "admin":
       return "/admin";
     case "account":

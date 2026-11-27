@@ -193,3 +193,40 @@ class AdminAnalysisTelemetry(Base):
     total_tokens: Mapped[int] = mapped_column(Integer, default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=_now, index=True)
 
+
+class AuthToken(Base):
+    """Token dùng một lần cho xác minh email và đặt lại mật khẩu.
+
+    Chỉ lưu SHA-256 của token (`token_hash`), không bao giờ lưu token thô. `purpose` tách hai loại token để token
+    xác minh không đặt lại được mật khẩu và ngược lại; `email` gắn token với địa chỉ tại lúc phát hành, nên đổi email
+    làm token cũ vô hiệu. Thời gian lưu dạng UTC không kèm múi giờ (giống nhau trên SQLite và PostgreSQL).
+    """
+
+    __tablename__ = "auth_tokens"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
+    purpose: Mapped[str] = mapped_column(String(32), index=True)
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    email: Mapped[str] = mapped_column(String(254))
+    created_at: Mapped[datetime] = mapped_column(DateTime)
+    expires_at: Mapped[datetime] = mapped_column(DateTime, index=True)
+    consumed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+
+
+class EmailVerification(Base):
+    """Bằng chứng tài khoản đã chứng minh quyền sở hữu địa chỉ email.
+
+    Bảng riêng (không thêm cột vào `users`) để CSDL SQLite cũ nhận được bằng `create_all` mà không cần ALTER. Một
+    tài khoản được coi là đã xác minh khi `email` ở đây trùng `users.email`; đổi email thì tự động mất xác minh.
+    """
+
+    __tablename__ = "email_verifications"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), unique=True, index=True)
+    email: Mapped[str] = mapped_column(String(254))
+    method: Mapped[str] = mapped_column(String(32))
+    verified_at: Mapped[datetime] = mapped_column(DateTime)
+

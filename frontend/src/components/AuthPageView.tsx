@@ -11,13 +11,23 @@ import {
 } from "./landing/landing-geometry-data";
 import { AuthInfoIcon, AuthInlineAlertIcon, PwToggleButton } from "./auth-shared";
 
-/* ── AuthPageView (Standalone Views 5–8: #view-login, #view-register, #view-forgot, #view-reset) ── */
+/* ── AuthPageView (Standalone Views 5–9: #view-login, #view-register, #view-forgot, #view-reset, #view-verify) ── */
+
+/** Câu trả lời trung tính của "Quên mật khẩu" — trùng câu máy chủ trả, không tiết lộ email có tồn tại hay không. */
+const RECOVERY_NEUTRAL_MESSAGE =
+  "Nếu địa chỉ email đủ điều kiện khôi phục tài khoản, bạn sẽ nhận được hướng dẫn đặt lại mật khẩu.";
+
+/** Liên kết trong thư mang token ở query: đọc MỘT lần khi mở trang (trước khi gỡ khỏi thanh địa chỉ). */
+function readQueryToken(name: string): string {
+  if (typeof window === "undefined") return "";
+  return new URLSearchParams(window.location.search).get(name)?.trim() || "";
+}
 
 export function AuthPageView({
   mode,
   initialEmailRecoveryAvailable = null,
 }: {
-  mode: "login" | "register" | "forgot" | "reset";
+  mode: "login" | "register" | "forgot" | "reset" | "verify";
   initialEmailRecoveryAvailable?: boolean | null;
 }) {
   const goHome = useAppStore((s) => s.goHome);
@@ -32,6 +42,8 @@ export function AuthPageView({
   const requestPasswordReset = useAuthStore((s) => s.requestPasswordReset);
   const fetchRecoveryStatus = useAuthStore((s) => s.fetchRecoveryStatus);
   const resetPassword = useAuthStore((s) => s.resetPassword);
+  const verifyEmail = useAuthStore((s) => s.verifyEmail);
+  const resendVerification = useAuthStore((s) => s.resendVerification);
   const clearError = useAuthStore((s) => s.clearError);
   const busy = useAuthStore((s) => s.busy);
   const authError = useAuthStore((s) => s.error);
@@ -91,10 +103,37 @@ export function AuthPageView({
     text: "",
   });
 
-  const [resetToken, setResetToken] = useState(() => {
-    if (typeof window === "undefined") return "";
-    return new URLSearchParams(window.location.search).get("reset_token")?.trim() || "";
-  });
+  const [resetToken, setResetToken] = useState(() => readQueryToken("reset_token"));
+  const [verifyToken] = useState(() => (mode === "verify" ? readQueryToken("token") : ""));
+  const [verifyState, setVerifyState] = useState<"idle" | "done" | "failed">("idle");
+  const [verifyMessage, setVerifyMessage] = useState("");
+  const [resendNote, setResendNote] = useState<{ tone: "warn" | "neutral"; text: string } | null>(null);
+
+  // Token trong liên kết thư: gỡ khỏi thanh địa chỉ và lịch sử ngay sau khi đọc, và không gửi Referer từ trang này.
+  useEffect(() => {
+    if (mode !== "reset" && mode !== "verify") return;
+    if (typeof document === "undefined") return;
+    const meta = document.createElement("meta");
+    meta.name = "referrer";
+    meta.content = "no-referrer";
+    document.head.appendChild(meta);
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const key = mode === "reset" ? "reset_token" : "token";
+      if (params.has(key) || (mode === "reset" && window.location.hash === "#reset")) {
+        window.history.replaceState(
+          window.history.state,
+          "",
+          mode === "reset" ? "/reset" : "/verify-email",
+        );
+      }
+    } catch {
+      /* môi trường chặn history API — token vẫn chỉ nằm trong bộ nhớ trang */
+    }
+    return () => {
+      meta.remove();
+    };
+  }, [mode]);
   const [resetPw, setResetPw] = useState("");
   const [resetPwConfirm, setResetPwConfirm] = useState("");
   const [showResetPw, setShowResetPw] = useState(false);
@@ -261,6 +300,14 @@ export function AuthPageView({
       setRegPwConfirm("");
       setShowRegPw(false);
       setShowRegPwConfirm(false);
+      if (useAuthStore.getState().lastVerificationStatus === "queued") {
+        useToastStore.getState().showToast({
+          tone: "success",
+          title: "Đã gửi email xác minh",
+          description: `Mở thư gửi tới ${em} và bấm liên kết để xác minh địa chỉ email.`,
+          durationMs: 8000,
+        });
+      }
       if (currentUser.mustChangePassword) {
         setView("reset");
         return;
@@ -313,7 +360,7 @@ export function AuthPageView({
       if (smtpReady) {
         setForgotBanner({
           tone: "neutral",
-          text: "Nếu email có trong hệ thống, hướng dẫn đặt lại mật khẩu (hiệu lực 15 phút) sẽ được gửi trong ít phút.",
+          text: res.message || RECOVERY_NEUTRAL_MESSAGE,
         });
       } else {
         setEmailRecoveryAvailable(false);
@@ -782,6 +829,122 @@ export function AuthPageView({
     );
   }
 
+  if (mode === "verify") {
+    const handleVerify = async () => {
+      if (busy || !verifyToken) return;
+      const res = await verifyEmail(verifyToken);
+      if (res.ok) {
+        setVerifyState("done");
+        setVerifyMessage("");
+      } else {
+        setVerifyState("failed");
+        setVerifyMessage(res.error ?? "Không xác minh được địa chỉ email.");
+      }
+    };
+    const handleResend = async () => {
+      const res = await resendVerification();
+      if (res.status === "queued") {
+        setResendNote({ tone: "neutral", text: "Đã gửi lại email xác minh. Vui lòng kiểm tra hộp thư." });
+      } else if (res.status === "already_verified") {
+        setVerifyState("done");
+        setResendNote(null);
+      } else if (res.status === "unavailable") {
+        setResendNote({ tone: "warn", text: "Hệ thống hiện chưa gửi được email. Vui lòng thử lại sau." });
+      } else {
+        setResendNote({ tone: "warn", text: res.error ?? "Không gửi lại được email xác minh." });
+      }
+    };
+    const continueAfterVerify = () => {
+      const current = useAuthStore.getState().user;
+      if (!current) {
+        setView("login");
+      } else if (current.role === "admin") {
+        setView("admin");
+      } else {
+        useAppStore.getState().setGuestEnteredApp(true);
+        goHome();
+      }
+    };
+    const missingToken = !verifyToken && verifyState === "idle";
+    const canResend = Boolean(user && user.role !== "admin" && !user.emailVerified);
+    return (
+      <section className="axo-page-view active" id="view-verify" aria-label="Xác minh email Axo">
+        <div className="auth-standalone-shell">
+          {renderTopBar()}
+          <div className="auth-center-stage">
+            <div className="auth-card">
+              <div className="auth-head">
+                <h1 className="auth-title">Xác minh email</h1>
+                <p className="auth-subtitle">
+                  {verifyState === "done"
+                    ? "Địa chỉ email của bạn đã được xác minh."
+                    : "Xác nhận rằng bạn sở hữu địa chỉ email của tài khoản Axo."}
+                </p>
+              </div>
+
+              {verifyState === "done" && (
+                <>
+                  <div className="auth-feedback-banner neutral visible" id="verify-success-banner" role="status">
+                    <span>Xác minh thành công. Bạn có thể dùng email này để khôi phục mật khẩu khi cần.</span>
+                  </div>
+                  <button type="button" className="btn-auth-submit" id="btn-verify-continue" onClick={continueAfterVerify}>
+                    <span>{user ? "Tiếp tục vào Axo" : "Đăng nhập"}</span>
+                  </button>
+                </>
+              )}
+
+              {(verifyState === "failed" || missingToken) && (
+                <>
+                  <div className="auth-feedback-banner warn visible" id="verify-error-banner" role="alert">
+                    <AuthInlineAlertIcon />
+                    <span>
+                      {missingToken
+                        ? "Liên kết xác minh không đầy đủ. Vui lòng mở lại liên kết trong email."
+                        : verifyMessage}
+                    </span>
+                  </div>
+                  {resendNote && (
+                    <div
+                      className={`auth-feedback-banner ${resendNote.tone} visible`}
+                      id="verify-resend-note"
+                      role={resendNote.tone === "warn" ? "alert" : "status"}
+                    >
+                      <span>{resendNote.text}</span>
+                    </div>
+                  )}
+                  {canResend ? (
+                    <button type="button" className="btn-auth-submit" id="btn-verify-resend" onClick={() => void handleResend()}>
+                      <span>Gửi lại email xác minh</span>
+                    </button>
+                  ) : (
+                    <button type="button" className="btn-auth-submit" id="btn-verify-continue" onClick={continueAfterVerify}>
+                      <span>{user ? "Tiếp tục vào Axo" : "Đăng nhập"}</span>
+                    </button>
+                  )}
+                </>
+              )}
+
+              {verifyState === "idle" && !missingToken && (
+                <button
+                  type="button"
+                  className={`btn-auth-submit${busy ? " is-loading" : ""}`}
+                  id="btn-verify-submit"
+                  disabled={busy}
+                  aria-busy={busy}
+                  onClick={() => void handleVerify()}
+                >
+                  {busy && <span className="auth-btn-spinner" aria-hidden="true" />}
+                  <span>{busy ? "Đang xác minh..." : "Xác minh email"}</span>
+                </button>
+              )}
+            </div>
+          </div>
+          <div className="auth-bottom-spacer" />
+        </div>
+      </section>
+    );
+  }
+
   if (mode === "forgot") {
     const recoveryChecking = emailRecoveryAvailable === null;
     const recoveryDisabled = emailRecoveryAvailable === false;
@@ -964,6 +1127,16 @@ export function AuthPageView({
                     "Mật khẩu của bạn đã được đặt lại thành công. Bạn có thể đăng nhập bằng mật khẩu mới."}
                 </span>
               </div>
+              {resetBanner.tone === "warn" && !user?.mustChangePassword && (
+                <button
+                  type="button"
+                  className="btn-text-link"
+                  id="btn-reset-request-new-link"
+                  onClick={() => setView("forgot")}
+                >
+                  Yêu cầu liên kết đặt lại mới →
+                </button>
+              )}
 
               {!user?.mustChangePassword && (
                 <div className="auth-field">

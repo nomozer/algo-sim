@@ -681,7 +681,7 @@ export default function App() {
   const isDraftWorkspaceTab =
     inWorkspace && activeTabId === "tab-draft-new" && workspaceTabs.some((t) => t.id === "tab-draft-new");
   const isAuthPage =
-    view === "login" || view === "register" || view === "forgot" || view === "reset";
+    view === "login" || view === "register" || view === "forgot" || view === "reset" || view === "verify";
   const isAdminPage = view === "admin";
   const browserPathname =
     typeof window !== "undefined" ? window.location.pathname || "/" : "";

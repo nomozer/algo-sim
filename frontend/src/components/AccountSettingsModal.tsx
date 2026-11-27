@@ -22,7 +22,21 @@ export function AccountSettingsModal() {
   const user = useAuthStore((s) => s.user);
   const updateProfile = useAuthStore((s) => s.updateProfile);
   const changePassword = useAuthStore((s) => s.changePassword);
+  const resendVerification = useAuthStore((s) => s.resendVerification);
   const busy = useAuthStore((s) => s.busy);
+  const [verifyNote, setVerifyNote] = useState("");
+  const [verifySending, setVerifySending] = useState(false);
+
+  const handleResendVerification = async () => {
+    if (verifySending) return;
+    setVerifySending(true);
+    const res = await resendVerification();
+    setVerifySending(false);
+    if (res.status === "queued") setVerifyNote("Đã gửi email xác minh. Vui lòng kiểm tra hộp thư.");
+    else if (res.status === "already_verified") setVerifyNote("Email đã được xác minh.");
+    else if (res.status === "unavailable") setVerifyNote("Hệ thống hiện chưa gửi được email. Vui lòng thử lại sau.");
+    else setVerifyNote(res.error ?? "Không gửi được email xác minh.");
+  };
 
   const [displayName, setDisplayName] = useState("");
   const [studentSchool, setStudentSchool] = useState("");
@@ -359,6 +373,27 @@ export function AccountSettingsModal() {
                     aria-readonly="true"
                     tabIndex={-1}
                   />
+                  {user.role !== "admin" && (
+                    <div className="auth-field-meta-hint" id="acc-settings-email-verify" role="status">
+                      {user.emailVerified ? (
+                        <span id="acc-settings-email-verified">Đã xác minh</span>
+                      ) : (
+                        <>
+                          <span id="acc-settings-email-unverified">Chưa xác minh · </span>
+                          <button
+                            type="button"
+                            className="btn-text-link"
+                            id="btn-acc-resend-verification"
+                            disabled={verifySending}
+                            onClick={() => void handleResendVerification()}
+                          >
+                            {verifySending ? "Đang gửi..." : "Gửi lại email xác minh"}
+                          </button>
+                        </>
+                      )}
+                      {verifyNote && <span id="acc-settings-verify-note"> {verifyNote}</span>}
+                    </div>
+                  )}
                 </div>
                 <div className="auth-field">
                   <span className="auth-label" id="acc-settings-role-label">

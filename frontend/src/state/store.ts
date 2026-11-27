@@ -105,7 +105,7 @@ export interface ActiveSimulation {
 export type AppView =
   | "home" | "landing" | "workspace" | "library" | "history" | "not_found"
   | "account"
-  | "login" | "register" | "forgot" | "reset" | "admin";
+  | "login" | "register" | "forgot" | "reset" | "verify" | "admin";
 
 export interface RouteFailureState {
   readonly kind: AxoErrorKind;

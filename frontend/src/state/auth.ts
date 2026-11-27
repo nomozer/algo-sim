@@ -36,7 +36,18 @@ export interface AuthUser {
   usedToday?: number;
   dailyLimit?: number;
   bonusQuotaToday?: number;
+  /** Đã chứng minh sở hữu địa chỉ email (bấm liên kết xác minh hoặc đặt lại mật khẩu qua email). */
+  emailVerified?: boolean;
 }
+
+/** Trạng thái thư xác minh do máy chủ trả sau đăng ký / gửi lại (không phải "người nhận đã nhận"). */
+export type VerificationStatus =
+  | "queued"
+  | "unavailable"
+  | "not_applicable"
+  | "already_verified"
+  | "throttled"
+  | "failed";
 
 export interface Entitlement {
   canRunSimulation: boolean;
@@ -61,6 +72,8 @@ interface AuthState {
   error: string | null;
   /** Cửa đăng nhập/đăng ký đang mở ở chế độ nào. `null` = đóng. */
   authGate: "login" | "register" | null;
+  /** Trạng thái thư xác minh của lượt đăng ký gần nhất (`null` = chưa đăng ký trong phiên này). */
+  lastVerificationStatus: VerificationStatus | null;
 
   refresh: () => Promise<void>;
   login: (email: string, password: string) => Promise<boolean>;
@@ -103,6 +116,8 @@ interface AuthState {
     newPassword: string,
     email?: string,
   ) => Promise<{ ok: boolean; updated?: boolean; error?: string }>;
+  verifyEmail: (token: string) => Promise<{ ok: boolean; error?: string }>;
+  resendVerification: () => Promise<{ ok: boolean; status?: VerificationStatus; error?: string }>;
   openAuthGate: (mode: "login" | "register") => void;
   closeAuthGate: () => void;
   clearError: () => void;
@@ -133,6 +148,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   busy: false,
   error: null,
   authGate: null,
+  lastVerificationStatus: null,
 
   refresh: async () => {
     try {
@@ -191,12 +207,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       return false;
     }
     const body = await res.json();
+    const status = body?.verification?.status;
     set({
       user: body.user,
       entitlement: body.entitlement,
       busy: false,
       authGate: null,
       resolved: true,
+      lastVerificationStatus: typeof status === "string" ? (status as VerificationStatus) : null,
     });
     return true;
   },
@@ -297,6 +315,35 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     const body = await res.json();
     set({ busy: false, error: null });
     return { ok: true, updated: Boolean(body.updated) };
+  },
+
+  verifyEmail: async (token) => {
+    set({ busy: true, error: null });
+    const res = await fetch("/api/auth/verify-email", {
+      ...OPTS,
+      method: "POST",
+      body: JSON.stringify({ token }),
+    }).catch(() => null);
+    if (!res || !res.ok) {
+      const err = res ? await errorOf(res) : "Không kết nối được máy chủ.";
+      set({ busy: false, error: err });
+      return { ok: false, error: err };
+    }
+    const curUser = get().user;
+    set({ busy: false, error: null, user: curUser ? { ...curUser, emailVerified: true } : curUser });
+    // Phiên đang mở có thể là của tài khoản khác: hỏi lại máy chủ thay vì đoán.
+    void get().refresh();
+    return { ok: true };
+  },
+
+  resendVerification: async () => {
+    const res = await fetch("/api/auth/verify-email/resend", { ...OPTS, method: "POST" }).catch(() => null);
+    if (!res) return { ok: false, error: "Không kết nối được máy chủ." };
+    if (res.status === 429) return { ok: false, status: "throttled", error: await errorOf(res) };
+    if (!res.ok) return { ok: false, error: await errorOf(res) };
+    const body = await res.json().catch(() => ({}));
+    const status = typeof body?.status === "string" ? (body.status as VerificationStatus) : undefined;
+    return { ok: Boolean(body?.ok), status };
   },
 
   openAuthGate: (mode) => set({ authGate: mode, error: null }),

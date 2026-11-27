@@ -22,16 +22,14 @@ import ipaddress
 import json
 import os
 import secrets
-import smtplib
 import threading
 import time
 from collections import deque
-from collections.abc import Callable
 from datetime import datetime, timedelta, timezone
-from email.message import EmailMessage
 from typing import Any
+from urllib.parse import urlencode
 
-from fastapi import APIRouter, Cookie, Depends, HTTPException, Request, Response
+from fastapi import APIRouter, BackgroundTasks, Cookie, Depends, HTTPException, Request, Response
 from pydantic import BaseModel, Field
 import logging
 import uuid
@@ -46,13 +44,15 @@ from ..persistence.classroom_models import (
     AnalysisUsageLedger,
     AdminSystemSetting,
     AuthSession,
+    AuthToken,
+    EmailVerification,
     LearningHistoryEntry,
     User,
     UserAccountMeta,
 )
-from ..persistence.db import Base, SessionLocal, SimulationCache
-from .passwords import WeakPasswordError
-from . import policy
+from ..persistence.db import Base, SessionLocal, SimulationCache, sqlite_owns_schema
+from .passwords import WeakPasswordError, check_password_policy
+from . import email_templates, mailer, policy, tokens
 from .policy import (
     Role,
     RoleEscalationError,
@@ -290,6 +290,14 @@ def _ensure_admin_tables(db) -> None:
         ],
         checkfirst=True,
     )
+    # Bảng khôi phục tài khoản: CHỈ SQLite được tự tạo (lưới an toàn cho CSDL cục bộ cũ). Trên PostgreSQL schema
+    # thuộc về Alembic (`b6d2f0a8c4e1`); tự tạo ở đây sẽ làm migration đó va chạm bảng có sẵn và bị preflight chặn.
+    if sqlite_owns_schema(bind):
+        Base.metadata.create_all(
+            bind=bind,
+            tables=[AuthToken.__table__, EmailVerification.__table__],
+            checkfirst=True,
+        )
     _ENSURED_ENGINE_IDS.add(bind_key)
 
 
@@ -582,6 +590,7 @@ def _user_public(user: User, db=None) -> dict:
         "passwordResetRequestedAt": (
             meta_row.password_reset_requested_at if meta_row is not None else None
         ),
+        "emailVerified": tokens.is_email_verified(db, user) if db is not None else False,
         "createdAt": user.created_at.isoformat() if user.created_at else None,
     }
 
@@ -940,7 +949,13 @@ def me(request: Request, response: Response, caller: Caller = Depends(get_caller
 
 
 @router.post("/auth/register")
-def register(body: RegisterBody, request: Request, response: Response, caller: Caller = Depends(get_caller)):
+def register(
+    body: RegisterBody,
+    request: Request,
+    response: Response,
+    background_tasks: BackgroundTasks,
+    caller: Caller = Depends(get_caller),
+):
     _consume_auth_rate_limit("register", request, body.email)
     settings = _load_system_settings(caller.db)
     if not settings.get("allowNewRegistrations", True):
@@ -987,10 +1002,13 @@ def register(body: RegisterBody, request: Request, response: Response, caller: C
         meta_row.subject = body.subject.strip()[:120]
     caller.db.flush()
 
+    verification_status = _queue_verification_email(caller.db, user, background_tasks)
     auth = _ensure_session(caller.db, caller.auth, response, request=request)
     service.attach_user(caller.db, auth, user)
     caller.user = user
-    return _me_payload(caller, auth)
+    payload = _me_payload(caller, auth)
+    payload["verification"] = {"status": verification_status}
+    return payload
 
 
 @router.post("/auth/login")
@@ -1036,7 +1054,9 @@ def logout(request: Request, response: Response, caller: Caller = Depends(get_ca
 
 
 @router.post("/auth/password")
-def change_password(body: PasswordBody, caller: Caller = Depends(get_caller)):
+def change_password(
+    body: PasswordBody, background_tasks: BackgroundTasks, caller: Caller = Depends(get_caller)
+):
     user = caller.require_user()
     if service.authenticate(caller.db, email=user.email, password=body.currentPassword) is None:
         raise HTTPException(400, "Mật khẩu hiện tại không đúng.")
@@ -1044,6 +1064,17 @@ def change_password(body: PasswordBody, caller: Caller = Depends(get_caller)):
         service.set_password(caller.db, user, body.newPassword)
     except WeakPasswordError as exc:
         raise HTTPException(400, str(exc)) from exc
+    # Giữ phiên hiện tại, đăng xuất mọi phiên khác và vô hiệu liên kết đặt lại mật khẩu đang chờ.
+    keep_id = caller.auth.id if caller.auth is not None else None
+    stmt = delete(AuthSession).where(AuthSession.user_id == user.id)
+    if keep_id is not None:
+        stmt = stmt.where(AuthSession.id != keep_id)
+    caller.db.execute(stmt)
+    _ensure_admin_tables(caller.db)
+    tokens.revoke_user_tokens(caller.db, user.id, purpose=tokens.PURPOSE_PASSWORD_RESET)
+    caller.db.flush()
+    _security_log.info("password_changed user_id=%s", user.id)
+    _queue_password_changed_email(user, background_tasks)
     return {"ok": True}
 
 
@@ -1351,59 +1382,63 @@ class AdminSystemSettingsBody(BaseModel):
     settings: dict[str, Any] | None = None
 
 
-PASSWORD_RESET_TTL = timedelta(minutes=15)
-#: Bảng token đặt lại mật khẩu: khóa là SHA-256(raw_token), không bao giờ lưu token thô.
-_PASSWORD_RESET_TOKENS: dict[str, dict[str, Any]] = {}
-_PASSWORD_RESET_MAIL_SENDER: Callable[[str, str], None] | None = None
+_security_log = logging.getLogger("algosim.security")
+
+#: Câu trả lời trung tính duy nhất của "Quên mật khẩu" — không tiết lộ email có tồn tại hay đủ điều kiện hay không.
+RECOVERY_NEUTRAL_MESSAGE = (
+    "Nếu địa chỉ email đủ điều kiện khôi phục tài khoản, bạn sẽ nhận được hướng dẫn đặt lại mật khẩu."
+)
+_RECOVERY_UNAVAILABLE_MESSAGE = (
+    "Tính năng gửi hướng dẫn khôi phục qua email hiện chưa được bật trên hệ thống này. "
+    "Vui lòng liên hệ giáo viên hoặc quản trị viên để được hỗ trợ đặt lại mật khẩu."
+)
+_INVALID_RESET_TOKEN = "Liên kết đặt lại mật khẩu không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu liên kết mới."
+_INVALID_VERIFY_TOKEN = "Liên kết xác minh email không hợp lệ, đã được dùng hoặc đã hết hạn."
+#: Khoảng tối thiểu giữa hai thư cùng mục đích cho một tài khoản (lưu bền trong CSDL nên đúng cả khi nhiều worker).
+_EMAIL_COOLDOWN = timedelta(seconds=60)
 
 
-def set_password_reset_mail_sender(
-    sender: Callable[[str, str], None] | None,
-) -> None:
-    """Cho phép kiểm thử tích hợp gắn kênh vận chuyển thư mà không hardcode SMTP."""
-    global _PASSWORD_RESET_MAIL_SENDER
-    _PASSWORD_RESET_MAIL_SENDER = sender
+def _app_link(path: str, **query: str) -> str | None:
+    """Liên kết tuyệt đối dựng từ `ALGOSIM_PUBLIC_APP_URL` cố định — không bao giờ từ Host header."""
+    base = mailer.public_app_url()
+    if base is None:
+        return None
+    return f"{base}{path}" + (f"?{urlencode(query)}" if query else "")
 
 
-def _hash_reset_token(raw_token: str) -> str:
-    return hashlib.sha256(raw_token.encode("utf-8")).hexdigest()
+def _email_cooldown_remaining(db, user_id: int, purpose: str) -> int:
+    latest = db.execute(
+        select(func.max(AuthToken.created_at)).where(AuthToken.user_id == user_id, AuthToken.purpose == purpose)
+    ).scalar_one_or_none()
+    if latest is None:
+        return 0
+    remaining = (latest + _EMAIL_COOLDOWN) - tokens.utcnow()
+    return max(0, int(remaining.total_seconds()) + 1) if remaining.total_seconds() > 0 else 0
 
 
-def _smtp_configured() -> bool:
-    if _PASSWORD_RESET_MAIL_SENDER is not None:
-        return True
-    host = os.getenv("ALGOSIM_SMTP_HOST", "").strip()
-    sender = os.getenv("ALGOSIM_SMTP_FROM", "").strip()
-    return bool(host and sender)
-
-
-def _send_password_reset_email(recipient: str, raw_token: str) -> None:
-    if _PASSWORD_RESET_MAIL_SENDER is not None:
-        _PASSWORD_RESET_MAIL_SENDER(recipient, raw_token)
-        return
-    host = os.getenv("ALGOSIM_SMTP_HOST", "").strip()
-    port = int(os.getenv("ALGOSIM_SMTP_PORT", "587").strip() or "587")
-    smtp_user = os.getenv("ALGOSIM_SMTP_USER", "").strip()
-    smtp_pass = os.getenv("ALGOSIM_SMTP_PASSWORD", "").strip()
-    sender = os.getenv("ALGOSIM_SMTP_FROM", "").strip()
-    app_url = os.getenv("ALGOSIM_PUBLIC_APP_URL", "http://localhost:3000").rstrip("/")
-
-    msg = EmailMessage()
-    msg["Subject"] = "Mã đặt lại mật khẩu tài khoản Axo"
-    msg["From"] = sender
-    msg["To"] = recipient
-    msg.set_content(
-        f"Bạn vừa yêu cầu đặt lại mật khẩu trên Axo.\n\n"
-        f"Mã khôi phục (có hiệu lực 15 phút, dùng 1 lần): {raw_token}\n"
-        f"Hoặc mở liên kết: {app_url}/?reset_token={raw_token}#reset\n\n"
-        f"Nếu bạn không thực hiện yêu cầu này, hãy bỏ qua thư này."
+def _queue_verification_email(db, user: User, background_tasks: BackgroundTasks) -> str:
+    """Phát hành token xác minh và xếp thư vào hàng gửi sau khi giao dịch được ghi. Trả trạng thái máy."""
+    if user.role == "admin":
+        return "not_applicable"
+    if not mailer.email_available():
+        return "unavailable"
+    raw = tokens.issue_token(db, user=user, purpose=tokens.PURPOSE_EMAIL_VERIFICATION)
+    link = _app_link("/verify-email", token=raw)
+    if link is None:
+        return "unavailable"
+    ttl = int(tokens.token_ttl(tokens.PURPOSE_EMAIL_VERIFICATION).total_seconds() // 60)
+    background_tasks.add_task(
+        mailer.send_email,
+        email_templates.verification_email(to=user.email, display_name=user.display_name, link=link, ttl_minutes=ttl),
     )
-    with smtplib.SMTP(host, port, timeout=10) as client:
-        if os.getenv("ALGOSIM_SMTP_STARTTLS", "1").strip() != "0":
-            client.starttls()
-        if smtp_user and smtp_pass:
-            client.login(smtp_user, smtp_pass)
-        client.send_message(msg)
+    return "queued"
+
+
+def _queue_password_changed_email(user: User, background_tasks: BackgroundTasks) -> None:
+    login_url = _app_link("/login")
+    if login_url is None or not mailer.email_available():
+        return
+    background_tasks.add_task(mailer.send_email, email_templates.password_changed_email(to=user.email, login_url=login_url))
 
 
 def _csv_safe_cell(value: Any) -> str:
@@ -1443,107 +1478,102 @@ def update_profile(
 def recovery_status():
     """Trạng thái khả dụng của kênh gửi email khôi phục mật khẩu (không lộ cấu hình nội bộ)."""
     return {
-        "emailRecoveryAvailable": _smtp_configured(),
+        "emailRecoveryAvailable": mailer.email_available(),
     }
 
 
 @router.post("/auth/forgot-password")
 def forgot_password(
-    body: ForgotPasswordBody, request: Request, caller: Caller = Depends(get_caller)
+    body: ForgotPasswordBody,
+    request: Request,
+    background_tasks: BackgroundTasks,
+    caller: Caller = Depends(get_caller),
 ):
     clean_email = service.normalize_email(body.email)
     _consume_auth_rate_limit("forgot_password", request, clean_email)
-    if not clean_email or "@" not in clean_email:
+    if not clean_email or "@" not in clean_email or len(clean_email) > 254:
         raise HTTPException(400, "Vui lòng nhập địa chỉ email hợp lệ.")
 
-    if not _smtp_configured():
+    if not mailer.email_available():
         return {
             "ok": True,
             "smtpConfigured": False,
             "deliveryStatus": "BLOCKED_EXTERNAL_CONFIGURATION",
-            "message": (
-                "Tính năng gửi mã khôi phục qua email hiện chưa được bật trên hệ thống này. "
-                "Vui lòng liên hệ giáo viên hoặc quản trị viên để được hỗ trợ đặt lại mật khẩu."
-            ),
+            "message": _RECOVERY_UNAVAILABLE_MESSAGE,
         }
 
-    now = datetime.now(timezone.utc)
-    expired_keys = [
-        k
-        for k, rec in _PASSWORD_RESET_TOKENS.items()
-        if rec.get("used") or rec.get("expires_at", now) <= now
-    ]
-    for k in expired_keys:
-        _PASSWORD_RESET_TOKENS.pop(k, None)
-
-    if len(_PASSWORD_RESET_TOKENS) > 2048:
-        _PASSWORD_RESET_TOKENS.clear()
-
-    user = caller.db.execute(
-        select(User).where(User.email == clean_email)
-    ).scalar_one_or_none()
-
-    if user is not None:
-        for rec in _PASSWORD_RESET_TOKENS.values():
-            if rec.get("user_id") == user.id:
-                rec["used"] = True
-        raw_token = secrets.token_urlsafe(32)
-        token_hash = _hash_reset_token(raw_token)
-        _PASSWORD_RESET_TOKENS[token_hash] = {
-            "user_id": user.id,
-            "expires_at": now + PASSWORD_RESET_TTL,
-            "used": False,
-        }
-        try:
-            _send_password_reset_email(clean_email, raw_token)
-        except Exception as exc:
-            _PASSWORD_RESET_TOKENS.pop(token_hash, None)
-            raise HTTPException(
-                503,
-                "Không thể gửi thư đặt lại mật khẩu lúc này. Vui lòng thử lại sau.",
-            ) from exc
+    _ensure_admin_tables(caller.db)
+    user = caller.db.execute(select(User).where(User.email == clean_email)).scalar_one_or_none()
+    meta_row = _get_user_meta_row(caller.db, user.id) if user is not None else None
+    eligible = (
+        user is not None
+        # Admin không khôi phục qua kênh công khai — chỉ qua `scripts/manage_admin.py` trên máy chủ.
+        and user.role != "admin"
+        and not (meta_row is not None and meta_row.status == "suspended")
+        and _email_cooldown_remaining(caller.db, user.id, tokens.PURPOSE_PASSWORD_RESET) == 0
+    )
+    link = None
+    if eligible:
+        raw = tokens.issue_token(caller.db, user=user, purpose=tokens.PURPOSE_PASSWORD_RESET)
+        link = _app_link("/reset", reset_token=raw)
+    if eligible and link is not None:
+        ttl = int(tokens.token_ttl(tokens.PURPOSE_PASSWORD_RESET).total_seconds() // 60)
+        meta = _ensure_user_meta_row(caller.db, user.id)
+        meta.password_reset_requested_at = datetime.now(timezone.utc).strftime("%d/%m/%Y · %H:%M")
+        caller.db.flush()
+        background_tasks.add_task(
+            mailer.send_email, email_templates.password_reset_email(to=user.email, link=link, ttl_minutes=ttl)
+        )
+        _security_log.info("password_reset_requested user_id=%s", user.id)
 
     return {
         "ok": True,
         "smtpConfigured": True,
-        "deliveryStatus": "SENT",
-        "message": (
-            "Nếu địa chỉ email đã đăng ký trên Axo, hướng dẫn và mã đặt lại mật khẩu "
-            "có hiệu lực 15 phút đã được gửi đến hộp thư của bạn."
-        ),
+        "deliveryStatus": "REQUEST_ACCEPTED",
+        "message": RECOVERY_NEUTRAL_MESSAGE,
     }
 
 
 @router.post("/auth/reset-password")
-def reset_password(body: ResetPasswordBody, request: Request, caller: Caller = Depends(get_caller)):
+def reset_password(
+    body: ResetPasswordBody,
+    request: Request,
+    background_tasks: BackgroundTasks,
+    caller: Caller = Depends(get_caller),
+):
     _consume_auth_rate_limit("reset_password", request)
     raw_token = (body.token or "").strip()
-    now = datetime.now(timezone.utc)
 
     if raw_token:
-        token_hash = _hash_reset_token(raw_token)
-        rec = _PASSWORD_RESET_TOKENS.get(token_hash)
-        if (
-            rec is None
-            or rec.get("used")
-            or not isinstance(rec.get("expires_at"), datetime)
-            or rec["expires_at"] <= now
-        ):
-            raise HTTPException(400, "Mã đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.")
-
-        target_user = caller.db.get(User, int(rec["user_id"]))
-        if target_user is None:
-            rec["used"] = True
-            raise HTTPException(400, "Mã đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.")
-
+        # Kiểm chính sách mật khẩu TRƯỚC khi tiêu thụ token: mật khẩu yếu không được làm mất liên kết hợp lệ.
         try:
-            service.set_password(caller.db, target_user, body.newPassword)
+            check_password_policy(body.newPassword)
         except WeakPasswordError as exc:
             raise HTTPException(400, str(exc)) from exc
+        _ensure_admin_tables(caller.db)
+        rec = tokens.consume_token(caller.db, raw_token, purpose=tokens.PURPOSE_PASSWORD_RESET)
+        target_user = caller.db.get(User, int(rec.user_id)) if rec is not None else None
+        meta_row = _get_user_meta_row(caller.db, target_user.id) if target_user is not None else None
+        if (
+            rec is None
+            or target_user is None
+            or target_user.role == "admin"
+            or rec.email != target_user.email
+            or (meta_row is not None and meta_row.status == "suspended")
+        ):
+            raise HTTPException(400, _INVALID_RESET_TOKEN)
 
+        service.set_password(caller.db, target_user, body.newPassword)
         target_user.must_change_password = False
-        rec["used"] = True
+        tokens.revoke_user_tokens(caller.db, target_user.id, purpose=tokens.PURPOSE_PASSWORD_RESET)
         _revoke_user_sessions(caller.db, target_user.id)
+        # Nhận được thư đặt lại = sở hữu hộp thư: đánh dấu email đã xác minh.
+        tokens.mark_email_verified(caller.db, target_user, method="password_reset")
+        if meta_row is not None:
+            meta_row.password_reset_requested_at = None
+        caller.db.flush()
+        _security_log.info("password_reset_completed user_id=%s", target_user.id)
+        _queue_password_changed_email(target_user, background_tasks)
         return {"ok": True, "updated": True}
 
     if caller.user is not None and caller.user.must_change_password:
@@ -1557,8 +1587,50 @@ def reset_password(body: ResetPasswordBody, request: Request, caller: Caller = D
 
     raise HTTPException(
         400,
-        "Vui lòng nhập mã khôi phục hợp lệ để đặt lại mật khẩu.",
+        "Vui lòng mở liên kết đặt lại mật khẩu hợp lệ trong email để đặt lại mật khẩu.",
     )
+
+
+class VerifyEmailBody(BaseModel):
+    token: str = Field(min_length=1, max_length=256)
+
+
+@router.post("/auth/verify-email")
+def verify_email(body: VerifyEmailBody, request: Request, caller: Caller = Depends(get_caller)):
+    """Xác minh email bằng token trong thư. Chỉ nhận POST: trình quét liên kết (GET) không tiêu thụ được token."""
+    _consume_auth_rate_limit("verify_email", request)
+    _ensure_admin_tables(caller.db)
+    rec = tokens.consume_token(caller.db, body.token, purpose=tokens.PURPOSE_EMAIL_VERIFICATION)
+    user = caller.db.get(User, int(rec.user_id)) if rec is not None else None
+    if rec is None or user is None or rec.email != user.email:
+        raise HTTPException(400, _INVALID_VERIFY_TOKEN)
+    tokens.mark_email_verified(caller.db, user, method="email_link")
+    _security_log.info("email_verified user_id=%s", user.id)
+    return {"ok": True, "verified": True}
+
+
+@router.post("/auth/verify-email/resend")
+def resend_verification_email(
+    request: Request, background_tasks: BackgroundTasks, caller: Caller = Depends(get_caller)
+):
+    user = caller.require_user()
+    _consume_auth_rate_limit("verify_email_resend", request, user.email)
+    _ensure_admin_tables(caller.db)
+    if user.role == "admin":
+        return {"ok": True, "status": "not_applicable"}
+    if tokens.is_email_verified(caller.db, user):
+        return {"ok": True, "status": "already_verified"}
+    if not mailer.email_available():
+        return {"ok": False, "status": "unavailable"}
+    wait_s = _email_cooldown_remaining(caller.db, user.id, tokens.PURPOSE_EMAIL_VERIFICATION)
+    if wait_s > 0:
+        raise HTTPException(
+            429,
+            "Bạn vừa yêu cầu gửi thư xác minh. Vui lòng đợi một chút rồi thử lại.",
+            headers={"Retry-After": str(wait_s)},
+        )
+    status = _queue_verification_email(caller.db, user, background_tasks)
+    return {"ok": status == "queued", "status": status}
 
 
 @router.get("/admin/overview")
@@ -1899,6 +1971,7 @@ def admin_delete_user(user_id: int, caller: Caller = Depends(get_caller)):
     target_name = u.display_name
     _ensure_admin_tables(caller.db)
     _revoke_user_sessions(caller.db, user_id)
+    tokens.delete_user_auth_records(caller.db, user_id)
     caller.db.execute(delete(UserAccountMeta).where(UserAccountMeta.user_id == user_id))
     caller.db.execute(delete(LearningHistoryEntry).where(LearningHistoryEntry.user_id == user_id))
     caller.db.delete(u)
