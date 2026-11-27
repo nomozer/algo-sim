@@ -3,7 +3,8 @@ import {
   LEGACY_GEOMETRY_SAMPLES,
   PUBLIC_GEOMETRY_SAMPLES,
 } from "./geometry-samples";
-import { normalizeCylinderEnvelopeTitle } from "../simulations/domains/geometry/scene3d-semantic-policy";
+import { cacheSamplePayloads } from "./sample-catalog-meta";
+import { normalizeCylinderEnvelopeTitle } from "../simulations/domains/geometry/scene3d-metadata";
 import type { Scene3D } from "../simulations/domains/geometry/scene3d-model";
 import type { Domain, SimulationEnvelope } from "../simulations/types";
 
@@ -149,6 +150,14 @@ export function offlineCatalog(): CatalogEntry[] {
     ...LEGACY_GEOMETRY_SAMPLES.map((s) => toCatalogEntry(s, "internal_fixture")),
   ];
   _offlineCatalogMemo = built;
+  const byId = new Map(GEOMETRY_SAMPLES.map((s) => [s.id, s]));
+  cacheSamplePayloads(
+    built.map((e) => ({
+      ...e,
+      group: e.preview ?? byId.get(e.id)?.group ?? "",
+      problemText: byId.get(e.id)?.problemText ?? "",
+    })),
+  );
   return [...built];
 }
 

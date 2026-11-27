@@ -1,7 +1,11 @@
-import { GEOMETRY_SAMPLES, geometrySampleById } from "../../data/geometry-samples";
+import {
+  getCachedSampleEntry,
+  resolveSampleMetaByRouteToken,
+} from "../../data/sample-catalog-meta";
 import { useAuthStore, type AuthUser } from "../../state/auth";
 import { historyStore } from "../../state/history";
 import { useAppStore } from "../../state/store";
+import { shouldPrefetchOnIntent } from "../../utils/lazy-with-retry";
 
 export const AXO_INTENDED_DESTINATION_KEY = "axo_intended_destination_v1";
 const INTENDED_DEST_TTL_MS = 30 * 60 * 1000;
@@ -137,9 +141,14 @@ export function applyIntendedDestination(dest: IntendedDestination, user: AuthUs
   }
 
   if (dest.kind === "sample" && dest.sampleId) {
-    const sample = geometrySampleById(dest.sampleId);
-    if (sample) {
-      store.loadEnvelope(sample.envelope, sample.id, sample.problemText);
+    const meta = resolveSampleMetaByRouteToken(dest.sampleId);
+    if (meta) {
+      const cached = getCachedSampleEntry(meta.id);
+      if (cached) {
+        store.loadEnvelope(cached.envelope, cached.id, cached.problemText);
+      } else {
+        void store.openSampleById(meta.id);
+      }
       return true;
     }
     store.openLibrary();
@@ -190,15 +199,15 @@ export function enterAxoWorkspaceWithOptions(options?: EnterWorkspaceOptions): v
     return;
   }
 
-  const target: IntendedDestination =
-    store.active !== null
-      ? {
-          kind: "workspace",
-          preferActive: true,
-          sampleId: store.activeSampleId ?? undefined,
-          createdAt: Date.now(),
-        }
-      : { kind: "home", createdAt: Date.now() };
+  const hasWorkspaceTarget = store.active !== null || store.loadingSampleId !== null;
+  const target: IntendedDestination = hasWorkspaceTarget
+    ? {
+        kind: "workspace",
+        preferActive: true,
+        sampleId: store.activeSampleId ?? store.loadingSampleId ?? undefined,
+        createdAt: Date.now(),
+      }
+    : { kind: "home", createdAt: Date.now() };
 
   const requiresAuth =
     options?.requireAuth !== undefined
@@ -231,12 +240,30 @@ export function openLibraryFromLanding(): void {
   store.openLibrary();
 }
 
+export function prefetchWorkspaceShell(): void {
+  if (!shouldPrefetchOnIntent()) return;
+  void import("../LeftSidebar").catch(() => {});
+  void import("../HomeView").catch(() => {});
+  void import("../AuthPageView").catch(() => {});
+}
+
+export function prefetchLibraryShell(): void {
+  if (!shouldPrefetchOnIntent()) return;
+  void import("../LeftSidebar").catch(() => {});
+  void import("../LibraryView").catch(() => {});
+}
+
 export function openSampleInWorkspace(sampleId: string): void {
   const store = useAppStore.getState();
   store.setGuestEnteredApp(true);
-  const sample = geometrySampleById(sampleId) ?? GEOMETRY_SAMPLES[0];
-  if (sample) {
-    store.loadEnvelope(sample.envelope, sample.id, sample.problemText);
+  const meta = resolveSampleMetaByRouteToken(sampleId) ?? resolveSampleMetaByRouteToken("chop-thiet-dien-ba-diem");
+  if (meta) {
+    const cached = getCachedSampleEntry(meta.id);
+    if (cached) {
+      store.loadEnvelope(cached.envelope, cached.id, cached.problemText);
+    } else {
+      void store.openSampleById(meta.id);
+    }
   } else {
     store.openLibrary();
   }

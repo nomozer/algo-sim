@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 import type { AnalysisUnsupported } from "../core/types";
-import { canonicalSlugForSampleId, resolveSampleByRouteToken } from "../data/offline-catalog";
+import {
+  canonicalSlugForSampleId,
+  resolveSampleMetaByRouteToken as resolveSampleByRouteToken,
+} from "../data/sample-catalog-meta";
 import type { ClientFailureContract } from "../llm/client";
 import { historyStore } from "../state/history";
 import type { AppView } from "../state/store";

@@ -1,19 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   geometryShapeLabel,
+  getCachedSampleEnvelope,
   LIBRARY_CATEGORY_ORDER,
   problemTextForSample,
-  publicCatalog,
-  type CatalogEntry,
+  publicCatalogMeta,
   type LibraryCategory,
-} from "../data/offline-catalog";
+  type SampleCatalogMeta,
+} from "../data/sample-catalog-meta";
+import { preloadSampleGroup } from "../data/sample-loader";
 import type { Domain } from "../simulations/types";
 import { resolveEffectiveWorkspaceTabs, useAppStore } from "../state/store";
 import { findMatchingOpenSimulationTab } from "../state/workspace-tab-identity";
-import { SamplePreview } from "./SamplePreview";
-import { stepCountOfEnvelope } from "./SessionCard";
+import { CatalogSamplePreview } from "./CatalogSamplePreview";
 import { WorkspaceTabBar } from "./WorkspaceTabBar";
-import { GeometryFamilyIcon, normalizeGeometryFamily } from "./geometry2d";
+import { GeometryFamilyIcon, normalizeGeometryFamily } from "./geometry2d/family-icons";
 
 /**
  * Thư viện mô phỏng Axo V2.7 (Phase B — Full UI Replacement, P5).
@@ -63,7 +64,7 @@ export function LibraryView({
   initialCategory?: LibraryCategory;
   initialCategoryMenuOpen?: boolean;
 } = {}) {
-  const loadEnvelope = useAppStore((s) => s.loadEnvelope);
+  const openSampleById = useAppStore((s) => s.openSampleById);
   const activateWorkspaceTab = useAppStore((s) => s.activateWorkspaceTab);
   const libraryTabOpen = useAppStore((s) => s.libraryTabOpen);
   const libraryUiState = useAppStore((s) => s.libraryUiState);
@@ -100,7 +101,8 @@ export function LibraryView({
     if (!el || typeof window === "undefined") return;
     const savedTop = useAppStore.getState().libraryUiState.scrollTop;
     const scrollParent = el.closest(".app-single") as HTMLElement | null;
-    if (savedTop > 0) {
+    const applySavedScroll = () => {
+      if (savedTop <= 0 || useAppStore.getState().view !== "library") return;
       el.scrollTop = savedTop;
       if (scrollParent) {
         scrollParent.scrollTop = savedTop;
@@ -115,14 +117,25 @@ export function LibraryView({
           /* bỏ qua trong jsdom nếu scrollTo chưa được cài */
         }
       }
-    }
+    };
+    applySavedScroll();
+    const rafId =
+      savedTop > 0 && typeof window.requestAnimationFrame === "function"
+        ? window.requestAnimationFrame(applySavedScroll)
+        : 0;
 
     const onParentScroll = () => {
+      if (useAppStore.getState().view !== "library" || !el.isConnected || el.offsetParent === null) {
+        return;
+      }
       if (scrollParent && scrollParent.scrollTop !== useAppStore.getState().libraryUiState.scrollTop) {
         setLibraryUiState({ scrollTop: scrollParent.scrollTop });
       }
     };
     const onWindowScroll = () => {
+      if (useAppStore.getState().view !== "library" || !el.isConnected || el.offsetParent === null) {
+        return;
+      }
       if (el.scrollHeight <= el.clientHeight) {
         setLibraryUiState({ scrollTop: window.scrollY || document.documentElement.scrollTop || 0 });
       }
@@ -130,6 +143,9 @@ export function LibraryView({
     scrollParent?.addEventListener("scroll", onParentScroll, { passive: true });
     window.addEventListener("scroll", onWindowScroll, { passive: true });
     return () => {
+      if (rafId !== 0 && typeof window.cancelAnimationFrame === "function") {
+        window.cancelAnimationFrame(rafId);
+      }
       scrollParent?.removeEventListener("scroll", onParentScroll);
       window.removeEventListener("scroll", onWindowScroll);
     };
@@ -146,7 +162,7 @@ export function LibraryView({
   };
 
   const entries = useMemo(() => {
-    const raw = publicCatalog();
+    const raw = publicCatalogMeta();
     return [...raw].sort((a, b) => {
       const ia = PROBLEM_CATALOG_ORDER.indexOf(a.id);
       const ib = PROBLEM_CATALOG_ORDER.indexOf(b.id);
@@ -179,7 +195,7 @@ export function LibraryView({
   const trimmedQuery = query.trim();
   const normalizedQuery = trimmedQuery.toLowerCase();
 
-  const matchesQuery = (entry: CatalogEntry): boolean => {
+  const matchesQuery = (entry: SampleCatalogMeta): boolean => {
     if (!normalizedQuery) return true;
     const cat = geometryShapeLabel(entry.id);
     const desc = problemTextForSample(entry.id);
@@ -201,7 +217,7 @@ export function LibraryView({
 
   const activeCatName = activeCat === "all" ? "Tất cả" : activeCat;
 
-  const openSample = (entry: CatalogEntry) => {
+  const openSample = (entry: SampleCatalogMeta) => {
     const state = useAppStore.getState();
     const { tabs: effectiveTabs } = resolveEffectiveWorkspaceTabs({
       workspaceTabs: state.workspaceTabs,
@@ -214,14 +230,14 @@ export function LibraryView({
       tabId: `tab-sample-${entry.id}`,
       sampleId: entry.id,
       title: entry.title,
-      problemStatement: problemTextForSample(entry.id) || entry.envelope.problem_statement || null,
-      envelope: entry.envelope,
+      problemStatement: entry.problemText || null,
+      envelope: getCachedSampleEnvelope(entry.id),
     });
     if (existingTab) {
       activateWorkspaceTab(existingTab.id);
       return;
     }
-    loadEnvelope(entry.envelope, entry.id);
+    void openSampleById(entry.id);
   };
 
   return (
@@ -231,7 +247,11 @@ export function LibraryView({
         ref={containerRef}
         className="page-container"
         id="view-library"
-        onScroll={(e) => setLibraryUiState({ scrollTop: e.currentTarget.scrollTop })}
+        onScroll={(e) => {
+          if (useAppStore.getState().view === "library") {
+            setLibraryUiState({ scrollTop: e.currentTarget.scrollTop });
+          }
+        }}
       >
       <div className="page-head-block">
         <div className="page-head-row">
@@ -403,9 +423,9 @@ export function LibraryView({
             const cat = geometryShapeLabel(entry.id);
             const desc =
               problemTextForSample(entry.id) ||
-              entry.envelope.description ||
+              entry.description ||
               entry.title;
-            const stepCount = stepCountOfEnvelope(entry.envelope);
+            const stepCount = entry.stepCount;
             return (
               <article
                 key={entry.id}
@@ -414,6 +434,8 @@ export function LibraryView({
                 data-canonical-slug={entry.slug}
                 role="button"
                 tabIndex={0}
+                onMouseEnter={() => preloadSampleGroup(entry.id)}
+                onFocus={() => preloadSampleGroup(entry.id)}
                 onClick={() => openSample(entry)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
@@ -423,7 +445,7 @@ export function LibraryView({
                 }}
               >
                 <div className="lib-card-thumb" aria-hidden="true">
-                  <SamplePreview sampleId={entry.id} category={cat} />
+                  <CatalogSamplePreview sampleId={entry.id} category={cat} />
                 </div>
                 <span className="lib-card-cat">{cat}</span>
                 <h3 className="lib-card-title">{entry.title}</h3>

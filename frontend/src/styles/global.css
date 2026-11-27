@@ -24207,3 +24207,33 @@ html::-webkit-scrollbar {
   display: inline;
 }
 
+
+/* ── Route / Chunk Loading Fallback (Phase 10.2) ───────────────────────── */
+.axo-route-loading {
+  width: 100%;
+  min-height: min(60vh, 420px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.axo-route-loading-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: var(--rounded-md);
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--ink-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.axo-route-loading-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--rounded-full);
+  background: var(--primary);
+}

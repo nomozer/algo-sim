@@ -3,7 +3,8 @@ import { createRoot } from "react-dom/client";
 import { AppRoot } from "./App";
 import { registerAllSimulations } from "./simulations";
 import { useAppStore } from "./state/store";
-import "./styles/global.css";
+import "./styles/tokens.css";
+import "./styles/shell-base.css";
 import "./components/landing/landing.css";
 
 registerAllSimulations();

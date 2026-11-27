@@ -1,10 +1,9 @@
 import {
-  offlineCatalog,
-  recoverCatalogScene3D,
-  resolveGeometrySampleId,
-  resolveSampleByRouteToken,
-} from "../data/offline-catalog";
-import { GEOMETRY_SAMPLES } from "../data/geometry-samples";
+  recoverCachedCatalogScene3D,
+  resolveGeometrySampleIdMeta as resolveGeometrySampleId,
+  resolveSampleMetaByRouteToken as resolveSampleByRouteToken,
+  sampleMetaById,
+} from "../data/sample-catalog-meta";
 import type { Scene3D, SceneObject } from "../simulations/domains/geometry/scene3d-model";
 import type { SimulationEnvelope } from "../simulations/types";
 
@@ -407,20 +406,9 @@ function classifyFromSampleToken(sampleIdRaw: string | null | undefined): Geomet
     return "cube";
   }
 
-  const catalogEntry =
-    resolveSampleByRouteToken(trimmed) ??
-    offlineCatalog().find((e) => e.id === trimmed || e.slug === lower);
-  if (catalogEntry) {
-    const fromEnv = classifyFromEnvelopeObject(catalogEntry.envelope);
-    if (fromEnv) return fromEnv;
-  }
-
-  const directSample = GEOMETRY_SAMPLES.find(
-    (s) => s.id === trimmed || s.id.toLowerCase() === lower,
-  );
-  if (directSample) {
-    const fromEnv = classifyFromEnvelopeObject(directSample.envelope);
-    if (fromEnv) return fromEnv;
+  const metaEntry = resolveSampleByRouteToken(trimmed) ?? sampleMetaById(trimmed);
+  if (metaEntry) {
+    return metaEntry.solidFamily;
   }
 
   if (lower.startsWith("oxyz-") || lower.includes("oxyz")) return "neutral";
@@ -571,7 +559,7 @@ function classifyFromEnvelopeObject(envRaw: unknown): GeometrySolidFamily | null
     env.config !== undefined
   ) {
     try {
-      const recovered = recoverCatalogScene3D(env as SimulationEnvelope) as {
+      const recovered = recoverCachedCatalogScene3D(env as SimulationEnvelope) as {
         scene3d?: unknown;
       };
       scene3d = recovered.scene3d;
@@ -601,11 +589,8 @@ function classifyFromEnvelopeObject(envRaw: unknown): GeometrySolidFamily | null
       envelope: env as SimulationEnvelope,
     });
     if (matchedSampleId) {
-      const matchedSample = GEOMETRY_SAMPLES.find((s) => s.id === matchedSampleId);
-      const sampleScene = (matchedSample?.envelope as { scene3d?: unknown } | undefined)
-        ?.scene3d;
-      const fromSampleScene = classifyFromScene3D(sampleScene);
-      if (fromSampleScene) return fromSampleScene;
+      const matchedMeta = sampleMetaById(matchedSampleId);
+      if (matchedMeta) return matchedMeta.solidFamily;
     }
   }
 

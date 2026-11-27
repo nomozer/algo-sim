@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { IconAxoLogo } from "../icons";
 import { useAuthStore } from "../../state/auth";
-import { enterAxoWorkspace, openLibraryFromLanding } from "./landing-geometry-data";
+import {
+  enterAxoWorkspace,
+  openLibraryFromLanding,
+  prefetchLibraryShell,
+  prefetchWorkspaceShell,
+} from "./landing-geometry-data";
 
 export interface LandingSectionNavItem {
   readonly id: string;
@@ -311,6 +316,8 @@ export function LandingHeader() {
                 id="btn-landing-header-library"
                 href="/library"
                 className="axo-sp-btn-ghost"
+                onMouseEnter={prefetchLibraryShell}
+                onFocus={prefetchLibraryShell}
                 onClick={(e) => {
                   e.preventDefault();
                   openLibraryFromLanding();
@@ -322,6 +329,8 @@ export function LandingHeader() {
                 id="btn-landing-header-start"
                 type="button"
                 className="axo-sp-btn-primary"
+                onMouseEnter={prefetchWorkspaceShell}
+                onFocus={prefetchWorkspaceShell}
                 onClick={enterAxoWorkspace}
               >
                 {user ? "Vào ứng dụng" : "Bắt đầu"}

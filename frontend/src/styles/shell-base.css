@@ -1,0 +1,744 @@
+/* shell-base.css — CSS tối thiểu cho shell, Landing, scrollbar, toast, error và loading state.
+   Toàn bộ CSS Workspace / Library / Auth / Admin / Scene3D nằm trong global.css và tải lazy theo route. */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--canvas-soft);
+  color: var(--ink);
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+
+/* ── M9-UX5 — THANH CUỘN: mảnh, chìm, TỰ ẨN khi đứng yên ─────────────────────
+   Thanh cuộn mặc định của Windows là một dải xám dày có hai nút mũi tên — nó
+   nặng hơn cả nội dung nó cuộn, và cắt ngang ngôn ngữ thị giác nhẹ của hệ.
+   Mặc định: TRONG SUỐT (chỉ chiếm chỗ, không nhìn thấy). Khi rê chuột vào vùng
+   cuộn được → hiện ra mờ; rê thẳng vào thanh → đậm hơn. Rời chuột → chìm lại.
+   `scrollbar-gutter: stable` giữ chỗ sẵn nên nội dung KHÔNG nhảy khi thanh
+   hiện/ẩn — đây là lý do phải "ẩn bằng màu" chứ không phải bằng `width: 0`.
+
+   ── W12 §4 ĐÍNH CHÍNH: "chìm" đã trượt thành "vô hình ────────────────────────
+   Bản trên đặt `scrollbar-color: transparent transparent` và thumb webkit
+   `background: transparent`, tức mặc định KHÔNG THẤY GÌ — chỉ hiện khi con trỏ
+   đã ở trong vùng cuộn. Người dùng phải đoán rằng có thể cuộn.
+   Hệ quả thứ hai, chính là thứ đọc ra trên ảnh chụp: máng do
+   `scrollbar-gutter: stable` giữ chỗ vẫn còn nguyên bề rộng nhưng RỖNG, nên nó
+   không đọc thành "thanh cuộn" mà thành MỘT KHE HỞ dọc cạnh header — header
+   trắng, khe xám `--canvas-soft`, chạy suốt chiều cao tài liệu.
+   Nay thumb có mặt sẵn ở mức mờ, đậm dần theo hover. Máng lại đọc đúng là máng.
+   Máng vẫn trong suốt: giữ chỗ là việc của `scrollbar-gutter`, không phải việc
+   của màu. */
+/* ── W6B — THANH CUỘN DÙNG MẶC ĐỊNH CỦA TRÌNH DUYỆT ──────────────────────
+ *
+ * Bản trước tự vẽ thanh cuộn: thumb `rgba(15,23,42,.22)`, bo tròn, KHÔNG có nút
+ * mũi tên hai đầu (`::-webkit-scrollbar-button { display: none }`), track trong
+ * suốt. Nhìn gọn hơn, nhưng nó bỏ mất ba tín hiệu mà thanh cuộn hệ điều hành
+ * vẫn có: track thấy được, hai nút mũi tên, và tương phản đủ để nhận ra ngay là
+ * "cuộn được". Với học sinh — người dùng chưa quen giao diện — ba tín hiệu ấy
+ * đáng giá hơn vẻ gọn.
+ *
+ * Nay trả về mặc định: không ghi đè `scrollbar-color`, không ghi đè thumb/track/
+ * button. `scrollbar-gutter: stable` GIỮ LẠI — nó chừa sẵn chỗ cho thanh cuộn
+ * nên nội dung không nhảy ngang khi thanh xuất hiện/biến mất, và đó là chuyện
+ * bố cục chứ không phải chuyện thẩm mỹ.
+ *
+ * Ba token `--scroll-thumb*` vẫn còn trong `tokens.css` nhưng THÔI ĐƯỢC DÙNG. */
+html {
+  scrollbar-gutter: stable;
+  scrollbar-width: none;
+  /* W13-UI — SÁNG/TỐI THEO SẢN PHẨM, KHÔNG THEO TRÌNH DUYỆT.
+   *
+   * `8e9474e` trả thanh cuộn về mặc định hệ điều hành, và lý do đó vẫn đúng
+   * (track thấy được, hai nút mũi tên, tương phản thật). Nhưng "mặc định" thì
+   * lấy tông từ TRÌNH DUYỆT: máy đang để dark mode sẽ vẽ thanh cuộn ĐEN cạnh
+   * một giao diện SÁNG — bảng màu của kho này chỉ có một tông sáng, không hề có
+   * nhánh `prefers-color-scheme`.
+   *
+   * Chữa bằng `color-scheme`, KHÔNG phải bằng cách tự vẽ lại thanh cuộn: khai
+   * báo này chỉ nói cho trình duyệt biết trang thuộc tông nào, nên thanh cuộn
+   * (và cả control gốc: select, input, ô cuộn con) được HỆ ĐIỀU HÀNH vẽ ở bản
+   * SÁNG — giữ nguyên ba tín hiệu mà `8e9474e` đòi, chỉ bỏ cái lệch tông.
+   *
+   * Ngày nào kho có chế độ tối thật thì đổi thành `light dark` cùng lúc với
+   * việc thêm nhánh token, không phải trước. */
+  color-scheme: light;
+}
+
+
+.app-single {
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: var(--sp-xl) var(--sp-lg) var(--sp-4xl);
+  min-height: calc(100vh - 57px);
+}
+
+.app-root { display: flex; min-height: 100vh; }
+.app-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+
+.loi-chan-goc {
+  min-height: 100vh;
+  background: var(--canvas-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.axo-toast-stack {
+  position: fixed;
+  top: 66px;
+  right: 16px;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(360px, calc(100vw - 32px));
+  pointer-events: none;
+}
+
+.axo-composer-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 13px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-lg);
+  box-shadow: var(--shadow-elevated);
+}
+
+.axo-composer-toast-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.axo-composer-toast-icon-wrap {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--rounded-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-sky-tint);
+  color: var(--primary-active);
+}
+
+.axo-composer-toast[data-toast-tone="error"] .axo-composer-toast-icon-wrap {
+  background: var(--canvas-soft);
+  color: var(--accent-orange-deep);
+}
+
+.axo-composer-toast[data-toast-tone="success"] .axo-composer-toast-icon-wrap {
+  background: var(--canvas-soft);
+  color: var(--accent-green-deep);
+}
+
+.axo-composer-toast-copy {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.axo-composer-toast-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.axo-composer-toast-desc {
+  font-size: 12.5px;
+  color: var(--ink-secondary);
+  line-height: 1.4;
+}
+
+.axo-composer-toast-close {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: var(--rounded-sm);
+  background: transparent;
+  color: var(--ink-quiet);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.axo-composer-toast-close:hover {
+  background: var(--canvas-soft);
+  color: var(--ink);
+}
+
+/* ── Axo V2.7 Phase A — Homepage Layout, Composer & Gợi ý khám phá (P4–P6) ── */
+
+.app-single.is-standalone-main,
+.is-standalone-main {
+  height: 100vh;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+html::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.axo-scrollbar-track {
+  position: fixed;
+  top: 0;
+  right: 2px;
+  bottom: 0;
+  width: 6px;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.axo-scrollbar-track.is-container {
+  position: absolute;
+  top: 0;
+  right: 2px;
+  bottom: 0;
+  z-index: 25;
+}
+
+.axo-scrollbar-thumb {
+  position: absolute;
+  right: 0;
+  width: 6px;
+  background-color: rgba(100, 116, 139, 0.45);
+  border-radius: 999px;
+  pointer-events: auto;
+  cursor: default;
+  opacity: 0;
+  transition: opacity 0.3s ease-out, background-color 0.15s ease-out;
+  user-select: none;
+}
+
+.axo-scrollbar-thumb:hover,
+.axo-scrollbar-thumb.is-dragging {
+  background-color: rgba(100, 116, 139, 0.8);
+}
+
+.axo-scrollbar-thumb.is-visible {
+  opacity: 1;
+}
+
+.axo-custom-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  position: relative;
+}
+
+.axo-custom-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.axo-error-experience {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 36px 20px 48px;
+  box-sizing: border-box;
+}
+
+.axo-error-experience.is-page {
+  min-height: calc(100vh - 116px);
+}
+
+.axo-error-experience.is-stage {
+  min-height: 100%;
+  align-items: center;
+  padding: 20px 16px;
+}
+
+.axo-error-experience.is-refusal {
+  padding: 24px 16px 36px;
+}
+
+.axo-error-surface {
+  width: 100%;
+  max-width: 520px;
+  margin: auto;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 20px 16px;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.axo-error-experience.is-kind-not_found .axo-error-surface {
+  max-width: 500px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 24px 0 16px;
+  box-shadow: none;
+}
+
+.axo-error-experience.is-stage .axo-error-surface {
+  max-width: 440px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 16px 12px;
+  gap: 10px;
+}
+
+.geo3d-recovering-overlay,
+.ws-invalid-scene-wrap,
+.ws-math-contradiction-wrap,
+.workspace-scene3d-unavailable {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.geo3d-recovering-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.axo-viewer-recovery {
+  max-width: 380px;
+  width: 100%;
+  margin: auto;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  color: #2d2b29;
+  box-sizing: border-box;
+}
+
+.axo-viewer-recovery-glyph {
+  width: 34px;
+  height: 34px;
+  color: #615d59;
+  margin-bottom: 4px;
+}
+
+.axo-viewer-recovery.is-recovering .axo-viewer-recovery-glyph svg {
+  animation: axoViewerRecoverPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes axoViewerRecoverPulse {
+  0%, 100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .axo-viewer-recovery.is-recovering .axo-viewer-recovery-glyph svg {
+    animation: none;
+  }
+}
+
+.axo-viewer-recovery-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.axo-viewer-recovery-desc {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #57534e;
+  max-width: 360px;
+}
+
+.axo-viewer-recovery-status {
+  margin: 2px 0 0;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #57534e;
+}
+
+.axo-viewer-recovery-actions {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.axo-viewer-recovery-retry {
+  min-height: 34px;
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+.axo-error-experience.is-refusal .axo-error-surface {
+  max-width: 640px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  text-align: left;
+  align-items: stretch;
+}
+
+.axo-error-visual {
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.axo-error-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.axo-error-svg-float {
+  animation: axoErrorFloat 5.2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .axo-error-svg-float {
+    animation: none;
+    transform: none;
+  }
+}
+
+.axo-error-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.axo-error-experience.is-refusal .axo-error-body {
+  align-items: flex-start;
+}
+
+.axo-error-kicker {
+  margin: 0;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #615d59;
+}
+
+.axo-error-title {
+  margin: 2px 0 0;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: rgba(0, 0, 0, 0.92);
+}
+
+.axo-error-desc {
+  margin: 0;
+  max-width: 480px;
+  font-size: 14.5px;
+  line-height: 1.58;
+  color: #615d59;
+}
+
+.axo-error-path-note {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: #615d59;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.axo-error-path-code {
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #31302e;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+
+.axo-error-slot {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.axo-error-slot > .card {
+  box-shadow: none;
+  border-color: rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+}
+
+.axo-error-actions {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.axo-error-experience.is-refusal .axo-error-actions {
+  justify-content: flex-start;
+}
+
+.axo-error-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.axo-error-btn-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.axo-error-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #ffffff;
+  color: #31302e;
+  font-size: 13.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+.axo-error-btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.95);
+}
+
+@media (max-width: 1080px), (max-height: 760px) {
+  .axo-error-experience.is-stage {
+    padding: 12px 12px 16px;
+  }
+
+  .axo-error-experience.is-stage .axo-error-surface {
+    padding: 16px 16px 14px;
+    gap: 10px;
+  }
+
+  .axo-error-experience.is-stage .axo-error-visual {
+    max-width: 176px;
+  }
+}
+
+@media (max-width: 640px) {
+  .axo-error-experience {
+    padding: 20px 14px 32px;
+  }
+
+  .axo-error-surface {
+    padding: 22px 18px 20px;
+    border-radius: 12px;
+    gap: 16px;
+  }
+
+  .axo-error-visual {
+    max-width: 248px;
+  }
+
+  .axo-error-title {
+    font-size: 18px;
+  }
+
+  .axo-error-desc {
+    font-size: 13.5px;
+  }
+
+  .axo-error-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .axo-error-btn-primary,
+  .axo-error-btn-secondary {
+    width: 100%;
+  }
+}
+
+:root {
+  --axo-sb-width: 271px;
+  --axo-sb-preview-width: 271px;
+}
+
+.app-root.has-left-sidebar {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 100dvh;
+}
+
+.app-root.has-left-sidebar > .app-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--canvas, #ffffff);
+}
+
+/* On Desktop & Tablet (> 767px), LeftSidebar owns primary navigation, brand & auth footer. */
+@media (min-width: 768px) {
+  .app-root.has-left-sidebar > .app-main > .nav-bar {
+    display: none;
+  }
+
+  /* When sidebar is completely hidden (collapsed), make room on the left of Workspace tab header for the Notion open trigger */
+  .app-root.has-left-sidebar > .axo-left-sidebar-slot.is-collapsed + .app-main .axo-header.ws-axo-header {
+    padding-left: 44px;
+  }
+}
+
+.app-root.is-page-landing .app-single.is-standalone-main {
+  height: auto;
+  min-height: 100dvh;
+  overflow-y: visible;
+}
+
+
+/* ── Route / Chunk Loading Fallback (Phase 10.2) ───────────────────────── */
+@keyframes axo-route-loading-reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.axo-left-sidebar-slot {
+  width: var(--axo-sb-width, 271px);
+  flex: 0 0 var(--axo-sb-width, 271px);
+}
+
+.axo-left-sidebar-slot.is-collapsed {
+  width: 0;
+  flex-basis: 0;
+}
+
+@media (max-width: 767px) {
+  .axo-left-sidebar-slot {
+    width: 0;
+    flex: 0 0 0px;
+  }
+}
+
+.axo-route-loading {
+  width: 100%;
+  min-height: min(60vh, 420px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  animation: axo-route-loading-reveal 160ms ease forwards;
+  animation-delay: 150ms;
+}
+
+.axo-route-loading-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: var(--rounded-md);
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--ink-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.axo-route-loading-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--rounded-full);
+  background: var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .axo-route-loading {
+    opacity: 1;
+    animation: none;
+  }
+}

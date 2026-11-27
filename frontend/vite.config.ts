@@ -15,7 +15,8 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes("node_modules/three")) return "vendor-three";
-          if (id.includes("geometry-samples")) return "geometry-samples";
+          if (id.includes("advanced-geometry-samples.json")) return "geometry-samples-public";
+          if (id.includes("geometry-samples.json")) return "geometry-samples-legacy";
           return undefined;
         },
       },

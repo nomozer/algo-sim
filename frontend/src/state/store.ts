@@ -10,12 +10,18 @@ import {
 } from "../components/family-icons";
 import type { AnalysisUnsupported } from "../core/types";
 import {
-  offlineCatalog,
-  publicCatalog,
-  recoverCatalogScene3D,
-  resolveGeometrySampleId,
-} from "../data/offline-catalog";
-import { GEOMETRY_SAMPLES } from "../data/geometry-samples";
+  getCachedSampleEntry,
+  getCachedSampleEnvelope,
+  problemTextForSample,
+  recoverCachedCatalogScene3D,
+  resolveGeometrySampleIdMeta as resolveGeometrySampleId,
+  resolveSampleMetaByRouteToken,
+  sampleMetaByHistoryId,
+} from "../data/sample-catalog-meta";
+import {
+  loadSampleById,
+  recoverCatalogScene3DAsync,
+} from "../data/sample-loader";
 import type { AxoClientError, ClientFailureContract } from "../llm/client";
 import { getSimulation } from "../simulations/registry";
 import { useAuthStore } from "./auth";
@@ -1096,6 +1102,13 @@ interface AppState {
   setAiOpen: (v: boolean) => void;
   setExploreOpen: (v: boolean) => void;
   openLibrary: () => void;
+  openSampleById: (
+    sampleIdOrToken: string,
+    opts?: { readonly replaceHistory?: boolean; readonly requestedPath?: string },
+  ) => Promise<boolean>;
+  waitForPendingSampleLoad: () => Promise<void>;
+  loadingSampleId: string | null;
+  sampleLoadError: string | null;
   openLanding: () => void;
   setLibraryUiState: (patch: Partial<LibraryUiState>) => void;
   hydrateWorkspaceSession: (opts?: { readonly force?: boolean }) => void;
@@ -1185,6 +1198,8 @@ interface AppState {
 export const useAppStore = create<AppState>((set, get) => {
   let hasHydratedLocation = false;
   let hasHydratedWorkspaceSession = false;
+  let sampleLoadSeq = 0;
+  let pendingSampleLoadPromise: Promise<boolean> | null = null;
   /** Chạy một phép biến đổi qua timeline capability; không có thì bỏ qua. */
   function withTimeline(
     fn: (tl: TimelineCapability<unknown>, state: unknown) => unknown,
@@ -1225,6 +1240,8 @@ export const useAppStore = create<AppState>((set, get) => {
     history: historyStore.list(),
     activeHistoryId: null,
     active: null,
+    loadingSampleId: null,
+    sampleLoadError: null,
     workspaceTabs: [],
     activeTabId: null,
     libraryTabOpen: false,
@@ -1563,13 +1580,13 @@ export const useAppStore = create<AppState>((set, get) => {
         return;
       }
       if (sampleIdMatch) {
-        const entry =
-          publicCatalog().find((s) => s.id === sampleIdMatch) ??
-          offlineCatalog().find((s) => s.id === sampleIdMatch);
-        if (entry) {
-          get().loadEnvelope(entry.envelope, entry.id);
+        const cached = getCachedSampleEntry(sampleIdMatch);
+        if (cached) {
+          get().loadEnvelope(cached.envelope, cached.id);
           return;
         }
+        void get().openSampleById(sampleIdMatch);
+        return;
       }
       if (canonicalId in curState.problemProcessingRecords) {
         get().openProblemAttempt(canonicalId);
@@ -2060,10 +2077,10 @@ export const useAppStore = create<AppState>((set, get) => {
           persistWorkspaceSessionSnapshot(get());
           return;
         }
-        const entry = publicCatalog().find((s) => s.id === decision.sampleId) ?? offlineCatalog().find((s) => s.id === decision.sampleId);
-        if (entry) {
-          set({ routeFailure: null });
-          get().loadEnvelope(entry.envelope, entry.id);
+        const cached = getCachedSampleEntry(decision.sampleId);
+        if (cached) {
+          set({ routeFailure: null, loadingSampleId: null, sampleLoadError: null });
+          get().loadEnvelope(cached.envelope, cached.id);
           if (get().active === null && get().unsupported === null) {
             set({
               view: "workspace",
@@ -2085,7 +2102,12 @@ export const useAppStore = create<AppState>((set, get) => {
             });
           }
           persistWorkspaceSessionSnapshot(get());
+          return;
         }
+        void get().openSampleById(decision.sampleId, {
+          replaceHistory: !hadNav,
+          requestedPath: pathname,
+        });
         return;
       }
       if (decision.kind === "history_item") {
@@ -2362,7 +2384,7 @@ export const useAppStore = create<AppState>((set, get) => {
       // công — cảnh hỏng không được lên sân khấu, cũng không bị ghi lại.
       const statementInput = normalizeStatement(deGui);
       const resolvedSampleId = sampleId ?? null;
-      const sampleStatement = sampleId ? GEOMETRY_SAMPLES.find((s) => s.id === sampleId)?.problemText : null;
+      const sampleStatement = sampleId ? (problemTextForSample(sampleId) || null) : null;
       const savedEnvelope = sampleStatement ? { ...env, problem_statement: sampleStatement } : env;
       const legacyMatch =
         statementInput && !(sampleId ? false : Boolean(recordId))
@@ -2590,6 +2612,8 @@ export const useAppStore = create<AppState>((set, get) => {
           routeFailure: null,
           activeSampleId: null,
           playing: false,
+          loadingSampleId: null,
+          sampleLoadError: null,
           hasInAppNavigation: true,
           validRouteStack: pushSafeRoute(s.validRouteStack, "home"),
           history: historyStore.list(),
@@ -2644,7 +2668,109 @@ export const useAppStore = create<AppState>((set, get) => {
       }
     },
 
+    openSampleById: async (sampleIdOrToken, opts) => {
+      const meta = resolveSampleMetaByRouteToken(sampleIdOrToken);
+      if (!meta) return false;
+      const cached = getCachedSampleEntry(meta.id);
+      if (cached) {
+        sampleLoadSeq += 1;
+        set({ loadingSampleId: null, sampleLoadError: null, routeFailure: null });
+        get().loadEnvelope(cached.envelope, cached.id);
+        return get().active !== null;
+      }
+
+      const reqSeq = ++sampleLoadSeq;
+      const hadActive = get().active !== null || get().workspaceTabs.length > 0;
+      set((s) => ({
+        view: "workspace",
+        active: null,
+        activeSampleId: meta.id,
+        loadingSampleId: meta.id,
+        sampleLoadError: null,
+        routeFailure: null,
+        unsupported: null,
+        analysisError: null,
+        clientFailure: null,
+        playing: false,
+        hasInAppNavigation: opts?.replaceHistory === undefined ? s.hasInAppNavigation : !opts.replaceHistory,
+        navHistoryMode: opts?.replaceHistory ? "replace" : "push",
+      }));
+
+      const task = (async (): Promise<boolean> => {
+        try {
+          const loaded = await loadSampleById(meta.id);
+          if (reqSeq !== sampleLoadSeq) return false;
+          const live = get();
+          if (live.view !== "workspace" || live.loadingSampleId !== meta.id) return false;
+          if (!loaded) {
+            set({
+              loadingSampleId: null,
+              sampleLoadError: "Không tìm thấy dữ liệu bài mẫu.",
+              routeFailure: {
+                kind: "unsupported_simulation",
+                requestedPath: opts?.requestedPath ?? `/simulation/${meta.slug}`,
+              },
+            });
+            return false;
+          }
+          set({ loadingSampleId: null, sampleLoadError: null, routeFailure: null });
+          get().loadEnvelope(loaded.envelope, loaded.id);
+          if (get().active === null && get().unsupported === null) {
+            set({
+              view: "workspace",
+              routeFailure: {
+                kind: "unsupported_simulation",
+                requestedPath: opts?.requestedPath ?? `/simulation/${meta.slug}`,
+              },
+            });
+            return false;
+          }
+          if (opts?.replaceHistory && !hadActive) {
+            const st = get();
+            set({
+              hasInAppNavigation: false,
+              workspaceNavStack: [
+                { view: "home", tabId: null },
+                { view: st.view, tabId: st.activeTabId },
+              ],
+              workspaceNavIndex: 1,
+              navHistoryMode: "replace",
+            });
+          }
+          persistWorkspaceSessionSnapshot(get());
+          return get().active !== null;
+        } catch (err) {
+          if (reqSeq !== sampleLoadSeq) return false;
+          const live = get();
+          if (live.view !== "workspace" || live.loadingSampleId !== meta.id) return false;
+          set({
+            loadingSampleId: null,
+            sampleLoadError:
+              err instanceof Error ? err.message : "Không tải được dữ liệu bài mẫu.",
+            routeFailure: {
+              kind: "network_failure",
+              requestedPath: opts?.requestedPath ?? `/simulation/${meta.slug}`,
+            },
+          });
+          return false;
+        } finally {
+          if (reqSeq === sampleLoadSeq) {
+            pendingSampleLoadPromise = null;
+          }
+        }
+      })();
+      pendingSampleLoadPromise = task;
+      return task;
+    },
+
+    waitForPendingSampleLoad: async () => {
+      if (pendingSampleLoadPromise) {
+        await pendingSampleLoadPromise;
+      }
+    },
+
     openLibrary: () => {
+      sampleLoadSeq += 1;
       hasHydratedWorkspaceSession = true;
       set((s) => {
         const syncedTabs = syncCurrentTabInList(
@@ -2671,6 +2797,8 @@ export const useAppStore = create<AppState>((set, get) => {
           analysisError: null,
           clientFailure: null,
           playing: false,
+          loadingSampleId: null,
+          sampleLoadError: null,
           hasInAppNavigation: true,
           validRouteStack: pushSafeRoute(s.validRouteStack, "library"),
         };
@@ -2700,7 +2828,8 @@ export const useAppStore = create<AppState>((set, get) => {
       persistWorkspaceSessionSnapshot(get());
     },
 
-    openLanding: () =>
+    openLanding: () => {
+      sampleLoadSeq += 1;
       set((s) => {
         const syncedTabs = syncCurrentTabInList(
           s.workspaceTabs,
@@ -2727,10 +2856,13 @@ export const useAppStore = create<AppState>((set, get) => {
           navHistoryMode: "push",
           routeFailure: null,
           playing: false,
+          loadingSampleId: null,
+          sampleLoadError: null,
           hasInAppNavigation: true,
           validRouteStack: pushSafeRoute(s.validRouteStack, "landing"),
         };
-      }),
+      });
+    },
 
     /* M18 — điều hướng mức ứng dụng. Đổi mặt trình bày KHÔNG đụng `active`:
        rời sang "Lớp của em" rồi quay lại phải thấy đúng mô phỏng đang dở. */
@@ -2738,6 +2870,9 @@ export const useAppStore = create<AppState>((set, get) => {
       if (view === "library") {
         get().openLibrary();
         return;
+      }
+      if (view !== "workspace") {
+        sampleLoadSeq += 1;
       }
       set((s) => {
         const syncedTabs = syncCurrentTabInList(
@@ -2762,6 +2897,7 @@ export const useAppStore = create<AppState>((set, get) => {
           workspaceNavIndex: nav.index,
           navHistoryMode: "push",
           routeFailure: view === "not_found" ? s.routeFailure : null,
+          ...(view !== "workspace" ? { loadingSampleId: null, sampleLoadError: null } : {}),
           hasInAppNavigation: view === "not_found" ? s.hasInAppNavigation : true,
           validRouteStack: pushSafeRoute(s.validRouteStack, view),
           ...(view === "history" || view === "home" ? { history: historyStore.list() } : {}),
@@ -2778,10 +2914,11 @@ export const useAppStore = create<AppState>((set, get) => {
       // History opens its own saved statement; matching catalog geometry cannot recover missing original wording.
       // Bản ghi là bài mẫu chỉ khi CHÍNH nó mang bằng chứng: không có đề người học, khoá biên dịch của bài mẫu và dấu
       // `problem_statement` mà lần mở bài mẫu tường minh đã ghi (`loadEnvelope`). Bản ghi cũ không dấu vẫn là "thiếu đề".
-      const sampleId = item.originalInput
-        ? undefined
-        : GEOMETRY_SAMPLES.find((s) => historyIdOf(s.envelope) === item.id
-          && s.problemText === item.envelope.problem_statement)?.id;
+      const matchedSampleMeta = item.originalInput ? undefined : sampleMetaByHistoryId(item.id);
+      const sampleId =
+        matchedSampleMeta && matchedSampleMeta.problemText === item.envelope.problem_statement
+          ? matchedSampleMeta.id
+          : undefined;
       const curState = get();
       const { tabs: effectiveTabs } = resolveEffectiveWorkspaceTabs({
         workspaceTabs: curState.workspaceTabs,
@@ -2832,11 +2969,24 @@ export const useAppStore = create<AppState>((set, get) => {
           // để `AxoWorkspaceV62` khôi phục đúng bước dựng 3D mà không bị timeline 2D kẹp cụt.
           const hasScene3d = Boolean(
             (item.envelope as { scene3d?: unknown }).scene3d ||
-            (recoverCatalogScene3D(item.envelope) as { scene3d?: unknown })?.scene3d,
+            (recoverCachedCatalogScene3D(item.envelope) as { scene3d?: unknown })?.scene3d,
           );
           if (hasScene3d) {
             historyStore.touch(item.id, { lastCursor: savedCursor });
             set({ history: historyStore.list() });
+          } else {
+            void recoverCatalogScene3DAsync(item.envelope).then((recovered) => {
+              if ((recovered as { scene3d?: unknown }).scene3d) {
+                historyStore.touch(item.id, { lastCursor: savedCursor });
+                const curActive = get().active;
+                if (curActive && get().activeHistoryId === item.id) {
+                  get().loadEnvelope(recovered, sampleId, item.originalInput ?? undefined, item.id);
+                  get().goToStep(savedCursor);
+                } else {
+                  set({ history: historyStore.list() });
+                }
+              }
+            });
           }
         }
         if (item.visualMode) get().setVisualMode(item.visualMode);
@@ -3068,6 +3218,8 @@ export const useAppStore = create<AppState>((set, get) => {
           clientFailure: null,
           unsupported: null,
           playing: false,
+          loadingSampleId: null,
+          sampleLoadError: null,
           hasInAppNavigation: true,
           history: historyStore.list(),
         };
@@ -3126,6 +3278,8 @@ export const useAppStore = create<AppState>((set, get) => {
           analysisError: null,
           clientFailure: null,
           playing: false,
+          loadingSampleId: null,
+          sampleLoadError: null,
           hasInAppNavigation: true,
         };
       });
@@ -3395,6 +3549,8 @@ export const useAppStore = create<AppState>((set, get) => {
           analysisError: null,
           clientFailure: null,
           playing: false,
+          loadingSampleId: null,
+          sampleLoadError: null,
           hasInAppNavigation: true,
         };
       });
@@ -3486,6 +3642,8 @@ export const useAppStore = create<AppState>((set, get) => {
           navHistoryMode: "replace",
           routeFailure: null,
           playing: false,
+          loadingSampleId: null,
+          sampleLoadError: null,
           hasInAppNavigation: true,
           validRouteStack: pushSafeRoute(s.validRouteStack, entry.view),
           ...(entry.view === "history" || entry.view === "home"
@@ -3550,6 +3708,8 @@ export const useAppStore = create<AppState>((set, get) => {
           navHistoryMode: "replace",
           routeFailure: null,
           playing: false,
+          loadingSampleId: null,
+          sampleLoadError: null,
           hasInAppNavigation: true,
           validRouteStack: pushSafeRoute(s.validRouteStack, entry.view),
           ...(entry.view === "history" || entry.view === "home"
@@ -3600,21 +3760,17 @@ export const useAppStore = create<AppState>((set, get) => {
         const histItem = entry.historyId
           ? historyItems.find((x) => x.id === entry.historyId)
           : undefined;
-        const catalogEntry = entry.sampleId
-          ? (publicCatalog().find((s) => s.id === entry.sampleId) ??
-             offlineCatalog().find((s) => s.id === entry.sampleId))
-          : undefined;
-        const rawEnv = histItem?.envelope ?? catalogEntry?.envelope ?? null;
+        const rawEnv = histItem?.envelope ?? getCachedSampleEnvelope(entry.sampleId) ?? null;
         if (!rawEnv) continue;
 
+        const inferredSampleMeta =
+          !entry.sampleId && histItem && !histItem.originalInput
+            ? sampleMetaByHistoryId(histItem.id)
+            : undefined;
         const inferredSampleId =
           entry.sampleId ??
-          (histItem && !histItem.originalInput
-            ? GEOMETRY_SAMPLES.find(
-                (s) =>
-                  historyIdOf(s.envelope) === histItem.id &&
-                  s.problemText === histItem.envelope.problem_statement,
-              )?.id ?? null
+          (inferredSampleMeta && inferredSampleMeta.problemText === histItem?.envelope.problem_statement
+            ? inferredSampleMeta.id
             : null);
 
         const existingMatch = findMatchingOpenSimulationTab(nextTabs, {
@@ -3633,7 +3789,7 @@ export const useAppStore = create<AppState>((set, get) => {
           : (histItem?.originalInput?.trim() || rawEnv.problem_statement?.trim() || undefined);
         const envWithStatement = deGui ? { ...rawEnv, problem_statement: deGui } : rawEnv;
         const env = inferredSampleId || !histItem?.originalInput
-          ? recoverCatalogScene3D(envWithStatement)
+          ? recoverCachedCatalogScene3D(envWithStatement)
           : envWithStatement;
         const mod = getSimulation(env.simulation_id);
         if (!mod) continue;

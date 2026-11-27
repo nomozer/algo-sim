@@ -9,7 +9,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 import { useAuthStore } from "../../state/auth";
-import { enterAxoWorkspace } from "./landing-geometry-data";
+import { enterAxoWorkspace, prefetchWorkspaceShell } from "./landing-geometry-data";
 
 export const HERO_SCENE_DWELL_MS = 6000;
 
@@ -399,6 +399,8 @@ export function LandingHeroV14() {
               id="btn-landing-hero-start"
               type="button"
               className="axo-v14-btn axo-v14-btn-primary"
+              onMouseEnter={prefetchWorkspaceShell}
+              onFocus={prefetchWorkspaceShell}
               onClick={enterAxoWorkspace}
             >
               {user ? "Vào ứng dụng" : "Bắt đầu dựng hình"}

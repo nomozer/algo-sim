@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { publicCatalog } from "../data/offline-catalog";
+import {
+  publicCatalogMeta,
+  stepCountOfEnvelopeLite,
+} from "../data/sample-catalog-meta";
 import {
   GeometryFamilyIcon,
   resolveGeometrySolidFamily,
@@ -7,7 +10,6 @@ import {
 } from "./family-icons";
 import { IconSidebarPanel } from "./icons";
 import { clearSavedDraftAttachments } from "./ProblemInput";
-import { stepCountOfEnvelope } from "./SessionCard";
 import { useAuthStore } from "../state/auth";
 import { historyStore } from "../state/history";
 import { clearIntendedDestination } from "./landing/landing-geometry-data";
@@ -33,7 +35,7 @@ function formatStepSubtitle(
     return `Bước ${safeCurrent}/${liveProgress.total}`;
   }
   const env = tab.active?.envelope;
-  const totalSteps = env ? stepCountOfEnvelope(env) : 0;
+  const totalSteps = env ? stepCountOfEnvelopeLite(env) : 0;
   const problemKey = tab.sampleId || tab.historyId || env?.simulation_id || tab.id;
   const recovered = problemKey ? loadLearnerRecoverySnapshot(problemKey) : null;
   if (totalSteps > 0) {
@@ -65,7 +67,7 @@ function formatUnifiedProblemSubtitle(
     return item.kind === "draft" ? sub : `Đang mở · ${sub}`;
   }
   if (item.historyItem) {
-    const totalSteps = stepCountOfEnvelope(item.historyItem.envelope);
+    const totalSteps = stepCountOfEnvelopeLite(item.historyItem.envelope);
     const stepNum =
       typeof item.historyItem.lastCursor === "number" && totalSteps > 0
         ? Math.max(1, Math.min(item.historyItem.lastCursor + 1, totalSteps))
@@ -912,25 +914,20 @@ export function LeftSidebar() {
 
     // 2. Public Simulation Library (when searching, or when no active/recent items exist yet)
     if (hasQuery || entries.length === 0) {
-      const catalog = publicCatalog();
+      const catalog = publicCatalogMeta();
       for (const entry of catalog) {
         if (seenSampleIds.has(entry.id) || seenTitles.has(foldVietnamese(entry.title))) {
           continue;
         }
-        const prompt = entry.envelope.problem_statement ?? "";
+        const prompt = entry.problemText ?? "";
         if (
           hasQuery &&
           !matchesSearchQuery(leftRailSearchQuery, entry.title, prompt, entry.slug)
         ) {
           continue;
         }
-        const totalSteps = stepCountOfEnvelope(entry.envelope);
-        const catalogFamily = resolveGeometrySolidFamily({
-          envelope: entry.envelope,
-          sampleId: entry.id,
-          problemStatement: prompt,
-          title: entry.title,
-        });
+        const totalSteps = entry.stepCount;
+        const catalogFamily = entry.solidFamily;
         entries.push({
           key: `catalog-${entry.id}`,
           source: "library",
@@ -942,7 +939,7 @@ export function LeftSidebar() {
           badgeText: "Thư viện",
           geometryFamily: catalogFamily,
           onSelect: () => {
-            loadEnvelope(entry.envelope, entry.id);
+            void useAppStore.getState().openSampleById(entry.id);
             closeSearchModal(false);
             closeMobileIfOpen();
           },
@@ -1133,7 +1130,7 @@ export function LeftSidebar() {
     }
   };
 
-  const catalogCount = publicCatalog().length;
+  const catalogCount = publicCatalogMeta().length;
 
   return (
     <div

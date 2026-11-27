@@ -1,8 +1,9 @@
-import { GEOMETRY_SAMPLES } from "../data/geometry-samples";
 import {
-  resolveGeometrySampleId,
-  resolveSampleByRouteToken,
-} from "../data/offline-catalog";
+  ALL_SAMPLE_META,
+  resolveGeometrySampleIdMeta as resolveGeometrySampleId,
+  resolveSampleMetaByRouteToken as resolveSampleByRouteToken,
+  sampleMetaById,
+} from "../data/sample-catalog-meta";
 import type { SimulationEnvelope } from "../simulations/types";
 import { historyIdOf, normalizeStatement } from "./history";
 
@@ -47,7 +48,7 @@ export interface ProjectedWorkspaceTab<TTab extends WorkspaceTabIdentityShape = 
 }
 
 const sampleNormalizedStatementMap = new Map<string, string>();
-for (const sample of GEOMETRY_SAMPLES) {
+for (const sample of ALL_SAMPLE_META) {
   const norm = normalizeStatement(sample.problemText);
   if (norm && !sampleNormalizedStatementMap.has(norm)) {
     sampleNormalizedStatementMap.set(norm, sample.id);
@@ -108,7 +109,7 @@ export function getSimulationResourceKey(candidate: SimulationResourceCandidate)
   if (historyId) {
     const directSampleByToken =
       resolveSampleByRouteToken(historyId)?.id ??
-      GEOMETRY_SAMPLES.find((s) => s.id === historyId)?.id ??
+      sampleMetaById(historyId)?.id ??
       null;
     if (directSampleByToken) {
       return `problem:${directSampleByToken}`;
@@ -131,7 +132,7 @@ export function getSimulationResourceKey(candidate: SimulationResourceCandidate)
   });
 
   if (catalogIdByEnvOrId) {
-    const matchedSample = GEOMETRY_SAMPLES.find((s) => s.id === catalogIdByEnvOrId);
+    const matchedSample = sampleMetaById(catalogIdByEnvOrId);
     const sampleStatementNorm = matchedSample
       ? normalizeStatement(matchedSample.problemText)
       : null;
@@ -200,7 +201,7 @@ function hasStatementOrKindConflict(
   );
   if (tabKey.startsWith("problem:") && candidateStatement) {
     const sampleId = tabKey.slice("problem:".length);
-    const sample = GEOMETRY_SAMPLES.find((s) => s.id === sampleId);
+    const sample = sampleMetaById(sampleId);
     const sampleNorm = sample ? normalizeStatement(sample.problemText) : null;
     if (sampleNorm && candidateStatement !== sampleNorm) {
       return true;

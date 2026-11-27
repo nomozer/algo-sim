@@ -1,17 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import {
-  AccountSettingsModal,
-  AdminWorkspaceView,
-  AuthGate,
-  AuthPageView,
-} from "./components/AuthGate";
+import { Suspense, useEffect, useRef, useState } from "react";
 import {
   AxoErrorExperience,
   canonicalPathForView,
 } from "./components/AxoErrorExperience";
 import { ErrorBoundary, ErrorFallback } from "./components/ErrorBoundary";
-import { HistoryView } from "./components/HistoryView";
-import { HomeView } from "./components/HomeView";
 import { IconPanel } from "./components/icons";
 import { LandingView } from "./components/LandingView";
 import {
@@ -22,10 +14,6 @@ import {
   restoreSavedDraftIfEmpty,
   saveIntendedDestination,
 } from "./components/landing/landing-geometry-data";
-import { LeftSidebar } from "./components/LeftSidebar";
-import { LibraryView } from "./components/LibraryView";
-import { SimulationControls } from "./components/SimulationControls";
-import { SimulationWorkspace } from "./components/SimulationWorkspace";
 import {
   computeAdaptiveHeaderState,
   TEN_TRANG,
@@ -36,11 +24,63 @@ import {
 } from "./components/TopNav";
 import { pageTitle } from "./branding";
 import { AxoScrollbar } from "./components/AxoScrollbar";
-import { recoverCatalogScene3D } from "./data/offline-catalog";
+import { recoverCachedCatalogScene3D } from "./data/sample-catalog-meta";
+import { recoverCatalogScene3DAsync } from "./data/sample-loader";
 import { hopLeScene3D } from "./simulations/domains/geometry/scene3d-model";
 import { useAppStore } from "./state/store";
 import { useAuthStore } from "./state/auth";
 import { LIBRARY_TAB_ID } from "./state/workspace-tab-identity";
+import { isChunkLoadError, lazyWithRetry, resetFailedLazyChunks } from "./utils/lazy-with-retry";
+
+let appStylesPromise: Promise<unknown> | null = null;
+function ensureAppStylesLoaded(): Promise<unknown> {
+  if (!appStylesPromise) {
+    appStylesPromise = import("./styles/load-app-styles").catch((err) => {
+      appStylesPromise = null;
+      throw err;
+    });
+  }
+  return appStylesPromise;
+}
+
+const LazyAccountSettingsModal = lazyWithRetry(
+  () => Promise.all([ensureAppStylesLoaded(), import("./components/AccountSettingsModal")]).then(([, m]) => m),
+);
+const LazyAdminWorkspaceView = lazyWithRetry(
+  () => Promise.all([ensureAppStylesLoaded(), import("./components/AdminWorkspaceView")]).then(([, m]) => m),
+);
+const LazyAuthGate = lazyWithRetry(
+  () => Promise.all([ensureAppStylesLoaded(), import("./components/AuthGateModal")]).then(([, m]) => m),
+);
+const LazyAuthPageView = lazyWithRetry(
+  () => Promise.all([ensureAppStylesLoaded(), import("./components/AuthPageView")]).then(([, m]) => m),
+);
+const LazyHomeView = lazyWithRetry(
+  () => Promise.all([ensureAppStylesLoaded(), import("./components/HomeView")]).then(([, m]) => ({ default: m.HomeView })),
+);
+const LazyLeftSidebar = lazyWithRetry(
+  () => Promise.all([ensureAppStylesLoaded(), import("./components/LeftSidebar")]).then(([, m]) => ({ default: m.LeftSidebar })),
+);
+const LazyLibraryView = lazyWithRetry(
+  () => Promise.all([ensureAppStylesLoaded(), import("./components/LibraryView")]).then(([, m]) => ({ default: m.LibraryView })),
+);
+const LazySimulationControls = lazyWithRetry(
+  () => Promise.all([ensureAppStylesLoaded(), import("./components/SimulationControls")]).then(([, m]) => ({ default: m.SimulationControls })),
+);
+const LazySimulationWorkspace = lazyWithRetry(
+  () => Promise.all([ensureAppStylesLoaded(), import("./components/SimulationWorkspace")]).then(([, m]) => ({ default: m.SimulationWorkspace })),
+);
+
+function RouteLoadingFallback({ label }: { label: string }) {
+  return (
+    <div className="axo-route-loading" role="status" aria-live="polite" aria-label={label}>
+      <div className="axo-route-loading-card">
+        <span className="axo-route-loading-dot" aria-hidden="true" />
+        <span>{label}</span>
+      </div>
+    </div>
+  );
+}
 
 export const AXO_AUTH_SYNC_STORAGE_KEY = "axo_auth_sync_v1";
 export const AXO_AUTH_SYNC_CHANNEL = "axo_auth_sync_v1";
@@ -217,9 +257,12 @@ export default function App() {
   const goHome = useAppStore((s) => s.goHome);
   const guestEnteredApp = useAppStore((s) => s.guestEnteredApp);
   const leftRailMobileOpen = useAppStore((s) => s.leftRailMobileOpen);
+  const accountModalOpen = useAppStore((s) => s.accountModalOpen);
+  const loadingSampleId = useAppStore((s) => s.loadingSampleId);
 
   const user = useAuthStore((s) => s.user);
   const authResolved = useAuthStore((s) => s.resolved);
+  const authGateMode = useAuthStore((s) => s.authGate);
   const isPopStateSyncRef = useRef(false);
   const hasHydratedLocationRef = useRef(false);
   const prevBroadcastUserIdRef = useRef<number | null | undefined>(undefined);
@@ -231,9 +274,9 @@ export default function App() {
     preferActive?: boolean;
   } | null>(null);
   const [crashedResetKey, setCrashedResetKey] = useState<string | null>(null);
+  const [crashedIsChunkError, setCrashedIsChunkError] = useState(false);
   const [guestHeaderMenuOpen, setGuestHeaderMenuOpen] = useState(false);
   const guestHeaderRef = useRef<HTMLDivElement | null>(null);
-  void HistoryView;
 
   useEffect(() => {
     setGuestHeaderMenuOpen(false);
@@ -688,12 +731,43 @@ export default function App() {
   const safeScene3d = inWorkspace && active
     ? (() => {
         try {
-          return (recoverCatalogScene3D(active.envelope) as { scene3d?: unknown })?.scene3d;
+          return (recoverCachedCatalogScene3D(active.envelope) as { scene3d?: unknown })?.scene3d;
         } catch {
           return null;
         }
       })()
     : null;
+
+  useEffect(() => {
+    if (view === "workspace" && loadingSampleId) {
+      void LazySimulationWorkspace.preload().catch(() => {});
+    }
+  }, [view, loadingSampleId]);
+
+  useEffect(() => {
+    if (!inWorkspace || !active) return;
+    const rawScene = (active.envelope as { scene3d?: unknown }).scene3d;
+    if (rawScene !== undefined && rawScene !== null) return;
+    if ((safeScene3d ?? null) !== null) return;
+    let cancelled = false;
+    void recoverCatalogScene3DAsync(active.envelope).then((recovered) => {
+      if (cancelled) return;
+      if ((recovered as { scene3d?: unknown }).scene3d != null) {
+        const cur = useAppStore.getState();
+        if (cur.active?.envelope === active.envelope) {
+          cur.loadEnvelope(
+            recovered,
+            cur.activeSampleId ?? undefined,
+            cur.active.problemStatement ?? undefined,
+            cur.activeHistoryId ?? undefined,
+          );
+        }
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [inWorkspace, active, safeScene3d]);
   const isGeometryDomainWorkspace = Boolean(
     inWorkspace && (active?.envelope?.domain === "geometry" || isDraftWorkspaceTab),
   );
@@ -770,11 +844,12 @@ export default function App() {
         onOpenLibrary={() => openLibrary()}
       />
     )
-    : isAuthPage ? <AuthPageView mode={view} />
-    : isAdminPage ? <AdminWorkspaceView />
+    : isAuthPage ? <LazyAuthPageView mode={view} />
+    : isAdminPage ? <LazyAdminWorkspaceView />
     : isLandingPage ? <LandingView />
-    : view === "history" ? <HomeView />
-    : view === "library" ? <LibraryView />
+    : view === "history" ? <LazyHomeView />
+    : view === "library" ? <LazyLibraryView />
+    : view === "workspace" && loadingSampleId ? <RouteLoadingFallback label="Đang tải mô phỏng hình học 3D..." />
     : view === "account" && user ? (
       <section className="page-stack" aria-label="Cài đặt tài khoản">
         <div className="page-card account-overview-card">
@@ -801,13 +876,25 @@ export default function App() {
         </div>
       </section>
     )
-    : <HomeView />;
+    : <LazyHomeView />;
+
+  const routeLoadingLabel = isAdminPage
+    ? "Đang tải trang quản trị..."
+    : isAuthPage
+      ? "Đang tải biểu mẫu tài khoản..."
+      : view === "library"
+        ? "Đang tải thư viện mô phỏng..."
+        : "Đang tải không gian làm việc...";
 
   return (
     <div
       className={`app-root${user ? " is-authed" : ""}${!isStandaloneShell ? " has-left-sidebar" : ""}${leftRailMobileOpen ? " is-mobile-sidebar-open" : ""}${canvasFirst ? " la-tap-trung" : ""}${isAuthPage ? " is-auth-page" : ""}${isAdminPage ? " is-page-admin" : ""}${isLandingPage ? " is-page-landing" : ""}`}
     >
-      {!isStandaloneShell && <LeftSidebar />}
+      {!isStandaloneShell && (
+        <Suspense fallback={<div className="axo-left-sidebar-slot" aria-hidden="true" />}>
+          <LazyLeftSidebar />
+        </Suspense>
+      )}
       <div className="app-main">
         {/* W05 · CHẾ ĐỘ TẬP TRUNG: cảnh 3D lấp trang — thanh trên toàn cục (đăng nhập/đăng ký, điều hướng, «Giải
             thích» vốn không tác dụng với cảnh 3D) KHÔNG dựng. Khi ErrorBoundary bắt lỗi render, `canvasFirst`
@@ -913,8 +1000,14 @@ export default function App() {
         <ErrorBoundary
           mien="main"
           resetKey={`${view}|${activeHistoryId ?? activeSampleId ?? ""}|${active?.envelope?.simulation_id ?? ""}|${active?.envelope?.title ?? ""}`}
-          onCatch={() => setCrashedResetKey(mainResetKey)}
-          onRecover={() => setCrashedResetKey(null)}
+          onCatch={(err) => {
+            setCrashedResetKey(mainResetKey);
+            setCrashedIsChunkError(isChunkLoadError(err));
+          }}
+          onRecover={() => {
+            setCrashedResetKey(null);
+            setCrashedIsChunkError(false);
+          }}
           fallback={(thuLai, { canRetry }) => (
             <main className="app-single">
               <AxoErrorExperience
@@ -922,23 +1015,35 @@ export default function App() {
                 hasBackHistory={hasInAppNavigation}
                 onBack={() => {
                   setCrashedResetKey(null);
+                  setCrashedIsChunkError(false);
+                  resetFailedLazyChunks();
                   escapeFromError();
                   thuLai();
                 }}
                 onGoHome={() => {
                   setCrashedResetKey(null);
+                  setCrashedIsChunkError(false);
+                  resetFailedLazyChunks();
                   goHome();
                   thuLai();
                 }}
                 onOpenLibrary={() => {
                   setCrashedResetKey(null);
+                  setCrashedIsChunkError(false);
+                  resetFailedLazyChunks();
                   openLibrary();
                   thuLai();
                 }}
                 onSecondaryRetry={
                   canRetry
                     ? () => {
+                        if (crashedIsChunkError && typeof window !== "undefined") {
+                          window.location.reload();
+                          return;
+                        }
                         setCrashedResetKey(null);
+                        setCrashedIsChunkError(false);
+                        resetFailedLazyChunks();
                         thuLai();
                       }
                     : undefined
@@ -947,10 +1052,11 @@ export default function App() {
             </main>
           )}
         >
+        <Suspense fallback={<main className={`app-single${isStandaloneShell ? " is-standalone-main" : ""}`}><RouteLoadingFallback label={routeLoadingLabel} /></main>}>
         {inWorkspace ? (
           <main className={layoutClass}>
             <section className="panel-center">
-              <SimulationWorkspace />
+              <LazySimulationWorkspace />
             </section>
             {/* W5AC — KHÔNG còn `aside.panel-right`: nội dung Giải thích nay là
                 CỘT HAI bên trong thẻ (`SimulationWorkspace`), cạnh chính cơ chế
@@ -966,18 +1072,27 @@ export default function App() {
                 nguyên khay của nó. */}
             {!canvasFirst && (
               <footer className="panel-controls">
-                <SimulationControls />
+                <LazySimulationControls />
               </footer>
             )}
           </main>
         ) : (
           <main className={`app-single${isStandaloneShell ? " is-standalone-main" : ""}`}>{page}</main>
         )}
+        </Suspense>
         </ErrorBoundary>
       </div>
 
-      <AccountSettingsModal />
-      <AuthGate />
+      {accountModalOpen && (
+        <Suspense fallback={null}>
+          <LazyAccountSettingsModal />
+        </Suspense>
+      )}
+      {authGateMode !== null && (
+        <Suspense fallback={null}>
+          <LazyAuthGate />
+        </Suspense>
+      )}
       <ToastContainer />
       <AxoScrollbar />
     </div>
