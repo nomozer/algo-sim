@@ -200,8 +200,9 @@ def test_inv_20_candidate_and_cache_verify_only():
     assert payload["verdict"] == "PASS"
     assert payload["actual_historical_tree_hash"] == payload["expected_tree_hash"]
     # 109 = candidate 132 (600f5105d); 127 = candidate 158 (35a17644a / product 2bb0211a1), integrated by the
-    # /20 Model 1 merge. The pin follows the manifest on HEAD; a changed count means a new candidate was frozen.
-    assert payload["actual_historical_so_file"] == payload["expected_so_file"] == 127
+    # /20 Model 1 merge; 130 = integrated candidate cab9d4ab5 (+email_templates, mailer, tokens in
+    # authentication-account-recovery). The pin follows the manifest on HEAD; a changed count means a new candidate was frozen.
+    assert payload["actual_historical_so_file"] == payload["expected_so_file"] == 130
     assert payload["provenance_matches_head"] is True
 
     # Đảm bảo EVALUATION_CANDIDATE.json không bị thay đổi trong working tree (chỉ verify-only)
