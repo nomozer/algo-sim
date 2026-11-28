@@ -200,7 +200,7 @@ Thực hiện tại [`AdminWorkspaceView.tsx`](file:///D:/Documents/projects/alg
 | V | Dọn sạch Docker nhiệm vụ & khôi phục Vite `:3000` | `PASS` | `local-act-*` đã xóa, asset Owner giữ nguyên |
 | W | Freeze governance (`EVALUATION_CANDIDATE.json`, `candidate_lineage.json`, `refresh_pending_templates.py`) | `PASS` | `--verify`, `--verify-historical`, `lock_cache_identity.py --verify` PASS |
 | X | Kiểm toán IA tài liệu & Publication Safety `--range 7a9dc97bc..HEAD` | `PASS` | Xác minh trước khi push `origin/main` |
-| Y | Xác minh Vercel production trực tiếp `https://hoclieu.tech` | `PENDING_LIVE_CHECK` | Chờ push `origin/main` và chạy `verify_live_vercel.mjs` |
+| Y | Xác minh Vercel production trực tiếp `https://hoclieu.tech` | `PASS` | [`production_verification.json`](file:///D:/Documents/projects/algo-sim/docs/evaluation/geometry/runs/local-activation-admin-refinement/production_verification.json) (`/assets/index-ChbK0kMG.js` + `/assets/AdminWorkspaceView-D-vfpfxQ.js`, 8/8 routes HTTP 200) |
 | Z | Bàn giao danh sách Owner Actions sao chép-chạy được & cây Git sạch | `PASS` | §30 dưới đây |
 
 ## 24. Kiểm Toán Thông Tin Tài Liệu & An Toàn Công Bố
@@ -213,11 +213,15 @@ Thực hiện tại [`AdminWorkspaceView.tsx`](file:///D:/Documents/projects/alg
 
 ## 26. Trạng Thái Remote (`origin/main`)
 
-- Sau khi xác minh `audit_docs_information_architecture.py` và `check_publication_safety.py`, nhánh `main` sẽ được đẩy lên `origin/main` (không force-push).
+- Đã đẩy sạch nhánh `main` lên `origin/main` (không force-push) từ `7a9dc97bc` đến `b9bd08dd2` và tiếp tục cập nhật xác minh live ở commit kế tiếp.
 
 ## 27. Kiểm Chứng Vercel Production (`https://hoclieu.tech`)
 
-- Trạng thái hiện tại trước bước push: `PENDING_LIVE_CHECK` (sẽ cập nhật kết quả thực tế từ `production_verification.json` ngay sau khi Vercel triển khai xong commit mới).
+- Xác minh trực tiếp tại [`production_verification.json`](file:///D:/Documents/projects/algo-sim/docs/evaluation/geometry/runs/local-activation-admin-refinement/production_verification.json) lúc `2026-11-28T03:04:00.874Z`:
+  - `https://hoclieu.tech/` phục vụ đúng bản build mới (`/assets/index-ChbK0kMG.js` và `/assets/AdminWorkspaceView-D-vfpfxQ.js`, `newAdminMarkersVerified: true`).
+  - Toàn bộ 8/8 SPA route (`/`, `/login`, `/register`, `/forgot-password`, `/reset-password`, `/verify-email`, `/library`, `/admin`) trả HTTP `200` với `#root` render đầy đủ.
+  - Footer trên live domain qua 7/7 viewport (`1920`, `1440`, `1366`, `1024`, `768`, `390`, `320`) đạt `horizontalOverflow: false`.
+  - Landing bundle isolation: `zeroThreeJsOnLanding: true`, `zeroAdminOnLanding: true`, `pageErrors: []` (chỉ có 404 từ `/api/*` do chưa triển khai backend VPS theo `BACKEND_DEPLOYMENT_PENDING`).
 
 ## 28. Các Hạng Mục Còn Chờ (Ngoài Phạm Vi Tự Chạy Trên Tài Sản Owner)
 

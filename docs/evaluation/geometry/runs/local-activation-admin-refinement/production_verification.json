@@ -1,0 +1,102 @@
+{
+  "checkedAtUtc": "2026-11-28T03:04:00.874Z",
+  "liveEntryJsPath": "/assets/index-ChbK0kMG.js",
+  "liveAdminChunkPath": "/assets/AdminWorkspaceView-D-vfpfxQ.js",
+  "newAdminMarkersVerified": true,
+  "routes": {
+    "/": {
+      "httpStatus": 200,
+      "hasRootContent": true
+    },
+    "/login": {
+      "httpStatus": 200,
+      "hasRootContent": true
+    },
+    "/register": {
+      "httpStatus": 200,
+      "hasRootContent": true
+    },
+    "/forgot-password": {
+      "httpStatus": 200,
+      "hasRootContent": true
+    },
+    "/reset-password": {
+      "httpStatus": 200,
+      "hasRootContent": true
+    },
+    "/verify-email": {
+      "httpStatus": 200,
+      "hasRootContent": true
+    },
+    "/library": {
+      "httpStatus": 200,
+      "hasRootContent": true
+    },
+    "/admin": {
+      "httpStatus": 200,
+      "hasRootContent": true
+    }
+  },
+  "footer7Viewports": [
+    {
+      "name": "desktop-1920",
+      "width": 1920,
+      "height": 1080,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "desktop-1440",
+      "width": 1440,
+      "height": 900,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "laptop-1366",
+      "width": 1366,
+      "height": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "landscape-1024",
+      "width": 1024,
+      "height": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "tablet-768",
+      "width": 768,
+      "height": 1024,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "mobile-390",
+      "width": 390,
+      "height": 844,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "mobile-320",
+      "width": 320,
+      "height": 700,
+      "horizontalOverflow": false
+    }
+  ],
+  "landingBundleIsolation": {
+    "entryJsLoaded": true,
+    "zeroThreeJsOnLanding": true,
+    "zeroAdminOnLanding": true
+  },
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()"
+  ],
+  "pageErrors": []
+}
