@@ -1,0 +1,56 @@
+{
+  "url": "https://hoclieu.tech",
+  "verified_at_utc": "2026-11-28T04:21:47.825Z",
+  "deployed_new_build": true,
+  "verified_commit_pushed": "44e7b3a2ab4783e35b7fdbe81d3fab9bf97d9d72",
+  "footer_markers": {
+    "copy": "© Hình học không gian 3D",
+    "lead": "Nhập đề tiếng Việt hoặc mở nhanh bài mẫu trong không gian học tập.",
+    "brandRepetitionRemoved": true,
+    "workspaceTranslated": true
+  },
+  "spa_routes_http": {
+    "/": 200,
+    "/app": 200,
+    "/library": 200,
+    "/login": 200,
+    "/register": 200,
+    "/admin": 200
+  },
+  "bundle_isolation": {
+    "landing_scripts": 1,
+    "landing_has_vendor_three": false,
+    "landing_has_geometry_samples": false,
+    "login_scripts": 7,
+    "login_has_vendor_three": false
+  },
+  "security_headers": {
+    "strict_transport_security": "max-age=63072000",
+    "x_content_type_options": "nosniff",
+    "x_frame_options": "DENY",
+    "referrer_policy": "strict-origin-when-cross-origin"
+  },
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "overflowX": 0
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "overflowX": 0
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflowX": 0
+    },
+    {
+      "width": 320,
+      "height": 700,
+      "overflowX": 0
+    }
+  ],
+  "backend_note": "BACKEND_DEPLOYMENT_PENDING — Vercel serves static frontend SPA only; /api/* awaits VPS deployment."
+}

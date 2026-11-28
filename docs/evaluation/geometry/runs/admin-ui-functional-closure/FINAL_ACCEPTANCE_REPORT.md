@@ -260,8 +260,13 @@ Do `backend/app/accounts/router.py` nằm trong vùng `measured_system` (`130` f
 
 ## 23. Xác minh Production Live (`https://hoclieu.tech`)
 
-- Trạng thái trước push: chờ đẩy `origin/main` và Vercel deploy bản build mới.
-- Sau khi push `origin/main`, kết quả kiểm tra trực tiếp trên `https://hoclieu.tech` (chứng thực build mới, Footer không lặp `Axo`, `không gian học tập`, SPA routes, bundle isolation, security headers) sẽ được ghi nhận vào [`production_verification.json`](production_verification.json) và cập nhật cuối mục này.
+- **Trạng thái:** `VERIFIED` (`2026-11-28T04:21:47Z`, bản build từ commit đã đẩy `44e7b3a2a`, biên bản [`production_verification.json`](production_verification.json)):
+  - **Bản build mới đang phục vụ:** `deployed_new_build = true`, Footer hiển thị chính xác `© Hình học không gian 3D` và `"Nhập đề tiếng Việt hoặc mở nhanh bài mẫu trong không gian học tập."`.
+  - **Tuyến SPA:** `/`, `/app`, `/library`, `/login`, `/register`, `/admin` đều trả `HTTP 200`.
+  - **Cô lập Bundle trên production:** `/` tải `1` script (`vendor-three = false`, `geometry-samples = false`); `/login` tải `7` scripts (`vendor-three = false`).
+  - **Security Headers:** `strict-transport-security: max-age=63072000`, `x-content-type-options: nosniff`, `x-frame-options: DENY`, `referrer-policy: strict-origin-when-cross-origin`.
+  - **Responsive:** `overflowX = 0` tại `1440px`, `768px`, `390px`, `320px`.
+  - **Ghi chú Backend:** Vercel chỉ phục vụ Frontend SPA (`BACKEND_DEPLOYMENT_PENDING` chờ VPS riêng).
 
 ---
 
@@ -292,8 +297,8 @@ Do `backend/app/accounts/router.py` nằm trong vùng `measured_system` (`130` f
 | `G21` | Bảo mật RBAC, Single-Admin, `npm audit`, secret scan | `PASS` | `401`/`403` chặt, `0` dist secrets, `0` prod vulnerabilities |
 | `G22` | Hồi quy toàn phần Frontend + Backend + Postgres | `PASS` | FE `2.329/2.329`, BE `15.267/15.267` duy nhất (`0` fail) |
 | `G23` | Freeze Governance & C21 Pending Templates | `PASS` | `9385d4965` (`e332983e...`), `--verify` & `--verify-historical` PASS |
-| `G24` | Cổng kiến trúc tài liệu & an toàn phát hành | `PASS` | Xác nhận ở bước kiểm tra trước push |
-| `G25` | Xác minh `https://hoclieu.tech` & `http://localhost:3000` | `PENDING_PUSH` | Hoàn tất ngay sau khi push `origin/main` |
+| `G24` | Cổng kiến trúc tài liệu & an toàn phát hành | `PASS` | `audit_docs_information_architecture.py` PASS, `42/42` test, `check_publication_safety` 0 vi phạm |
+| `G25` | Xác minh `https://hoclieu.tech` & `http://localhost:3000` | `PASS` | `https://hoclieu.tech` VERIFIED (`production_verification.json`), `localhost:3000` `HTTP 200` |
 
 **Trạng thái vận hành tách biệt (giữ trung thực, không tự thực thi thay Owner):**
 - `LOCAL_DATABASE_MIGRATION_PENDING_OWNER_APPROVAL`
