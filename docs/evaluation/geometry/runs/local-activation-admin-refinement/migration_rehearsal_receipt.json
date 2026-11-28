@@ -1,0 +1,115 @@
+{
+  "history_lines": [
+    "f8a2c41d9e05 -> b6d2f0a8c4e1 (head), auth tokens and email verifications",
+    "9c4d8e2b7a10 -> f8a2c41d9e05, retain legacy classroom tables on classroom feature retirement",
+    "e437149641fa -> 9c4d8e2b7a10, add step edit tables",
+    "d5f9b82c3a14 -> e437149641fa, analysis usage ledger",
+    "c4e8a91b2f03 -> d5f9b82c3a14, admin persistence and telemetry tables",
+    "a1c7e4b90d52 -> c4e8a91b2f03, learning history entries per user",
+    "f32f9b107b77 -> a1c7e4b90d52, live classroom session + semantic focus",
+    "72095b7dd318 -> f32f9b107b77, m18 accounts and classroom",
+    "<base> -> 72095b7dd318, initial schema (simulation_cache, simulation_patterns, reuse_metrics)"
+  ],
+  "heads": [
+    "b6d2f0a8c4e1 (head)"
+  ],
+  "current_before": [
+    "a1c7e4b90d52"
+  ],
+  "preflight_before": {
+    "returncode": 23,
+    "allowed": false,
+    "reason_code": "PARTIAL_MIGRATION_PRE_EXISTING_OBJECT",
+    "colliding_tables": [
+      "admin_analysis_telemetry",
+      "admin_audit_logs",
+      "admin_system_settings",
+      "analysis_usage_ledger",
+      "user_account_meta"
+    ]
+  },
+  "direct_upgrade_head_before_reconciliation": {
+    "returncode": 1,
+    "blocked_cleanly": true
+  },
+  "pre_existing_5_tables_inspected": [
+    "user_account_meta",
+    "admin_system_settings",
+    "admin_audit_logs",
+    "admin_analysis_telemetry",
+    "analysis_usage_ledger"
+  ],
+  "reconciliation_steps": [
+    "1. alembic upgrade a1c7e4b90d52:c4e8a91b2f03 --sql > c4.sql & apply cleanly via psql ON_ERROR_STOP=1",
+    "2. alembic stamp --purge e437149641fa (online _run_online_preflight validates 100% schema parity)",
+    "3. alembic upgrade head (e437149641fa -> 9c4d8e2b7a10 -> f8a2c41d9e05 -> b6d2f0a8c4e1)"
+  ],
+  "after": {
+    "preflight_startup_allowed": true,
+    "preflight_startup_reason": "SAFE_NO_DESTRUCTIVE_OPERATIONS",
+    "current_revision": [
+      "b6d2f0a8c4e1"
+    ],
+    "alembic_current_cli": [
+      "b6d2f0a8c4e1 (head)"
+    ],
+    "alembic_check_output": "No new upgrade operations detected.",
+    "table_count": 22,
+    "tables_added": [
+      "auth_tokens",
+      "email_verifications",
+      "learning_history_entries",
+      "step_edit_feedback",
+      "step_edit_revisions",
+      "step_edit_sessions"
+    ],
+    "tables_dropped": [],
+    "row_counts": {
+      "admin_analysis_telemetry": 2,
+      "admin_audit_logs": 0,
+      "admin_system_settings": 0,
+      "alembic_version": 1,
+      "analysis_usage_ledger": 2,
+      "assignments": 1,
+      "auth_sessions": 1141,
+      "auth_tokens": 0,
+      "class_memberships": 2,
+      "classroom_sessions": 0,
+      "classrooms": 1,
+      "email_verifications": 0,
+      "learning_history_entries": 0,
+      "practice_sessions": 1,
+      "reuse_metrics": 4,
+      "simulation_cache": 4,
+      "simulation_patterns": 9,
+      "step_edit_feedback": 0,
+      "step_edit_revisions": 0,
+      "step_edit_sessions": 0,
+      "user_account_meta": 0,
+      "users": 10
+    },
+    "users_by_role": {
+      "student": 8,
+      "teacher": 2
+    },
+    "non_pii_users_sha256": "c1b3cf73ee23c9622421f251be7e41022eb5e298d53849181a4677e76a0f7d4a",
+    "foreign_keys_count": 15,
+    "legacy_accounts_auto_verified": false,
+    "existing_rows_100pct_preserved": true,
+    "token_tables_rw_smoke": "TOKEN_TABLES_RW_OK"
+  },
+  "post_restart": {
+    "alembic_version": [
+      "b6d2f0a8c4e1"
+    ],
+    "non_pii_users_sha256_match": true
+  },
+  "rollback_rehearsal": {
+    "alembic_version": [
+      "a1c7e4b90d52"
+    ],
+    "table_count": 16,
+    "row_counts_match_original": true,
+    "non_pii_users_sha256_match": true
+  }
+}

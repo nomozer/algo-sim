@@ -1,0 +1,300 @@
+{
+  "image_id": "sha256:f1d310b1d0030c65e06ea2c89692a185f56cbc6f6ec673efc6c96a19934310e3",
+  "labels": {
+    "org.algosim.backend.build-time": "2026-11-28T01:24:50Z",
+    "org.algosim.backend.git-sha": "7a9dc97bce9118127a933b13cddc2d251e9b5dda",
+    "org.algosim.backend.image-inputs-sha256": "03a54f21906043020fe7d2e722d6ae8e50c6c7b9fb8ac6bae376443cdb627fc1",
+    "org.algosim.backend.requirements-sha256": "8565b6bfbe8ae553a64c32183dcf7b74e1a3c974ebaac32c6c91425ceb9cafa6"
+  },
+  "health_endpoint": {
+    "ok": true,
+    "dbConnected": true,
+    "hasKey": false,
+    "cachedProblems": 4,
+    "patterns": 9,
+    "reuse": {
+      "pattern_reuse_hits": 6,
+      "estimated_llm_calls_saved": 24,
+      "exact_cache_hits": 6,
+      "compose_new_count": 33
+    },
+    "db": "postgresql",
+    "runtime": {
+      "route_policy": {
+        "default_route_mode": "HYBRID",
+        "fingerprint": null
+      },
+      "hybrid_route": {
+        "mode": "live",
+        "enabled": true,
+        "simulated": false,
+        "local_only": false,
+        "local_slm_model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+        "local_slm_provisioned": false,
+        "extraction_mode": "LIVE_GEMINI_STRUCTURED",
+        "local_parser_version": "local-geometry-parser/3",
+        "adaptive_router_version": "adaptive-input-router/1",
+        "registry_version": "geometry-functions/33",
+        "planner_version": "geometry-fact-planner/26",
+        "engine_version": "geometry-function-engine/24",
+        "adapter_version": "hybrid-simulation-adapter/4",
+        "envelope_version": "hybrid-route-d-simulation/4",
+        "response_contract": "typed-fact-next/2",
+        "extraction_surface": "33197a45e0620d94a669047b47907479d1e7f07b1dc76e7c6abd75ada7a6df14",
+        "gemini_model": "gemini-2.5-flash",
+        "allow_live_ai": false,
+        "replay_corpus_configured": false
+      },
+      "hybrid_route_mode": "live",
+      "hybrid_route_d_preview": {
+        "enabled": false
+      },
+      "git_sha": "7a9dc97bce9118127a933b13cddc2d251e9b5dda",
+      "build_timestamp": "2026-11-28T01:24:50Z",
+      "cache_version": "158",
+      "domain": "hinh_hoc",
+      "expression_count": 11,
+      "construct_statement_count": 9,
+      "measure_count": 7,
+      "obligation_count": 12,
+      "stable_capability_hash": "f1518bb80fe7434208427019ec20c8d8991d886ac5cd3c3ff54732633e2b5f50",
+      "skills": {
+        "tren_dia": {
+          "transcribe": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6"
+        },
+        "da_nap": {},
+        "cu": [],
+        "grammar_card": "fb2b54383009021f1e176f027de9f9583d1168d53af8b0f8da79043276d6d748",
+        "tong": "cb272862541ae2dcdeb4ede7535c4b36f14e6abc739321ff32ae60fea592a385"
+      },
+      "semantic_telemetry": "0",
+      "gemini_model": "gemini-2.5-flash",
+      "dev_reload": "0",
+      "simulation_id": "generic.semantic_program",
+      "expressions": [
+        "divide_segment",
+        "intersect_line_line",
+        "intersect_line_plane",
+        "intersect_plane_curved",
+        "intersect_plane_curved_ellipse",
+        "intersect_plane_plane",
+        "midpoint",
+        "plane_perpendicular_to_line",
+        "project_onto",
+        "translate",
+        "vector_from_points"
+      ],
+      "construct_statements": [
+        "construct_curved_solid",
+        "construct_line",
+        "construct_plane",
+        "construct_plane_from_equation",
+        "construct_point",
+        "construct_polygon",
+        "construct_section",
+        "construct_segment",
+        "construct_solid"
+      ],
+      "measures": [
+        "angle_cos",
+        "angle_cos_sq",
+        "area",
+        "distance",
+        "lateral_area",
+        "radius",
+        "volume"
+      ]
+    },
+    "routeMode": "live",
+    "localOnlyMode": false,
+    "localSlmReady": false,
+    "localSlmModel": "qwen3-0.6b-axo-v9-q4_k_m",
+    "extractionBackend": "live_gemini",
+    "aiAvailable": false
+  },
+  "docker_health_status": "healthy",
+  "runtime_diagnostics": {
+    "route_policy": {
+      "default_route_mode": "HYBRID",
+      "fingerprint": null
+    },
+    "hybrid_route": {
+      "mode": "live",
+      "enabled": true,
+      "simulated": false,
+      "local_only": false,
+      "local_slm_model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+      "local_slm_provisioned": false,
+      "extraction_mode": "LIVE_GEMINI_STRUCTURED",
+      "local_parser_version": "local-geometry-parser/3",
+      "adaptive_router_version": "adaptive-input-router/1",
+      "registry_version": "geometry-functions/33",
+      "planner_version": "geometry-fact-planner/26",
+      "engine_version": "geometry-function-engine/24",
+      "adapter_version": "hybrid-simulation-adapter/4",
+      "envelope_version": "hybrid-route-d-simulation/4",
+      "response_contract": "typed-fact-next/2",
+      "extraction_surface": "33197a45e0620d94a669047b47907479d1e7f07b1dc76e7c6abd75ada7a6df14",
+      "gemini_model": "gemini-2.5-flash",
+      "allow_live_ai": false,
+      "replay_corpus_configured": false
+    },
+    "hybrid_route_mode": "live",
+    "hybrid_route_d_preview": {
+      "enabled": false
+    },
+    "git_sha": "7a9dc97bce9118127a933b13cddc2d251e9b5dda",
+    "build_timestamp": "2026-11-28T01:24:50Z",
+    "cache_version": "158",
+    "domain": "hinh_hoc",
+    "expression_count": 11,
+    "construct_statement_count": 9,
+    "measure_count": 7,
+    "obligation_count": 12,
+    "stable_capability_hash": "f1518bb80fe7434208427019ec20c8d8991d886ac5cd3c3ff54732633e2b5f50",
+    "skills": {
+      "tren_dia": {
+        "transcribe": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6"
+      },
+      "da_nap": {},
+      "cu": [],
+      "grammar_card": "fb2b54383009021f1e176f027de9f9583d1168d53af8b0f8da79043276d6d748",
+      "tong": "cb272862541ae2dcdeb4ede7535c4b36f14e6abc739321ff32ae60fea592a385"
+    },
+    "semantic_telemetry": "0",
+    "gemini_model": "gemini-2.5-flash",
+    "dev_reload": "0",
+    "simulation_id": "generic.semantic_program",
+    "expressions": [
+      "divide_segment",
+      "intersect_line_line",
+      "intersect_line_plane",
+      "intersect_plane_curved",
+      "intersect_plane_curved_ellipse",
+      "intersect_plane_plane",
+      "midpoint",
+      "plane_perpendicular_to_line",
+      "project_onto",
+      "translate",
+      "vector_from_points"
+    ],
+    "construct_statements": [
+      "construct_curved_solid",
+      "construct_line",
+      "construct_plane",
+      "construct_plane_from_equation",
+      "construct_point",
+      "construct_polygon",
+      "construct_section",
+      "construct_segment",
+      "construct_solid"
+    ],
+    "measures": [
+      "angle_cos",
+      "angle_cos_sq",
+      "area",
+      "distance",
+      "lateral_area",
+      "radius",
+      "volume"
+    ]
+  },
+  "manage_admin_check_before": {
+    "databaseTarget": {
+      "dialect": "postgresql",
+      "host": "local-act-pg",
+      "port": 5432,
+      "database": "restored_rehearsal"
+    },
+    "schemaReady": true,
+    "alembicRevision": "b6d2f0a8c4e1",
+    "adminCount": 0,
+    "ambiguous": false,
+    "configuredUsername": "admin",
+    "usernameAliasValid": true,
+    "configuredEmailEnv": "ad***@example.test",
+    "envAdminPasswordPresent": true,
+    "configuredPasswordMatchesStoredHash": null,
+    "resolvedAdmin": null,
+    "admins": [],
+    "diagnosis": "ADMIN_NOT_CREATED",
+    "nextStep": "Chạy: python scripts/manage_admin.py --apply --create-if-missing"
+  },
+  "manage_admin_apply_create": {
+    "ok": true,
+    "action": "created",
+    "adminId": 12,
+    "email": "ad***@example.test",
+    "username": "admin",
+    "role": "admin",
+    "revokedSessions": 0
+  },
+  "manage_admin_check_after": {
+    "databaseTarget": {
+      "dialect": "postgresql",
+      "host": "local-act-pg",
+      "port": 5432,
+      "database": "restored_rehearsal"
+    },
+    "schemaReady": true,
+    "alembicRevision": "b6d2f0a8c4e1",
+    "adminCount": 1,
+    "ambiguous": false,
+    "configuredUsername": "admin",
+    "usernameAliasValid": true,
+    "configuredEmailEnv": "ad***@example.test",
+    "envAdminPasswordPresent": true,
+    "configuredPasswordMatchesStoredHash": true,
+    "resolvedAdmin": {
+      "id": 12,
+      "email": "ad***@example.test",
+      "displayName": "Quản trị viên Axo",
+      "role": "admin"
+    },
+    "admins": [
+      {
+        "id": 12,
+        "email": "ad***@example.test",
+        "displayName": "Quản trị viên Axo",
+        "role": "admin"
+      }
+    ],
+    "diagnosis": "OK",
+    "nextStep": null
+  },
+  "manage_admin_apply_idempotent": {
+    "ok": true,
+    "action": "updated",
+    "adminId": 12,
+    "email": "ad***@example.test",
+    "username": "admin",
+    "role": "admin",
+    "revokedSessions": 0
+  },
+  "restored_rehearsal_roles_after_admin_create": [
+    "admin\t1",
+    "student\t8",
+    "teacher\t2"
+  ],
+  "browser_login_verification": {
+    "wrong_password_rejected": true,
+    "username_login": {
+      "status": 200,
+      "userId": 12,
+      "role": "admin",
+      "url": "http://localhost:3000/admin",
+      "cookieHttpOnly": true,
+      "cookieSameSite": "Lax"
+    },
+    "f5_restored_admin": true,
+    "logout_cleared_session": true,
+    "email_login": {
+      "status": 200,
+      "userId": 12,
+      "role": "admin",
+      "url": "http://localhost:3000/admin",
+      "sameIdentityAsUsername": true
+    },
+    "page_errors": []
+  }
+}

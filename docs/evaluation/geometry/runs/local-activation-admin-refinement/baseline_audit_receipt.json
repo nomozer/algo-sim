@@ -1,0 +1,621 @@
+{
+  "adminBefore": {
+    "overviewMetrics": {
+      "cards": [
+        {
+          "label": "Tổng số tài khoản",
+          "val": "15 tài khoản",
+          "sub": "12 Học sinh · 2 Giáo viên · 1 Đã khóa · 1 Quản trị"
+        },
+        {
+          "label": "Yêu cầu cấp quyền Giáo viên",
+          "val": "1 hồ sơ",
+          "sub": "Ưu tiên xử lý yêu cầu gửi sớm nhất trước để tránh tồn đọng"
+        },
+        {
+          "label": "Lượt phân tích AI hôm nay",
+          "val": "25 lượt",
+          "sub": "4/6 yêu cầu thành công · 7 ngày: 6 lượt"
+        },
+        {
+          "label": "Token tiêu thụ (7 ngày)",
+          "val": "7.300 tokens",
+          "sub": "Đầu vào: 4.620 · Đầu ra: 2.010 · Suy luận: 670"
+        },
+        {
+          "label": "Hạn mức sử dụng hôm nay",
+          "val": "25 lượt đã dùng",
+          "sub": "Định mức ngày: Học sinh 15 lượt · Giáo viên 80 lượt"
+        },
+        {
+          "label": "Trạng thái dịch vụ AI",
+          "val": "4–10 req/phút",
+          "sub": "Model: gemini-2.5-flash · TB 700 ms"
+        }
+      ],
+      "overflow": false,
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "searchVietnameseWithoutDiacriticsMatchedRows": 1,
+    "searchVietnameseWithDiacriticsMatchedRows": 1,
+    "searchAdminUsernameMatchedRows": 1,
+    "detailModalHasEmailVerified": false,
+    "confirmModalBefore": {
+      "title": "Xác nhận thao tác",
+      "desc": "Bạn có chắc chắn muốn thực hiện thao tác quản trị cho tài khoản Tô Minh Nhật (nhat.to@example.test)?"
+    },
+    "mobileOverviewOverflow": {
+      "overflow": false,
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "mobileAccountsMetrics": {
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "tableWrapScrollWidth": 872,
+      "tableWrapClientWidth": 322
+    },
+    "overview500ErrorUiBefore": {
+      "hasErrorBanner": false,
+      "firstKpiVal": "0 tài khoản"
+    },
+    "backendCreateRoleAdminBeforeStatus": 200,
+    "pageErrors": []
+  },
+  "footerAudit": {
+    "viewports": [
+      {
+        "name": "desktop-1920",
+        "width": 1920,
+        "height": 1080,
+        "docScrollWidth": 1920,
+        "docClientWidth": 1920,
+        "horizontalOverflow": false,
+        "footerHeight": 612,
+        "barHeight": 52,
+        "links": [
+          {
+            "id": "btn-landing-final-start",
+            "text": "Bắt đầu dựng hình",
+            "href": null,
+            "w": 183,
+            "h": 46,
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(0, 117, 222)"
+          },
+          {
+            "id": "btn-landing-footer-logo",
+            "text": "Axo",
+            "href": "#landing-hero",
+            "w": 63,
+            "h": 24,
+            "color": "rgb(0, 0, 0)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Về Axo",
+            "href": "#about-axo",
+            "w": 56,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Cách hoạt động",
+            "href": "#cach-hoat-dong",
+            "w": 114,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Bài mẫu",
+            "href": "#bai-mau",
+            "w": 61,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-library",
+            "text": "Thư viện",
+            "href": "/library",
+            "w": 66,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-top",
+            "text": "Trở về đầu trang",
+            "href": "#landing-hero",
+            "w": 161,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgb(246, 245, 244)"
+          }
+        ]
+      },
+      {
+        "name": "desktop-1440",
+        "width": 1440,
+        "height": 900,
+        "docScrollWidth": 1440,
+        "docClientWidth": 1440,
+        "horizontalOverflow": false,
+        "footerHeight": 612,
+        "barHeight": 52,
+        "links": [
+          {
+            "id": "btn-landing-final-start",
+            "text": "Bắt đầu dựng hình",
+            "href": null,
+            "w": 183,
+            "h": 46,
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(0, 117, 222)"
+          },
+          {
+            "id": "btn-landing-footer-logo",
+            "text": "Axo",
+            "href": "#landing-hero",
+            "w": 63,
+            "h": 24,
+            "color": "rgb(0, 0, 0)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Về Axo",
+            "href": "#about-axo",
+            "w": 56,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Cách hoạt động",
+            "href": "#cach-hoat-dong",
+            "w": 114,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Bài mẫu",
+            "href": "#bai-mau",
+            "w": 61,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-library",
+            "text": "Thư viện",
+            "href": "/library",
+            "w": 66,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-top",
+            "text": "Trở về đầu trang",
+            "href": "#landing-hero",
+            "w": 161,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgb(246, 245, 244)"
+          }
+        ]
+      },
+      {
+        "name": "laptop-1366",
+        "width": 1366,
+        "height": 768,
+        "docScrollWidth": 1366,
+        "docClientWidth": 1366,
+        "horizontalOverflow": false,
+        "footerHeight": 612,
+        "barHeight": 52,
+        "links": [
+          {
+            "id": "btn-landing-final-start",
+            "text": "Bắt đầu dựng hình",
+            "href": null,
+            "w": 183,
+            "h": 46,
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(0, 117, 222)"
+          },
+          {
+            "id": "btn-landing-footer-logo",
+            "text": "Axo",
+            "href": "#landing-hero",
+            "w": 63,
+            "h": 24,
+            "color": "rgb(0, 0, 0)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Về Axo",
+            "href": "#about-axo",
+            "w": 56,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Cách hoạt động",
+            "href": "#cach-hoat-dong",
+            "w": 114,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Bài mẫu",
+            "href": "#bai-mau",
+            "w": 61,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-library",
+            "text": "Thư viện",
+            "href": "/library",
+            "w": 66,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-top",
+            "text": "Trở về đầu trang",
+            "href": "#landing-hero",
+            "w": 161,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgb(246, 245, 244)"
+          }
+        ]
+      },
+      {
+        "name": "landscape-1024",
+        "width": 1024,
+        "height": 768,
+        "docScrollWidth": 1024,
+        "docClientWidth": 1024,
+        "horizontalOverflow": false,
+        "footerHeight": 621,
+        "barHeight": 92,
+        "links": [
+          {
+            "id": "btn-landing-final-start",
+            "text": "Bắt đầu dựng hình",
+            "href": null,
+            "w": 183,
+            "h": 46,
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(0, 117, 222)"
+          },
+          {
+            "id": "btn-landing-footer-logo",
+            "text": "Axo",
+            "href": "#landing-hero",
+            "w": 63,
+            "h": 24,
+            "color": "rgb(0, 0, 0)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Về Axo",
+            "href": "#about-axo",
+            "w": 56,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Cách hoạt động",
+            "href": "#cach-hoat-dong",
+            "w": 114,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Bài mẫu",
+            "href": "#bai-mau",
+            "w": 61,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-library",
+            "text": "Thư viện",
+            "href": "/library",
+            "w": 66,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-top",
+            "text": "Trở về đầu trang",
+            "href": "#landing-hero",
+            "w": 161,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgb(246, 245, 244)"
+          }
+        ]
+      },
+      {
+        "name": "tablet-768",
+        "width": 768,
+        "height": 1024,
+        "docScrollWidth": 768,
+        "docClientWidth": 768,
+        "horizontalOverflow": false,
+        "footerHeight": 500,
+        "barHeight": 92,
+        "links": [
+          {
+            "id": "btn-landing-final-start",
+            "text": "Bắt đầu dựng hình",
+            "href": null,
+            "w": 183,
+            "h": 46,
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(0, 117, 222)"
+          },
+          {
+            "id": "btn-landing-footer-logo",
+            "text": "Axo",
+            "href": "#landing-hero",
+            "w": 63,
+            "h": 24,
+            "color": "rgb(0, 0, 0)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Về Axo",
+            "href": "#about-axo",
+            "w": 56,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Cách hoạt động",
+            "href": "#cach-hoat-dong",
+            "w": 114,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Bài mẫu",
+            "href": "#bai-mau",
+            "w": 61,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-library",
+            "text": "Thư viện",
+            "href": "/library",
+            "w": 66,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-top",
+            "text": "Trở về đầu trang",
+            "href": "#landing-hero",
+            "w": 161,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgb(246, 245, 244)"
+          }
+        ]
+      },
+      {
+        "name": "mobile-390",
+        "width": 390,
+        "height": 844,
+        "docScrollWidth": 390,
+        "docClientWidth": 390,
+        "horizontalOverflow": false,
+        "footerHeight": 572,
+        "barHeight": 148,
+        "links": [
+          {
+            "id": "btn-landing-final-start",
+            "text": "Bắt đầu dựng hình",
+            "href": null,
+            "w": 183,
+            "h": 44,
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(0, 117, 222)"
+          },
+          {
+            "id": "btn-landing-footer-logo",
+            "text": "Axo",
+            "href": "#landing-hero",
+            "w": 65,
+            "h": 24,
+            "color": "rgb(0, 0, 0)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Về Axo",
+            "href": "#about-axo",
+            "w": 56,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Cách hoạt động",
+            "href": "#cach-hoat-dong",
+            "w": 114,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Bài mẫu",
+            "href": "#bai-mau",
+            "w": 61,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-library",
+            "text": "Thư viện",
+            "href": "/library",
+            "w": 66,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-top",
+            "text": "Trở về đầu trang",
+            "href": "#landing-hero",
+            "w": 161,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgb(246, 245, 244)"
+          }
+        ]
+      },
+      {
+        "name": "mobile-320",
+        "width": 320,
+        "height": 700,
+        "docScrollWidth": 320,
+        "docClientWidth": 320,
+        "horizontalOverflow": false,
+        "footerHeight": 638,
+        "barHeight": 222,
+        "links": [
+          {
+            "id": "btn-landing-final-start",
+            "text": "Bắt đầu dựng hình",
+            "href": null,
+            "w": 183,
+            "h": 44,
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(0, 117, 222)"
+          },
+          {
+            "id": "btn-landing-footer-logo",
+            "text": "Axo",
+            "href": "#landing-hero",
+            "w": 65,
+            "h": 24,
+            "color": "rgb(0, 0, 0)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Về Axo",
+            "href": "#about-axo",
+            "w": 56,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Cách hoạt động",
+            "href": "#cach-hoat-dong",
+            "w": 114,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": null,
+            "text": "Bài mẫu",
+            "href": "#bai-mau",
+            "w": 61,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-library",
+            "text": "Thư viện",
+            "href": "/library",
+            "w": 66,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "btn-landing-footer-top",
+            "text": "Trở về đầu trang",
+            "href": "#landing-hero",
+            "w": 161,
+            "h": 44,
+            "color": "rgb(49, 48, 46)",
+            "bg": "rgb(246, 245, 244)"
+          }
+        ]
+      }
+    ],
+    "links": {
+      "anchorChecks": [
+        {
+          "hrefSel": "a[href=\"#about-axo\"]",
+          "targetId": "about-axo",
+          "targetTopAfterClick": 73
+        },
+        {
+          "hrefSel": "a[href=\"#cach-hoat-dong\"]",
+          "targetId": "cach-hoat-dong",
+          "targetTopAfterClick": 76
+        },
+        {
+          "hrefSel": "a[href=\"#bai-mau\"]",
+          "targetId": "bai-mau",
+          "targetTopAfterClick": 76
+        }
+      ],
+      "scrollBeforeTopBtn": 2614,
+      "scrollAfterTopBtn": 6,
+      "backToTopWorked": true,
+      "libraryUrl": "http://localhost:3000/library",
+      "startUrl": "http://localhost:3000/login"
+    },
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+}

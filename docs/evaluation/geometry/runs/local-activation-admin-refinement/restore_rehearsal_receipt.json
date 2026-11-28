@@ -1,0 +1,113 @@
+{
+  "backup_path": "C:\\Users\\Bunny\\algosim_backups\\algosim_backup_20261128_082150.dump",
+  "backup_size_bytes": 136255,
+  "backup_sha256": "cc18110f89565f79049a17c2f17988cdfa42ba1e109cb992706748b9a7f71ff8",
+  "owner_db_summary": {
+    "alembic_version": [
+      "a1c7e4b90d52"
+    ],
+    "table_count": 16,
+    "tables": [
+      "admin_analysis_telemetry",
+      "admin_audit_logs",
+      "admin_system_settings",
+      "alembic_version",
+      "analysis_usage_ledger",
+      "assignments",
+      "auth_sessions",
+      "class_memberships",
+      "classroom_sessions",
+      "classrooms",
+      "practice_sessions",
+      "reuse_metrics",
+      "simulation_cache",
+      "simulation_patterns",
+      "user_account_meta",
+      "users"
+    ],
+    "row_counts": {
+      "admin_analysis_telemetry": 2,
+      "admin_audit_logs": 0,
+      "admin_system_settings": 0,
+      "alembic_version": 1,
+      "analysis_usage_ledger": 2,
+      "assignments": 1,
+      "auth_sessions": 1141,
+      "class_memberships": 2,
+      "classroom_sessions": 0,
+      "classrooms": 1,
+      "practice_sessions": 1,
+      "reuse_metrics": 4,
+      "simulation_cache": 4,
+      "simulation_patterns": 9,
+      "user_account_meta": 0,
+      "users": 10
+    },
+    "users_by_role": {
+      "student": 8,
+      "teacher": 2
+    },
+    "non_pii_users_sha256": "c1b3cf73ee23c9622421f251be7e41022eb5e298d53849181a4677e76a0f7d4a",
+    "foreign_keys_count": 12,
+    "indexes_count": 50
+  },
+  "restored_db_summary": {
+    "alembic_version": [
+      "a1c7e4b90d52"
+    ],
+    "table_count": 16,
+    "tables": [
+      "admin_analysis_telemetry",
+      "admin_audit_logs",
+      "admin_system_settings",
+      "alembic_version",
+      "analysis_usage_ledger",
+      "assignments",
+      "auth_sessions",
+      "class_memberships",
+      "classroom_sessions",
+      "classrooms",
+      "practice_sessions",
+      "reuse_metrics",
+      "simulation_cache",
+      "simulation_patterns",
+      "user_account_meta",
+      "users"
+    ],
+    "row_counts": {
+      "admin_analysis_telemetry": 2,
+      "admin_audit_logs": 0,
+      "admin_system_settings": 0,
+      "alembic_version": 1,
+      "analysis_usage_ledger": 2,
+      "assignments": 1,
+      "auth_sessions": 1141,
+      "class_memberships": 2,
+      "classroom_sessions": 0,
+      "classrooms": 1,
+      "practice_sessions": 1,
+      "reuse_metrics": 4,
+      "simulation_cache": 4,
+      "simulation_patterns": 9,
+      "user_account_meta": 0,
+      "users": 10
+    },
+    "users_by_role": {
+      "student": 8,
+      "teacher": 2
+    },
+    "non_pii_users_sha256": "c1b3cf73ee23c9622421f251be7e41022eb5e298d53849181a4677e76a0f7d4a",
+    "foreign_keys_count": 12,
+    "indexes_count": 50
+  },
+  "parity": {
+    "alembic_match": true,
+    "tables_match": true,
+    "row_counts_match": true,
+    "roles_match": true,
+    "non_pii_users_sha256_match": true,
+    "foreign_keys_match": true,
+    "indexes_match": true
+  },
+  "all_parity_checks_passed": true
+}

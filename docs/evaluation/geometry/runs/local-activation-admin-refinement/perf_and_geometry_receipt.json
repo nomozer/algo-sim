@@ -1,0 +1,31 @@
+{
+  "routes": {
+    "landing": {
+      "wallMs": 1637,
+      "domContentLoadedMs": 615,
+      "loadEventMs": 618,
+      "assetCount": 9
+    },
+    "login": {
+      "wallMs": 655,
+      "zeroThreeJs": true
+    },
+    "admin": {
+      "zeroThreeJsOnAdmin": true
+    }
+  },
+  "bundleIsolation": {
+    "landingZeroThreeJs": true,
+    "landingZeroAdminChunk": true,
+    "landingZeroSimWorkspaceChunk": true
+  },
+  "chunkRecovery": {
+    "missingAssetStatus": 404,
+    "indexHtmlServedForSpaRoute": true
+  },
+  "offlineSampleGeometrySmoke": {
+    "wallMs": 1452,
+    "canvasRendered": true,
+    "lazyLoadedThreeJsOn3dRoute": true
+  }
+}

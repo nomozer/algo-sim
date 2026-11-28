@@ -1,0 +1,137 @@
+{
+  "adminAuth": {
+    "wrongPasswordStatus": 401,
+    "usernameLoginStatus": 200,
+    "emailLoginStatus": 200,
+    "persistedAfterF5": true
+  },
+  "adminAfterUi": {
+    "overviewCards": [
+      {
+        "label": "Tổng số tài khoản",
+        "chip": "Đang quản lý",
+        "val": "15 tài khoản",
+        "sub": "12 Học sinh · 2 Giáo viên · 1 Đã khóa · 1 Quản trị"
+      },
+      {
+        "label": "Yêu cầu cấp quyền Giáo viên",
+        "chip": "1 chờ duyệt",
+        "val": "1 hồ sơ",
+        "sub": "Ưu tiên xử lý yêu cầu gửi sớm nhất trước để tránh tồn đọng"
+      },
+      {
+        "label": "Lượt phân tích AI hôm nay",
+        "chip": "Hôm nay",
+        "val": "3 lượt",
+        "sub": "4/6 yêu cầu thành công · 7 ngày: 6 lượt"
+      },
+      {
+        "label": "Token tiêu thụ (7 ngày)",
+        "chip": "Đã ghi nhận",
+        "val": "7.300 tokens",
+        "sub": "Đầu vào: 4.620 · Đầu ra: 2.010 · Suy luận: 670"
+      },
+      {
+        "label": "Hạn mức sử dụng hôm nay",
+        "chip": "Đang bảo vệ",
+        "val": "25 lượt đã dùng",
+        "sub": "Định mức ngày: Học sinh 15 lượt · Giáo viên 80 lượt"
+      },
+      {
+        "label": "Trạng thái dịch vụ AI",
+        "chip": "Chế độ đệm",
+        "val": "4–10 req/phút",
+        "sub": "Model: gemini-2.5-flash · TB 700 ms"
+      }
+    ],
+    "countGiaHan": 1,
+    "countAdminSearch": 1,
+    "countAfterReset": 10,
+    "adminEmailVerifiedBadge": "Chưa xác minh",
+    "confirmTitleDelete": "Xóa vĩnh viễn tài khoản?",
+    "confirmDescDelete": "Tài khoản Tô Minh Nhật (nhat.to@example.test) cùng dữ liệu phiên và lịch sử học tập liên quan sẽ bị xóa vĩnh viễn và không thể khôi phục.",
+    "mobileOverviewOverflow": false
+  },
+  "adminMutationsAndGuards": {
+    "createAdminStatus": 403,
+    "promoteToAdminStatus": 403,
+    "demoteAdminStatus": 400,
+    "lockAdminStatus": 400,
+    "deleteAdminStatus": 400,
+    "csvUsersStatus": 200,
+    "csvUsersHasEmailVerifiedCol": true,
+    "csvAuditStatus": 404
+  },
+  "adminFailureHonesty": {
+    "http500ShowsBannerAndDash": true,
+    "retryRecoveredKpi": "15 tài khoản",
+    "networkErrorNoFakeCreate": true,
+    "http401TriggeredAuthRefresh": true
+  },
+  "rbacAndAuthRecovery": {
+    "studentAdminOverviewStatus": 403,
+    "authRecoveryRoutesRendered": [
+      "/register",
+      "/forgot-password",
+      "/reset-password",
+      "/verify-email"
+    ]
+  },
+  "footer7Viewports": [
+    {
+      "name": "desktop-1920",
+      "width": 1920,
+      "height": 1080,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "desktop-1440",
+      "width": 1440,
+      "height": 900,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "laptop-1366",
+      "width": 1366,
+      "height": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "landscape-1024",
+      "width": 1024,
+      "height": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "tablet-768",
+      "width": 768,
+      "height": 1024,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "mobile-390",
+      "width": 390,
+      "height": 844,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "mobile-320",
+      "width": 320,
+      "height": 700,
+      "horizontalOverflow": false
+    }
+  ],
+  "footerInteractions": {
+    "backToTopScrollY": 40
+  },
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+    "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+    "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "pageErrors": []
+}
