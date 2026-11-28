@@ -1,0 +1,15 @@
+{
+  "emailEnabled": false,
+  "allowLiveAi": false,
+  "postgresPort": "127.0.0.1:47432",
+  "bindMounts": [],
+  "imageTag": "algo-sim-backend:closure-verify",
+  "buildTimeUtc": "2026-11-28T03:45:19Z",
+  "imageId": "sha256:3a05302ef580f0b6fcab361f3a694758556c4ce48bceae655a58f4af39696421",
+  "imageSizeBytes": 473574834,
+  "healthStatus": 200,
+  "workingTreeModifiedBackend": true,
+  "postgresContainer": "closure-pg",
+  "baseGitSha": "9a729e2c795553905d863462acb827274ffa26fd",
+  "requirementsSha256": "72615aebb69ab948176ca036d3ba6d5f11632406af3abb4bb067754cc0f5cdbd"
+}

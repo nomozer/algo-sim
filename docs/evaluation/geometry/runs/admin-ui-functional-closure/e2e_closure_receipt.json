@@ -1,0 +1,298 @@
+{
+  "phase": "after",
+  "baseUrl": "http://localhost:3000",
+  "timestamp": "2026-11-28T03:49:25.986Z",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedNetworkRequests": [],
+  "checks": {
+    "rbacGuest": {
+      "deniedView": true,
+      "overviewStatus": 401,
+      "auditCsvStatus": 401
+    },
+    "rbacStudent": {
+      "deniedView": true,
+      "overviewStatus": 403,
+      "auditCsvStatus": 403
+    },
+    "rbacTeacher": {
+      "deniedView": true,
+      "overviewStatus": 403,
+      "auditCsvStatus": 403
+    },
+    "headerAndSidebar": {
+      "headerRightButtonIds": [
+        "btn-admin-notif-bell",
+        "btn-admin-account-menu"
+      ],
+      "hasRefreshButton": false,
+      "hasBackWorkspaceInSidebar": false,
+      "hasBackWorkspaceInAvatarMenu": true,
+      "sidebarNavCount": 4,
+      "sidebarItems": [
+        {
+          "tab": "overview",
+          "label": "Tổng quan"
+        },
+        {
+          "tab": "accounts",
+          "label": "Tài khoản"
+        },
+        {
+          "tab": "analytics",
+          "label": "Thống kê"
+        },
+        {
+          "tab": "audit",
+          "label": "Nhật ký quản trị"
+        }
+      ],
+      "bellBorderWidth": "0px",
+      "accountBorderWidth": "0px",
+      "overviewKpiCardCount": 4,
+      "hasHardcodedRateInOverview": false,
+      "hasDecorativeBadges": false
+    },
+    "notificationAndAvatar": {
+      "notifOpen1": true,
+      "notifTitle": "Thông báo",
+      "notifHasMarkAllRead": false,
+      "notifClosedWhenAvatarOpens": true,
+      "avatarOpen1": true,
+      "avatarMenuItems": [
+        "Cài đặt tài khoản",
+        "Cài đặt hệ thống",
+        "Về không gian học",
+        "Đăng xuất"
+      ],
+      "avatarClosedOnEsc": true
+    },
+    "auditCsvDownload": {
+      "httpStatus": 200,
+      "contentType": "text/csv; charset=utf-8",
+      "contentDisposition": "attachment; filename=\"axo-nhat-ky-quan-tri-20261128.csv\"",
+      "suggestedFilename": "axo-nhat-ky-quan-tri-20261128.csv",
+      "hasUtf8Bom": true,
+      "hasVietnameseHeaders": true,
+      "formulaInjectionEscaped": true,
+      "rowCount": 6
+    },
+    "usersCsvDownload": {
+      "httpStatus": 200,
+      "contentType": "text/csv; charset=utf-8",
+      "suggestedFilename": "axo-danh-sach-tai-khoan-20261128.csv",
+      "hasVietnameseHeaders": true,
+      "hasNoPasswordHash": true,
+      "rowCount": 16
+    },
+    "accountsAndPagination": {
+      "headers": [
+        "Người dùng",
+        "Vai trò",
+        "Trạng thái",
+        "Ngày đăng ký",
+        "Sử dụng hôm nay",
+        "Thao tác"
+      ],
+      "hasRepetitiveTokenPlaceholder": false,
+      "paginationSummary": "1–10 trên 15 tài khoản 10 / trang 1 / 2",
+      "hasBoxedPageNums": false,
+      "searchPlaceholder": "Tìm theo tên, email, tên đăng nhập hoặc trường học...",
+      "page2Rows": 5,
+      "size20Rows": 15,
+      "navHiddenWhenSinglePage": true,
+      "adminSearchRows": 1
+    },
+    "analytics": {
+      "kpiCards": 4,
+      "hasTokenKpi": true,
+      "hasMisleadingDeterministicBadge": false,
+      "succeededBars": 7,
+      "refusedBars": 7,
+      "failedBars": 7,
+      "legendHasAllThree": true
+    },
+    "systemSettingsService": {
+      "showsEmailReadiness": true,
+      "showsModelReadOnly": true,
+      "exposesSecrets": false
+    },
+    "notificationAutoSyncAfterApprove": {
+      "badgeBefore": "2",
+      "badgeAfter": "1",
+      "decrementedWithoutReload": true
+    },
+    "returnToWorkspace": {
+      "pathname": "/app",
+      "hash": "",
+      "isLandingVisible": false,
+      "isWorkspaceHomeVisible": true,
+      "sessionPreservedRole": "admin"
+    },
+    "logoutClearedSession": true
+  },
+  "viewports": [
+    {
+      "surface": "admin_overview",
+      "width": 1920,
+      "height": 1080,
+      "overflowX": 0,
+      "headerHeight": 52,
+      "bellInsideViewport": true,
+      "accInsideViewport": true,
+      "bellWidth": 36,
+      "bellHeight": 36
+    },
+    {
+      "surface": "admin_overview",
+      "width": 1440,
+      "height": 900,
+      "overflowX": 0,
+      "headerHeight": 52,
+      "bellInsideViewport": true,
+      "accInsideViewport": true,
+      "bellWidth": 36,
+      "bellHeight": 36
+    },
+    {
+      "surface": "admin_overview",
+      "width": 1366,
+      "height": 768,
+      "overflowX": 0,
+      "headerHeight": 52,
+      "bellInsideViewport": true,
+      "accInsideViewport": true,
+      "bellWidth": 36,
+      "bellHeight": 36
+    },
+    {
+      "surface": "admin_overview",
+      "width": 1024,
+      "height": 768,
+      "overflowX": 0,
+      "headerHeight": 52,
+      "bellInsideViewport": true,
+      "accInsideViewport": true,
+      "bellWidth": 36,
+      "bellHeight": 36
+    },
+    {
+      "surface": "admin_overview",
+      "width": 768,
+      "height": 1024,
+      "overflowX": 0,
+      "headerHeight": 52,
+      "bellInsideViewport": true,
+      "accInsideViewport": true,
+      "bellWidth": 36,
+      "bellHeight": 36
+    },
+    {
+      "surface": "admin_overview",
+      "width": 390,
+      "height": 844,
+      "overflowX": 0,
+      "headerHeight": 52,
+      "bellInsideViewport": true,
+      "accInsideViewport": true,
+      "bellWidth": 36,
+      "bellHeight": 36
+    },
+    {
+      "surface": "admin_overview",
+      "width": 320,
+      "height": 700,
+      "overflowX": 0,
+      "headerHeight": 52,
+      "bellInsideViewport": true,
+      "accInsideViewport": true,
+      "bellWidth": 36,
+      "bellHeight": 36
+    },
+    {
+      "surface": "landing_footer",
+      "width": 1920,
+      "height": 1080,
+      "overflowX": 0,
+      "copyText": "© Hình học không gian 3D",
+      "leadText": "Nhập đề tiếng Việt hoặc mở nhanh bài mẫu trong không gian học tập."
+    },
+    {
+      "surface": "landing_footer",
+      "width": 1440,
+      "height": 900,
+      "overflowX": 0,
+      "copyText": "© Hình học không gian 3D",
+      "leadText": "Nhập đề tiếng Việt hoặc mở nhanh bài mẫu trong không gian học tập."
+    },
+    {
+      "surface": "landing_footer",
+      "width": 1366,
+      "height": 768,
+      "overflowX": 0,
+      "copyText": "© Hình học không gian 3D",
+      "leadText": "Nhập đề tiếng Việt hoặc mở nhanh bài mẫu trong không gian học tập."
+    },
+    {
+      "surface": "landing_footer",
+      "width": 1024,
+      "height": 768,
+      "overflowX": 0,
+      "copyText": "© Hình học không gian 3D",
+      "leadText": "Nhập đề tiếng Việt hoặc mở nhanh bài mẫu trong không gian học tập."
+    },
+    {
+      "surface": "landing_footer",
+      "width": 768,
+      "height": 1024,
+      "overflowX": 0,
+      "copyText": "© Hình học không gian 3D",
+      "leadText": "Nhập đề tiếng Việt hoặc mở nhanh bài mẫu trong không gian học tập."
+    },
+    {
+      "surface": "landing_footer",
+      "width": 390,
+      "height": 844,
+      "overflowX": 0,
+      "copyText": "© Hình học không gian 3D",
+      "leadText": "Nhập đề tiếng Việt hoặc mở nhanh bài mẫu trong không gian học tập."
+    },
+    {
+      "surface": "landing_footer",
+      "width": 320,
+      "height": 700,
+      "overflowX": 0,
+      "copyText": "© Hình học không gian 3D",
+      "leadText": "Nhập đề tiếng Việt hoặc mở nhanh bài mẫu trong không gian học tập."
+    }
+  ],
+  "bundleIsolation": {
+    "landing": {
+      "scriptCount": 1,
+      "hasVendorThree": false,
+      "hasGeometrySamples": false
+    },
+    "login": {
+      "scriptCount": 7,
+      "hasVendorThree": false,
+      "hasGeometrySamples": false
+    },
+    "admin": {
+      "scriptCount": 8,
+      "hasVendorThree": false,
+      "hasGeometrySamples": false
+    }
+  },
+  "offlineGeometrySmoke": {
+    "hasCanvas": true,
+    "width": 809,
+    "height": 862,
+    "lazyLoadedVendorThree": true,
+    "liveAiDisabledGuard": {
+      "status": 503,
+      "reasonCode": "LIVE_AI_DISABLED"
+    },
+    "externalAiDisabled": true
+  }
+}

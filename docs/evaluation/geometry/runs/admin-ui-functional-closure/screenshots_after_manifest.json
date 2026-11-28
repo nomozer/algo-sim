@@ -1,0 +1,111 @@
+{
+  "phase": "after",
+  "count": 21,
+  "shots": [
+    {
+      "name": "footer_desktop_1440.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "footer_tablet_768.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "footer_mobile_390.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "footer_mobile_320.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "header_desktop_1440.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "overview_desktop_1440.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "sidebar_expanded_1440.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "sidebar_collapsed_1440.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "notification_dropdown_desktop_1440.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "avatar_dropdown_desktop_1440.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "system_settings_service_1440.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "accounts_desktop_1440.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "pagination_desktop_1440.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "analytics_desktop_1440.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "audit_desktop_1440.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "overview_tablet_768.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "header_mobile_390.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "overview_mobile_390.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "accounts_mobile_390.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "pagination_mobile_390.png",
+      "phase": "after",
+      "visibleToasts": 0
+    },
+    {
+      "name": "header_mobile_320.png",
+      "phase": "after",
+      "visibleToasts": 0
+    }
+  ]
+}
