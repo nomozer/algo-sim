@@ -583,4 +583,34 @@ class TestV29SingleAdminAndOverviewHardening:
         assert "Đã xác minh" in csv_text
         assert "Chưa xác minh" in csv_text
 
+        # Additive operational readiness & cache telemetry fields (no secrets)
+        assert st["dbConnected"] is True
+        assert st["databaseDialect"] in ("sqlite", "postgresql")
+        assert isinstance(st["allowLiveAi"], bool)
+        assert st["cachedToday"] == 0
+        assert st["cached7d"] == 0
+        assert st["cachedTotal"] == 0
+        er = st["emailReadiness"]
+        assert isinstance(er, dict)
+        assert set(er.keys()) == {"provider", "enabled", "available", "senderDomain", "issues"}
+        assert "re_" not in str(er)
+        assert all("cachedRequests" in day for day in st["dailyBreakdown"])
+
+        # Audit CSV formula injection neutralization
+        with accounts_router.SessionLocal() as db:
+            accounts_router._record_audit_log(
+                db,
+                actor="quantri-v28@axo.edu.vn",
+                action="Kiểm thử CSV",
+                target="=HYPERLINK(\"http://evil.test\")",
+                detail="+SUM(A1:A2)",
+                severity="info",
+            )
+            db.commit()
+        r_audit_csv = c_admin.get("/api/admin/export/audit-logs")
+        assert r_audit_csv.status_code == 200
+        audit_text = r_audit_csv.content.decode("utf-8-sig")
+        assert "'=HYPERLINK" in audit_text
+        assert "'+SUM(A1:A2)" in audit_text
+
 

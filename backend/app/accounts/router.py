@@ -50,7 +50,7 @@ from ..persistence.classroom_models import (
     User,
     UserAccountMeta,
 )
-from ..persistence.db import Base, SessionLocal, SimulationCache, sqlite_owns_schema
+from ..persistence.db import Base, SessionLocal, SimulationCache, db_dialect, sqlite_owns_schema
 from .passwords import WeakPasswordError, check_password_policy
 from . import email_templates, mailer, policy, tokens
 from .policy import (
@@ -1658,7 +1658,16 @@ def admin_overview(caller: Caller = Depends(get_caller)):
     teacher_count = len(teacher_users)
     admin_count = len(admin_users)
     ai_configured = bool(os.getenv("GEMINI_API_KEY", "").strip())
+    allow_live_ai = os.getenv("ALLOW_LIVE_AI", "1").strip() != "0"
     configured_model_id = _configured_gemini_model_id()
+    raw_email_readiness = mailer.readiness()
+    email_readiness = {
+        "provider": raw_email_readiness.get("provider"),
+        "enabled": bool(raw_email_readiness.get("enabled")),
+        "available": bool(raw_email_readiness.get("available")),
+        "senderDomain": raw_email_readiness.get("senderDomain"),
+        "issues": list(raw_email_readiness.get("issues") or []),
+    }
 
     now_utc = datetime.now(timezone.utc)
     today_date = now_utc.date()
@@ -1688,6 +1697,9 @@ def admin_overview(caller: Caller = Depends(get_caller)):
     succeeded_7d = sum(1 for r in rows_7d if r.outcome == "succeeded")
     refused_7d = sum(1 for r in rows_7d if r.outcome == "refused")
     failed_7d = sum(1 for r in rows_7d if r.outcome == "failed")
+    cached_today = sum(1 for r in today_rows if bool(r.cached))
+    cached_7d = sum(1 for r in rows_7d if bool(r.cached))
+    cached_total = sum(1 for r in telemetry_rows if bool(r.cached))
 
     avg_latency_ms = (
         round(sum(max(0, int(r.latency_ms or 0)) for r in telemetry_rows) / len(telemetry_rows))
@@ -1713,6 +1725,7 @@ def admin_overview(caller: Caller = Depends(get_caller)):
                 "succeededRequests": sum(1 for r in d_rows if r.outcome == "succeeded"),
                 "refusedRequests": sum(1 for r in d_rows if r.outcome == "refused"),
                 "failedRequests": sum(1 for r in d_rows if r.outcome == "failed"),
+                "cachedRequests": sum(1 for r in d_rows if bool(r.cached)),
                 "avgLatencyMs": (
                     round(sum(max(0, int(r.latency_ms or 0)) for r in d_rows) / len(d_rows))
                     if d_rows
@@ -1750,6 +1763,9 @@ def admin_overview(caller: Caller = Depends(get_caller)):
             "succeeded7d": succeeded_7d,
             "refused7d": refused_7d,
             "failed7d": failed_7d,
+            "cachedToday": cached_today,
+            "cached7d": cached_7d,
+            "cachedTotal": cached_total,
             "avgLatencyMs": avg_latency_ms,
             "avgLatency7dMs": avg_latency_7d_ms,
             "tokensMeasured": bool(measured_all),
@@ -1780,6 +1796,10 @@ def admin_overview(caller: Caller = Depends(get_caller)):
             ),
             "estimatedCostVnd": None,
             "aiServiceConfigured": ai_configured,
+            "allowLiveAi": allow_live_ai,
+            "dbConnected": True,
+            "databaseDialect": db_dialect(),
+            "emailReadiness": email_readiness,
             "cachedProblems": len(cache_rows),
             "dailyBreakdown": daily_breakdown,
             "roleQuotaSummary": {
