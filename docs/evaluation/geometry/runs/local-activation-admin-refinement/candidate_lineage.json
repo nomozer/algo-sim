@@ -1,0 +1,93 @@
+{
+  "schema_version": "integrated-candidate-lineage/1",
+  "created_at_utc": "2026-11-28T02:52:12Z",
+  "creation_reason": "Single-admin hardening, 32-bit Postgres audit timestamp fix, Alembic-only Postgres schema guard, Resend Sending-access smoke check, and Admin functional honesty refinement outside the core geometry/AI evaluation boundary (backend/app/accounts/router.py).",
+  "parent_integrated_candidate": {
+    "commit": "cab9d4ab508b577a07dc4c5e5c9887f9dfc3541d",
+    "governance_commit": "6d11c03b64d6d93a8c1981720e1130b67fdea0c3",
+    "product_commit_sha": "0b11279b9c1571641cf690e9c9e96a88bb2f1ec6",
+    "measured_system_tree_hash": "60b1fb9b1ce6dc2cfbbac749414b2ebd410c4b03930ccebe77442c1e8cd1ca0a",
+    "so_file": 130,
+    "cache_version": "158",
+    "archive_path": "docs/evaluation/geometry/runs/local-activation-admin-refinement/prior-EVALUATION_CANDIDATE-cab9d4ab5.json",
+    "archive_sha256": "8312717f226d9836619baf1af1b852cfce8858260517bc43d553d9906c81147c"
+  },
+  "historical_benchmark_anchors": [
+    {
+      "commit": "600f5105d",
+      "role": "historical_freeze_anchor"
+    },
+    {
+      "commit": "4978ac01f3240d08ae259d532edcc83c2c5af5e4",
+      "manifest_commit": "f2cc62b1e",
+      "product_commit_sha": "3104635dbd74118d2bb6db9b1f91fbd0a5f734ae",
+      "measured_system_tree_hash": "7bd85b6e2c8719e4fb6192e362ce17505588081623c90514dda0a83e88b4dd04",
+      "archive_path": "docs/evaluation/geometry/runs/integrated-security-release/prior-EVALUATION_CANDIDATE-4978ac01f.json",
+      "archive_sha256": "d5198276e8415014507f42502e7efeaacdf9767f3dc0c63fc17c40370c871a68",
+      "role": "historical_benchmark_attribution_anchor"
+    },
+    {
+      "commit": "473cb68ded13d35f413032e9c45aea36960928ea",
+      "manifest_commit": "ebe257fbf9e33d8569851dae3f09bcd6d8c701aa",
+      "measured_system_tree_hash": "92f8e24dd56b5bb0eda60fa85cdf3caabea71a0c7b5ed0e741922f7b2cbb1ab7",
+      "archive_path": "docs/evaluation/geometry/runs/frontend-performance-optimization/prior-EVALUATION_CANDIDATE-473cb68de.json",
+      "archive_sha256": "4d75487bfbe66bcfbe880e998a9b4cfef0b9a2d67a3f48d4b9aa971371a764af",
+      "role": "prior_integrated_security_candidate"
+    },
+    {
+      "commit": "5255ac2a026f2cd9d099020bbed5ddf71b222e93",
+      "manifest_commit": "ba9eec063ca30bfa1e81fec0b86f4acff8f8df5c",
+      "product_commit_sha": "ec034ab1f6a1524fcbfee7f0bfb2835a93da5024",
+      "measured_system_tree_hash": "92f8e24dd56b5bb0eda60fa85cdf3caabea71a0c7b5ed0e741922f7b2cbb1ab7",
+      "archive_path": "docs/evaluation/geometry/runs/authentication-account-recovery/prior-EVALUATION_CANDIDATE-5255ac2a0.json",
+      "archive_sha256": "b1312097054aebeaf91c21e8c9a5f4ed18b31d4f319504ba36774d8733025918",
+      "role": "prior_pre_auth_candidate"
+    }
+  ],
+  "integrated_candidate": {
+    "manifest_path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "manifest_sha256": "a14c1070b28e4b0a00f453e94c318d81f78a1d6a9acde3911c1c8f1ce331763f",
+    "source_commit": "9568cf07bb2e53f65a2d07c0ceb8072fab7b878a",
+    "product_commit_sha": "3d7da1f9138fe9af26abb4c1e4bf6f40f9e5301e",
+    "product_commit_rule": "product-paths-excluding-test-only/1",
+    "measured_system_tree_hash": "c496f7d124986984c912d0607fb3831558c0496171bb09678bf4400307c391cd",
+    "so_file": 130,
+    "cay_lam_viec_sach": true,
+    "cache_version": "158",
+    "default_runtime_mode": "live",
+    "default_route_policy": "HYBRID"
+  },
+  "measured_system_diff_vs_parent": {
+    "core_evaluation_changed": [],
+    "changed_files": [
+      "backend/app/accounts/router.py"
+    ],
+    "added_files": [],
+    "removed_files": [],
+    "classification": "admin_account_and_audit_timestamp_hardening_outside_geometry_core"
+  },
+  "model_artifact_identity": {
+    "configured_gemini_model": "gemini-2.5-flash",
+    "local_slm_model_key": "qwen3-0.6b-axo-v9-q4_k_m",
+    "retrained_in_this_release": false
+  },
+  "approval_governance": {
+    "status": "PENDING_OWNER_DECISION",
+    "live_evaluation_status": "LIVE_EVALUATION_PENDING_AUTHORIZATION",
+    "c21_pending_templates": [
+      "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+      "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json",
+      "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json"
+    ],
+    "paid_project_confirmed": false,
+    "refresh_receipt_path": "docs/evaluation/geometry/runs/local-activation-admin-refinement/pending_template_refresh.json"
+  },
+  "evaluation_status": "OFFLINE_REVALIDATED_ONLY",
+  "benchmark_inheritance_policy": {
+    "historical_results_attributed_to": "4978ac01f3240d08ae259d532edcc83c2c5af5e4",
+    "historical_scores_copied_to_new_candidate": false,
+    "full_gemini_equivalence_claimed": false,
+    "slm_full_replacement_claimed": false,
+    "statement": "Historical benchmark results and receipts remain bound strictly to 4978ac01f3240d08ae259d532edcc83c2c5af5e4. The integrated candidate at source commit 9568cf07b (product_commit_sha 3d7da1f91) preserves unchanged geometry/AI core (core_evaluation_changed == []) and CACHE_VERSION 158; live evaluation remains PENDING Owner authorization."
+  }
+}

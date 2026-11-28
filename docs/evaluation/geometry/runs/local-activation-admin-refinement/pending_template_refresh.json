@@ -1,0 +1,77 @@
+{
+  "classification": "CURRENT_PENDING_TEMPLATE_METADATA_REFRESH_NOT_HUMAN_APPROVAL",
+  "tool": "backend/scripts/refresh_pending_templates.py",
+  "reason": "Integrated single-admin hardening, 32-bit Postgres audit timestamp fix, and Admin functional refinement outside geometry/AI core (9568cf07b).",
+  "runtime_identity_measured_system": "c496f7d124986984c912d0607fb3831558c0496171bb09678bf4400307c391cd",
+  "rows": [
+    {
+      "study": "K-1",
+      "template": "D:/Documents/projects/algo-sim/docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+      "before": {
+        "measured_system": "60b1fb9b1ce6dc2cfbbac749414b2ebd410c4b03930ccebe77442c1e8cd1ca0a",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "60b1fb9b1ce6dc2cfbbac749414b2ebd410c4b03930ccebe77442c1e8cd1ca0a"
+      },
+      "after": {
+        "measured_system": "c496f7d124986984c912d0607fb3831558c0496171bb09678bf4400307c391cd",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "c496f7d124986984c912d0607fb3831558c0496171bb09678bf4400307c391cd"
+      },
+      "original_saved_as": "logs/prior-k1-owner-approval.template.json",
+      "original_sha256": "3a8f35e2d969747c8516a8ad1bee89fdb7b3fc207f226b5621557562f48a2312",
+      "new_sha256": "b97751fa075c3e59bd39c70bdbc6ca59c004e5d64e98a74b3e35c22461f4277c",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "S-2",
+      "template": "D:/Documents/projects/algo-sim/docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json",
+      "before": {
+        "measured_system": "60b1fb9b1ce6dc2cfbbac749414b2ebd410c4b03930ccebe77442c1e8cd1ca0a",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "60b1fb9b1ce6dc2cfbbac749414b2ebd410c4b03930ccebe77442c1e8cd1ca0a"
+      },
+      "after": {
+        "measured_system": "c496f7d124986984c912d0607fb3831558c0496171bb09678bf4400307c391cd",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "c496f7d124986984c912d0607fb3831558c0496171bb09678bf4400307c391cd"
+      },
+      "original_saved_as": "logs/prior-s2-owner-approval.template.json",
+      "original_sha256": "4d077ed40d11e880bd705de78cd719b40aaa40bbe0f13e56f6ee247ce0091313",
+      "new_sha256": "57dde9a909249b8ebd9bc87634e1aac49b45ae7829cf7427811eb89a5b79f890",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    },
+    {
+      "study": "R-1",
+      "template": "D:/Documents/projects/algo-sim/docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json",
+      "before": {
+        "measured_system": "60b1fb9b1ce6dc2cfbbac749414b2ebd410c4b03930ccebe77442c1e8cd1ca0a",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "60b1fb9b1ce6dc2cfbbac749414b2ebd410c4b03930ccebe77442c1e8cd1ca0a"
+      },
+      "after": {
+        "measured_system": "c496f7d124986984c912d0607fb3831558c0496171bb09678bf4400307c391cd",
+        "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
+        "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
+        "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+        "measured_system_tree_hash": "c496f7d124986984c912d0607fb3831558c0496171bb09678bf4400307c391cd"
+      },
+      "original_saved_as": "logs/prior-r1-owner-approval.template.json",
+      "original_sha256": "7c5f2c9dab3a2eb388d16bac52f80290cde4cae283408cd887294a6929ab8cd5",
+      "new_sha256": "f70460f2b2b0691c7f02ee9ebe25c28b171de105a4cfd5a83b72ea0002d14003",
+      "owner_decision": "PENDING_OWNER_DECISION",
+      "paid_project_confirmed": false
+    }
+  ]
+}
