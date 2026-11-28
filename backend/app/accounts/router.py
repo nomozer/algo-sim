@@ -279,23 +279,19 @@ def _ensure_admin_tables(db) -> None:
     bind_key = id(bind)
     if bind_key in _ENSURED_ENGINE_IDS:
         return
-    Base.metadata.create_all(
-        bind=bind,
-        tables=[
-            UserAccountMeta.__table__,
-            AdminSystemSetting.__table__,
-            AdminAuditLogEntry.__table__,
-            AdminAnalysisTelemetry.__table__,
-            AnalysisUsageLedger.__table__,
-        ],
-        checkfirst=True,
-    )
-    # Bảng khôi phục tài khoản: CHỈ SQLite được tự tạo (lưới an toàn cho CSDL cục bộ cũ). Trên PostgreSQL schema
-    # thuộc về Alembic (`b6d2f0a8c4e1`); tự tạo ở đây sẽ làm migration đó va chạm bảng có sẵn và bị preflight chặn.
+    # Trên PostgreSQL schema thuộc về Alembic migrations; CHỈ SQLite mới tự tạo bảng cục bộ.
     if sqlite_owns_schema(bind):
         Base.metadata.create_all(
             bind=bind,
-            tables=[AuthToken.__table__, EmailVerification.__table__],
+            tables=[
+                UserAccountMeta.__table__,
+                AdminSystemSetting.__table__,
+                AdminAuditLogEntry.__table__,
+                AdminAnalysisTelemetry.__table__,
+                AnalysisUsageLedger.__table__,
+                AuthToken.__table__,
+                EmailVerification.__table__,
+            ],
             checkfirst=True,
         )
     _ENSURED_ENGINE_IDS.add(bind_key)
@@ -366,7 +362,7 @@ def _record_audit_log(
     )
     seq = existing_count + 1
     audit_key = f"audit-{seq}-{int(now_dt.timestamp())}"
-    time_ts = int(now_dt.timestamp() * 1000) * 1000 + seq
+    time_ts = int(now_dt.timestamp())
     entry = AdminAuditLogEntry(
         audit_key=audit_key,
         timestamp_display=now_str,
@@ -1650,8 +1646,11 @@ def admin_overview(caller: Caller = Depends(get_caller)):
     )
 
     user_list = [_user_public(u, caller.db) for u in users]
-    active_count = sum(1 for u in user_list if u.get("status") != "suspended")
-    suspended_count = len(user_list) - active_count
+    active_count = sum(1 for u in user_list if u.get("status") in ("active", "verified"))
+    suspended_count = sum(1 for u in user_list if u.get("status") == "suspended")
+    pending_teacher_count = sum(1 for u in user_list if u.get("status") == "pending_teacher")
+    pending_activation_count = sum(1 for u in user_list if u.get("status") == "pending_activation")
+    verified_email_users = sum(1 for u in user_list if u.get("emailVerified"))
     student_users = [u for u in user_list if u.get("role") == "student"]
     teacher_users = [u for u in user_list if u.get("role") == "teacher"]
     admin_users = [u for u in user_list if u.get("role") == "admin"]
@@ -1733,6 +1732,9 @@ def admin_overview(caller: Caller = Depends(get_caller)):
             "totalUsers": len(users),
             "activeUsers": active_count,
             "suspendedUsers": suspended_count,
+            "pendingTeacherCount": pending_teacher_count,
+            "pendingActivationCount": pending_activation_count,
+            "verifiedEmailUsers": verified_email_users,
             "studentCount": student_count,
             "teacherCount": teacher_count,
             "adminCount": admin_count,
@@ -1806,7 +1808,12 @@ def admin_overview(caller: Caller = Depends(get_caller)):
 @router.post("/admin/users")
 def admin_create_user(body: AdminCreateUserBody, caller: Caller = Depends(get_caller)):
     admin_user = caller.require_admin()
-    target_role = Role.TEACHER if body.role in ("teacher", "admin") else Role.STUDENT
+    if body.role == "admin":
+        raise HTTPException(
+            403,
+            "Hệ thống chỉ cho phép một Quản trị viên duy nhất (cấu hình qua backend/scripts/manage_admin.py và .env).",
+        )
+    target_role = Role.TEACHER if body.role == "teacher" else Role.STUDENT
     has_explicit_password = bool(body.password and body.password.strip())
     effective_password = (
         body.password.strip() if has_explicit_password else secrets.token_urlsafe(24)
@@ -1819,8 +1826,6 @@ def admin_create_user(body: AdminCreateUserBody, caller: Caller = Depends(get_ca
             password=effective_password,
             role=target_role,
         )
-        if body.role == "admin":
-            u.role = "admin"
         if not has_explicit_password:
             u.must_change_password = True
         caller.db.flush()
@@ -1880,7 +1885,17 @@ def admin_update_user(
         u.display_name = body.displayName.strip()[:120]
         changes.append(f"tên → {u.display_name}")
     role_changed = False
-    if body.role in ("student", "teacher", "admin") and body.role != u.role:
+    if body.role == "admin" and u.role != "admin":
+        raise HTTPException(
+            403,
+            "Không thể nâng cấp tài khoản khác lên vai trò Quản trị viên; hệ thống chỉ cho phép một Quản trị viên duy nhất.",
+        )
+    if u.role == "admin" and body.role in ("student", "teacher"):
+        raise HTTPException(
+            400,
+            "Không thể hạ cấp hoặc thay đổi vai trò của Quản trị viên duy nhất.",
+        )
+    if body.role in ("student", "teacher") and body.role != u.role:
         old_role = u.role
         u.role = body.role
         role_changed = True
@@ -1904,14 +1919,19 @@ def admin_update_user(
         resolved_status = "suspended"
 
     if resolved_status in ("active", "suspended", "pending_activation", "pending_teacher", "verified"):
-        if resolved_status == "suspended" and u.id == admin_user.id:
-            raise HTTPException(400, "Không thể tự khóa tài khoản Quản trị viên đang đăng nhập.")
+        if resolved_status == "suspended" and (u.id == admin_user.id or u.role == "admin"):
+            raise HTTPException(400, "Không thể khóa tài khoản Quản trị viên.")
         meta_row.status = resolved_status
         changes.append(f"trạng thái → {resolved_status}")
         if resolved_status == "suspended":
             _revoke_user_sessions(caller.db, u.id)
 
     if body.mustChangePassword is not None:
+        if bool(body.mustChangePassword) and u.role == "admin":
+            raise HTTPException(
+                400,
+                "Không thể đặt trạng thái bắt buộc đổi mật khẩu cho tài khoản Quản trị viên.",
+            )
         u.must_change_password = bool(body.mustChangePassword)
         if body.mustChangePassword:
             meta_row.password_reset_requested_at = datetime.now(timezone.utc).strftime("%d/%m/%Y · %H:%M")
@@ -1965,8 +1985,8 @@ def admin_delete_user(user_id: int, caller: Caller = Depends(get_caller)):
     u = caller.db.get(User, user_id)
     if u is None:
         raise HTTPException(404, "Không tìm thấy người dùng.")
-    if u.id == admin_user.id:
-        raise HTTPException(400, "Không thể tự xóa tài khoản Quản trị viên đang đăng nhập.")
+    if u.id == admin_user.id or u.role == "admin":
+        raise HTTPException(400, "Không thể xóa tài khoản Quản trị viên.")
     target_email = u.email
     target_name = u.display_name
     _ensure_admin_tables(caller.db)
@@ -2120,6 +2140,7 @@ def admin_export_users_csv(caller: Caller = Depends(get_caller)):
             "Đã dùng hôm nay",
             "Bắt buộc đổi mật khẩu",
             "Ngày tạo",
+            "Xác minh email",
         ]
     )
     for u in users:
@@ -2137,6 +2158,7 @@ def admin_export_users_csv(caller: Caller = Depends(get_caller)):
                 _csv_safe_cell(pub["usedToday"]),
                 "Có" if pub["mustChangePassword"] else "Không",
                 _csv_safe_cell(pub["createdAt"] or ""),
+                "Đã xác minh" if pub.get("emailVerified") else "Chưa xác minh",
             ]
         )
 

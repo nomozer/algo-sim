@@ -4,7 +4,7 @@
 An toàn:
 - KHÔNG BAO GIỜ in khoá API, nội dung thư hay token; chỉ in trạng thái và mã lỗi máy.
 - Mặc định chỉ đọc (`--check`). Gửi thư thật CHỈ khi truyền tường minh `--send --to <địa chỉ>`.
-- `--status <id>` hỏi Resend trạng thái giao thư của một email đã gửi (sự kiện cuối: sent/delivered/bounced…).
+- `--status <id>` hỏi Resend trạng thái giao thư của một email đã gửi (yêu cầu khóa `Full access`; khóa `Sending access` được xử lý êm và hướng dẫn kiểm tra trên Resend Dashboard, không nâng quyền khóa).
 
 Cách dùng (trong thư mục backend/, hoặc `docker compose exec backend python scripts/email_smoke_test.py …`):
     python scripts/email_smoke_test.py --check
@@ -63,8 +63,19 @@ def _send(to: str) -> dict:
         idempotency_key=f"axo-smoke-{uuid.uuid4().hex}",
     )
     result = mailer.send_email(msg)
-    return {"status": result.status, "providerId": result.provider_id, "reason": result.reason,
-            "recipientDomain": to.rsplit("@", 1)[-1].lower() if "@" in to else None}
+    out = {
+        "status": result.status,
+        "providerId": result.provider_id,
+        "reason": result.reason,
+        "recipientDomain": to.rsplit("@", 1)[-1].lower() if "@" in to else None,
+        "deliveryVerified": False,
+    }
+    if result.status == "accepted":
+        out["deliveryNote"] = (
+            "Trạng thái 'accepted' chỉ xác nhận Resend đã tiếp nhận yêu cầu gửi, không đồng nghĩa "
+            "người nhận đã nhận thư; kiểm tra trạng thái giao thư thực tế trên Resend Dashboard (mục Emails)."
+        )
+    return out
 
 
 def _status(email_id: str) -> dict:
@@ -81,6 +92,28 @@ def _status(email_id: str) -> dict:
         )
     except httpx.HTTPError:
         return {"status": "failed", "reason": "PROVIDER_NETWORK_ERROR"}
+    if resp.status_code in (401, 403):
+        err_name = ""
+        err_msg = ""
+        try:
+            err_body = resp.json()
+            if isinstance(err_body, dict):
+                err_name = str(err_body.get("name") or "").strip().lower()
+                err_msg = str(err_body.get("message") or "").strip().lower()
+        except ValueError:
+            pass
+        if err_name == "restricted_api_key" or "restricted to only send" in err_msg or "sending access" in err_msg:
+            return {
+                "status": "unsupported_by_key_scope",
+                "reason": "SENDING_ACCESS_KEY_ONLY",
+                "httpStatus": resp.status_code,
+                "message": (
+                    "Khóa Resend chỉ có quyền Sending access (đúng nguyên tắc tối thiểu đặc quyền) "
+                    "nên không gọi được GET /emails/{id}. Không nâng khóa lên Full access; kiểm tra "
+                    "trạng thái giao thư (Delivered/Bounced) trực tiếp trên Resend Dashboard (mục Emails)."
+                ),
+            }
+        return {"status": "failed", "reason": f"PROVIDER_HTTP_{resp.status_code}"}
     if resp.status_code != 200:
         return {"status": "failed", "reason": f"PROVIDER_HTTP_{resp.status_code}"}
     body = resp.json()
@@ -108,7 +141,7 @@ def main(argv: list[str] | None = None) -> int:
     else:
         out = _status(args.status)
     print(json.dumps(out, ensure_ascii=False, indent=2))
-    ok = out.get("available", True) if args.check else out.get("status") in ("accepted", "ok")
+    ok = out.get("available", True) if args.check else out.get("status") in ("accepted", "ok", "unsupported_by_key_scope")
     return 0 if ok else 1
 
 
