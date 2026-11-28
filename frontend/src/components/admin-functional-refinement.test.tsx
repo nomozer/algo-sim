@@ -100,26 +100,47 @@ describe("AdminWorkspaceView — Functional Refinement & Honesty Gates", () => {
     expect(specs[4].confirmLabel).toBe("Xóa vĩnh viễn");
   });
 
-  it("displays emailVerified badges, #btn-admin-refresh, honest analysesToday, and neutral aiServiceConfigured=null", () => {
+  it("enforces borderless 2-control Header, 4-card Overview, honest analysesToday/system health, merged Accounts usage, and emailVerified tags", () => {
     const html = renderToString(
       <AdminWorkspaceView
         initialTab="overview"
         initialUsersFixture={makeSampleUsers()}
-        initialOverviewFixture={{ analysesToday: 1, totalAnalyses: 2, succeededRequests: 1, analyses7d: 2 }}
+        initialOverviewFixture={{
+          analysesToday: 1,
+          totalAnalyses: 2,
+          succeededRequests: 1,
+          analyses7d: 2,
+          dbConnected: true,
+          databaseDialect: "postgresql",
+        }}
       />,
     );
-    expect(html).toContain('id="btn-admin-refresh"');
+    // Header has ONLY Bell + Avatar (no manual refresh button)
+    expect(html).not.toContain('id="btn-admin-refresh"');
+    expect(html).toContain('id="btn-admin-notif-bell"');
+    expect(html).toContain('id="btn-admin-account-menu"');
+    // Overview has strictly 4 KPI cards and zero decorative badges or hardcoded req/phút
+    expect((html.match(/class="admin-kpi-card"/g) ?? []).length).toBe(4);
+    expect(html).not.toContain("req/phút");
+    expect(html).not.toContain("Đang quản lý");
+    expect(html).not.toContain("Đang bảo vệ");
+    expect(html).not.toContain("Đã ghi nhận");
     // Tổng usedToday của users là 5, nhưng analysesToday từ server là 1 -> không bị ép lên 5
     expect(html).toContain(">1 lượt<");
     expect(html).not.toContain(">5 lượt<");
     // aiServiceConfigured === null -> Chưa xác định thay vì Hoạt động giả
     expect(html).toContain("Chưa xác định");
+    expect(html).toContain("CSDL: PostgreSQL");
 
     const accountsHtml = renderToString(
       <AdminWorkspaceView initialTab="accounts" initialUsersFixture={makeSampleUsers()} />,
     );
     expect(accountsHtml).toContain("Đã xác minh email");
     expect(accountsHtml).toContain("Chưa xác minh email");
+    // Merged usage column (Sử dụng hôm nay) without repetitive "Chưa đo token" in table rows
+    expect(accountsHtml).toContain("Sử dụng hôm nay");
+    expect(accountsHtml).not.toContain("Hạn mức AI / ngày");
+    expect(accountsHtml).not.toContain("Chưa đo token");
   });
 
   it("contains zero fake offline mutation fallbacks and preserves required controls in AdminWorkspaceView.tsx", () => {

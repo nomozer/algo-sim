@@ -330,7 +330,7 @@ describe("Admin Workspace Overview, RBAC, Analytics & Sidebar Brand Controls", (
 
     const overviewHtml = renderToString(<AdminWorkspaceView initialTab="overview" />);
     expect(overviewHtml).toContain('id="admin-shell"');
-    expect(overviewHtml).toContain("Chưa có dữ liệu");
+    expect(overviewHtml).toContain("Trạng thái hệ thống");
     expect(overviewHtml).toContain("0/0 yêu cầu");
     expect(overviewHtml).not.toContain("0 tok");
     expect(overviewHtml).not.toContain("Ngân sách tháng (VND)");
@@ -338,6 +338,7 @@ describe("Admin Workspace Overview, RBAC, Analytics & Sidebar Brand Controls", (
     expect(overviewHtml).toContain('aria-hidden="true"');
 
     const analyticsHtml = renderToString(<AdminWorkspaceView initialTab="analytics" />);
+    expect(analyticsHtml).toContain("Chưa có dữ liệu");
     expect(analyticsHtml).toContain("Chưa có hoạt động phân tích trong 7 ngày qua.");
     expect(analyticsHtml).not.toContain("0%");
     expect(analyticsHtml).not.toContain("Chi phí (VND)");
@@ -405,27 +406,28 @@ describe("Admin Workspace Overview, RBAC, Analytics & Sidebar Brand Controls", (
     });
     syncStoreForSSR();
 
-    // 1. Trạng thái rỗng (0 lượt phân tích): không lặp lại nhiều lần "Chưa có dữ liệu"
+    // 1. Trạng thái rỗng (0 lượt phân tích): Overview 4 KPI cards gọn gàng, Analytics 4 KPI cards gồm Token tiêu thụ (7 ngày)
     const emptyOverviewHtml = renderToString(<AdminWorkspaceView initialTab="overview" />);
-    expect((emptyOverviewHtml.match(/Chưa có dữ liệu/g) ?? []).length).toBe(1);
+    expect((emptyOverviewHtml.match(/class="admin-kpi-card"/g) ?? []).length).toBe(4);
     expect(emptyOverviewHtml).toContain('id="admin-overview-kpi-grid"');
     expect(emptyOverviewHtml).toContain('id="btn-admin-account-menu"');
     expect(emptyOverviewHtml).toContain("0/0 yêu cầu");
+    expect(emptyOverviewHtml).toContain("Trạng thái hệ thống");
     expect(emptyOverviewHtml).not.toContain("Ngân sách tháng (VND)");
+    expect(emptyOverviewHtml).not.toContain("req/phút");
 
     const emptyAnalyticsHtml = renderToString(<AdminWorkspaceView initialTab="analytics" />);
-    // §3.1: Không có thanh Model/Hạn mức, khôi phục đúng 3 KPI với role-chip như HTML V2.7
     expect(emptyAnalyticsHtml).not.toContain('id="admin-analytics-config-strip"');
     expect(emptyAnalyticsHtml).not.toContain("Model cấu hình");
     expect(emptyAnalyticsHtml).not.toContain("Hạn mức vai trò");
     expect(emptyAnalyticsHtml).toContain('id="admin-analytics-kpi-grid"');
-    expect((emptyAnalyticsHtml.match(/class="admin-kpi-card"/g) ?? []).length).toBe(3);
-    expect(emptyAnalyticsHtml).toContain("Tổng lượt phân tích");
-    expect(emptyAnalyticsHtml).toContain("Tỷ lệ thành công");
+    expect((emptyAnalyticsHtml.match(/class="admin-kpi-card"/g) ?? []).length).toBe(4);
+    expect(emptyAnalyticsHtml).toContain("Tổng yêu cầu (7 ngày)");
+    expect(emptyAnalyticsHtml).toContain("Tỷ lệ xử lý thành công");
     expect(emptyAnalyticsHtml).toContain("Thời gian phản hồi TB");
-    expect(emptyAnalyticsHtml).not.toContain("Tổng token sử dụng");
-    expect(emptyAnalyticsHtml).toContain('class="role-chip student">7 ngày<');
-    expect(emptyAnalyticsHtml).toContain('class="role-chip neutral">Chưa có mẫu<');
+    expect(emptyAnalyticsHtml).toContain("Token tiêu thụ (7 ngày)");
+    expect((emptyAnalyticsHtml.match(/Chưa có dữ liệu/g) ?? []).length).toBe(1);
+    expect(emptyAnalyticsHtml).not.toContain("Kiểm chứng tất định");
     expect(emptyAnalyticsHtml).not.toContain("Usage metadata");
     expect(emptyAnalyticsHtml).not.toContain("usage metadata");
     expect(emptyAnalyticsHtml).not.toContain("model configured");
@@ -455,6 +457,7 @@ describe("Admin Workspace Overview, RBAC, Analytics & Sidebar Brand Controls", (
           succeeded7d: 38,
           refused7d: 3,
           failed7d: 1,
+          cached7d: 6,
           avgLatencyMs: 1250,
           avgLatency7dMs: 825,
           tokensMeasured: true,
@@ -502,29 +505,28 @@ describe("Admin Workspace Overview, RBAC, Analytics & Sidebar Brand Controls", (
     );
     expect(populatedAnalyticsHtml).not.toContain('id="admin-analytics-config-strip"');
     expect(populatedAnalyticsHtml).not.toContain("gemini-2.5-flash");
-    expect((populatedAnalyticsHtml.match(/class="admin-kpi-card"/g) ?? []).length).toBe(3);
-    expect(populatedAnalyticsHtml).toContain('class="role-chip teacher">Kiểm chứng tất định<');
+    expect((populatedAnalyticsHtml.match(/class="admin-kpi-card"/g) ?? []).length).toBe(4);
+    expect(populatedAnalyticsHtml).not.toContain("Kiểm chứng tất định");
     expect(populatedAnalyticsHtml).toContain(">42</div>");
+    expect(populatedAnalyticsHtml).toContain("6 lượt phục vụ từ bộ nhớ đệm");
     expect(populatedAnalyticsHtml).toContain(">90,5%</div>");
     expect(populatedAnalyticsHtml).toContain(">825 ms</div>");
-    // §3.2 & §4: Loại bỏ hoàn toàn các phụ đề và chú thích thống kê thừa
+    expect(populatedAnalyticsHtml).toContain("64.200 tokens");
     expect(populatedAnalyticsHtml).not.toContain("(38/42)");
-    expect(populatedAnalyticsHtml).not.toContain("Hôm nay:");
-    expect(populatedAnalyticsHtml).not.toContain("Lũy kế:");
-    expect(populatedAnalyticsHtml).not.toContain("Toàn kỳ:");
-    expect(populatedAnalyticsHtml).not.toContain("Đầu vào:");
     expect(populatedAnalyticsHtml).not.toContain('id="admin-analytics-failed-note"');
     expect(populatedAnalyticsHtml).not.toContain("Chi phí (VND)");
     expect(populatedAnalyticsHtml).toContain(
-      "Biểu đồ số lượt phân tích AI &amp; từ chối an toàn theo ngày",
+      "Biểu đồ yêu cầu phân tích theo ngày (7 ngày qua)",
     );
     expect(populatedAnalyticsHtml).toContain('id="admin-analytics-bar-chart"');
     expect(populatedAnalyticsHtml).toContain("Xử lý thành công");
     expect(populatedAnalyticsHtml).toContain("Từ chối an toàn");
+    expect(populatedAnalyticsHtml).toContain("Lỗi xử lý");
+    expect(populatedAnalyticsHtml).toContain('class="admin-chart-bar is-failed"');
     expect(populatedAnalyticsHtml).not.toContain("#0075DE");
     expect(populatedAnalyticsHtml).not.toContain("#C85A32");
     expect(populatedAnalyticsHtml).not.toContain("Dựng hình hợp lệ");
-    // Bảng chi tiết V2.7 nằm dưới biểu đồ cột, hiển thị token & tách riêng lỗi xử lý khỏi từ chối
+    // Bảng chi tiết nằm dưới biểu đồ 3 cột, hiển thị token & tách riêng lỗi xử lý khỏi từ chối
     expect(populatedAnalyticsHtml).toContain('id="admin-analytics-table"');
     expect(populatedAnalyticsHtml.indexOf('id="admin-analytics-bar-chart"')).toBeLessThan(
       populatedAnalyticsHtml.indexOf('id="admin-analytics-table"'),
@@ -538,7 +540,7 @@ describe("Admin Workspace Overview, RBAC, Analytics & Sidebar Brand Controls", (
     expect(populatedAnalyticsHtml).not.toContain("Chưa có hoạt động phân tích trong 7 ngày qua.");
   });
 
-  it("17. buildAdminAnalyticsChartModel & formatAdminLatency — trục Y bắt đầu từ 0, sắp xếp 7 ngày tăng dần và không gộp lỗi xử lý vào từ chối an toàn", () => {
+  it("17. buildAdminAnalyticsChartModel & formatAdminLatency — trục Y bắt đầu từ 0, sắp xếp 7 ngày tăng dần và tính đủ 3 chuỗi thành công/từ chối/lỗi xử lý", () => {
     expect(formatAdminLatency(null)).toBeNull();
     expect(formatAdminLatency(825)).toBe("825 ms");
     expect(formatAdminLatency(1250)).toBe("1,25 giây");
@@ -588,11 +590,13 @@ describe("Admin Workspace Overview, RBAC, Analytics & Sidebar Brand Controls", (
     // Trục số bắt đầu từ 0 và maxTick >= 21
     expect(activeModel.yTicks[activeModel.yTicks.length - 1]).toBe(0);
     expect(activeModel.maxTick).toBeGreaterThanOrEqual(21);
-    // Không gộp failedRequests (1) vào refusedRequests (2)
+    // Không gộp failedRequests (1) vào refusedRequests (2) và có chiều cao cột riêng
     expect(activeModel.days[5].refusedRequests).toBe(2);
     expect(activeModel.days[5].failedRequests).toBe(1);
     expect(activeModel.days[5].totalRequests).toBe(24);
     expect(activeModel.days[5].refusedHeightPct).toBeCloseTo((2 / activeModel.maxTick) * 100, 1);
+    expect(activeModel.days[5].failedHeightPct).toBeCloseTo((1 / activeModel.maxTick) * 100, 1);
+    expect(activeModel.days[6].failedHeightPct).toBe(0);
   });
 
   it("18. Admin Sidebar Brand Visual Parity — khớp viewBox 0 0 547 547, 24x24, khoảng đệm 12px 10px, typography 15px/10.8px, nút thu gọn 34x34 và không ảnh hưởng Header Public/Workspace", () => {

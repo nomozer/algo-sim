@@ -59,34 +59,34 @@ describe("Admin Accounts Pagination — V2.7 Parity & 10 Mandatory Edge Cases", 
       expect(html).toContain('id="admin-accounts-pagination"');
       expect(html).toContain('id="admin-pagination-summary"');
       expect(html).toContain('id="admin-page-size-select"');
-      expect(html).toContain("Số dòng mỗi trang:");
       expect(html).toContain("10 / trang");
+      expect(html).not.toContain('id="admin-page-size-label"');
       expect(html).not.toContain('id="admin-page-nav-group"');
       expect(html).not.toContain('id="btn-page-prev"');
       expect(html).not.toContain('id="btn-page-next"');
 
       if (count === 0) {
-        expect(html).toContain("Hiển thị 0 tài khoản");
+        expect(html).toContain("0 tài khoản");
       } else {
         expect(html).toContain(`1–${count}`);
-        expect(html).toContain(`trong tổng số`);
+        expect(html).toContain("trên");
         expect(html).not.toContain("Trang 1/1");
       }
     }
   });
 
-  it("shows navigation cluster when totalPages >= 2 (11 accounts at 10/page) with active state and disabled Prev", () => {
+  it("shows minimalist chevron pager when totalPages >= 2 (11 accounts at 10/page) with clean indicator and no boxed page numbers", () => {
     const html = renderToString(
       <AdminWorkspaceView initialTab="accounts" initialUsersFixture={makeUsers(11)} />,
     ).replace(/<!--\s*-->/g, "");
     expect(html).toContain('id="admin-page-nav-group"');
     expect(html).toContain('id="btn-page-prev"');
     expect(html).toContain('id="btn-page-next"');
-    expect(html).toContain('data-page-num="1"');
-    expect(html).toContain('data-page-num="2"');
-    expect(html).not.toContain('data-page-num="3"');
-    expect(html).toContain("Trang");
-    expect(html).toContain("1/2");
+    expect(html).toContain('id="admin-page-indicator"');
+    expect(html).toContain("<strong>1</strong> / 2");
+    expect(html).not.toContain('data-page-num="1"');
+    expect(html).not.toContain(">Trước<");
+    expect(html).not.toContain(">Sau<");
   });
 
   it("computes exact pagination math and auto-clamps out-of-range currentPage across all boundary transitions", () => {
@@ -192,7 +192,7 @@ describe("Admin Accounts Pagination — V2.7 Parity & 10 Mandatory Edge Cases", 
       18,
     ]);
 
-    // Render 9/18 via AdminAccountsPaginationBar and verify `…` is a non-interactive span, never a button
+    // Render 9/18 via minimalist AdminAccountsPaginationBar and verify clean indicator without boxed page buttons
     const barHtml = renderToString(
       <AdminAccountsPaginationBar
         totalItems={180}
@@ -205,17 +205,15 @@ describe("Admin Accounts Pagination — V2.7 Parity & 10 Mandatory Edge Cases", 
       />,
     ).replace(/<!--\s*-->/g, "");
     expect(barHtml).toContain("81–90");
-    expect(barHtml).toContain("9/18");
-    expect(barHtml).toContain('class="admin-page-ellipsis"');
-    expect(barHtml).toContain('aria-hidden="true"');
-    expect(barHtml).not.toMatch(/<button[^>]*>…<\/button>/);
-    expect(barHtml).toContain('data-page-num="9"');
-    expect(barHtml).toContain('aria-current="page"');
+    expect(barHtml).toContain("<strong>9</strong> / 18");
+    expect(barHtml).toContain('id="btn-page-prev"');
+    expect(barHtml).toContain('id="btn-page-next"');
+    expect(barHtml).not.toContain('data-page-num="9"');
   });
 
-  it("preserves V2.7 active hover protection (:not(.is-current)) in global.css", () => {
+  it("preserves clean minimalist pagination button styles in global.css", () => {
     const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf-8");
-    expect(css).not.toMatch(/\.btn-page-nav:hover:not\(:disabled\)\s*\{/);
-    expect(css).toContain(".btn-page-nav:hover:not(:disabled):not(.is-current)");
+    expect(css).toContain(".btn-page-nav.is-icon-only");
+    expect(css).toContain(".admin-page-indicator");
   });
 });

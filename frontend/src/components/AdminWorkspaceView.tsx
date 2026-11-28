@@ -128,6 +128,14 @@ interface BulkImportRowItem {
   reason: string;
 }
 
+export interface AdminEmailReadinessInfo {
+  provider?: string | null;
+  enabled?: boolean;
+  available?: boolean;
+  senderDomain?: string | null;
+  issues?: string[];
+}
+
 export interface AdminOverviewStatsFixture {
   configuredModelId?: string | null;
   totalAnalyses?: number;
@@ -140,6 +148,9 @@ export interface AdminOverviewStatsFixture {
   succeeded7d?: number;
   refused7d?: number;
   failed7d?: number;
+  cachedToday?: number;
+  cached7d?: number;
+  cachedTotal?: number;
   avgLatencyMs?: number | null;
   avgLatency7dMs?: number | null;
   totalHistoryEntries?: number;
@@ -152,6 +163,10 @@ export interface AdminOverviewStatsFixture {
   thoughtsTokens7d?: number | null;
   totalTokens7d?: number | null;
   aiServiceConfigured?: boolean | null;
+  allowLiveAi?: boolean | null;
+  dbConnected?: boolean | null;
+  databaseDialect?: string | null;
+  emailReadiness?: AdminEmailReadinessInfo | null;
   cachedProblems?: number;
   dailyBreakdown?: Array<{
     dateIso: string;
@@ -160,6 +175,7 @@ export interface AdminOverviewStatsFixture {
     succeededRequests: number;
     refusedRequests: number;
     failedRequests: number;
+    cachedRequests?: number;
     avgLatencyMs: number | null;
     tokensMeasured: boolean;
     inputTokens: number | null;
@@ -181,6 +197,7 @@ export interface AdminDailyTelemetryItem {
   succeededRequests: number;
   refusedRequests: number;
   failedRequests: number;
+  cachedRequests?: number;
   avgLatencyMs: number | null;
   tokensMeasured: boolean;
   inputTokens: number | null;
@@ -195,6 +212,7 @@ export interface AdminAnalyticsChartDay extends AdminDailyTelemetryItem {
   xAxisLabel: string;
   succeededHeightPct: number;
   refusedHeightPct: number;
+  failedHeightPct: number;
   ariaLabel: string;
 }
 
@@ -308,7 +326,7 @@ export function buildAdminAnalyticsChartModel(
   const totalFromDays = normalizedSeven.reduce((acc, d) => acc + d.totalRequests, 0);
   const hasActivity = analyses7d > 0 || totalFromDays > 0;
   const peakBarValue = normalizedSeven.reduce(
-    (acc, d) => Math.max(acc, d.succeededRequests, d.refusedRequests),
+    (acc, d) => Math.max(acc, d.succeededRequests, d.refusedRequests, d.failedRequests),
     0,
   );
   const midTick = hasActivity ? computeNiceHalfTick(peakBarValue) : 2;
@@ -324,6 +342,10 @@ export function buildAdminAnalyticsChartModel(
       d.refusedRequests > 0
         ? Math.min(100, Number(((d.refusedRequests / maxTick) * 100).toFixed(2)))
         : 0;
+    const failedHeightPct =
+      d.failedRequests > 0
+        ? Math.min(100, Number(((d.failedRequests / maxTick) * 100).toFixed(2)))
+        : 0;
     const failedSuffix =
       d.failedRequests > 0
         ? `, ${d.failedRequests.toLocaleString("vi-VN")} lỗi xử lý`
@@ -337,6 +359,7 @@ export function buildAdminAnalyticsChartModel(
       xAxisLabel: meta.xAxisLabel,
       succeededHeightPct,
       refusedHeightPct,
+      failedHeightPct,
       ariaLabel,
     };
   });
@@ -438,33 +461,23 @@ export function AdminAccountsPaginationBar({
     endIndex,
     hasMultiplePages,
   } = computeAdminPagination(totalItems, pageSize, currentPage);
-  const navItems = buildAdminPaginationItems(totalPages, safePage);
 
   return (
     <div className="admin-pagination-bar" id="admin-accounts-pagination">
       <div className="admin-pagination-info" id="admin-pagination-summary">
         {totalItems === 0 ? (
-          "Hiển thị 0 tài khoản"
+          "0 tài khoản"
         ) : (
           <>
-            Hiển thị <strong>{startIndex + 1}–{endIndex}</strong> trong tổng số{" "}
-            <strong>{totalItems}</strong> tài khoản
-            {hasMultiplePages ? (
-              <>
-                {" · Trang "}
-                <strong>
-                  {safePage}/{totalPages}
-                </strong>
-              </>
-            ) : null}
+            <strong>
+              {startIndex + 1}–{endIndex}
+            </strong>{" "}
+            trên <strong>{totalItems}</strong> tài khoản
           </>
         )}
       </div>
       <div className="admin-pagination-controls">
         <div className="admin-page-size-wrap" id="admin-page-size-wrap">
-          <span className="admin-page-size-label" id="admin-page-size-label">
-            Số dòng mỗi trang:
-          </span>
           <div
             className={`admin-page-size-dropdown${pageSizeOpen ? " open" : ""}`}
             id="admin-page-size-dropdown"
@@ -475,7 +488,7 @@ export function AdminAccountsPaginationBar({
               className={`admin-page-size-select admin-page-size-trigger${pageSizeOpen ? " is-open" : ""}`}
               aria-haspopup="listbox"
               aria-expanded={pageSizeOpen}
-              aria-labelledby="admin-page-size-label admin-page-size-value"
+              aria-label={`Số dòng mỗi trang: ${pageSize} / trang`}
               aria-controls="admin-page-size-listbox"
               onClick={onTogglePageSize}
             >
@@ -490,7 +503,7 @@ export function AdminAccountsPaginationBar({
               id="admin-page-size-listbox"
               className={`admin-page-size-listbox${pageSizeOpen ? " open" : ""}`}
               role="listbox"
-              aria-labelledby="admin-page-size-label"
+              aria-label="Chọn số dòng mỗi trang"
               tabIndex={-1}
               onClick={(e) => e.stopPropagation()}
             >
@@ -524,45 +537,29 @@ export function AdminAccountsPaginationBar({
           >
             <button
               type="button"
-              className="btn-page-nav"
+              className="btn-page-nav is-icon-only"
               id="btn-page-prev"
               disabled={safePage <= 1}
               aria-label="Trang trước"
+              title="Trang trước"
               onClick={() => onPageChange(Math.max(1, safePage - 1))}
             >
               <svg className="page-nav-ico" viewBox="0 0 24 24" aria-hidden="true">
                 <polyline points="15 18 9 12 15 6" />
               </svg>
-              <span>Trước</span>
             </button>
-            {navItems.map((item) =>
-              item.type === "ellipsis" ? (
-                <span key={item.key} className="admin-page-ellipsis" aria-hidden="true">
-                  …
-                </span>
-              ) : (
-                <button
-                  key={item.page}
-                  type="button"
-                  className={`btn-page-nav is-page-num${item.page === safePage ? " is-current" : ""}`}
-                  data-page-num={item.page}
-                  aria-label={`Trang ${item.page}`}
-                  aria-current={item.page === safePage ? "page" : undefined}
-                  onClick={() => onPageChange(item.page)}
-                >
-                  {item.page}
-                </button>
-              ),
-            )}
+            <span className="admin-page-indicator" id="admin-page-indicator" aria-live="polite">
+              <strong>{safePage}</strong> / {totalPages}
+            </span>
             <button
               type="button"
-              className="btn-page-nav"
+              className="btn-page-nav is-icon-only"
               id="btn-page-next"
               disabled={safePage >= totalPages}
               aria-label="Trang sau"
+              title="Trang sau"
               onClick={() => onPageChange(Math.min(totalPages, safePage + 1))}
             >
-              <span>Sau</span>
               <svg className="page-nav-ico" viewBox="0 0 24 24" aria-hidden="true">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
@@ -642,6 +639,9 @@ export function AdminWorkspaceView({
     succeeded7d: number;
     refused7d: number;
     failed7d: number;
+    cachedToday: number;
+    cached7d: number;
+    cachedTotal: number;
     avgLatencyMs: number | null;
     avgLatency7dMs: number | null;
     totalHistoryEntries: number;
@@ -654,6 +654,10 @@ export function AdminWorkspaceView({
     thoughtsTokens7d: number | null;
     totalTokens7d: number | null;
     aiServiceConfigured: boolean | null;
+    allowLiveAi: boolean | null;
+    dbConnected: boolean | null;
+    databaseDialect: string | null;
+    emailReadiness: AdminEmailReadinessInfo | null;
     cachedProblems: number;
     dailyBreakdown: Array<{
       dateIso: string;
@@ -662,6 +666,7 @@ export function AdminWorkspaceView({
       succeededRequests: number;
       refusedRequests: number;
       failedRequests: number;
+      cachedRequests?: number;
       avgLatencyMs: number | null;
       tokensMeasured: boolean;
       inputTokens: number | null;
@@ -686,6 +691,9 @@ export function AdminWorkspaceView({
     succeeded7d: 0,
     refused7d: 0,
     failed7d: 0,
+    cachedToday: 0,
+    cached7d: 0,
+    cachedTotal: 0,
     avgLatencyMs: null,
     avgLatency7dMs: null,
     totalHistoryEntries: 0,
@@ -698,6 +706,10 @@ export function AdminWorkspaceView({
     thoughtsTokens7d: null,
     totalTokens7d: null,
     aiServiceConfigured: null,
+    allowLiveAi: null,
+    dbConnected: null,
+    databaseDialect: null,
+    emailReadiness: null,
     cachedProblems: 0,
     dailyBreakdown: [],
     roleQuotaSummary: null,
@@ -856,6 +868,9 @@ export function AdminWorkspaceView({
           succeeded7d?: number;
           refused7d?: number;
           failed7d?: number;
+          cachedToday?: number;
+          cached7d?: number;
+          cachedTotal?: number;
           avgLatencyMs?: number | null;
           avgLatency7dMs?: number | null;
           totalHistoryEntries?: number;
@@ -868,6 +883,10 @@ export function AdminWorkspaceView({
           thoughtsTokens7d?: number | null;
           totalTokens7d?: number | null;
           aiServiceConfigured?: boolean;
+          allowLiveAi?: boolean;
+          dbConnected?: boolean;
+          databaseDialect?: string | null;
+          emailReadiness?: AdminEmailReadinessInfo | null;
           cachedProblems?: number;
           dailyBreakdown?: Array<{
             dateIso: string;
@@ -876,6 +895,7 @@ export function AdminWorkspaceView({
             succeededRequests: number;
             refusedRequests: number;
             failedRequests: number;
+            cachedRequests?: number;
             avgLatencyMs: number | null;
             tokensMeasured: boolean;
             inputTokens: number | null;
@@ -918,6 +938,9 @@ export function AdminWorkspaceView({
           succeeded7d: Number(st.succeeded7d) || 0,
           refused7d: Number(st.refused7d) || 0,
           failed7d: Number(st.failed7d) || 0,
+          cachedToday: Number(st.cachedToday) || 0,
+          cached7d: Number(st.cached7d) || 0,
+          cachedTotal: Number(st.cachedTotal) || 0,
           avgLatencyMs: typeof st.avgLatencyMs === "number" ? st.avgLatencyMs : null,
           avgLatency7dMs: typeof st.avgLatency7dMs === "number" ? st.avgLatency7dMs : null,
           totalHistoryEntries: Number(st.totalHistoryEntries) || 0,
@@ -931,6 +954,16 @@ export function AdminWorkspaceView({
           totalTokens7d: typeof st.totalTokens7d === "number" ? st.totalTokens7d : null,
           aiServiceConfigured:
             typeof st.aiServiceConfigured === "boolean" ? st.aiServiceConfigured : null,
+          allowLiveAi: typeof st.allowLiveAi === "boolean" ? st.allowLiveAi : null,
+          dbConnected: typeof st.dbConnected === "boolean" ? st.dbConnected : null,
+          databaseDialect:
+            typeof st.databaseDialect === "string" && st.databaseDialect.trim()
+              ? st.databaseDialect.trim()
+              : null,
+          emailReadiness:
+            st.emailReadiness && typeof st.emailReadiness === "object"
+              ? st.emailReadiness
+              : null,
           cachedProblems: Number(st.cachedProblems) || 0,
           dailyBreakdown: Array.isArray(st.dailyBreakdown) ? st.dailyBreakdown : [],
           roleQuotaSummary: st.roleQuotaSummary ?? null,
@@ -1052,6 +1085,14 @@ export function AdminWorkspaceView({
   }, [fetchAdminUsers]);
 
   useEffect(() => {
+    if (overviewError && !overviewLoading) {
+      void fetchAdminUsers();
+    }
+    // Sync when switching tabs after a previous load error (replaces manual header refresh button)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [adminTab]);
+
+  useEffect(() => {
     setDetailUser((prev) => {
       if (!prev) return null;
       return users.find((u) => String(u.id) === String(prev.id)) ?? prev;
@@ -1089,7 +1130,6 @@ export function AdminWorkspaceView({
   const pendingTeachers = users.filter((u) => u.status === "pending_teacher");
   const pendingActivationCount = users.filter((u) => u.status === "pending_activation").length;
   const lockedCount = users.filter((u) => u.status === "locked").length;
-  const totalUsedToday = users.reduce((sum, u) => sum + (Number(u.usedToday) || 0), 0);
 
   const ROLE_SORT_RANK: Record<string, number> = {
     student: 1,
@@ -2207,26 +2247,6 @@ export function AdminWorkspaceView({
                   <span className="admin-sb-label">Nhật ký quản trị</span>
                   <span className="admin-sb-tooltip">Nhật ký quản trị</span>
                 </button>
-
-                <button
-                  type="button"
-                  className="admin-sb-item"
-                  id="btn-admin-back-workspace"
-                  data-admin-tab="back-workspace"
-                  aria-label="Về không gian học"
-                  title="Về không gian học"
-                  onClick={() => {
-                    setMobileDrawerOpen(false);
-                    goHome();
-                  }}
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M19 12H5" />
-                    <polyline points="12 19 5 12 12 5" />
-                  </svg>
-                  <span className="admin-sb-label">Về không gian học</span>
-                  <span className="admin-sb-tooltip">Về không gian học</span>
-                </button>
               </nav>
             </div>
           </aside>
@@ -2256,27 +2276,16 @@ export function AdminWorkspaceView({
               <div className="admin-header-right" id="admin-header-right">
                 <button
                   type="button"
-                  className="btn-admin-hdr-icon"
-                  id="btn-admin-refresh"
-                  aria-label="Làm mới dữ liệu quản trị"
-                  title="Làm mới dữ liệu"
-                  disabled={overviewLoading}
-                  onClick={() => void fetchAdminUsers()}
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <polyline points="23 4 23 10 17 10" />
-                    <polyline points="1 20 1 14 7 14" />
-                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
-                  </svg>
-                </button>
-                <button
-                  type="button"
                   className={`btn-admin-hdr-icon${notifOpen ? " is-open" : ""}`}
                   id="btn-admin-notif-bell"
-                  aria-label="Thông báo quản trị"
+                  aria-label={
+                    pendingTeachers.length > 0
+                      ? `Thông báo (${pendingTeachers.length} yêu cầu chờ duyệt)`
+                      : "Thông báo"
+                  }
                   aria-haspopup="dialog"
                   aria-expanded={notifOpen}
-                  title="Thông báo quản trị"
+                  title="Thông báo"
                   onClick={(e) => {
                     e.stopPropagation();
                     setAccMenuOpen(false);
@@ -2308,7 +2317,9 @@ export function AdminWorkspaceView({
                     setAccMenuOpen((v) => !v);
                   }}
                 >
-                  <span className="admin-hdr-avatar">A</span>
+                  <span className="admin-hdr-avatar">
+                    {(user?.displayName?.trim().charAt(0) || "A").toUpperCase()}
+                  </span>
                   <svg className="admin-hdr-caret" viewBox="0 0 24 24" aria-hidden="true">
                     <polyline points="6 9 12 15 18 9" />
                   </svg>
@@ -2318,21 +2329,38 @@ export function AdminWorkspaceView({
                   className={`admin-notif-popover${notifOpen ? " open" : ""}`}
                   id="admin-notif-popover"
                   role="dialog"
-                  aria-label="Thông báo quản trị"
+                  aria-label="Thông báo"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="notif-pop-head">
-                    <span className="notif-pop-title">Thông báo quản trị</span>
+                    <span className="notif-pop-title">Thông báo</span>
+                    {!overviewError && pendingTeachers.length > 0 && (
+                      <span className="notif-pop-count" id="admin-notif-count">
+                        {pendingTeachers.length} chờ duyệt
+                      </span>
+                    )}
                   </div>
-                  {pendingTeachers.length === 0 ? (
-                    <div className="notif-empty">Hệ thống vận hành ổn định, không có yêu cầu tồn đọng.</div>
+                  {overviewError ? (
+                    <div className="notif-error-box" id="admin-notif-error" role="alert">
+                      <p>Không tải được danh sách thông báo từ máy chủ.</p>
+                      <button
+                        type="button"
+                        className="btn-admin-sm"
+                        disabled={overviewLoading}
+                        onClick={() => void fetchAdminUsers()}
+                      >
+                        {overviewLoading ? "Đang thử lại..." : "Thử lại"}
+                      </button>
+                    </div>
+                  ) : pendingTeachers.length === 0 ? (
+                    <div className="notif-empty">Hiện không có yêu cầu chờ duyệt nào.</div>
                   ) : (
                     <div className="notif-list">
                       {pendingTeachers.map((pt) => (
                         <button
                           key={pt.id}
                           type="button"
-                          className="notif-item is-unread"
+                          className="notif-item"
                           onClick={() => {
                             setNotifOpen(false);
                             setAdminTab("accounts");
@@ -2342,8 +2370,12 @@ export function AdminWorkspaceView({
                             setCurrentPage(1);
                           }}
                         >
-                          <span className="notif-item-title">Yêu cầu cấp quyền Giáo viên: {pt.name}</span>
-                          <span className="notif-item-sub">{pt.email}</span>
+                          <span className="notif-item-title">
+                            Yêu cầu cấp quyền Giáo viên: {pt.name}
+                          </span>
+                          <span className="notif-item-sub">
+                            {pt.email} · {pt.school}
+                          </span>
                         </button>
                       ))}
                     </div>
@@ -2358,58 +2390,13 @@ export function AdminWorkspaceView({
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="admin-acc-head" id="admin-account-dropdown-info-head">
-                    <div className="admin-acc-kicker">Thông tin tài khoản</div>
                     <div className="admin-acc-name">{user?.displayName || "Quản trị viên"}</div>
-                    <div className="admin-acc-email">{user?.email || "Chưa cấu hình email quản trị"}</div>
+                    <div className="admin-acc-email">{user?.email || "Chưa cấu hình email"}</div>
                     <div className="admin-acc-role-badge">
                       <span className="role-chip admin">Quản trị viên</span>
                     </div>
                   </div>
                   <div className="admin-acc-menu-list">
-                    <button
-                      type="button"
-                      className="admin-acc-menu-item"
-                      role="menuitem"
-                      data-admin-acc-act="account-info"
-                      onClick={() => {
-                        setAccMenuOpen(false);
-                        const matchedAdmin =
-                          users.find(
-                            (u) =>
-                              (user && (String(u.id) === String(user.id) || u.email === user.email)) ||
-                              u.role === "admin",
-                          ) ?? null;
-                        const adminItem: AdminUserItem = matchedAdmin
-                          ? {
-                              ...matchedAdmin,
-                              role: "admin",
-                              name: user?.displayName || matchedAdmin.name || "Quản trị viên",
-                              email: user?.email || matchedAdmin.email || "Chưa cấu hình email quản trị",
-                            }
-                          : {
-                              id: user?.id ?? "admin-self",
-                              name: user?.displayName || "Quản trị viên",
-                              email: user?.email || "Chưa cấu hình email quản trị",
-                              username: user?.username ?? null,
-                              emailVerified: Boolean(user?.emailVerified),
-                              role: "admin",
-                              status: "active",
-                              school: user?.school || user?.workplace || "Hệ thống Axo",
-                              joinedAt: new Date().toLocaleDateString("vi-VN"),
-                              joinedTs: Date.now(),
-                              dailyLimit: user?.dailyLimit ?? 500,
-                              tokenCap: 500000,
-                              usedToday: user?.usedToday ?? 0,
-                              tokensToday: "Chưa đo token",
-                            };
-                        setDetailUser(adminItem);
-                      }}
-                    >
-                      <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                      </svg>
-                      <span>Thông tin tài khoản</span>
-                    </button>
                     <button
                       type="button"
                       className="admin-acc-menu-item"
@@ -2452,10 +2439,15 @@ export function AdminWorkspaceView({
                     <button
                       type="button"
                       className="admin-acc-menu-item"
+                      id="btn-admin-back-workspace"
                       role="menuitem"
                       data-admin-acc-act="learning"
                       onClick={() => {
                         setAccMenuOpen(false);
+                        setNotifOpen(false);
+                        if (typeof window !== "undefined" && window.location.hash === "#admin") {
+                          window.history.replaceState(null, "", window.location.pathname);
+                        }
                         goHome();
                       }}
                     >
@@ -2463,7 +2455,7 @@ export function AdminWorkspaceView({
                         <path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10Z" />
                         <path d="M9 21V12h6v9" />
                       </svg>
-                      <span>Về trang học tập</span>
+                      <span>Về không gian học</span>
                     </button>
                     <div className="admin-acc-menu-sep" role="separator" />
                     <button
@@ -2473,6 +2465,10 @@ export function AdminWorkspaceView({
                       data-admin-acc-act="logout"
                       onClick={() => {
                         setAccMenuOpen(false);
+                        setNotifOpen(false);
+                        if (typeof window !== "undefined" && window.location.hash === "#admin") {
+                          window.history.replaceState(null, "", window.location.pathname);
+                        }
                         void logout();
                         goHome();
                       }}
@@ -2520,12 +2516,49 @@ export function AdminWorkspaceView({
 
                   {(() => {
                     const showLoadErrPlaceholder = Boolean(overviewError && !overviewLoaded);
+                    const dialectLabel =
+                      overviewStats.databaseDialect === "postgresql"
+                        ? "PostgreSQL"
+                        : overviewStats.databaseDialect === "sqlite"
+                          ? "SQLite"
+                          : overviewStats.databaseDialect || null;
+                    const sysHealthValue = showLoadErrPlaceholder
+                      ? "Mất kết nối"
+                      : overviewStats.dbConnected === false
+                        ? "Lỗi CSDL"
+                        : overviewStats.aiServiceConfigured === true &&
+                            overviewStats.allowLiveAi !== false
+                          ? "Sẵn sàng"
+                          : overviewStats.aiServiceConfigured === true &&
+                              overviewStats.allowLiveAi === false
+                            ? "AI tạm tắt"
+                            : overviewStats.aiServiceConfigured === false
+                              ? "Chế độ cục bộ"
+                              : "Chưa xác định";
+                    const sysHealthSub = showLoadErrPlaceholder
+                      ? "Không tải được trạng thái máy chủ"
+                      : [
+                          overviewStats.dbConnected === true
+                            ? `CSDL: ${dialectLabel ?? "Đã kết nối"}`
+                            : overviewStats.dbConnected === false
+                              ? "CSDL: Mất kết nối"
+                              : "CSDL: Chưa xác định",
+                          overviewStats.aiServiceConfigured === true
+                            ? overviewStats.allowLiveAi === false
+                              ? "Live AI đang tắt (ALLOW_LIVE_AI=0)"
+                              : "Đã cấu hình khóa AI"
+                            : overviewStats.aiServiceConfigured === false
+                              ? "Chưa cấu hình khóa AI"
+                              : "Dịch vụ AI: Chưa xác định",
+                        ].join(" · ");
                     return (
-                  <div className="admin-kpi-grid" id="admin-overview-kpi-grid">
+                  <div
+                    className={`admin-overview-flow${pendingTeachers.length > 0 ? " has-pending-priority" : ""}`}
+                  >
+                  <div className="admin-kpi-grid admin-kpi-grid-4" id="admin-overview-kpi-grid">
                     <div className="admin-kpi-card">
                       <div className="admin-kpi-lbl">
                         <span>Tổng số tài khoản</span>
-                        <span className="role-chip student">Đang quản lý</span>
                       </div>
                       <div className="admin-kpi-val">
                         {showLoadErrPlaceholder ? "—" : `${totalUsersCount} tài khoản`}
@@ -2533,31 +2566,46 @@ export function AdminWorkspaceView({
                       <div className="admin-kpi-sub">
                         {showLoadErrPlaceholder
                           ? "Không có dữ liệu máy chủ"
-                          : `${studentCount} Học sinh · ${teacherVerifiedCount} Giáo viên · ${lockedCount} Đã khóa · ${adminCount} Quản trị`}
+                          : `${studentCount} Học sinh · ${teacherVerifiedCount} Giáo viên · ${adminCount} Quản trị${lockedCount > 0 ? ` (${lockedCount} đang khóa)` : ""}`}
                       </div>
                     </div>
                     <div className="admin-kpi-card">
                       <div className="admin-kpi-lbl">
                         <span>Yêu cầu cấp quyền Giáo viên</span>
-                        <span className={pendingTeachers.length > 0 ? "role-chip pending" : "role-chip neutral"}>
-                          {showLoadErrPlaceholder ? "—" : `${pendingTeachers.length} chờ duyệt`}
-                        </span>
+                        {!showLoadErrPlaceholder && pendingTeachers.length > 0 && (
+                          <span className="role-chip pending">
+                            {pendingTeachers.length} chờ duyệt
+                          </span>
+                        )}
                       </div>
                       <div className="admin-kpi-val">
                         {showLoadErrPlaceholder ? "—" : `${pendingTeachers.length} hồ sơ`}
                       </div>
                       <div className="admin-kpi-sub">
-                        {showLoadErrPlaceholder
-                          ? "Không có dữ liệu máy chủ"
-                          : pendingTeachers.length > 0
-                            ? "Ưu tiên xử lý yêu cầu gửi sớm nhất trước để tránh tồn đọng"
-                            : "Hiện không có hồ sơ đăng ký Giáo viên đang tồn đọng"}
+                        {showLoadErrPlaceholder ? (
+                          "Không có dữ liệu máy chủ"
+                        ) : pendingTeachers.length > 0 ? (
+                          <button
+                            type="button"
+                            className="admin-kpi-inline-link"
+                            onClick={() => {
+                              setAdminTab("accounts");
+                              setSearchQuery("");
+                              setRoleFilter("all");
+                              setStatusFilter("pending_teacher");
+                              setCurrentPage(1);
+                            }}
+                          >
+                            Xem danh sách chờ duyệt →
+                          </button>
+                        ) : (
+                          "Không có hồ sơ đăng ký Giáo viên tồn đọng"
+                        )}
                       </div>
                     </div>
                     <div className="admin-kpi-card">
                       <div className="admin-kpi-lbl">
-                        <span>Lượt phân tích AI hôm nay</span>
-                        <span className="role-chip student">Hôm nay</span>
+                        <span>Lượt phân tích hôm nay</span>
                       </div>
                       <div className="admin-kpi-val">
                         {showLoadErrPlaceholder ? "—" : `${overviewStats.analysesToday} lượt`}
@@ -2572,66 +2620,18 @@ export function AdminWorkspaceView({
                     </div>
                     <div className="admin-kpi-card">
                       <div className="admin-kpi-lbl">
-                        <span>Token tiêu thụ (7 ngày)</span>
-                        <span className={overviewStats.tokensMeasured ? "role-chip teacher" : "role-chip neutral"}>
-                          {overviewStats.tokensMeasured ? "Đã ghi nhận" : "Theo dõi token"}
-                        </span>
+                        <span>Trạng thái hệ thống</span>
                       </div>
-                      <div className={`admin-kpi-val${overviewStats.tokensMeasured && overviewStats.totalTokens7d !== null ? "" : " is-empty-metric"}`}>
-                        {showLoadErrPlaceholder
-                          ? "—"
-                          : overviewStats.tokensMeasured && overviewStats.totalTokens7d !== null
-                            ? `${overviewStats.totalTokens7d.toLocaleString("vi-VN")} tokens`
-                            : "Chưa có dữ liệu"}
+                      <div
+                        className={`admin-kpi-val${sysHealthValue === "Chưa xác định" ? " is-empty-metric" : ""}`}
+                      >
+                        {sysHealthValue}
                       </div>
-                      <div className="admin-kpi-sub">
-                        {showLoadErrPlaceholder
-                          ? "Không có dữ liệu máy chủ"
-                          : overviewStats.tokensMeasured
-                            ? `Đầu vào: ${(overviewStats.inputTokens7d ?? 0).toLocaleString("vi-VN")} · Đầu ra: ${(overviewStats.outputTokens7d ?? 0).toLocaleString("vi-VN")}${overviewStats.thoughtsTokens7d ? ` · Suy luận: ${overviewStats.thoughtsTokens7d.toLocaleString("vi-VN")}` : ""}`
-                            : "Ghi nhận tự động khi phát sinh lượt gọi Gemini trực tuyến"}
-                      </div>
-                    </div>
-                    <div className="admin-kpi-card">
-                      <div className="admin-kpi-lbl">
-                        <span>Hạn mức sử dụng hôm nay</span>
-                        <span className="role-chip student">
-                          {quotaConfig.autoCutoffEnabled ? "Đang bảo vệ" : "Theo dõi hạn mức"}
-                        </span>
-                      </div>
-                      <div className="admin-kpi-val">
-                        {showLoadErrPlaceholder ? "—" : `${totalUsedToday} lượt đã dùng`}
-                      </div>
-                      <div className="admin-kpi-sub">
-                        Định mức ngày: Học sinh {quotaConfig.studentDailyRequests} lượt · Giáo viên {quotaConfig.teacherDailyRequests} lượt
-                      </div>
-                    </div>
-                    <div className="admin-kpi-card">
-                      <div className="admin-kpi-lbl">
-                        <span>Trạng thái dịch vụ AI</span>
-                        {overviewStats.aiServiceConfigured === true ? (
-                          <span className="role-chip teacher">Hoạt động</span>
-                        ) : overviewStats.aiServiceConfigured === false ? (
-                          <span className="role-chip neutral">Chế độ đệm</span>
-                        ) : (
-                          <span className="role-chip neutral">Chưa xác định</span>
-                        )}
-                      </div>
-                      <div className="admin-kpi-val">
-                        {quotaConfig.studentRatePerMin}–{quotaConfig.teacherRatePerMin} req/phút
-                      </div>
-                      <div className="admin-kpi-sub">
-                        Model: {overviewStats.configuredModelId || "gemini-2.5-flash"}
-                        {overviewStats.avgLatencyMs !== null
-                          ? ` · TB ${overviewStats.avgLatencyMs.toLocaleString("vi-VN")} ms`
-                          : ` · ${overviewStats.cachedProblems} đề lưu đệm`}
-                      </div>
+                      <div className="admin-kpi-sub">{sysHealthSub}</div>
                     </div>
                   </div>
-                    );
-                  })()}
 
-                  <div className="admin-panel-card">
+                  <div className="admin-panel-card admin-pending-panel" id="admin-pending-panel">
                     <div className="admin-panel-head">
                       <div>
                         <h2 className="admin-panel-title">
@@ -2660,9 +2660,54 @@ export function AdminWorkspaceView({
                           <thead>
                             <tr>
                               {renderSortableTh("Người đăng ký", "name", "asc", pendingSort, togglePendingSort)}
-                              {renderSortableTh("Đơn vị công tác", "school", "asc", pendingSort, togglePendingSort)}
-                              {renderSortableTh("Ngày gửi yêu cầu", "joinedTs", "asc", pendingSort, togglePendingSort)}
-                              {renderSortableTh("Trạng thái yêu cầu", "statusOrder", "asc", pendingSort, togglePendingSort)}
+                              <th className="admin-col-desktop-only is-sortable">
+                                <button
+                                  type="button"
+                                  className={`th-sort-btn${pendingSort.field === "school" ? " is-sorted" : ""}`}
+                                  onClick={() => togglePendingSort("school", "asc")}
+                                >
+                                  <span>Đơn vị công tác</span>
+                                  <span className="sort-arrow" aria-hidden="true">
+                                    {pendingSort.field === "school"
+                                      ? pendingSort.dir === "asc"
+                                        ? "↑"
+                                        : "↓"
+                                      : "↕"}
+                                  </span>
+                                </button>
+                              </th>
+                              <th className="admin-col-desktop-only is-sortable">
+                                <button
+                                  type="button"
+                                  className={`th-sort-btn${pendingSort.field === "joinedTs" ? " is-sorted" : ""}`}
+                                  onClick={() => togglePendingSort("joinedTs", "asc")}
+                                >
+                                  <span>Ngày gửi yêu cầu</span>
+                                  <span className="sort-arrow" aria-hidden="true">
+                                    {pendingSort.field === "joinedTs"
+                                      ? pendingSort.dir === "asc"
+                                        ? "↑"
+                                        : "↓"
+                                      : "↕"}
+                                  </span>
+                                </button>
+                              </th>
+                              <th className="admin-col-desktop-only is-sortable">
+                                <button
+                                  type="button"
+                                  className={`th-sort-btn${pendingSort.field === "statusOrder" ? " is-sorted" : ""}`}
+                                  onClick={() => togglePendingSort("statusOrder", "asc")}
+                                >
+                                  <span>Trạng thái yêu cầu</span>
+                                  <span className="sort-arrow" aria-hidden="true">
+                                    {pendingSort.field === "statusOrder"
+                                      ? pendingSort.dir === "asc"
+                                        ? "↑"
+                                        : "↓"
+                                      : "↕"}
+                                  </span>
+                                </button>
+                              </th>
                               <th>Thao tác</th>
                             </tr>
                           </thead>
@@ -2672,14 +2717,19 @@ export function AdminWorkspaceView({
                                 <td>
                                   <strong>{u.name}</strong>
                                   <div className="admin-cell-sub">{u.email}</div>
+                                  <div className="admin-mobile-user-meta">
+                                    <span className="admin-cell-sub-inline">
+                                      {u.school} · {u.joinedAt}
+                                    </span>
+                                  </div>
                                 </td>
-                                <td>{u.school}</td>
-                                <td>{u.joinedAt}</td>
-                                <td>
+                                <td className="admin-col-desktop-only">{u.school}</td>
+                                <td className="admin-col-desktop-only admin-td-tabular">{u.joinedAt}</td>
+                                <td className="admin-col-desktop-only">
                                   <span className="role-chip pending">Học sinh · Chờ cấp quyền GV</span>
                                 </td>
                                 <td>
-                                  <div className="admin-action-cell">
+                                  <div className="admin-action-cell admin-pending-actions">
                                     <button
                                       type="button"
                                       className="btn-admin-sm approve"
@@ -2705,6 +2755,9 @@ export function AdminWorkspaceView({
                       </div>
                     )}
                   </div>
+                  </div>
+                    );
+                  })()}
                 </>
               ) : adminTab === "accounts" ? (
                 <>
@@ -2861,13 +2914,13 @@ export function AdminWorkspaceView({
                           type="search"
                           id="admin-user-search-input"
                           className="auth-input"
-                          placeholder="Tìm theo tên, email hoặc trường học..."
+                          placeholder="Tìm theo tên, email, tên đăng nhập hoặc trường học..."
                           value={searchQuery}
                           onChange={(e) => {
                             setSearchQuery(e.target.value);
                             setCurrentPage(1);
                           }}
-                          aria-label="Tìm theo tên, email hoặc trường học"
+                          aria-label="Tìm theo tên, email, tên đăng nhập hoặc trường học"
                         />
                       </div>
 
@@ -3019,18 +3072,77 @@ export function AdminWorkspaceView({
                         <thead>
                           <tr>
                             {renderSortableTh("Người dùng", "name", "asc", sortState, toggleSort)}
-                            {renderSortableTh("Vai trò", "roleOrder", "asc", sortState, toggleSort)}
-                            {renderSortableTh("Trạng thái", "statusOrder", "asc", sortState, toggleSort)}
-                            {renderSortableTh("Ngày đăng ký", "joinedTs", "desc", sortState, toggleSort)}
-                            {renderSortableTh("Hạn mức AI / ngày", "dailyLimit", "desc", sortState, toggleSort)}
-                            {renderSortableTh("Đã dùng hôm nay", "usedToday", "desc", sortState, toggleSort)}
+                            <th className="admin-col-desktop-only is-sortable">
+                              <button
+                                type="button"
+                                className={`th-sort-btn${sortState.field === "roleOrder" ? " is-sorted" : ""}`}
+                                onClick={() => toggleSort("roleOrder", "asc")}
+                              >
+                                <span>Vai trò</span>
+                                <span className="sort-arrow" aria-hidden="true">
+                                  {sortState.field === "roleOrder"
+                                    ? sortState.dir === "asc"
+                                      ? "↑"
+                                      : "↓"
+                                    : "↕"}
+                                </span>
+                              </button>
+                            </th>
+                            <th className="admin-col-desktop-only is-sortable">
+                              <button
+                                type="button"
+                                className={`th-sort-btn${sortState.field === "statusOrder" ? " is-sorted" : ""}`}
+                                onClick={() => toggleSort("statusOrder", "asc")}
+                              >
+                                <span>Trạng thái</span>
+                                <span className="sort-arrow" aria-hidden="true">
+                                  {sortState.field === "statusOrder"
+                                    ? sortState.dir === "asc"
+                                      ? "↑"
+                                      : "↓"
+                                    : "↕"}
+                                </span>
+                              </button>
+                            </th>
+                            <th className="admin-col-desktop-only is-sortable">
+                              <button
+                                type="button"
+                                className={`th-sort-btn${sortState.field === "joinedTs" ? " is-sorted" : ""}`}
+                                onClick={() => toggleSort("joinedTs", "desc")}
+                              >
+                                <span>Ngày đăng ký</span>
+                                <span className="sort-arrow" aria-hidden="true">
+                                  {sortState.field === "joinedTs"
+                                    ? sortState.dir === "asc"
+                                      ? "↑"
+                                      : "↓"
+                                    : "↕"}
+                                </span>
+                              </button>
+                            </th>
+                            <th className="admin-col-desktop-only is-sortable">
+                              <button
+                                type="button"
+                                className={`th-sort-btn${sortState.field === "usedToday" ? " is-sorted" : ""}`}
+                                onClick={() => toggleSort("usedToday", "desc")}
+                              >
+                                <span>Sử dụng hôm nay</span>
+                                <span className="sort-arrow" aria-hidden="true">
+                                  {sortState.field === "usedToday"
+                                    ? sortState.dir === "asc"
+                                      ? "↑"
+                                      : "↓"
+                                    : "↕"}
+                                </span>
+                              </button>
+                            </th>
                             <th>Thao tác</th>
                           </tr>
                         </thead>
                         <tbody>
                           {pageItems.length === 0 ? (
                             <tr>
-                              <td colSpan={7} className="admin-table-empty">
+                              <td colSpan={6} className="admin-table-empty">
                                 <div className="admin-empty-reset-wrap">
                                   <span>Không tìm thấy tài khoản nào phù hợp với bộ lọc hiện tại.</span>
                                   {(searchQuery.trim() || roleFilter !== "all" || statusFilter !== "all") && (
@@ -3059,41 +3171,54 @@ export function AdminWorkspaceView({
                                   : u.role === "teacher"
                                     ? "Giáo viên"
                                     : "Học sinh";
+                              const statusChip =
+                                u.status === "verified" ? (
+                                  <span className="role-chip teacher">Đã xác minh</span>
+                                ) : u.status === "pending_teacher" ? (
+                                  <span className="role-chip pending">Chờ cấp quyền GV</span>
+                                ) : u.status === "pending_activation" ? (
+                                  <span className="role-chip pending-activation">Chờ kích hoạt</span>
+                                ) : u.status === "locked" ? (
+                                  <span className="role-chip locked">Đã khóa</span>
+                                ) : (
+                                  <span className="role-chip student">Hoạt động</span>
+                                );
                               const isMenuOpen = dotsMenu?.userId === u.id;
                               return (
                                 <tr key={u.id} data-account-row-id={u.id}>
                                   <td>
-                                    <strong>{u.name}</strong>
+                                    <div className="admin-user-name-row">
+                                      <strong>{u.name}</strong>
+                                      {typeof u.emailVerified === "boolean" && (
+                                        <span
+                                          className={`admin-email-verify-tag${u.emailVerified ? " is-verified" : " is-unverified"}`}
+                                        >
+                                          {u.emailVerified ? "Đã xác minh email" : "Chưa xác minh email"}
+                                        </span>
+                                      )}
+                                    </div>
                                     <div className="admin-cell-sub">
                                       {u.email} · {u.school}
-                                      {typeof u.emailVerified === "boolean"
-                                        ? ` · ${u.emailVerified ? "Đã xác minh email" : "Chưa xác minh email"}`
-                                        : ""}
+                                    </div>
+                                    <div className="admin-mobile-user-meta">
+                                      <span className={`role-chip ${u.role}`}>{rLabel}</span>
+                                      {statusChip}
+                                      <span className="admin-mobile-usage-pill">
+                                        {u.usedToday}/{u.dailyLimit} lượt
+                                      </span>
                                     </div>
                                   </td>
-                                  <td>
+                                  <td className="admin-col-desktop-only">
                                     <span className={`role-chip ${u.role}`}>{rLabel}</span>
                                   </td>
-                                  <td>
-                                    {u.status === "verified" ? (
-                                      <span className="role-chip teacher">Đã xác minh</span>
-                                    ) : u.status === "pending_teacher" ? (
-                                      <span className="role-chip pending">Chờ cấp quyền GV</span>
-                                    ) : u.status === "pending_activation" ? (
-                                      <span className="role-chip pending-activation">Chờ kích hoạt</span>
-                                    ) : u.status === "locked" ? (
-                                      <span className="role-chip locked">Đã khóa</span>
-                                    ) : (
-                                      <span className="role-chip student">Hoạt động</span>
-                                    )}
+                                  <td className="admin-col-desktop-only">{statusChip}</td>
+                                  <td className="admin-col-desktop-only admin-td-tabular">
+                                    {u.joinedAt}
                                   </td>
-                                  <td>{u.joinedAt}</td>
-                                  <td>
-                                    <strong>{u.dailyLimit} lượt/ngày</strong>
-                                  </td>
-                                  <td>
-                                    {u.usedToday}/{u.dailyLimit} lượt
-                                    <div className="admin-cell-sub">{u.tokensToday}</div>
+                                  <td className="admin-col-desktop-only admin-td-tabular">
+                                    <strong>
+                                      {u.usedToday}/{u.dailyLimit} lượt
+                                    </strong>
                                   </td>
                                   <td>
                                     <div className="admin-action-cell">
@@ -3159,29 +3284,23 @@ export function AdminWorkspaceView({
                   <div className="admin-kpi-grid admin-analytics-kpi-grid" id="admin-analytics-kpi-grid">
                     <div className="admin-kpi-card">
                       <div className="admin-kpi-lbl">
-                        <span>Tổng lượt phân tích</span>
-                        <span className="role-chip student">7 ngày</span>
+                        <span>Tổng yêu cầu (7 ngày)</span>
                       </div>
                       <div className="admin-kpi-val">
                         {overviewStats.analyses7d.toLocaleString("vi-VN")}
                       </div>
                       <div className="admin-kpi-sub">
                         {overviewStats.analyses7d > 0
-                          ? "Tổng yêu cầu phân tích trong 7 ngày qua"
+                          ? overviewStats.cached7d > 0
+                            ? `${overviewStats.cached7d.toLocaleString("vi-VN")} lượt phục vụ từ bộ nhớ đệm`
+                            : "Tổng yêu cầu phân tích trong 7 ngày qua"
                           : "Chưa phát sinh lượt phân tích trong 7 ngày qua"}
                       </div>
                     </div>
 
                     <div className="admin-kpi-card">
                       <div className="admin-kpi-lbl">
-                        <span>Tỷ lệ thành công</span>
-                        <span
-                          className={
-                            overviewStats.analyses7d > 0 ? "role-chip teacher" : "role-chip neutral"
-                          }
-                        >
-                          {overviewStats.analyses7d > 0 ? "Kiểm chứng tất định" : "Chưa có mẫu"}
-                        </span>
+                        <span>Tỷ lệ xử lý thành công</span>
                       </div>
                       <div
                         className={`admin-kpi-val${overviewStats.analyses7d > 0 ? "" : " is-empty-dash"}`}
@@ -3195,7 +3314,7 @@ export function AdminWorkspaceView({
                       </div>
                       <div className="admin-kpi-sub">
                         {overviewStats.analyses7d > 0
-                          ? `${overviewStats.succeeded7d.toLocaleString("vi-VN")} thành công · ${overviewStats.refused7d.toLocaleString("vi-VN")} từ chối${overviewStats.failed7d > 0 ? ` · ${overviewStats.failed7d.toLocaleString("vi-VN")} lỗi xử lý` : ""}`
+                          ? `${overviewStats.succeeded7d.toLocaleString("vi-VN")} thành công · ${overviewStats.refused7d.toLocaleString("vi-VN")} từ chối an toàn${overviewStats.failed7d > 0 ? ` · ${overviewStats.failed7d.toLocaleString("vi-VN")} lỗi xử lý` : ""}`
                           : "Chưa có mẫu đánh giá trong 7 ngày qua"}
                       </div>
                     </div>
@@ -3203,15 +3322,6 @@ export function AdminWorkspaceView({
                     <div className="admin-kpi-card">
                       <div className="admin-kpi-lbl">
                         <span>Thời gian phản hồi TB</span>
-                        <span
-                          className={
-                            overviewStats.avgLatency7dMs !== null
-                              ? "role-chip student"
-                              : "role-chip neutral"
-                          }
-                        >
-                          {overviewStats.avgLatency7dMs !== null ? "7 ngày" : "Chưa có mẫu"}
-                        </span>
                       </div>
                       <div
                         className={`admin-kpi-val${overviewStats.avgLatency7dMs !== null ? "" : " is-empty-dash"}`}
@@ -3224,13 +3334,31 @@ export function AdminWorkspaceView({
                           : "Chưa có mẫu đo thời gian phản hồi"}
                       </div>
                     </div>
+
+                    <div className="admin-kpi-card">
+                      <div className="admin-kpi-lbl">
+                        <span>Token tiêu thụ (7 ngày)</span>
+                      </div>
+                      <div
+                        className={`admin-kpi-val${overviewStats.tokensMeasured && overviewStats.totalTokens7d !== null ? "" : " is-empty-metric"}`}
+                      >
+                        {overviewStats.tokensMeasured && overviewStats.totalTokens7d !== null
+                          ? `${overviewStats.totalTokens7d.toLocaleString("vi-VN")} tokens`
+                          : "Chưa có dữ liệu"}
+                      </div>
+                      <div className="admin-kpi-sub">
+                        {overviewStats.tokensMeasured
+                          ? `Đầu vào: ${(overviewStats.inputTokens7d ?? 0).toLocaleString("vi-VN")} · Đầu ra: ${(overviewStats.outputTokens7d ?? 0).toLocaleString("vi-VN")}${overviewStats.thoughtsTokens7d ? ` · Suy luận: ${overviewStats.thoughtsTokens7d.toLocaleString("vi-VN")}` : ""}`
+                          : "Ghi nhận tự động khi phát sinh lượt gọi AI trực tuyến"}
+                      </div>
+                    </div>
                   </div>
 
                   <div className="admin-panel-card" id="admin-analytics-panel">
                     <div className="admin-analytics-chart-frame" id="admin-analytics-chart-frame">
                       <div className="admin-analytics-chart-head">
                         <h2 className="admin-analytics-chart-title">
-                          Biểu đồ số lượt phân tích AI &amp; từ chối an toàn theo ngày
+                          Biểu đồ yêu cầu phân tích theo ngày (7 ngày qua)
                         </h2>
                         <div className="admin-analytics-legend" aria-label="Chú giải nhóm dữ liệu biểu đồ">
                           <span className="admin-chart-legend-item">
@@ -3240,6 +3368,10 @@ export function AdminWorkspaceView({
                           <span className="admin-chart-legend-item">
                             <span className="admin-chart-swatch is-refused" aria-hidden="true" />
                             <span>Từ chối an toàn</span>
+                          </span>
+                          <span className="admin-chart-legend-item">
+                            <span className="admin-chart-swatch is-failed" aria-hidden="true" />
+                            <span>Lỗi xử lý</span>
                           </span>
                         </div>
                       </div>
@@ -3326,15 +3458,13 @@ export function AdminWorkspaceView({
                                           </span>
                                           <strong>{activeDay.refusedRequests.toLocaleString("vi-VN")}</strong>
                                         </div>
-                                        {activeDay.failedRequests > 0 ? (
-                                          <div className="admin-chart-tooltip-row">
-                                            <span className="admin-chart-tooltip-lbl">
-                                              <span className="admin-chart-swatch is-failed" aria-hidden="true" />
-                                              <span>Lỗi xử lý</span>
-                                            </span>
-                                            <strong>{activeDay.failedRequests.toLocaleString("vi-VN")}</strong>
-                                          </div>
-                                        ) : null}
+                                        <div className="admin-chart-tooltip-row">
+                                          <span className="admin-chart-tooltip-lbl">
+                                            <span className="admin-chart-swatch is-failed" aria-hidden="true" />
+                                            <span>Lỗi xử lý</span>
+                                          </span>
+                                          <strong>{activeDay.failedRequests.toLocaleString("vi-VN")}</strong>
+                                        </div>
                                       </div>
                                     );
                                   })()}
@@ -3395,6 +3525,17 @@ export function AdminWorkspaceView({
                                                   height:
                                                     day.refusedRequests > 0
                                                       ? `max(3px, ${day.refusedHeightPct}%)`
+                                                      : "0px",
+                                                }}
+                                              />
+                                            </span>
+                                            <span className="admin-chart-bar-col is-failed">
+                                              <span
+                                                className="admin-chart-bar is-failed"
+                                                style={{
+                                                  height:
+                                                    day.failedRequests > 0
+                                                      ? `max(3px, ${day.failedHeightPct}%)`
                                                       : "0px",
                                                 }}
                                               />
@@ -5692,15 +5833,23 @@ export function AdminWorkspaceView({
                       <div className="service-status-indicator">
                         <span className="status-dot-live" aria-hidden="true" />
                         <span>
-                          {overviewStats.aiServiceConfigured === true
-                            ? "Đang hoạt động · Phản hồi ổn định"
-                            : overviewStats.aiServiceConfigured === false
-                              ? "Chưa cấu hình khóa AI · Đang phục vụ Thư viện 3D & bộ nhớ đệm"
-                              : "Chưa xác định trạng thái dịch vụ AI từ máy chủ"}
+                          {overviewStats.aiServiceConfigured === true &&
+                          overviewStats.allowLiveAi !== false
+                            ? "Đã cấu hình dịch vụ AI · Sẵn sàng tiếp nhận yêu cầu"
+                            : overviewStats.aiServiceConfigured === true &&
+                                overviewStats.allowLiveAi === false
+                              ? "Dịch vụ AI trực tuyến đang tạm tắt (ALLOW_LIVE_AI=0)"
+                              : overviewStats.aiServiceConfigured === false
+                                ? "Chưa cấu hình khóa AI · Đang phục vụ Thư viện 3D & bộ nhớ đệm"
+                                : "Chưa xác định trạng thái dịch vụ AI từ máy chủ"}
                         </span>
                       </div>
-                      {overviewStats.aiServiceConfigured === true ? (
-                        <span className="role-chip teacher">Kết nối sẵn sàng</span>
+                      {overviewStats.aiServiceConfigured === true &&
+                      overviewStats.allowLiveAi !== false ? (
+                        <span className="role-chip teacher">Đã cấu hình</span>
+                      ) : overviewStats.aiServiceConfigured === true &&
+                          overviewStats.allowLiveAi === false ? (
+                        <span className="role-chip pending">AI tạm tắt</span>
                       ) : overviewStats.aiServiceConfigured === false ? (
                         <span className="role-chip pending">Chế độ giới hạn</span>
                       ) : (
@@ -5708,19 +5857,51 @@ export function AdminWorkspaceView({
                       )}
                     </div>
 
-                    <div className="service-info-list" aria-label="Thông tin vận hành dịch vụ AI">
+                    <div className="service-info-list" aria-label="Thông tin vận hành dịch vụ">
                       <div className="service-info-row">
                         <span className="service-info-lbl">Trạng thái kết nối dịch vụ AI</span>
                         <span className="service-info-val">
-                          {overviewStats.aiServiceConfigured === false
-                            ? "Chưa cấu hình GEMINI_API_KEY trên máy chủ · Phục vụ bài mẫu & đề lưu đệm"
-                            : "Đang kết nối · Thời gian phản hồi ổn định"}
+                          {overviewStats.aiServiceConfigured === true
+                            ? overviewStats.allowLiveAi === false
+                              ? "Đã cấu hình GEMINI_API_KEY nhưng ALLOW_LIVE_AI=0 đang tắt gọi trực tuyến"
+                              : "Đã cấu hình GEMINI_API_KEY trên máy chủ"
+                            : overviewStats.aiServiceConfigured === false
+                              ? "Chưa cấu hình GEMINI_API_KEY trên máy chủ · Phục vụ bài mẫu & đề lưu đệm"
+                              : "Chưa xác định từ máy chủ"}
+                        </span>
+                      </div>
+                      <div className="service-info-row">
+                        <span className="service-info-lbl">Model AI đang cấu hình (chỉ đọc)</span>
+                        <span className="service-info-val">
+                          {overviewStats.configuredModelId || "Chưa xác định"}
+                        </span>
+                      </div>
+                      <div className="service-info-row">
+                        <span className="service-info-lbl">Dịch vụ Email giao dịch (Resend)</span>
+                        <span className="service-info-val">
+                          {overviewStats.emailReadiness
+                            ? overviewStats.emailReadiness.available
+                              ? `Sẵn sàng (${(overviewStats.emailReadiness.provider || "resend").toUpperCase()}${overviewStats.emailReadiness.senderDomain ? ` · ${overviewStats.emailReadiness.senderDomain}` : ""})`
+                              : overviewStats.emailReadiness.enabled === false
+                                ? `Đang tắt (EMAIL_ENABLED=false${overviewStats.emailReadiness.senderDomain ? ` · ${overviewStats.emailReadiness.senderDomain}` : ""})`
+                                : `Chưa sẵn sàng (${(overviewStats.emailReadiness.issues || []).join(", ") || "thiếu cấu hình"})`
+                            : "Chưa xác định từ máy chủ"}
+                        </span>
+                      </div>
+                      <div className="service-info-row">
+                        <span className="service-info-lbl">Cơ sở dữ liệu máy chủ</span>
+                        <span className="service-info-val">
+                          {overviewStats.dbConnected === true
+                            ? `Đã kết nối (${overviewStats.databaseDialect === "postgresql" ? "PostgreSQL" : overviewStats.databaseDialect === "sqlite" ? "SQLite" : overviewStats.databaseDialect || "CSDL"})`
+                            : overviewStats.dbConnected === false
+                              ? "Mất kết nối CSDL"
+                              : "Chưa xác định"}
                         </span>
                       </div>
                       <div className="service-info-row">
                         <span className="service-info-lbl">Trạng thái bộ dựng hình học 3D</span>
                         <span className="service-info-val">
-                          Hoạt động bình thường · Kiểm chứng dữ kiện tất định (Fail-closed)
+                          Hoạt động bình thường · Kiểm chứng dữ kiện tất định (Fail-closed) · {overviewStats.cachedProblems} đề lưu đệm
                         </span>
                       </div>
                       <div className="service-info-row">
@@ -5747,7 +5928,7 @@ export function AdminWorkspaceView({
                       <div className="service-info-row">
                         <span className="service-info-lbl">Quản lý cấu hình máy chủ</span>
                         <span className="service-info-val">
-                          Thông tin kết nối dịch vụ AI được quản lý ở môi trường máy chủ. Không hiển thị khóa API trên giao diện quản trị.
+                          Thông tin kết nối AI và Email được quản lý qua biến môi trường máy chủ. Không hiển thị khóa API hay bí mật trên giao diện quản trị.
                         </span>
                       </div>
                     </div>

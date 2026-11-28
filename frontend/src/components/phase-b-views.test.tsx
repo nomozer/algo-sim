@@ -2086,8 +2086,12 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
 
     const adminWorkspaceV9Html = renderToString(<AdminWorkspaceView />);
     expect(adminWorkspaceV9Html).toContain('id="view-admin"');
+    // "Về không gian học" nằm trong menu Avatar (#admin-account-dropdown), Sidebar giữ đúng 4 mục điều hướng quản trị
     expect(adminWorkspaceV9Html).toContain('id="btn-admin-back-workspace"');
     expect(adminWorkspaceV9Html).toContain("Về không gian học");
+    const sidebarMatch = adminWorkspaceV9Html.match(/<aside[^>]*id="admin-sidebar"[\s\S]*?<\/aside>/);
+    expect(sidebarMatch?.[0] ?? "").not.toContain('id="btn-admin-back-workspace"');
+    expect((sidebarMatch?.[0]?.match(/class="admin-sb-item/g) ?? []).length).toBe(4);
     expect(adminWorkspaceV9Html).toContain("Quản Trị Hệ Thống");
     expect(adminWorkspaceV9Html).toContain("Quản trị viên");
   });
