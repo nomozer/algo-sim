@@ -6,10 +6,91 @@ import { AxoScrollbar } from "./AxoScrollbar";
 
 /* ── AdminWorkspaceView (#view-admin — HTML V2.7 P1–P6) ──────────────────── */
 
+export const foldAdminSearchText = (value: string): string =>
+  value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[\u0110\u0111]/g, "d")
+    .toLowerCase();
+
+async function extractAdminServerError(res: Response, fallback: string): Promise<string> {
+  try {
+    const body = (await res.json()) as { detail?: unknown; error?: unknown };
+    if (typeof body?.detail === "string" && body.detail.trim()) return body.detail;
+    if (typeof body?.error === "string" && body.error.trim()) return body.error;
+  } catch {
+    /* ignore non-JSON body */
+  }
+  return fallback;
+}
+
+type AdminConfirmActionType =
+  | "grant_teacher"
+  | "revert_student"
+  | "lock"
+  | "unlock"
+  | "delete_account"
+  | "reset_password";
+
+export function getConfirmModalSpec(type: AdminConfirmActionType, targetUser: AdminUserItem): {
+  title: string;
+  desc: string;
+  confirmLabel: string;
+  toneClass: string;
+} {
+  const who = `${targetUser.name} (${targetUser.email})`;
+  switch (type) {
+    case "grant_teacher":
+      return {
+        title: "Cấp quyền Giáo viên?",
+        desc: `Tài khoản ${who} sẽ được nâng cấp lên vai trò Giáo viên (trạng thái Đã xác minh) và áp dụng hạn mức Giáo viên mặc định.`,
+        confirmLabel: "Cấp quyền Giáo viên",
+        toneClass: "btn-auth-primary",
+      };
+    case "revert_student":
+      return {
+        title: "Chuyển vai trò về Học sinh?",
+        desc: `Tài khoản ${who} sẽ được chuyển từ Giáo viên về vai trò Học sinh và áp dụng lại hạn mức Học sinh mặc định.`,
+        confirmLabel: "Chuyển về Học sinh",
+        toneClass: "btn-confirm-danger",
+      };
+    case "lock":
+      return {
+        title: "Khóa tạm thời tài khoản?",
+        desc: `Tài khoản ${who} sẽ bị khóa tạm thời và toàn bộ phiên đăng nhập hiện tại sẽ bị thu hồi cho đến khi mở khóa lại.`,
+        confirmLabel: "Khóa tài khoản",
+        toneClass: "btn-confirm-danger",
+      };
+    case "unlock":
+      return {
+        title: "Mở khóa tài khoản?",
+        desc: `Tài khoản ${who} sẽ được mở khóa để tiếp tục đăng nhập và sử dụng hệ thống bình thường.`,
+        confirmLabel: "Mở khóa tài khoản",
+        toneClass: "btn-auth-primary",
+      };
+    case "delete_account":
+      return {
+        title: "Xóa vĩnh viễn tài khoản?",
+        desc: `Tài khoản ${who} cùng dữ liệu phiên và lịch sử học tập liên quan sẽ bị xóa vĩnh viễn và không thể khôi phục.`,
+        confirmLabel: "Xóa vĩnh viễn",
+        toneClass: "btn-confirm-danger",
+      };
+    case "reset_password":
+      return {
+        title: "Yêu cầu đặt lại mật khẩu?",
+        desc: `Tài khoản ${who} sẽ được đánh dấu bắt buộc đổi mật khẩu ở lần đăng nhập kế tiếp.`,
+        confirmLabel: "Gửi yêu cầu đổi mật khẩu",
+        toneClass: "btn-confirm-danger",
+      };
+  }
+}
+
 export interface AdminUserItem {
   id: number | string;
   name: string;
   email: string;
+  username?: string | null;
+  emailVerified?: boolean;
   role: "student" | "teacher" | "admin";
   status: "active" | "verified" | "pending_teacher" | "pending_activation" | "locked";
   school: string;
@@ -685,6 +766,23 @@ export function AdminWorkspaceView({
 
   const [sysSettingsOpen, setSysSettingsOpen] = useState(false);
   const [sysSettingsTab, setSysSettingsTab] = useState<"quotas" | "service">("quotas");
+  const [overviewLoading, setOverviewLoading] = useState(false);
+  const [overviewError, setOverviewError] = useState<string | null>(null);
+  const [overviewLoaded, setOverviewLoaded] = useState(false);
+  const [isMutating, setIsMutating] = useState(false);
+  const [createSubmitting, setCreateSubmitting] = useState(false);
+  const [quotaSaving, setQuotaSaving] = useState(false);
+  const [bulkSubmitting, setBulkSubmitting] = useState(false);
+  const [sysSaving, setSysSaving] = useState(false);
+  const [numDrafts, setNumDrafts] = useState<Partial<Record<
+    | "studentDailyRequests"
+    | "teacherDailyRequests"
+    | "studentDailyTokens"
+    | "teacherDailyTokens"
+    | "studentRatePerMin"
+    | "teacherRatePerMin",
+    string
+  >>>({});
   const [actionToast, setActionToast] = useState("");
   const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -701,13 +799,30 @@ export function AdminWorkspaceView({
 
   const fetchAdminUsers = useCallback(async () => {
     if (!user || user.role !== "admin") return;
+    setOverviewLoading(true);
     try {
       const r = await fetch("/api/admin/overview", { credentials: "include" });
-      if (!r.ok) return;
+      if (r.status === 401 || r.status === 403) {
+        setOverviewError(
+          "Phiên quản trị đã hết hạn hoặc không còn hợp lệ. Vui lòng đăng nhập lại để tiếp tục.",
+        );
+        void useAuthStore.getState().refresh();
+        return;
+      }
+      if (!r.ok) {
+        const msg = await extractAdminServerError(
+          r,
+          `Không thể tải dữ liệu quản trị (HTTP ${r.status}).`,
+        );
+        setOverviewError(msg);
+        return;
+      }
       const body = (await r.json()) as {
         users?: Array<{
           id: number;
           email: string;
+          username?: string | null;
+          emailVerified?: boolean;
           displayName: string;
           role: "student" | "teacher" | "admin";
           status?:
@@ -906,6 +1021,8 @@ export function AdminWorkspaceView({
               id: u.id,
               name: u.displayName,
               email: u.email,
+              username: u.username ?? null,
+              emailVerified: typeof u.emailVerified === "boolean" ? u.emailVerified : undefined,
               role: u.role,
               status: resolvedStatus,
               school: (u.school || u.workplace || "").trim() || "Chưa cập nhật đơn vị",
@@ -921,14 +1038,25 @@ export function AdminWorkspaceView({
           }),
         );
       }
+      setOverviewError(null);
+      setOverviewLoaded(true);
     } catch {
-      /* ignore network errors in offline tests */
+      setOverviewError("Không kết nối được tới máy chủ quản trị. Vui lòng kiểm tra và thử lại.");
+    } finally {
+      setOverviewLoading(false);
     }
   }, [user]);
 
   useEffect(() => {
     void fetchAdminUsers();
   }, [fetchAdminUsers]);
+
+  useEffect(() => {
+    setDetailUser((prev) => {
+      if (!prev) return null;
+      return users.find((u) => String(u.id) === String(prev.id)) ?? prev;
+    });
+  }, [users]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -977,7 +1105,7 @@ export function AdminWorkspaceView({
   };
 
   const filteredUsers = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
+    const q = foldAdminSearchText(searchQuery.trim());
     return users
       .filter((u) => {
         const matchRole = roleFilter === "all" || u.role === roleFilter;
@@ -989,9 +1117,10 @@ export function AdminWorkspaceView({
           (statusFilter === "locked" && u.status === "locked");
         const matchQ =
           !q ||
-          u.name.toLowerCase().includes(q) ||
-          u.email.toLowerCase().includes(q) ||
-          u.school.toLowerCase().includes(q);
+          foldAdminSearchText(u.name).includes(q) ||
+          foldAdminSearchText(u.email).includes(q) ||
+          foldAdminSearchText(u.school).includes(q) ||
+          (u.username ? foldAdminSearchText(u.username).includes(q) : false);
         return matchRole && matchStatus && matchQ;
       })
       .sort((a, b) => {
@@ -1170,16 +1299,7 @@ export function AdminWorkspaceView({
     );
   };
 
-  const extractServerError = async (res: Response, fallback: string): Promise<string> => {
-    try {
-      const body = (await res.json()) as { detail?: unknown; error?: unknown };
-      if (typeof body?.detail === "string" && body.detail.trim()) return body.detail;
-      if (typeof body?.error === "string" && body.error.trim()) return body.error;
-    } catch {
-      /* ignore non-JSON body */
-    }
-    return fallback;
-  };
+  const extractServerError = extractAdminServerError;
 
   const handleExportCsv = async (endpoint: string, fallbackName: string) => {
     try {
@@ -1212,19 +1332,13 @@ export function AdminWorkspaceView({
   };
 
   const handleExecuteConfirm = async () => {
-    if (!confirmAction) return;
+    if (!confirmAction || isMutating) return;
     const { type, user: targetUser } = confirmAction;
-    const actorEmail = user?.email || "admin@axo.edu.vn";
-    const nowStr =
-      new Date().toLocaleDateString("vi-VN") +
-      " · " +
-      new Date().toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
-
-    if (type === "grant_teacher" || type === "revert_student") {
-      const nextRole = type === "grant_teacher" ? "teacher" : "student";
-      const nextStatus = nextRole === "teacher" ? "verified" : "active";
-      let serverHandled = false;
-      try {
+    setIsMutating(true);
+    try {
+      if (type === "grant_teacher" || type === "revert_student") {
+        const nextRole = type === "grant_teacher" ? "teacher" : "student";
+        const nextStatus = nextRole === "teacher" ? "verified" : "active";
         const r = await fetch(`/api/admin/users/${targetUser.id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -1237,51 +1351,14 @@ export function AdminWorkspaceView({
           showToastMsg(errMsg);
           return;
         }
-        serverHandled = true;
-      } catch {
-        /* fallback to local update in offline preview */
-      }
-      if (serverHandled) {
         await fetchAdminUsers();
-      } else {
-        setUsers((prev) =>
-          prev.map((item) =>
-            item.id === targetUser.id
-              ? {
-                  ...item,
-                  role: nextRole,
-                  status: nextRole === "teacher" ? "verified" : "active",
-                  dailyLimit:
-                    nextRole === "teacher"
-                      ? quotaConfig.teacherDailyRequests
-                      : quotaConfig.studentDailyRequests,
-                }
-              : item,
-          ),
+        showToastMsg(
+          nextRole === "teacher"
+            ? `Đã cấp quyền Giáo viên cho ${targetUser.name} (${targetUser.email}).`
+            : `Đã chuyển ${targetUser.name} (${targetUser.email}) về vai trò Học sinh.`,
         );
-        setAuditLogs((prev) => [
-          {
-            id: `aud-${Date.now()}`,
-            time: nowStr,
-            timeTs: Date.now(),
-            actor: actorEmail,
-            action: nextRole === "teacher" ? "Cấp quyền Giáo viên" : "Chuyển vai trò về Học sinh",
-            target: targetUser.email,
-            detail: `Cập nhật vai trò của ${targetUser.name} (${targetUser.email}) sang ${nextRole === "teacher" ? "Giáo viên" : "Học sinh"}.`,
-          },
-          ...prev,
-        ]);
-      }
-      showToastMsg(
-        nextRole === "teacher"
-          ? `Đã cấp quyền Giáo viên cho ${targetUser.name} (${targetUser.email}).`
-          : `Đã chuyển ${targetUser.name} (${targetUser.email}) về vai trò Học sinh.`,
-      );
-    } else if (type === "lock" || type === "unlock") {
-      const isLock = type === "lock";
-      const nextStatus = isLock ? "locked" : targetUser.role === "teacher" ? "verified" : "active";
-      let serverHandled = false;
-      try {
+      } else if (type === "lock" || type === "unlock") {
+        const isLock = type === "lock";
         const r = await fetch(`/api/admin/users/${targetUser.id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -1294,35 +1371,11 @@ export function AdminWorkspaceView({
           showToastMsg(errMsg);
           return;
         }
-        serverHandled = true;
-      } catch {
-        /* ignore in offline preview */
-      }
-      if (serverHandled) {
         await fetchAdminUsers();
-      } else {
-        setUsers((prev) =>
-          prev.map((item) => (item.id === targetUser.id ? { ...item, status: nextStatus } : item)),
+        showToastMsg(
+          `${isLock ? "Đã khóa tạm thời" : "Đã mở khóa"} tài khoản ${targetUser.name}.`,
         );
-        setAuditLogs((prev) => [
-          {
-            id: `aud-${Date.now()}`,
-            time: nowStr,
-            timeTs: Date.now(),
-            actor: actorEmail,
-            action: isLock ? "Khóa tạm thời tài khoản" : "Mở khóa tài khoản",
-            target: targetUser.email,
-            detail: `${isLock ? "Khóa tạm thời" : "Mở khóa"} tài khoản ${targetUser.name} (${targetUser.email}).`,
-          },
-          ...prev,
-        ]);
-      }
-      showToastMsg(
-        `${isLock ? "Đã khóa tạm thời" : "Đã mở khóa"} tài khoản ${targetUser.name}.`,
-      );
-    } else if (type === "delete_account") {
-      let serverHandled = false;
-      try {
+      } else if (type === "delete_account") {
         const r = await fetch(`/api/admin/users/${targetUser.id}`, {
           method: "DELETE",
           credentials: "include",
@@ -1333,31 +1386,12 @@ export function AdminWorkspaceView({
           showToastMsg(errMsg);
           return;
         }
-        serverHandled = true;
-      } catch {
-        /* ignore in offline preview */
-      }
-      if (serverHandled) {
+        if (detailUser && String(detailUser.id) === String(targetUser.id)) {
+          setDetailUser(null);
+        }
         await fetchAdminUsers();
-      } else {
-        setUsers((prev) => prev.filter((item) => item.id !== targetUser.id));
-        setAuditLogs((prev) => [
-          {
-            id: `aud-${Date.now()}`,
-            time: nowStr,
-            timeTs: Date.now(),
-            actor: actorEmail,
-            action: "Xóa tài khoản",
-            target: targetUser.email,
-            detail: `Đã xóa tài khoản ${targetUser.name} (${targetUser.email}).`,
-          },
-          ...prev,
-        ]);
-      }
-      showToastMsg(`Đã xóa tài khoản ${targetUser.name} (${targetUser.email}).`);
-    } else if (type === "reset_password") {
-      let serverHandled = false;
-      try {
+        showToastMsg(`Đã xóa tài khoản ${targetUser.name} (${targetUser.email}).`);
+      } else if (type === "reset_password") {
         const r = await fetch(`/api/admin/users/${targetUser.id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -1370,39 +1404,21 @@ export function AdminWorkspaceView({
           showToastMsg(errMsg);
           return;
         }
-        serverHandled = true;
-      } catch {
-        /* ignore in offline preview */
-      }
-      if (serverHandled) {
         await fetchAdminUsers();
-      } else {
-        setUsers((prev) =>
-          prev.map((item) =>
-            item.id === targetUser.id ? { ...item, passwordResetRequestedAt: nowStr } : item,
-          ),
-        );
-        setAuditLogs((prev) => [
-          {
-            id: `aud-${Date.now()}`,
-            time: nowStr,
-            timeTs: Date.now(),
-            actor: actorEmail,
-            action: "Yêu cầu đặt lại mật khẩu",
-            target: targetUser.email,
-            detail: `Đã yêu cầu đặt lại mật khẩu cho ${targetUser.name} (${targetUser.email}).`,
-          },
-          ...prev,
-        ]);
+        showToastMsg(`Đã ghi nhận yêu cầu đặt lại mật khẩu cho ${targetUser.name}.`);
       }
-      showToastMsg(`Đã ghi nhận yêu cầu đặt lại mật khẩu cho ${targetUser.name}.`);
+      setConfirmAction(null);
+    } catch {
+      setConfirmAction(null);
+      showToastMsg("Không kết nối được tới máy chủ để thực hiện thao tác quản trị.");
+    } finally {
+      setIsMutating(false);
     }
-
-    setConfirmAction(null);
   };
 
   const handleCreateUserSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (createSubmitting) return;
     const nm = newUserName.trim();
     const em = newUserEmail.trim().toLowerCase();
     const sch = newUserSchool.trim();
@@ -1416,6 +1432,7 @@ export function AdminWorkspaceView({
       return;
     }
     setCreateUserErr("");
+    setCreateSubmitting(true);
     try {
       const r = await fetch("/api/admin/users", {
         method: "POST",
@@ -1429,40 +1446,23 @@ export function AdminWorkspaceView({
           adminNote: note,
         }),
       });
-      if (r.ok) {
-        await fetchAdminUsers();
-      } else {
+      if (!r.ok) {
         const msg = await extractServerError(r, "Không thể tạo tài khoản.");
         setCreateUserErr(msg);
         return;
       }
+      await fetchAdminUsers();
+      setCreateUserOpen(false);
+      setNewUserName("");
+      setNewUserEmail("");
+      setNewUserSchool("");
+      setNewUserNote("");
+      showToastMsg(`Đã tạo tài khoản ${nm} (${em}) · Trạng thái: Chờ kích hoạt.`);
     } catch {
-      /* fallback in offline preview */
-      setUsers((prev) => [
-        {
-          id: `local-${Date.now()}`,
-          name: nm,
-          email: em,
-          role: "student",
-          status: "pending_activation",
-          school: sch || "Chưa cập nhật đơn vị",
-          adminNote: note,
-          joinedAt: new Date().toLocaleDateString("vi-VN"),
-          joinedTs: Date.now(),
-          dailyLimit: quotaConfig.studentDailyRequests,
-          tokenCap: quotaConfig.studentDailyTokens,
-          usedToday: 0,
-          tokensToday: `0 / ${quotaConfig.studentDailyTokens.toLocaleString("vi-VN")}`,
-        },
-        ...prev,
-      ]);
+      setCreateUserErr("Không kết nối được máy chủ để tạo tài khoản.");
+    } finally {
+      setCreateSubmitting(false);
     }
-    setCreateUserOpen(false);
-    setNewUserName("");
-    setNewUserEmail("");
-    setNewUserSchool("");
-    setNewUserNote("");
-    showToastMsg(`Đã tạo tài khoản ${nm} (${em}) · Trạng thái: Chờ kích hoạt.`);
   };
 
   const analyzeBulkInput = (
@@ -2256,6 +2256,21 @@ export function AdminWorkspaceView({
               <div className="admin-header-right" id="admin-header-right">
                 <button
                   type="button"
+                  className="btn-admin-hdr-icon"
+                  id="btn-admin-refresh"
+                  aria-label="Làm mới dữ liệu quản trị"
+                  title="Làm mới dữ liệu"
+                  disabled={overviewLoading}
+                  onClick={() => void fetchAdminUsers()}
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <polyline points="23 4 23 10 17 10" />
+                    <polyline points="1 20 1 14 7 14" />
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
                   className={`btn-admin-hdr-icon${notifOpen ? " is-open" : ""}`}
                   id="btn-admin-notif-bell"
                   aria-label="Thông báo quản trị"
@@ -2321,7 +2336,10 @@ export function AdminWorkspaceView({
                           onClick={() => {
                             setNotifOpen(false);
                             setAdminTab("accounts");
+                            setSearchQuery("");
+                            setRoleFilter("all");
                             setStatusFilter("pending_teacher");
+                            setCurrentPage(1);
                           }}
                         >
                           <span className="notif-item-title">Yêu cầu cấp quyền Giáo viên: {pt.name}</span>
@@ -2342,7 +2360,7 @@ export function AdminWorkspaceView({
                   <div className="admin-acc-head" id="admin-account-dropdown-info-head">
                     <div className="admin-acc-kicker">Thông tin tài khoản</div>
                     <div className="admin-acc-name">{user?.displayName || "Quản trị viên"}</div>
-                    <div className="admin-acc-email">{user?.email || "admin@axo.edu.vn"}</div>
+                    <div className="admin-acc-email">{user?.email || "Chưa cấu hình email quản trị"}</div>
                     <div className="admin-acc-role-badge">
                       <span className="role-chip admin">Quản trị viên</span>
                     </div>
@@ -2366,18 +2384,20 @@ export function AdminWorkspaceView({
                               ...matchedAdmin,
                               role: "admin",
                               name: user?.displayName || matchedAdmin.name || "Quản trị viên",
-                              email: user?.email || matchedAdmin.email || "admin@axo.edu.vn",
+                              email: user?.email || matchedAdmin.email || "Chưa cấu hình email quản trị",
                             }
                           : {
                               id: user?.id ?? "admin-self",
                               name: user?.displayName || "Quản trị viên",
-                              email: user?.email || "admin@axo.edu.vn",
+                              email: user?.email || "Chưa cấu hình email quản trị",
+                              username: user?.username ?? null,
+                              emailVerified: Boolean(user?.emailVerified),
                               role: "admin",
                               status: "active",
                               school: user?.school || user?.workplace || "Hệ thống Axo",
                               joinedAt: new Date().toLocaleDateString("vi-VN"),
                               joinedTs: Date.now(),
-                              dailyLimit: user?.dailyLimit ?? 200,
+                              dailyLimit: user?.dailyLimit ?? 500,
                               tokenCap: 500000,
                               usedToday: user?.usedToday ?? 0,
                               tokensToday: "Chưa đo token",
@@ -2470,6 +2490,23 @@ export function AdminWorkspaceView({
             </header>
 
             <div className="admin-main-area" id="admin-main-mount" data-admin-page={adminTab}>
+              {overviewError && (
+                <div className="admin-load-error-banner" id="admin-load-error-banner" role="alert">
+                  <div className="admin-load-error-copy">
+                    <strong>Không tải được dữ liệu quản trị từ máy chủ.</strong>
+                    <span>{overviewError}</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-admin-sm"
+                    id="btn-admin-retry-overview"
+                    disabled={overviewLoading}
+                    onClick={() => void fetchAdminUsers()}
+                  >
+                    {overviewLoading ? "Đang thử lại..." : "Thử lại"}
+                  </button>
+                </div>
+              )}
               {adminTab === "overview" ? (
                 <>
                   <div className="admin-page-head-group" id="admin-page-head-group">
@@ -2481,29 +2518,40 @@ export function AdminWorkspaceView({
                     </p>
                   </div>
 
+                  {(() => {
+                    const showLoadErrPlaceholder = Boolean(overviewError && !overviewLoaded);
+                    return (
                   <div className="admin-kpi-grid" id="admin-overview-kpi-grid">
                     <div className="admin-kpi-card">
                       <div className="admin-kpi-lbl">
                         <span>Tổng số tài khoản</span>
                         <span className="role-chip student">Đang quản lý</span>
                       </div>
-                      <div className="admin-kpi-val">{totalUsersCount} tài khoản</div>
+                      <div className="admin-kpi-val">
+                        {showLoadErrPlaceholder ? "—" : `${totalUsersCount} tài khoản`}
+                      </div>
                       <div className="admin-kpi-sub">
-                        {studentCount} Học sinh · {teacherVerifiedCount} Giáo viên · {lockedCount} Đã khóa · {adminCount} Quản trị
+                        {showLoadErrPlaceholder
+                          ? "Không có dữ liệu máy chủ"
+                          : `${studentCount} Học sinh · ${teacherVerifiedCount} Giáo viên · ${lockedCount} Đã khóa · ${adminCount} Quản trị`}
                       </div>
                     </div>
                     <div className="admin-kpi-card">
                       <div className="admin-kpi-lbl">
                         <span>Yêu cầu cấp quyền Giáo viên</span>
                         <span className={pendingTeachers.length > 0 ? "role-chip pending" : "role-chip neutral"}>
-                          {pendingTeachers.length} chờ duyệt
+                          {showLoadErrPlaceholder ? "—" : `${pendingTeachers.length} chờ duyệt`}
                         </span>
                       </div>
-                      <div className="admin-kpi-val">{pendingTeachers.length} hồ sơ</div>
+                      <div className="admin-kpi-val">
+                        {showLoadErrPlaceholder ? "—" : `${pendingTeachers.length} hồ sơ`}
+                      </div>
                       <div className="admin-kpi-sub">
-                        {pendingTeachers.length > 0
-                          ? "Ưu tiên xử lý yêu cầu gửi sớm nhất trước để tránh tồn đọng"
-                          : "Hiện không có hồ sơ đăng ký Giáo viên đang tồn đọng"}
+                        {showLoadErrPlaceholder
+                          ? "Không có dữ liệu máy chủ"
+                          : pendingTeachers.length > 0
+                            ? "Ưu tiên xử lý yêu cầu gửi sớm nhất trước để tránh tồn đọng"
+                            : "Hiện không có hồ sơ đăng ký Giáo viên đang tồn đọng"}
                       </div>
                     </div>
                     <div className="admin-kpi-card">
@@ -2512,12 +2560,14 @@ export function AdminWorkspaceView({
                         <span className="role-chip student">Hôm nay</span>
                       </div>
                       <div className="admin-kpi-val">
-                        {Math.max(overviewStats.analysesToday, totalUsedToday)} lượt
+                        {showLoadErrPlaceholder ? "—" : `${overviewStats.analysesToday} lượt`}
                       </div>
                       <div className="admin-kpi-sub">
-                        {overviewStats.totalAnalyses > 0
-                          ? `${overviewStats.succeededRequests}/${overviewStats.totalAnalyses} yêu cầu thành công · 7 ngày: ${overviewStats.analyses7d} lượt`
-                          : `0/0 yêu cầu · 7 ngày qua: 0 lượt · ${overviewStats.totalHistoryEntries} phiên lưu`}
+                        {showLoadErrPlaceholder
+                          ? "Không có dữ liệu máy chủ"
+                          : overviewStats.totalAnalyses > 0
+                            ? `${overviewStats.succeededRequests}/${overviewStats.totalAnalyses} yêu cầu thành công · 7 ngày: ${overviewStats.analyses7d} lượt`
+                            : `0/0 yêu cầu · 7 ngày qua: 0 lượt · ${overviewStats.totalHistoryEntries} phiên lưu`}
                       </div>
                     </div>
                     <div className="admin-kpi-card">
@@ -2528,14 +2578,18 @@ export function AdminWorkspaceView({
                         </span>
                       </div>
                       <div className={`admin-kpi-val${overviewStats.tokensMeasured && overviewStats.totalTokens7d !== null ? "" : " is-empty-metric"}`}>
-                        {overviewStats.tokensMeasured && overviewStats.totalTokens7d !== null
-                          ? `${overviewStats.totalTokens7d.toLocaleString("vi-VN")} tokens`
-                          : "Chưa có dữ liệu"}
+                        {showLoadErrPlaceholder
+                          ? "—"
+                          : overviewStats.tokensMeasured && overviewStats.totalTokens7d !== null
+                            ? `${overviewStats.totalTokens7d.toLocaleString("vi-VN")} tokens`
+                            : "Chưa có dữ liệu"}
                       </div>
                       <div className="admin-kpi-sub">
-                        {overviewStats.tokensMeasured
-                          ? `Đầu vào: ${(overviewStats.inputTokens7d ?? 0).toLocaleString("vi-VN")} · Đầu ra: ${(overviewStats.outputTokens7d ?? 0).toLocaleString("vi-VN")}${overviewStats.thoughtsTokens7d ? ` · Suy luận: ${overviewStats.thoughtsTokens7d.toLocaleString("vi-VN")}` : ""}`
-                          : "Ghi nhận tự động khi phát sinh lượt gọi Gemini trực tuyến"}
+                        {showLoadErrPlaceholder
+                          ? "Không có dữ liệu máy chủ"
+                          : overviewStats.tokensMeasured
+                            ? `Đầu vào: ${(overviewStats.inputTokens7d ?? 0).toLocaleString("vi-VN")} · Đầu ra: ${(overviewStats.outputTokens7d ?? 0).toLocaleString("vi-VN")}${overviewStats.thoughtsTokens7d ? ` · Suy luận: ${overviewStats.thoughtsTokens7d.toLocaleString("vi-VN")}` : ""}`
+                            : "Ghi nhận tự động khi phát sinh lượt gọi Gemini trực tuyến"}
                       </div>
                     </div>
                     <div className="admin-kpi-card">
@@ -2545,7 +2599,9 @@ export function AdminWorkspaceView({
                           {quotaConfig.autoCutoffEnabled ? "Đang bảo vệ" : "Theo dõi hạn mức"}
                         </span>
                       </div>
-                      <div className="admin-kpi-val">{totalUsedToday} lượt đã dùng</div>
+                      <div className="admin-kpi-val">
+                        {showLoadErrPlaceholder ? "—" : `${totalUsedToday} lượt đã dùng`}
+                      </div>
                       <div className="admin-kpi-sub">
                         Định mức ngày: Học sinh {quotaConfig.studentDailyRequests} lượt · Giáo viên {quotaConfig.teacherDailyRequests} lượt
                       </div>
@@ -2553,10 +2609,12 @@ export function AdminWorkspaceView({
                     <div className="admin-kpi-card">
                       <div className="admin-kpi-lbl">
                         <span>Trạng thái dịch vụ AI</span>
-                        {overviewStats.aiServiceConfigured === false ? (
+                        {overviewStats.aiServiceConfigured === true ? (
+                          <span className="role-chip teacher">Hoạt động</span>
+                        ) : overviewStats.aiServiceConfigured === false ? (
                           <span className="role-chip neutral">Chế độ đệm</span>
                         ) : (
-                          <span className="role-chip teacher">Hoạt động</span>
+                          <span className="role-chip neutral">Chưa xác định</span>
                         )}
                       </div>
                       <div className="admin-kpi-val">
@@ -2570,6 +2628,8 @@ export function AdminWorkspaceView({
                       </div>
                     </div>
                   </div>
+                    );
+                  })()}
 
                   <div className="admin-panel-card">
                     <div className="admin-panel-head">
@@ -2971,7 +3031,24 @@ export function AdminWorkspaceView({
                           {pageItems.length === 0 ? (
                             <tr>
                               <td colSpan={7} className="admin-table-empty">
-                                Không tìm thấy tài khoản nào phù hợp với bộ lọc hiện tại.
+                                <div className="admin-empty-reset-wrap">
+                                  <span>Không tìm thấy tài khoản nào phù hợp với bộ lọc hiện tại.</span>
+                                  {(searchQuery.trim() || roleFilter !== "all" || statusFilter !== "all") && (
+                                    <button
+                                      type="button"
+                                      className="btn-admin-sm"
+                                      id="btn-admin-empty-reset"
+                                      onClick={() => {
+                                        setSearchQuery("");
+                                        setRoleFilter("all");
+                                        setStatusFilter("all");
+                                        setCurrentPage(1);
+                                      }}
+                                    >
+                                      Đặt lại tìm kiếm &amp; bộ lọc
+                                    </button>
+                                  )}
+                                </div>
                               </td>
                             </tr>
                           ) : (
@@ -2989,6 +3066,9 @@ export function AdminWorkspaceView({
                                     <strong>{u.name}</strong>
                                     <div className="admin-cell-sub">
                                       {u.email} · {u.school}
+                                      {typeof u.emailVerified === "boolean"
+                                        ? ` · ${u.emailVerified ? "Đã xác minh email" : "Chưa xác minh email"}`
+                                        : ""}
                                     </div>
                                   </td>
                                   <td>
@@ -3606,24 +3686,26 @@ export function AdminWorkspaceView({
               </span>
               <span>Điều chỉnh hạn mức AI</span>
             </button>
-            <button
-              type="button"
-              className="admin-dots-menu-item"
-              role="menuitem"
-              data-dots-act="reset_password"
-              onClick={() => {
-                setDotsMenu(null);
-                setConfirmAction({ type: "reset_password", user: dotsTargetUser });
-              }}
-            >
-              <span className="menu-item-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <rect x="3" y="5" width="18" height="14" rx="2" />
-                  <polyline points="3 7 12 13 21 7" />
-                </svg>
-              </span>
-              <span>Yêu cầu đặt lại mật khẩu</span>
-            </button>
+            {dotsTargetUser.role !== "admin" && (
+              <button
+                type="button"
+                className="admin-dots-menu-item"
+                role="menuitem"
+                data-dots-act="reset_password"
+                onClick={() => {
+                  setDotsMenu(null);
+                  setConfirmAction({ type: "reset_password", user: dotsTargetUser });
+                }}
+              >
+                <span className="menu-item-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <polyline points="3 7 12 13 21 7" />
+                  </svg>
+                </span>
+                <span>Yêu cầu đặt lại mật khẩu</span>
+              </button>
+            )}
             <div className="admin-dots-menu-sep" role="separator" />
             {dotsTargetUser.role !== "admin" ? (
               <>
@@ -3759,7 +3841,7 @@ export function AdminWorkspaceView({
                     : "Học sinh";
               const defaultRoleLimit =
                 detailUser.role === "admin"
-                  ? 200
+                  ? 500
                   : detailUser.role === "teacher"
                     ? quotaConfig.teacherDailyRequests
                     : quotaConfig.studentDailyRequests;
@@ -3785,6 +3867,16 @@ export function AdminWorkspaceView({
                         <span className="user-detail-kv-lbl">Email</span>
                         <div className="user-detail-kv-val" id="detail-user-email">
                           {detailUser.email}
+                        </div>
+                      </div>
+                      <div className="user-detail-kv">
+                        <span className="user-detail-kv-lbl">Xác minh email</span>
+                        <div className="user-detail-kv-val" id="detail-user-email-verified">
+                          {detailUser.emailVerified ? (
+                            <span className="role-chip teacher">Đã xác minh</span>
+                          ) : (
+                            <span className="role-chip neutral">Chưa xác minh</span>
+                          )}
                         </div>
                       </div>
                       <div className="user-detail-kv">
@@ -3956,52 +4048,65 @@ export function AdminWorkspaceView({
         aria-hidden={!confirmAction}
         aria-label="Xác nhận thao tác quản trị"
         onClick={(e) => {
-          if (e.target === e.currentTarget) setConfirmAction(null);
+          if (e.target === e.currentTarget && !isMutating) setConfirmAction(null);
         }}
       >
         <div className="axo-modal-dialog">
-          <div className="axo-modal-head">
-            <span className="axo-modal-title" id="admin-confirm-modal-title">
-              Xác nhận thao tác
-            </span>
-            <button
-              type="button"
-              className="context-close-icon-btn"
-              id="btn-close-admin-confirm-modal"
-              aria-label="Đóng hộp xác nhận"
-              onClick={() => setConfirmAction(null)}
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
-          </div>
-          <div className="axo-modal-body">
-            <p id="admin-confirm-modal-desc">
-              {confirmAction
-                ? `Bạn có chắc chắn muốn thực hiện thao tác quản trị cho tài khoản ${confirmAction.user.name} (${confirmAction.user.email})?`
-                : ""}
-            </p>
-            <div className="acc-modal-actions-row">
-              <button
-                type="button"
-                className="btn-confirm-cancel"
-                id="btn-admin-confirm-cancel"
-                onClick={() => setConfirmAction(null)}
-              >
-                Hủy
-              </button>
-              <button
-                type="button"
-                className="btn-confirm-danger"
-                id="btn-admin-confirm-ok"
-                onClick={() => void handleExecuteConfirm()}
-              >
-                Xác nhận
-              </button>
-            </div>
-          </div>
+          {(() => {
+            const spec = confirmAction
+              ? getConfirmModalSpec(confirmAction.type, confirmAction.user)
+              : {
+                  title: "Xác nhận thao tác",
+                  desc: "",
+                  confirmLabel: "Xác nhận",
+                  toneClass: "btn-confirm-danger",
+                };
+            return (
+              <>
+                <div className="axo-modal-head">
+                  <span className="axo-modal-title" id="admin-confirm-modal-title">
+                    {spec.title}
+                  </span>
+                  <button
+                    type="button"
+                    className="context-close-icon-btn"
+                    id="btn-close-admin-confirm-modal"
+                    aria-label="Đóng hộp xác nhận"
+                    disabled={isMutating}
+                    onClick={() => setConfirmAction(null)}
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+                </div>
+                <div className="axo-modal-body">
+                  <p id="admin-confirm-modal-desc">{spec.desc}</p>
+                  <div className="acc-modal-actions-row">
+                    <button
+                      type="button"
+                      className="btn-confirm-cancel"
+                      id="btn-admin-confirm-cancel"
+                      disabled={isMutating}
+                      onClick={() => setConfirmAction(null)}
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      type="button"
+                      className={spec.toneClass}
+                      id="btn-admin-confirm-ok"
+                      disabled={isMutating}
+                      onClick={() => void handleExecuteConfirm()}
+                    >
+                      {isMutating ? "Đang xử lý..." : spec.confirmLabel}
+                    </button>
+                  </div>
+                </div>
+              </>
+            );
+          })()}
         </div>
       </div>
 
@@ -4110,12 +4215,18 @@ export function AdminWorkspaceView({
                   type="button"
                   className="btn-confirm-cancel"
                   id="btn-cancel-create-user"
+                  disabled={createSubmitting}
                   onClick={() => setCreateUserOpen(false)}
                 >
                   Hủy
                 </button>
-                <button type="submit" className="btn-auth-primary" id="btn-submit-create-user">
-                  Tạo tài khoản
+                <button
+                  type="submit"
+                  className="btn-auth-primary"
+                  id="btn-submit-create-user"
+                  disabled={createSubmitting}
+                >
+                  {createSubmitting ? "Đang tạo..." : "Tạo tài khoản"}
                 </button>
               </div>
             </form>
@@ -4798,99 +4909,84 @@ export function AdminWorkspaceView({
                           type="button"
                           className="btn-auth-primary"
                           id="btn-bulk-confirm-import"
-                          disabled={validRows.length === 0}
+                          disabled={validRows.length === 0 || bulkSubmitting}
                           onClick={async () => {
+                            if (bulkSubmitting) return;
                             setBulkStep4Error("");
+                            setBulkSubmitting(true);
                             let createdCount = 0;
-                            let backendReachable = false;
-                            let backendErrorStatus: number | null = null;
-                            let backendErrorText = "";
+                            let failedOnServer = 0;
+                            let unreachableCount = 0;
+                            let lastServerErr = "";
 
-                            for (const row of validRows) {
-                              try {
-                                const res = await fetch("/api/admin/users", {
-                                  method: "POST",
-                                  headers: { "Content-Type": "application/json" },
-                                  credentials: "include",
-                                  body: JSON.stringify({
-                                    displayName: row.rawName.trim(),
-                                    email: row.rawEmail.trim(),
-                                    role: "student",
-                                    school: row.rawSchool.trim(),
-                                  }),
-                                });
-                                const cType = res.headers.get("content-type") || "";
-                                if (res.ok) {
-                                  backendReachable = true;
-                                  createdCount++;
-                                } else if (cType.includes("application/json") || res.status < 500) {
-                                  backendReachable = true;
-                                  backendErrorStatus = res.status;
-                                  try {
-                                    const errBody = (await res.json()) as {
-                                      error?: string;
-                                      message?: string;
-                                      detail?: string;
-                                    };
-                                    if (errBody?.error || errBody?.message || errBody?.detail) {
-                                      backendErrorText = String(
-                                        errBody.error || errBody.message || errBody.detail,
-                                      );
-                                    }
-                                  } catch {
-                                    /* ignore json parse error */
+                            try {
+                              for (const row of validRows) {
+                                try {
+                                  const res = await fetch("/api/admin/users", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    credentials: "include",
+                                    body: JSON.stringify({
+                                      displayName: row.rawName.trim(),
+                                      email: row.rawEmail.trim(),
+                                      role: "student",
+                                      school: row.rawSchool.trim(),
+                                    }),
+                                  });
+                                  if (res.ok) {
+                                    createdCount++;
+                                  } else {
+                                    failedOnServer++;
+                                    lastServerErr = await extractServerError(
+                                      res,
+                                      `Máy chủ từ chối (HTTP ${res.status}).`,
+                                    );
                                   }
+                                } catch {
+                                  unreachableCount++;
                                 }
-                              } catch {
-                                /* offline preview fallback */
                               }
-                            }
 
-                            if (backendReachable && createdCount === 0 && backendErrorStatus !== null) {
-                              setBulkStep4Error(
-                                backendErrorText ||
-                                  `Không thể nhập danh sách tài khoản do máy chủ trả về lỗi (HTTP ${backendErrorStatus}). Không có tài khoản nào được tạo.`,
-                              );
-                              return;
-                            }
+                              if (createdCount === 0) {
+                                if (unreachableCount === validRows.length) {
+                                  setBulkStep4Error(
+                                    "Không kết nối được tới máy chủ để nhập danh sách tài khoản. Chưa có tài khoản nào được tạo.",
+                                  );
+                                } else {
+                                  setBulkStep4Error(
+                                    lastServerErr ||
+                                      "Không thể nhập danh sách tài khoản từ máy chủ. Không có tài khoản nào được tạo.",
+                                  );
+                                }
+                                return;
+                              }
 
-                            if (!backendReachable) {
-                              const nowStr = new Date().toLocaleDateString("vi-VN");
-                              const nowTs = Date.now();
-                              const newItems: AdminUserItem[] = validRows.map((r, idx) => ({
-                                id: `bulk-${nowTs}-${idx}`,
-                                name: r.rawName.trim(),
-                                email: r.rawEmail.trim(),
-                                role: "student",
-                                status: "pending_activation",
-                                school: r.rawSchool.trim(),
-                                adminNote: `Nhập từ tệp ${bulkFileName}`,
-                                joinedAt: nowStr,
-                                joinedTs: nowTs + idx,
-                                dailyLimit: quotaConfig.studentDailyRequests,
-                                tokenCap: quotaConfig.studentDailyTokens,
-                                usedToday: 0,
-                                tokensToday: `0 / ${quotaConfig.studentDailyTokens.toLocaleString("vi-VN")}`,
-                              }));
-                              setUsers((prev) => [...newItems, ...prev]);
-                              createdCount = validRows.length;
-                            } else {
                               await fetchAdminUsers();
+                              const totalFailed = bulkRows.length - createdCount;
+                              setBulkResult({
+                                totalRecords: bulkRows.length,
+                                createdCount,
+                                errorCount: totalFailed,
+                                operatedAt: new Date().toLocaleDateString("vi-VN"),
+                              });
+                              setBulkStep("result");
+                              if (failedOnServer > 0 || unreachableCount > 0) {
+                                showToastMsg(
+                                  `Đã tạo ${createdCount}/${validRows.length} tài khoản hợp lệ; ${failedOnServer + unreachableCount} dòng gửi lên máy chủ thất bại.`,
+                                );
+                              } else {
+                                showToastMsg(
+                                  `Đã nhập thành công ${createdCount}/${bulkRows.length} tài khoản Học sinh (Chờ kích hoạt).`,
+                                );
+                              }
+                            } finally {
+                              setBulkSubmitting(false);
                             }
-
-                            setBulkResult({
-                              totalRecords: bulkRows.length,
-                              createdCount,
-                              errorCount: bulkRows.length - createdCount,
-                              operatedAt: new Date().toLocaleDateString("vi-VN"),
-                            });
-                            setBulkStep("result");
-                            showToastMsg(
-                              `Đã nhập thành công ${createdCount}/${bulkRows.length} tài khoản Học sinh (Chờ kích hoạt).`,
-                            );
                           }}
                         >
-                          Xác nhận tạo {validRows.length} tài khoản hợp lệ
+                          {bulkSubmitting
+                            ? "Đang gửi lên máy chủ..."
+                            : `Xác nhận tạo ${validRows.length} tài khoản hợp lệ`}
                         </button>
                       </div>
                     </div>
@@ -4940,7 +5036,8 @@ export function AdminWorkspaceView({
                   <div className="confirm-target-row">
                     <span className="confirm-target-lbl">Người thực hiện:</span>
                     <span className="confirm-target-val" id="bulk-res-actor">
-                      {user?.displayName || "Trần Quản Trị"} ({user?.email || "admin@axo.edu.vn"})
+                      {user?.displayName || "Quản trị viên"}
+                      {user?.email ? ` (${user.email})` : ""}
                     </span>
                   </div>
                   <div className="confirm-target-row">
@@ -5036,7 +5133,7 @@ export function AdminWorkspaceView({
                     <span className="confirm-target-lbl">Mặc định vai trò / Đã dùng hôm nay:</span>
                     <span className="confirm-target-val">
                       {quotaModalUser.role === "admin"
-                        ? 200
+                        ? 500
                         : quotaModalUser.role === "teacher"
                           ? quotaConfig.teacherDailyRequests
                           : quotaConfig.studentDailyRequests}{" "}
@@ -5079,6 +5176,7 @@ export function AdminWorkspaceView({
                     type="button"
                     className="btn-confirm-cancel"
                     id="btn-modal-cancel-user-quota"
+                    disabled={quotaSaving}
                     onClick={() => setQuotaModalUser(null)}
                   >
                     Hủy
@@ -5087,9 +5185,12 @@ export function AdminWorkspaceView({
                     type="button"
                     className="btn-auth-primary"
                     id="btn-modal-save-user-quota"
+                    disabled={quotaSaving}
                     onClick={async () => {
-                      const nextLim = Math.max(1, Math.min(500, Number(quotaInputVal) || 5));
-                      let serverHandled = false;
+                      if (quotaSaving) return;
+                      const parsed = Number(quotaInputVal);
+                      const nextLim = Number.isFinite(parsed) && parsed > 0 ? Math.max(1, Math.min(500, Math.round(parsed))) : 5;
+                      setQuotaSaving(true);
                       try {
                         const r = await fetch(`/api/admin/users/${quotaModalUser.id}`, {
                           method: "PATCH",
@@ -5105,26 +5206,19 @@ export function AdminWorkspaceView({
                           showToastMsg(errMsg);
                           return;
                         }
-                        serverHandled = true;
-                      } catch {
-                        /* ignore in offline preview */
-                      }
-                      if (serverHandled) {
                         await fetchAdminUsers();
-                      } else {
-                        setUsers((prev) =>
-                          prev.map((item) =>
-                            item.id === quotaModalUser.id ? { ...item, dailyLimit: nextLim } : item,
-                          ),
+                        setQuotaModalUser(null);
+                        showToastMsg(
+                          `Đã lưu hạn mức AI cá nhân (${nextLim} lượt/ngày) cho ${quotaModalUser.name} (${quotaModalUser.email}).`,
                         );
+                      } catch {
+                        showToastMsg("Không kết nối được máy chủ để lưu hạn mức AI cá nhân.");
+                      } finally {
+                        setQuotaSaving(false);
                       }
-                      setQuotaModalUser(null);
-                      showToastMsg(
-                        `Đã lưu hạn mức AI cá nhân (${nextLim} lượt/ngày) cho ${quotaModalUser.name} (${quotaModalUser.email}).`,
-                      );
                     }}
                   >
-                    Lưu hạn mức cá nhân
+                    {quotaSaving ? "Đang lưu..." : "Lưu hạn mức cá nhân"}
                   </button>
                 </div>
               </>
@@ -5282,13 +5376,21 @@ export function AdminWorkspaceView({
                                 className="quota-num-input"
                                 min={1}
                                 max={100}
-                                value={quotaDraft.studentDailyRequests}
-                                onChange={(e) =>
-                                  setQuotaDraft((prev) => ({
-                                    ...prev,
-                                    studentDailyRequests: Math.max(1, Number(e.target.value) || 5),
-                                  }))
-                                }
+                                value={numDrafts.studentDailyRequests ?? String(quotaDraft.studentDailyRequests)}
+                                onChange={(e) => {
+                                  const raw = e.target.value;
+                                  setNumDrafts((prev) => ({ ...prev, studentDailyRequests: raw }));
+                                  const parsed = Number(raw);
+                                  if (raw.trim() !== "" && Number.isFinite(parsed) && parsed > 0) {
+                                    setQuotaDraft((prev) => ({
+                                      ...prev,
+                                      studentDailyRequests: Math.max(1, Math.min(100, Math.round(parsed))),
+                                    }));
+                                  }
+                                }}
+                                onBlur={() => {
+                                  setNumDrafts((prev) => ({ ...prev, studentDailyRequests: undefined }));
+                                }}
                               />
                               <span className="settings-unit-lbl">lượt/ngày</span>
                             </div>
@@ -5301,13 +5403,21 @@ export function AdminWorkspaceView({
                                 className="quota-num-input"
                                 min={5}
                                 max={500}
-                                value={quotaDraft.teacherDailyRequests}
-                                onChange={(e) =>
-                                  setQuotaDraft((prev) => ({
-                                    ...prev,
-                                    teacherDailyRequests: Math.max(5, Number(e.target.value) || 30),
-                                  }))
-                                }
+                                value={numDrafts.teacherDailyRequests ?? String(quotaDraft.teacherDailyRequests)}
+                                onChange={(e) => {
+                                  const raw = e.target.value;
+                                  setNumDrafts((prev) => ({ ...prev, teacherDailyRequests: raw }));
+                                  const parsed = Number(raw);
+                                  if (raw.trim() !== "" && Number.isFinite(parsed) && parsed > 0) {
+                                    setQuotaDraft((prev) => ({
+                                      ...prev,
+                                      teacherDailyRequests: Math.max(5, Math.min(500, Math.round(parsed))),
+                                    }));
+                                  }
+                                }}
+                                onBlur={() => {
+                                  setNumDrafts((prev) => ({ ...prev, teacherDailyRequests: undefined }));
+                                }}
                               />
                               <span className="settings-unit-lbl">lượt/ngày</span>
                             </div>
@@ -5327,13 +5437,21 @@ export function AdminWorkspaceView({
                                 step={1000}
                                 min={1000}
                                 max={200000}
-                                value={quotaDraft.studentDailyTokens}
-                                onChange={(e) =>
-                                  setQuotaDraft((prev) => ({
-                                    ...prev,
-                                    studentDailyTokens: Math.max(1000, Number(e.target.value) || 20000),
-                                  }))
-                                }
+                                value={numDrafts.studentDailyTokens ?? String(quotaDraft.studentDailyTokens)}
+                                onChange={(e) => {
+                                  const raw = e.target.value;
+                                  setNumDrafts((prev) => ({ ...prev, studentDailyTokens: raw }));
+                                  const parsed = Number(raw);
+                                  if (raw.trim() !== "" && Number.isFinite(parsed) && parsed >= 1000) {
+                                    setQuotaDraft((prev) => ({
+                                      ...prev,
+                                      studentDailyTokens: Math.max(1000, Math.min(200000, Math.round(parsed))),
+                                    }));
+                                  }
+                                }}
+                                onBlur={() => {
+                                  setNumDrafts((prev) => ({ ...prev, studentDailyTokens: undefined }));
+                                }}
                               />
                               <span className="settings-unit-lbl">tokens/ngày</span>
                             </div>
@@ -5347,13 +5465,21 @@ export function AdminWorkspaceView({
                                 step={5000}
                                 min={5000}
                                 max={1000000}
-                                value={quotaDraft.teacherDailyTokens}
-                                onChange={(e) =>
-                                  setQuotaDraft((prev) => ({
-                                    ...prev,
-                                    teacherDailyTokens: Math.max(5000, Number(e.target.value) || 120000),
-                                  }))
-                                }
+                                value={numDrafts.teacherDailyTokens ?? String(quotaDraft.teacherDailyTokens)}
+                                onChange={(e) => {
+                                  const raw = e.target.value;
+                                  setNumDrafts((prev) => ({ ...prev, teacherDailyTokens: raw }));
+                                  const parsed = Number(raw);
+                                  if (raw.trim() !== "" && Number.isFinite(parsed) && parsed >= 5000) {
+                                    setQuotaDraft((prev) => ({
+                                      ...prev,
+                                      teacherDailyTokens: Math.max(5000, Math.min(1000000, Math.round(parsed))),
+                                    }));
+                                  }
+                                }}
+                                onBlur={() => {
+                                  setNumDrafts((prev) => ({ ...prev, teacherDailyTokens: undefined }));
+                                }}
                               />
                               <span className="settings-unit-lbl">tokens/ngày</span>
                             </div>
@@ -5372,13 +5498,21 @@ export function AdminWorkspaceView({
                                 className="quota-num-input"
                                 min={1}
                                 max={30}
-                                value={quotaDraft.studentRatePerMin}
-                                onChange={(e) =>
-                                  setQuotaDraft((prev) => ({
-                                    ...prev,
-                                    studentRatePerMin: Math.max(1, Number(e.target.value) || 5),
-                                  }))
-                                }
+                                value={numDrafts.studentRatePerMin ?? String(quotaDraft.studentRatePerMin)}
+                                onChange={(e) => {
+                                  const raw = e.target.value;
+                                  setNumDrafts((prev) => ({ ...prev, studentRatePerMin: raw }));
+                                  const parsed = Number(raw);
+                                  if (raw.trim() !== "" && Number.isFinite(parsed) && parsed >= 1) {
+                                    setQuotaDraft((prev) => ({
+                                      ...prev,
+                                      studentRatePerMin: Math.max(1, Math.min(30, Math.round(parsed))),
+                                    }));
+                                  }
+                                }}
+                                onBlur={() => {
+                                  setNumDrafts((prev) => ({ ...prev, studentRatePerMin: undefined }));
+                                }}
                               />
                               <span className="settings-unit-lbl">yêu cầu/phút</span>
                             </div>
@@ -5391,13 +5525,21 @@ export function AdminWorkspaceView({
                                 className="quota-num-input"
                                 min={1}
                                 max={60}
-                                value={quotaDraft.teacherRatePerMin}
-                                onChange={(e) =>
-                                  setQuotaDraft((prev) => ({
-                                    ...prev,
-                                    teacherRatePerMin: Math.max(1, Number(e.target.value) || 15),
-                                  }))
-                                }
+                                value={numDrafts.teacherRatePerMin ?? String(quotaDraft.teacherRatePerMin)}
+                                onChange={(e) => {
+                                  const raw = e.target.value;
+                                  setNumDrafts((prev) => ({ ...prev, teacherRatePerMin: raw }));
+                                  const parsed = Number(raw);
+                                  if (raw.trim() !== "" && Number.isFinite(parsed) && parsed >= 1) {
+                                    setQuotaDraft((prev) => ({
+                                      ...prev,
+                                      teacherRatePerMin: Math.max(1, Math.min(60, Math.round(parsed))),
+                                    }));
+                                  }
+                                }}
+                                onBlur={() => {
+                                  setNumDrafts((prev) => ({ ...prev, teacherRatePerMin: undefined }));
+                                }}
                               />
                               <span className="settings-unit-lbl">yêu cầu/phút</span>
                             </div>
@@ -5550,15 +5692,19 @@ export function AdminWorkspaceView({
                       <div className="service-status-indicator">
                         <span className="status-dot-live" aria-hidden="true" />
                         <span>
-                          {overviewStats.aiServiceConfigured === false
-                            ? "Chưa cấu hình khóa AI · Đang phục vụ Thư viện 3D & bộ nhớ đệm"
-                            : "Đang hoạt động · Phản hồi ổn định"}
+                          {overviewStats.aiServiceConfigured === true
+                            ? "Đang hoạt động · Phản hồi ổn định"
+                            : overviewStats.aiServiceConfigured === false
+                              ? "Chưa cấu hình khóa AI · Đang phục vụ Thư viện 3D & bộ nhớ đệm"
+                              : "Chưa xác định trạng thái dịch vụ AI từ máy chủ"}
                         </span>
                       </div>
-                      {overviewStats.aiServiceConfigured === false ? (
+                      {overviewStats.aiServiceConfigured === true ? (
+                        <span className="role-chip teacher">Kết nối sẵn sàng</span>
+                      ) : overviewStats.aiServiceConfigured === false ? (
                         <span className="role-chip pending">Chế độ giới hạn</span>
                       ) : (
-                        <span className="role-chip teacher">Kết nối sẵn sàng</span>
+                        <span className="role-chip neutral">Chưa xác định</span>
                       )}
                     </div>
 
@@ -5645,9 +5791,10 @@ export function AdminWorkspaceView({
                   type="button"
                   className="btn-settings-save sys-foot-btn"
                   id="btn-save-quota-config"
-                  disabled={!isSysDraftDirty}
+                  disabled={!isSysDraftDirty || sysSaving}
                   onClick={async () => {
-                    let serverHandled = false;
+                    if (sysSaving) return;
+                    setSysSaving(true);
                     try {
                       const r = await fetch("/api/admin/settings", {
                         method: "PUT",
@@ -5663,21 +5810,19 @@ export function AdminWorkspaceView({
                         showToastMsg(errMsg);
                         return;
                       }
-                      serverHandled = true;
-                    } catch {
-                      /* ignore in offline preview */
-                    }
-                    if (serverHandled) {
                       await fetchAdminUsers();
-                    } else {
-                      setQuotaConfig(quotaDraft);
+                      setNumDrafts({});
+                      setSysSettingsOpen(false);
+                      setSysDiscardConfirmOpen(false);
+                      showToastMsg("Đã lưu cấu hình hạn mức hệ thống.");
+                    } catch {
+                      showToastMsg("Không kết nối được máy chủ để lưu cấu hình hạn mức hệ thống.");
+                    } finally {
+                      setSysSaving(false);
                     }
-                    setSysSettingsOpen(false);
-                    setSysDiscardConfirmOpen(false);
-                    showToastMsg("Đã lưu cấu hình hạn mức hệ thống.");
                   }}
                 >
-                  Lưu thay đổi
+                  {sysSaving ? "Đang lưu..." : "Lưu thay đổi"}
                 </button>
               )}
             </div>
