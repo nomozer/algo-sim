@@ -338,3 +338,27 @@ cần cho một lần kiểm thủ công thì **đừng commit** trừ khi nó t
   docker compose up -d --build --force-recreate backend
   ```
   Bước `stamp --purge` vẫn đi qua cổng preflight (kiểm tra schema khớp tuyệt đối với `e437149641fa`) — nếu báo `INVALID_STAMP_SCHEMA_MISMATCH` thì dừng lại và đối chiếu, không ép.
+
+### Khôi phục sao lưu PostgreSQL an toàn (Rollback `pg_restore` trên Windows & Linux)
+
+- **Tuyệt đối không** pipe tệp nhị phân `pg_dump -Fc` qua PowerShell (`Get-Content -Raw -Encoding Byte ... | docker compose exec -T db pg_restore ...`): đường ống byte của PowerShell trên Windows có thể làm hỏng tệp nhị phân hoặc không tương thích giữa Windows PowerShell 5.1 và PowerShell 7.
+- Luôn sao chép trực tiếp tệp `.dump` vào container bằng `docker compose cp`, đối chiếu mã băm SHA-256 trước khi nạp, và lưu ý rằng `pg_restore --clean --if-exists` **không** tự xóa các bảng mới được migration thêm sau thời điểm tạo bản sao lưu (ví dụ `auth_tokens`, `email_verifications`) trừ khi khôi phục vào một CSDL sạch vừa tạo lại:
+  ```powershell
+  # 1. Dừng backend để tránh ghi đồng thời
+  docker compose stop backend
+
+  # 2. Sao chép bản sao lưu vào container db và xác minh nguyên vẹn SHA-256
+  $backup = "C:\Users\Bunny\algosim_backups\algosim_backup_20261128_082150.dump"
+  $hostHash = (Get-FileHash $backup -Algorithm SHA256).Hash.ToLower()
+  docker compose cp $backup db:/tmp/algosim_restore.dump
+  docker compose exec -T db sha256sum /tmp/algosim_restore.dump
+  # Xác nhận mã băm trong container khớp chính xác $hostHash trước khi tiếp tục!
+
+  # 3. Khôi phục vào CSDL sạch (bảo đảm không sót bảng mới từ migration sau thời điểm sao lưu)
+  docker compose exec -T db psql -U algosim -d postgres -v ON_ERROR_STOP=1 -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'algosim' AND pid <> pg_backend_pid();"
+  docker compose exec -T db psql -U algosim -d postgres -v ON_ERROR_STOP=1 -c "DROP DATABASE algosim; CREATE DATABASE algosim OWNER algosim;"
+  docker compose exec -T db pg_restore -U algosim -d algosim --no-owner --no-privileges /tmp/algosim_restore.dump
+
+  # 4. Xóa tệp tạm trong container
+  docker compose exec -T db rm -f /tmp/algosim_restore.dump
+  ```

@@ -50,7 +50,9 @@ describe("Landing Footer — Two-Tier Closing Scene (3D Visual + Pastel CTA) & 3
     expect(html).toContain("Bài mẫu");
     expect(html).toContain('id="btn-landing-footer-library"');
     expect(html).toContain("Thư viện");
-    expect(html).toContain("© Axo · Hình học không gian 3D");
+    expect(html).toContain("© Hình học không gian 3D");
+    expect(html).toContain("không gian học tập.");
+    expect(html).not.toContain("trong Workspace.");
 
     // Zero invented social/contact metadata
     expect(html).not.toContain("mailto:");

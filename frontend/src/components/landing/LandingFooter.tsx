@@ -164,7 +164,7 @@ export function LandingFooter() {
               Sẵn sàng nhìn hình học theo cách khác?
             </h2>
             <p className="axo-v14-closing-lead">
-              Nhập đề tiếng Việt hoặc mở nhanh bài mẫu trong Workspace.
+              Nhập đề tiếng Việt hoặc mở nhanh bài mẫu trong không gian học tập.
             </p>
             <div className="axo-v14-closing-actions">
               <button
@@ -197,7 +197,7 @@ export function LandingFooter() {
               <span className="axo-sp-logo-name">Axo</span>
             </a>
             <p className="axo-v14-footer-copy">
-              © Axo · Hình học không gian 3D
+              © Hình học không gian 3D
             </p>
           </div>
 
