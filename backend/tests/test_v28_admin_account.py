@@ -481,3 +481,106 @@ class TestAdminHoanThienVaXuatDuLieuV28:
         # Mật khẩu sinh ngẫu nhiên mỗi lượt chạy, không cố định trong mã nguồn
         assert [a["password"] for a in data1["accounts"]] != [a["password"] for a in data2["accounts"]]
 
+
+class TestV29SingleAdminAndOverviewHardening:
+    """Kiểm thử bất biến một Quản trị viên duy nhất, thống kê activeUsers thật, CSV xác minh email và timeTs 32-bit."""
+
+    def test_single_admin_invariants_enforced_across_crud(self, api):
+        c_admin = _register_admin(api)
+
+        # Tạo thêm tài khoản vai trò admin bị từ chối HTTP 403
+        r_create_admin = c_admin.post(
+            "/api/admin/users",
+            json={"displayName": "Admin Thứ Hai", "email": "admin2@example.test", "role": "admin"},
+        )
+        assert r_create_admin.status_code == 403
+
+        # Tạo học sinh bình thường thành công
+        r_stu = c_admin.post(
+            "/api/admin/users",
+            json={
+                "displayName": "Nguyễn Minh Châu",
+                "email": "chau.hs@example.test",
+                "role": "student",
+                "school": "THPT Chu Văn An",
+            },
+        )
+        assert r_stu.status_code == 200
+        stu_id = r_stu.json()["user"]["id"]
+
+        # Nâng cấp student lên admin bị từ chối HTTP 403
+        r_promote = c_admin.patch(f"/api/admin/users/{stu_id}", json={"role": "admin"})
+        assert r_promote.status_code == 403
+
+        # Lấy id của chính admin đang đăng nhập
+        ov = c_admin.get("/api/admin/overview").json()
+        admin_rows = [u for u in ov["users"] if u["role"] == "admin"]
+        assert len(admin_rows) == 1
+        admin_id = admin_rows[0]["id"]
+
+        # Không thể hạ cấp, khóa, đặt mustChangePassword hoặc xóa tài khoản admin duy nhất
+        assert c_admin.patch(f"/api/admin/users/{admin_id}", json={"role": "student"}).status_code == 400
+        assert c_admin.patch(f"/api/admin/users/{admin_id}", json={"role": "teacher"}).status_code == 400
+        assert c_admin.patch(f"/api/admin/users/{admin_id}", json={"isSuspended": True}).status_code == 400
+        assert c_admin.patch(f"/api/admin/users/{admin_id}", json={"status": "suspended"}).status_code == 400
+        assert c_admin.patch(f"/api/admin/users/{admin_id}", json={"mustChangePassword": True}).status_code == 400
+        assert c_admin.delete(f"/api/admin/users/{admin_id}").status_code == 400
+
+    def test_overview_counts_csv_email_verified_and_32bit_timets(self, api):
+        from app.accounts import tokens as account_tokens
+        from app.persistence.classroom_models import User
+
+        c_admin = _register_admin(api)
+        r_stu = c_admin.post(
+            "/api/admin/users",
+            json={
+                "displayName": "Học sinh Chờ kích hoạt",
+                "email": "pending.act@example.test",
+                "role": "student",
+            },
+        )
+        assert r_stu.status_code == 200
+        r_pt = c_admin.post(
+            "/api/admin/users",
+            json={
+                "displayName": "Chờ duyệt Giáo viên",
+                "email": "pending.gv@example.test",
+                "role": "student",
+                "status": "pending_teacher",
+                "password": TEST_PASSWORD,
+            },
+        )
+        assert r_pt.status_code == 200
+        pt_id = r_pt.json()["user"]["id"]
+        with accounts_router.SessionLocal() as db:
+            pt_user = db.get(User, pt_id)
+            assert pt_user is not None
+            account_tokens.mark_email_verified(db, pt_user, method="email_link")
+            db.commit()
+
+        r_ov = c_admin.get("/api/admin/overview")
+        assert r_ov.status_code == 200
+        ov = r_ov.json()
+        st = ov["stats"]
+        # Admin duy nhất là active, 2 user pending KHÔNG bị tính vào activeUsers
+        assert st["activeUsers"] == 1
+        assert st["suspendedUsers"] == 0
+        assert st["pendingTeacherCount"] == 1
+        assert st["pendingActivationCount"] == 1
+        assert st["verifiedEmailUsers"] >= 1
+        # timeTs phải nằm trong giới hạn INTEGER 32-bit có dấu của PostgreSQL
+        assert all(
+            isinstance(entry.get("timeTs"), int) and 0 < entry["timeTs"] <= 2_147_483_647
+            for entry in ov["auditLogs"]
+        )
+
+        # CSV export chứa cột "Xác minh email"
+        r_csv = c_admin.get("/api/admin/export/users")
+        assert r_csv.status_code == 200
+        csv_text = r_csv.content.decode("utf-8-sig")
+        header_line = csv_text.splitlines()[0]
+        assert "Xác minh email" in header_line
+        assert "Đã xác minh" in csv_text
+        assert "Chưa xác minh" in csv_text
+
+

@@ -9,7 +9,7 @@
 | Endpoint: `POST /api/auth/forgot-password` (trung tính, Admin bị loại), `POST /api/auth/reset-password`, `POST /api/auth/verify-email`, `POST /api/auth/verify-email/resend`, thông báo đổi mật khẩu, thu hồi phiên | `backend/app/accounts/router.py` |
 | Admin duy nhất: đăng nhập bằng `ADMIN_USERNAME` hoặc email (cùng tài khoản), chẩn đoán CHỈ ĐỌC `--check` (`ADMIN_NOT_CREATED`, `ADMIN_PASSWORD_NOT_SYNCHRONIZED`, `ADMIN_CONFIGURATION_MISMATCH`, `MULTIPLE_ADMINS`, `SCHEMA_MISSING`) | `backend/app/accounts/service.py`, `backend/scripts/manage_admin.py` |
 | Giao diện: view `verify` (`/verify-email`, xác minh bằng nút bấm), gỡ token khỏi URL + `no-referrer`, câu trung tính, trạng thái xác minh/gửi lại trong Cài đặt tài khoản | `frontend/src/components/AuthPageView.tsx`, `frontend/src/components/AccountSettingsModal.tsx`, `frontend/src/state/auth.ts` |
-| Kiểm thử | `backend/tests/test_auth_account_recovery.py`, `backend/tests/test_v28_admin_account.py`, `frontend/src/components/auth-account-recovery.test.tsx` · cách ly thư trong pytest: fixture `isolate_transactional_email` ở `backend/conftest.py` |
+| Kiểm thử | `backend/tests/test_auth_account_recovery.py`, `backend/tests/test_v28_admin_account.py`, `backend/tests/test_postgres_integration.py`, `frontend/src/components/auth-account-recovery.test.tsx`, `frontend/src/components/admin-functional-refinement.test.tsx` · cách ly thư trong pytest: fixture `isolate_transactional_email` ở `backend/conftest.py` |
 
 ## Frontend Performance Optimization, Route Lazy Loading & Bundle Isolation (2026-11-27)
 

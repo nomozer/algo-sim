@@ -308,7 +308,7 @@ cần cho một lần kiểm thủ công thì **đừng commit** trừ khi nó t
 
 - Backend **không bao giờ** tự tạo hay tự đổi mật khẩu Admin. Điền `ADMIN_PASSWORD` vào `backend/.env` không tạo tài khoản; công cụ duy nhất là `scripts/manage_admin.py`, chạy trên **đúng CSDL mà backend đang dùng**.
 - Đăng nhập Admin: `ADMIN_USERNAME` (mặc định `admin`) hoặc email của tài khoản Admin — cả hai là cùng một bản ghi `role = "admin"`. `ADMIN_EMAIL` lệch email đã lưu không còn khoá đăng nhập bằng tên khi chỉ có một Admin; nhiều Admin ⇒ đăng nhập bằng tên bị từ chối (fail-closed).
-- Admin không dùng "Quên mật khẩu" công khai (phản hồi vẫn trung tính); khôi phục bằng `manage_admin.py --apply` trên máy chủ.
+- Admin không dùng "Quên mật khẩu" công khai (phản hồi vẫn trung tính); khôi phục bằng `manage_admin.py --apply` trên máy chủ. Các endpoint `/api/admin/users` (POST/PATCH/DELETE) chặn tạo thêm, nâng cấp, hạ cấp, khóa, bật `mustChangePassword` hoặc xóa tài khoản `admin` duy nhất (`403`/`400`); `_record_audit_log` lưu `time_ts` theo giây epoch 32-bit vừa chuẩn `INTEGER` trên PostgreSQL, và `_ensure_admin_tables` chỉ chạy `create_all` trên SQLite.
 
 | Môi trường | Kiểm tra (chỉ đọc) | Tạo lần đầu / đồng bộ mật khẩu |
 |---|---|---|
@@ -322,7 +322,7 @@ cần cho một lần kiểm thủ công thì **đừng commit** trừ khi nó t
 
 - Biến: `EMAIL_PROVIDER=resend`, `RESEND_API_KEY` (bí mật, chỉ trong `.env` của máy chủ), `EMAIL_FROM="Axo <noreply@mail.hoclieu.tech>"`, `EMAIL_ENABLED`, `EMAIL_VERIFICATION_TOKEN_TTL_MINUTES=1440`, `PASSWORD_RESET_TOKEN_TTL_MINUTES=15`, `ALGOSIM_PUBLIC_APP_URL` (liên kết trong thư luôn dựng từ biến này, không từ Host header). Mẫu: [`backend/.env.example`](../backend/.env.example).
 - Thiếu cấu hình ⇒ không khả dụng một cách trung thực: `GET /api/auth/recovery-status` trả `false`, đăng ký vẫn thành công (`verification.status = "unavailable"`), không giả vờ đã gửi.
-- Kiểm tra: `python scripts/email_smoke_test.py --check` · gửi một thư thử (chủ động): `--send --to <địa chỉ>` · trạng thái giao: `--status <email-id>`. Kết quả `accepted` nghĩa là Resend đã nhận yêu cầu, không phải người nhận đã nhận thư.
+- Kiểm tra: `python scripts/email_smoke_test.py --check` · gửi một thư thử (chủ động): `--send --to <địa chỉ>` · trạng thái giao: `--status <email-id>`. Kết quả `accepted` nghĩa là Resend đã nhận yêu cầu (`deliveryVerified: false`), không phải người nhận đã nhận thư. Với API key chỉ có quyền `Sending access` (tối thiểu đặc quyền), `--status` trả trạng thái `unsupported_by_key_scope` (`SENDING_ACCESS_KEY_ONLY`, exit `0`) và hướng dẫn kiểm tra `Delivered`/`Bounced` trên Resend Dashboard (không nâng khóa lên `Full access`).
 - Giới hạn: khoảng chờ 60 giây giữa hai thư cùng mục đích cho một tài khoản (lưu trong CSDL); 5 thư/người nhận/giờ và 200 thư/giờ mỗi tiến trình (`EMAIL_MAX_PER_RECIPIENT_PER_HOUR`, `EMAIL_MAX_PER_HOUR`); giới hạn tốc độ endpoint xác thực dùng `AUTH_RATE_LIMIT_*`. Các bộ đếm trong bộ nhớ là theo từng worker.
 
 ### Migration `b6d2f0a8c4e1` và CSDL Docker cũ

@@ -315,3 +315,68 @@ def test_postgres_migrate_persist_reconnect(pg_container):
     assert chk.returncode == 0, chk.stdout + chk.stderr
     assert "No new upgrade operations detected" in (chk.stdout + chk.stderr)
     eng2.dispose()
+
+
+def test_postgres_admin_audit_log_32bit_and_schema_guard(pg_container):
+    """Khóa hồi quy PostgreSQL thật:
+    1) _record_audit_log ghi vào admin_audit_logs với time_ts vừa kiểu INTEGER 32-bit (< 2^31-1).
+    2) _ensure_admin_tables không gọi create_all trái phép trên PostgreSQL (sqlite_owns_schema=False).
+    3) Tạo user và cập nhật settings qua route Admin chạy thông suốt trên Postgres sau Alembic head.
+    """
+    from fastapi.testclient import TestClient
+    from sqlalchemy import create_engine, select
+    from sqlalchemy.orm import sessionmaker
+
+    from app import main as app_main
+    from app.accounts import router as accounts_router
+    from app.accounts import service as accounts_service
+    from app.persistence.classroom_models import AdminAuditLogEntry, Base
+    from app.persistence.db import sqlite_owns_schema
+
+    url = pg_container["url"]
+    up = _alembic(["upgrade", "head"], url)
+    assert up.returncode == 0, up.stdout + up.stderr
+
+    eng = create_engine(url, future=True)
+    assert sqlite_owns_schema(eng) is False
+
+    Session = sessionmaker(bind=eng, autoflush=False, autocommit=False, future=True)
+    admin_pw = f"PgAdmin-{uuid.uuid4().hex[:12]}9!"
+    with Session() as s:
+        accounts_service.upsert_or_rotate_admin_credentials(
+            s, password=admin_pw, email="pg.admin@example.test", display_name="PG Admin", create_if_missing=True
+        )
+        s.commit()
+
+    # Đảm bảo _ensure_admin_tables không chạm create_all trên Postgres bind
+    orig_create_all = Base.metadata.create_all
+    called = []
+    Base.metadata.create_all = lambda *a, **kw: called.append((a, kw))
+    orig_session_local = accounts_router.SessionLocal
+    try:
+        accounts_router._ENSURED_ENGINE_IDS.clear()
+        accounts_router.SessionLocal = Session
+        with Session() as s:
+            accounts_router._ensure_admin_tables(s)
+        assert called == []
+
+        client = TestClient(app_main.app)
+        r_login = client.post("/api/auth/login", json={"email": "admin", "password": admin_pw})
+        assert r_login.status_code == 200, r_login.text
+        r_create = client.post(
+            "/api/admin/users",
+            json={"displayName": "PG Student", "email": "pg.stu@example.test", "role": "student"},
+        )
+        assert r_create.status_code == 200, r_create.text
+        r_set = client.put("/api/admin/settings", json={"settings": {"studentDailyRequests": 20}})
+        assert r_set.status_code == 200, r_set.text
+    finally:
+        Base.metadata.create_all = orig_create_all
+        accounts_router.SessionLocal = orig_session_local
+
+    with Session() as s:
+        rows = s.execute(select(AdminAuditLogEntry)).scalars().all()
+        assert len(rows) >= 2
+        assert all(0 < int(r.time_ts) <= 2_147_483_647 for r in rows)
+    eng.dispose()
+

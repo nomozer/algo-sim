@@ -550,3 +550,50 @@ class TestXoaTaiKhoan:
             assert db.execute(select(AuthToken).where(AuthToken.user_id == stu["id"])).first() is None
             assert db.execute(select(EmailVerification).where(EmailVerification.user_id == stu["id"])).first() is None
             assert db.execute(select(AuthSession).where(AuthSession.user_id == stu["id"])).first() is None
+
+
+class TestEmailSmokeTestScript:
+    def test_status_handles_sending_access_restricted_key_cleanly(self, monkeypatch):
+        from scripts import email_smoke_test as est
+
+        class _FakeResp:
+            status_code = 401
+
+            def json(self):
+                return {
+                    "statusCode": 401,
+                    "name": "restricted_api_key",
+                    "message": "This API key is restricted to only send emails",
+                }
+
+        monkeypatch.setenv("RESEND_API_KEY", "re_dummy_sending_only")
+        monkeypatch.setattr("httpx.get", lambda *a, **kw: _FakeResp())
+
+        res = est._status("email_123")
+        assert res["status"] == "unsupported_by_key_scope"
+        assert res["reason"] == "SENDING_ACCESS_KEY_ONLY"
+        assert res["httpStatus"] == 401
+
+        rc = est.main(["--status", "email_123", "--env-file", "backend/.env.example"])
+        assert rc == 0
+
+    def test_send_marks_delivery_unverified_even_when_accepted(self, monkeypatch):
+        from app.accounts import mailer
+        from app.accounts.mailer import SendResult
+        from scripts import email_smoke_test as est
+
+        monkeypatch.setattr(mailer, "email_available", lambda: True)
+        orig = mailer._TEST_TRANSPORT
+        mailer.set_email_transport(
+            lambda msg: SendResult(status="accepted", provider_id="re_msg_1", reason=None)
+        )
+        try:
+            out = est._send("hs@example.test")
+        finally:
+            mailer.set_email_transport(orig)
+
+        assert out["status"] == "accepted"
+        assert out["providerId"] == "re_msg_1"
+        assert out["deliveryVerified"] is False
+        assert "deliveryNote" in out and "Resend Dashboard" in out["deliveryNote"]
+
